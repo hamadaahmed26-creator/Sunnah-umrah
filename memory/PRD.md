@@ -22,7 +22,16 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
-## Implemented (Feb 2026)
+## Implemented (Feb 2026 — latest session)
+- **Tawaf & Sa'i wizard pages** with persistent landmark photo at top + step text/duas flowing below:
+  - Iconic Kaaba photo (Unsplash CDN) for Tawaf
+  - Mas'a corridor photo (Wikimedia Commons) for Sa'i
+  - Single `<img>` mounted once per page → no flicker between laps/steps
+  - Sunnah-correct duas extracted verbatim from user's PDF (lapGuide.js)
+  - Special handling: no takbir on 7th Marwah; Yemeni Corner = touch only, no kiss/dua
+- Removed dead components (`Kaaba3D`, `Masaa3D`, `Sketchfab3D`, `landmarkPhotos`, prior CSS-3D and Sketchfab iframe attempts)
+
+## Implemented (earlier in Feb 2026)
 - `/api/gates` — 12 main gates of Masjid al-Haram
 - `/api/gates/nearest` — haversine + bearing for nearest gate
 - `/api/chat` (POST) + `/api/chat/{session_id}/messages` (GET) — Claude 4.5 chat with persistence

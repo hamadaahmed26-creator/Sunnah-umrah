@@ -2,39 +2,36 @@ import React from "react";
 import { Loader2 } from "lucide-react";
 
 /*
- Persistent inline 3D model viewer.
- Loads ONCE and stays mounted while the parent's step text flows below.
- Uses Sketchfab's free embed for a real photorealistic model.
+ Persistent inline landmark photo.
+ One static, official-looking image stays mounted at the top of the page while
+ the step text and du'as flow below it. The img element never re-mounts when
+ the parent's step state changes (parent only swaps a sibling caption + body),
+ so there is no flicker between Tawaf laps or Sa'i trips.
 */
 
-const MODELS = {
-  kaaba: "43041d42a0ae4cb58e20a86edc572688",
-  grandMosque: "74f86a1f7e9d4f7882c390d2ef58c10f",
+const PHOTOS = {
+  // Iconic Kaaba photo (Unsplash, Haidan — free to use, 11M+ views)
+  kaaba: {
+    src:
+      "https://images.unsplash.com/photo-1554794470-42d3cd193ecc?w=1600&q=80&auto=format&fit=crop",
+    alt: "The Ka'bah inside the Grand Mosque, Mecca",
+  },
+  // Mas'a corridor between Safa and Marwah (Wikimedia Commons, public)
+  grandMosque: {
+    src:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Mas%27aa2.jpg/1280px-Mas%27aa2.jpg",
+    alt: "The Mas'a corridor between Safa and Marwah, Masjid al-Haram",
+  },
 };
 
 export default function Inline3DModel({
   model = "kaaba",
-  height = "h-[300px]",
+  height = "h-[280px]",
   caption,
-  testid = "inline-3d",
+  testid = "inline-photo",
 }) {
   const [loaded, setLoaded] = React.useState(false);
-  const id = MODELS[model] || model;
-  const params = new URLSearchParams({
-    autostart: "1",
-    autospin: "0.4",
-    ui_infos: "0",
-    ui_inspector: "0",
-    ui_settings: "0",
-    ui_help: "0",
-    ui_stop: "0",
-    ui_watermark: "0",
-    ui_loading: "0",
-    ui_hint: "2",
-    preload: "1",
-    dnt: "1",
-  });
-  const url = `https://sketchfab.com/models/${id}/embed?${params.toString()}`;
+  const photo = PHOTOS[model] || PHOTOS.kaaba;
 
   return (
     <div
@@ -43,23 +40,25 @@ export default function Inline3DModel({
     >
       {!loaded && (
         <div className="absolute inset-0 grid place-items-center text-white/80 z-10 bg-[#1C1D1B]">
-          <div className="flex flex-col items-center gap-2">
-            <Loader2 className="w-7 h-7 animate-spin text-[#B3884D]" />
-            <span className="text-[11px] uppercase tracking-[0.22em]">Loading 3D model…</span>
-          </div>
+          <Loader2 className="w-7 h-7 animate-spin text-[#B3884D]" />
         </div>
       )}
-      <iframe
-        title={`3D ${model}`}
-        src={url}
-        className="absolute inset-0 w-full h-full"
-        frameBorder="0"
-        allow="autoplay; fullscreen; xr-spatial-tracking"
-        allowFullScreen
+      <img
+        src={photo.src}
+        alt={photo.alt}
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        decoding="async"
         onLoad={() => setLoaded(true)}
+        data-testid={`${testid}-img`}
       />
+      {/* Subtle bottom gradient so the caption stays legible over any photo */}
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
       {caption && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B]/85 backdrop-blur px-3 py-1 text-[10px] font-semibold tracking-[0.18em] uppercase text-white pointer-events-none">
+        <div
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B]/85 backdrop-blur px-3 py-1 text-[10px] font-semibold tracking-[0.18em] uppercase text-white pointer-events-none max-w-[90%] truncate"
+          data-testid={`${testid}-caption`}
+        >
           {caption}
         </div>
       )}
