@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
 import { STEPS } from "../lib/umrahData";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
+import TawafVisual from "../components/TawafVisual";
+import SaiVisual from "../components/SaiVisual";
 
 export default function Guide() {
   const { lang } = React.useContext(LangContext);
@@ -54,6 +56,17 @@ export default function Guide() {
           <p className={`text-[15px] leading-relaxed text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
             {isAr ? step.summary_ar : step.summary_en}
           </p>
+
+          {step.id === "tawaf" && (
+            <div className="mt-5" data-testid="guide-tawaf-visual">
+              <TawafVisual count={0} total={7} />
+            </div>
+          )}
+          {step.id === "sai" && (
+            <div className="mt-5" data-testid="guide-sai-visual">
+              <SaiVisual count={0} total={7} />
+            </div>
+          )}
 
           {step.dua && (
             <div className="mt-6 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-5" data-testid="guide-dua">

@@ -4,6 +4,8 @@ import { RotateCcw, Check, Volume2, ListChecks } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
 import { TAWAF_GUIDE, SAI_GUIDE } from "../lib/lapGuide";
+import TawafVisual from "../components/TawafVisual";
+import SaiVisual from "../components/SaiVisual";
 
 // Reusable counter for both Tawaf (7 laps) and Sa'i (7 trips)
 export default function Counter({ kind = "tawaf", title, total = 7 }) {
@@ -109,6 +111,14 @@ export default function Counter({ kind = "tawaf", title, total = 7 }) {
             className={`h-2 rounded-full transition-colors ${i < count ? "bg-[#B3884D]" : "bg-[#E8E5DD]"}`}
           />
         ))}
+      </div>
+
+      <div className="mt-7" data-testid={`${kind}-visual-wrap`}>
+        {kind === "tawaf" ? (
+          <TawafVisual count={count} total={total} />
+        ) : (
+          <SaiVisual count={count} total={total} />
+        )}
       </div>
 
       <LapActions kind={kind} count={count} />
