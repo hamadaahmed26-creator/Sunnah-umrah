@@ -309,10 +309,10 @@ function Scene_Done() {
 function Scene_Intro({ onJump }) {
   // Step indices in tourSteps.js for each chapter's first step.
   const items = [
-    { n: "1", k: "IHRAM", c: GREEN, jump: 1 },
-    { n: "2", k: "TAWAF", c: GOLD, jump: 5 },
-    { n: "3", k: "SA'I", c: "#8B4540", jump: 11 },
-    { n: "4", k: "HALQ", c: INK, jump: 14 },
+    { n: "1", k: "IHRAM", slug: "ihram", c: GREEN, jump: 1 },
+    { n: "2", k: "TAWAF", slug: "tawaf", c: GOLD, jump: 5 },
+    { n: "3", k: "SA'I", slug: "sai", c: "#8B4540", jump: 11 },
+    { n: "4", k: "HALQ", slug: "halq", c: INK, jump: 14 },
   ];
   return (
     <div className="absolute inset-0 grid grid-cols-2 gap-3 p-5 bg-[#F8F6F0]">
@@ -321,7 +321,7 @@ function Scene_Intro({ onJump }) {
           key={it.k}
           onClick={() => onJump && onJump(it.jump)}
           className="tap-pulse rounded-2xl bg-white border border-[#E8E5DD] flex flex-col items-center justify-center gap-2 py-4 hover:border-[#B3884D] active:scale-[0.97] transition"
-          data-testid={`intro-jump-${it.k.toLowerCase()}`}
+          data-testid={`intro-jump-${it.slug}`}
         >
           <div
             className="w-10 h-10 rounded-full grid place-items-center text-white text-[16px] font-bold"

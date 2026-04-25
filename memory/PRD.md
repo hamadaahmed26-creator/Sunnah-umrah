@@ -23,17 +23,21 @@
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
 ## Implemented (Feb 2026 — latest session)
-- **Tour mode — the whole Umrah on one page, step by step (15 steps):**
-  - Intro · 4 simple steps overview card
-  - Ihram: Miqāt boundary scene, Niyyah with Arabic speech bubble, Talbiyah (group walking with arrow)
-  - Entering Masjid al-Haram (right-foot illustration with mosque arch)
-  - Tawaf: start at Black Stone (figure with raised right hand, Kaaba labeled), animated top-down Tawaf map with **inline 0–7 lap counter** (tap + each time you pass the Black Stone, "Next" disabled until 7/7), Yemeni Corner du'a, Maqam Ibrahim (figure in sujood), Zamzam
-  - Sa'i: Safa start, On-hill takbir (figure with arms raised on triangle hill), animated Safa↔Marwah corridor with **inline 0–7 trip counter**
-  - Halq/Taqsir scissors illustration; Done celebration with glowing Kaaba
-- Each step: illustrated SVG scene + plain instruction + exact Sunnah du'a (with Arabic TTS button) + optional Sunnah tip
-- Progress saved per-step + per-lap/trip in localStorage; pilgrim can close the app and resume on the exact step
-- Replaced bottom nav: Home(Tour) · Plan · Lost · Group · Chat. Old /tawaf, /sai, /guide redirect to /tour.
-- Removed: video-based tour, photo-based scenes, separate Tawaf & Sa'i counter pages.
+- **Tour mode — single page, 15 illustrated steps, walks the whole Umrah:**
+  - Intro: 4 tappable section cards (IHRAM/TAWAF/SA'I/HALQ) jump straight to that chapter
+  - Ihram: Miqāt boundary, Niyyah with Arabic speech bubble, Talbiyah (group walking)
+  - Enter Masjid (right-foot illustration with mosque arch)
+  - Tawaf: Black Stone start scene → animated top-down Tawaf map with **inline 0–7 lap counter** (Next button locked until 7/7) → Yemeni Corner → Maqam Ibrahim → Zamzam
+  - Sa'i: Safa start with pulsing marker → on-hill takbir → animated Safa↔Marwah corridor with **0–7 trip counter** (Next locked)
+  - Halq scissors illustration; Done celebration with glowing Kaaba
+- Each step: SVG scene + plain instruction + exact Sunnah du'a (Arabic + transliteration + English with TTS button) + optional Sunnah tip
+- **Floating "Ask the Companion"** FAB on every tour step → opens bottom sheet with suggested questions, sends current step as context to Claude Sonnet via `/api/chat`
+- Progress saves automatically; bottom-nav controls fixed (Next button no longer overlaps nav)
+- Cleanup: deleted old Tawaf/Sai/Guide/Home/Counter pages and visual components; old routes redirect to `/tour`
+
+## Verification
+- Backend pytest: **9/9 passed** (chat with Claude Sonnet 4.5, gates, group create/join/checkin, progress upsert)
+- Frontend Playwright on iPhone 414×896: **34/35 passed** (one cosmetic testid mismatch already fixed)
 
 ## Implemented (earlier in Feb 2026)
 - `/api/gates` — 12 main gates of Masjid al-Haram
