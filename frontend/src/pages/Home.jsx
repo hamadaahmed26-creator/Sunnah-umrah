@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, RefreshCw, Footprints, Compass, MessageCircle, BookOpen } from "lucide-react";
+import { ArrowRight, RefreshCw, Footprints, Compass, MessageCircle, BookOpen, CalendarClock, Users } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
 
@@ -16,6 +16,8 @@ export default function Home() {
     { to: "/sai", icon: Footprints, label: t("saiCounter"), id: "sai" },
     { to: "/lost", icon: Compass, label: t("findGate"), id: "lost" },
     { to: "/chat", icon: MessageCircle, label: t("askScholar"), id: "chat" },
+    { to: "/plan", icon: CalendarClock, label: lang === "ar" ? "خطّة اليوم" : "Today's plan", id: "plan" },
+    { to: "/group", icon: Users, label: lang === "ar" ? "مجموعة العائلة" : "Family group", id: "group" },
   ];
 
   return (

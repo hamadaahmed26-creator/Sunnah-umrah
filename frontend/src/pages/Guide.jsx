@@ -6,6 +6,9 @@ import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
 import TawafVisual from "../components/TawafVisual";
 import SaiVisual from "../components/SaiVisual";
+import IhramVisual from "../components/IhramVisual";
+import HalqVisual from "../components/HalqVisual";
+import TalbiyahPlayer from "../components/TalbiyahPlayer";
 
 export default function Guide() {
   const { lang } = React.useContext(LangContext);
@@ -57,6 +60,12 @@ export default function Guide() {
             {isAr ? step.summary_ar : step.summary_en}
           </p>
 
+          {step.id === "ihram" && (
+            <div className="mt-5 space-y-4" data-testid="guide-ihram-extras">
+              <IhramVisual />
+              <TalbiyahPlayer />
+            </div>
+          )}
           {step.id === "tawaf" && (
             <div className="mt-5" data-testid="guide-tawaf-visual">
               <TawafVisual count={0} total={7} />
@@ -65,6 +74,11 @@ export default function Guide() {
           {step.id === "sai" && (
             <div className="mt-5" data-testid="guide-sai-visual">
               <SaiVisual count={0} total={7} />
+            </div>
+          )}
+          {step.id === "halq" && (
+            <div className="mt-5" data-testid="guide-halq-visual">
+              <HalqVisual />
             </div>
           )}
 

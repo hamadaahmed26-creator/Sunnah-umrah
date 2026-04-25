@@ -112,6 +112,19 @@ class ProgressUpdate(BaseModel):
     sai_count: Optional[int] = None
 
 
+class GroupJoinRequest(BaseModel):
+    code: str
+
+
+class GroupCheckin(BaseModel):
+    user_id: str
+    name: str
+    tawaf_count: int = 0
+    sai_count: int = 0
+    lat: Optional[float] = None
+    lng: Optional[float] = None
+
+
 # ---------- Routes ----------
 @api_router.get("/")
 async def root():
@@ -211,6 +224,90 @@ async def get_progress(user_id: str):
     if not doc:
         return {"user_id": user_id, "step": "ihram", "tawaf_count": 0, "sai_count": 0}
     return doc
+
+
+# ---------- Group / Family ----------
+import random as _random
+import string as _string
+
+
+def _gen_code():
+    return "".join(_random.choices(_string.ascii_uppercase + _string.digits, k=6))
+
+
+def _ago(iso_ts: str) -> str:
+    try:
+        t = datetime.fromisoformat(iso_ts)
+        if t.tzinfo is None:
+            t = t.replace(tzinfo=timezone.utc)
+        delta = (datetime.now(timezone.utc) - t).total_seconds()
+        if delta < 60:
+            return "just now"
+        if delta < 3600:
+            return f"{int(delta // 60)}m ago"
+        if delta < 86400:
+            return f"{int(delta // 3600)}h ago"
+        return f"{int(delta // 86400)}d ago"
+    except Exception:
+        return ""
+
+
+@api_router.post("/group/create")
+async def group_create():
+    for _ in range(8):
+        code = _gen_code()
+        existing = await db.groups.find_one({"code": code})
+        if not existing:
+            await db.groups.insert_one({
+                "code": code,
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            })
+            return {"code": code}
+    raise HTTPException(status_code=500, detail="Could not allocate code")
+
+
+@api_router.post("/group/join")
+async def group_join(req: GroupJoinRequest):
+    code = req.code.upper()
+    g = await db.groups.find_one({"code": code}, {"_id": 0})
+    if not g:
+        raise HTTPException(status_code=404, detail="Group not found")
+    return {"ok": True, "code": code}
+
+
+@api_router.put("/group/{code}/checkin")
+async def group_checkin(code: str, c: GroupCheckin):
+    code = code.upper()
+    g = await db.groups.find_one({"code": code})
+    if not g:
+        raise HTTPException(status_code=404, detail="Group not found")
+    doc = {
+        "code": code,
+        "user_id": c.user_id,
+        "name": c.name,
+        "tawaf_count": c.tawaf_count,
+        "sai_count": c.sai_count,
+        "lat": c.lat,
+        "lng": c.lng,
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    await db.group_members.update_one(
+        {"code": code, "user_id": c.user_id}, {"$set": doc}, upsert=True
+    )
+    return {"ok": True}
+
+
+@api_router.get("/group/{code}")
+async def group_get(code: str):
+    code = code.upper()
+    g = await db.groups.find_one({"code": code}, {"_id": 0})
+    if not g:
+        raise HTTPException(status_code=404, detail="Group not found")
+    members = await db.group_members.find({"code": code}, {"_id": 0}).to_list(50)
+    for m in members:
+        m["last_ago"] = _ago(m.get("updated_at", ""))
+    members.sort(key=lambda x: x.get("updated_at", ""), reverse=True)
+    return {"code": code, "members": members}
 
 
 # Include the router in the main app

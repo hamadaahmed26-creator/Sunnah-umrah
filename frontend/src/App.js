@@ -8,6 +8,8 @@ import Tawaf from "./pages/Tawaf";
 import Sai from "./pages/Sai";
 import Lost from "./pages/Lost";
 import Chat from "./pages/Chat";
+import Plan from "./pages/Plan";
+import Group from "./pages/Group";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
               <Route path="/sai" element={<Sai />} />
               <Route path="/lost" element={<Lost />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/plan" element={<Plan />} />
+              <Route path="/group" element={<Group />} />
             </Routes>
           </Layout>
         </BrowserRouter>
