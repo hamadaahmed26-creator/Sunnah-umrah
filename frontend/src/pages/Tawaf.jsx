@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, ArrowRight, Check, RotateCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
-import Landmark, { REAL_PHOTOS } from "../components/Sketchfab3D";
+import Inline3DModel from "../components/Inline3DModel";
 
 function speak(text) {
   if (!text) return;
@@ -17,83 +17,44 @@ function speak(text) {
 
 const STEPS = (lap) => [
   {
-    visual: (
-      <Landmark
-        photo={REAL_PHOTOS.kaabaAerial}
-        alt="The Ka'bah"
-        badge={<><span className="w-2 h-2 rounded-full bg-[#2A5A4A]" /> BLACK STONE · east corner</>}
-        annotation={{ x: 68, y: 52, color: "#2A5A4A", label: "BLACK STONE" }}
-        caption="Real view · tap 3D to rotate"
-        modelKey="kaaba"
-        testid="landmark-blackstone"
-      />
-    ),
-    place_en: "BLACK STONE",
-    place_ar: "الحجر الأسود",
+    place_en: "1 · Black Stone — east corner",
+    place_ar: "١ · الحجر الأسود — الركن الشرقي",
     title_en: "Say Allāhu Akbar",
     title_ar: "قل: اللَّهُ أَكْبَر",
-    sub_en: "The Black Stone is at the eastern corner — the corner where each Tawaf lap starts. Face it, raise your right hand, say it once.",
-    sub_ar: "الحجر الأسود في الركن الشرقي — مبدأ كل شوط. استقبله، ارفع يدك اليمنى، قلها مرّة.",
+    sub_en: "Stand at the east corner where the Black Stone is. Face it, raise your right hand, say it once. Each lap starts here.",
+    sub_ar: "قف عند الركن الشرقي حيث الحجر الأسود. استقبله، ارفع يدك اليمنى، قلها مرّة. كل شوط يبدأ من هنا.",
     dua: { ar: "اللَّهُ أَكْبَر", tr: "Allāhu Akbar", en: "Allah is the Greatest." },
+    accent: "#2A5A4A",
   },
   {
-    visual: (
-      <Landmark
-        photo={REAL_PHOTOS.kaabaPilgrims}
-        alt="Pilgrims walking around the Ka'bah"
-        badge={<><span className="w-2 h-2 rounded-full bg-[#B3884D]" /> WALKING · counter-clockwise</>}
-        caption="Keep the Ka'bah on your LEFT"
-        modelKey="kaaba"
-        testid="landmark-walking"
-      />
-    ),
-    place_en: "WALK AROUND THE KA'BAH",
-    place_ar: "الطواف حول الكعبة",
+    place_en: "2 · Walk around the Ka'bah",
+    place_ar: "٢ · امشِ حول الكعبة",
     title_en: "Walk and make du'a",
     title_ar: "امشِ وادعُ الله",
     sub_en:
       lap < 3
-        ? "Walk counter-clockwise. Men: brisk pace with shoulders shaken (Raml). Women: walk normally."
-        : "Walk counter-clockwise at your normal pace. Make du'a in any language.",
+        ? "Walk counter-clockwise. Keep the Ka'bah on your LEFT. Men: brisk pace, shoulders shaken (Raml). Women: walk normally."
+        : "Walk counter-clockwise. Keep the Ka'bah on your LEFT. Walk at your normal pace. Make du'a in any language.",
     sub_ar:
       lap < 3
-        ? "امشِ عكس عقارب الساعة. الرجال بسرعة مع تحريك الكتفين (الرَّمَل). النساء بمشي عادي."
-        : "امشِ عكس عقارب الساعة بمشيك المعتاد. ادعُ بأي لغة.",
+        ? "امشِ عكس عقارب الساعة، والكعبة عن يسارك. الرجال: بسرعة مع تحريك الكتفين (الرَّمَل). النساء: المشي العادي."
+        : "امشِ عكس عقارب الساعة، والكعبة عن يسارك. بمشيك المعتاد. ادعُ بأي لغة.",
     dua: null,
+    accent: "#B3884D",
   },
   {
-    visual: (
-      <Landmark
-        photo={REAL_PHOTOS.kaabaCorner}
-        alt="Yemeni Corner of the Ka'bah"
-        badge={<><span className="w-2 h-2 rounded-full bg-[#B3884D]" /> YEMENI CORNER · south-west</>}
-        annotation={{ x: 32, y: 60, color: "#B3884D", label: "YEMENI CORNER" }}
-        caption="Touch only · don't kiss"
-        modelKey="kaaba"
-        testid="landmark-yemeni"
-      />
-    ),
-    place_en: "YEMENI CORNER",
-    place_ar: "الركن اليماني",
+    place_en: "3 · Yemeni Corner — south-west",
+    place_ar: "٣ · الركن اليماني — الجنوبي الغربي",
     title_en: "Touch with right hand only",
     title_ar: "استلم بيدك اليمنى فقط",
-    sub_en: "The corner BEFORE the Black Stone (south-west). Just touch with your right hand if easy. DO NOT kiss. NO takbir. NO du'a here.",
-    sub_ar: "الركن قبل الحجر الأسود (الجنوبي الغربي). المسه بيدك اليمنى إن تيسّر — لا تُقبّله. لا تكبّر. لا تدعُ.",
+    sub_en: "The corner BEFORE the Black Stone. Touch with your right hand if easy. DO NOT kiss it. NO takbir. NO du'a here. If crowded, walk past.",
+    sub_ar: "الركن قبل الحجر الأسود. المسه بيدك اليمنى إن تيسّر. لا تُقبّله. لا تكبّر. لا تدعُ. إذا ازدحم فمرّ.",
     dua: null,
+    accent: "#B3884D",
   },
   {
-    visual: (
-      <Landmark
-        photo={REAL_PHOTOS.kaabaPilgrims}
-        alt="Final stretch back to the Black Stone"
-        badge={<><span className="w-2 h-2 rounded-full bg-[#8B4540]" /> FINAL STRETCH</>}
-        caption="Yemeni Corner → Black Stone"
-        modelKey="kaaba"
-        testid="landmark-between"
-      />
-    ),
-    place_en: "BETWEEN YEMENI & BLACK STONE",
-    place_ar: "بين الركن اليماني والحجر",
+    place_en: "4 · Yemeni → Black Stone",
+    place_ar: "٤ · بين الركن اليماني والحجر",
     title_en: "Say this prayer",
     title_ar: "اقرأ هذا الدعاء",
     sub_en: "On the final stretch back to the Black Stone, recite this du'a. When you reach the Black Stone, the lap is complete.",
@@ -103,6 +64,7 @@ const STEPS = (lap) => [
       tr: "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā 'adhāban-nār.",
       en: "Our Lord, give us good in this world and good in the Hereafter, and protect us from the Fire.",
     },
+    accent: "#8B4540",
   },
 ];
 
@@ -143,11 +105,15 @@ export default function Tawaf() {
   if (allDone) {
     return (
       <div className="max-w-md mx-auto pb-12" data-testid="tawaf-page">
-        <div className="mt-10 text-center">
-          <div className="inline-flex w-16 h-16 rounded-full bg-[#2A5A4A] text-white items-center justify-center mb-4">
-            <Check className="w-8 h-8" />
+        <div className="mt-2">
+          {/* Persistent 3D model */}
+          <Inline3DModel model="kaaba" caption="Tawaf complete · drag to rotate" testid="tawaf-3d" />
+        </div>
+        <div className="mt-6 text-center">
+          <div className="inline-flex w-14 h-14 rounded-full bg-[#2A5A4A] text-white items-center justify-center mb-3">
+            <Check className="w-7 h-7" />
           </div>
-          <h1 className="text-[28px] font-medium text-[#1C1D1B]">
+          <h1 className="text-[26px] font-medium text-[#1C1D1B]">
             {isAr ? "اكتمل الطواف — الحمد لله" : "Tawaf Complete · Alhamdulillah"}
           </h1>
           <p className="mt-3 text-[15px] text-[#5C5D58]">
@@ -155,16 +121,6 @@ export default function Tawaf() {
               ? "صلِّ ركعتين خلف مقام إبراهيم، اشرب من زمزم، ثم توجّه للسعي."
               : "Now pray 2 raka'ah behind Maqam Ibrahim, drink Zamzam, then start Sa'i."}
           </p>
-        </div>
-        <div className="mt-8">
-          <Landmark
-            photo={REAL_PHOTOS.kaabaAerial}
-            alt="Ka'bah and Maqam Ibrahim"
-            badge="MAQAM IBRAHIM AHEAD"
-            caption="Pray 2 raka'ah · drink Zamzam"
-            modelKey="grandMosque"
-            testid="landmark-complete"
-          />
         </div>
         <button
           onClick={reset}
@@ -179,7 +135,7 @@ export default function Tawaf() {
 
   return (
     <div className="max-w-md mx-auto pb-10" data-testid="tawaf-page">
-      {/* Lap badge + dots */}
+      {/* Lap header */}
       <div className="mt-2 flex items-center justify-between">
         <div>
           <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">Tawaf</div>
@@ -196,35 +152,50 @@ export default function Tawaf() {
           <RotateCcw className="w-4 h-4 text-[#1C1D1B]" />
         </button>
       </div>
+
+      {/* Lap dots */}
       <div className="mt-3 grid grid-cols-7 gap-1.5" data-testid="tawaf-pips">
         {Array.from({ length: 7 }).map((_, i) => (
           <div key={i} className={`h-1.5 rounded-full ${i < lap ? "bg-[#B3884D]" : "bg-[#E8E5DD]"}`} />
         ))}
       </div>
 
-      {/* Step micro-progress */}
+      {/* PERSISTENT 3D — stays mounted across all steps */}
+      <div className="mt-4">
+        <Inline3DModel
+          model="kaaba"
+          height="h-[300px]"
+          caption={isAr ? cur.place_ar : cur.place_en}
+          testid="tawaf-3d"
+        />
+      </div>
+
+      {/* Step pips */}
       <div className="mt-4 flex gap-1.5" data-testid="tawaf-step-pips">
         {steps.map((_, i) => (
           <div key={i} className={`h-1 flex-1 rounded-full ${i <= step ? "bg-[#1C1D1B]" : "bg-[#E8E5DD]"}`} />
         ))}
       </div>
 
+      {/* Flowing instruction card — only this swaps */}
       <AnimatePresence mode="wait">
         <motion.section
           key={`${lap}-${step}`}
-          initial={{ opacity: 0, x: 18 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -18 }}
-          transition={{ duration: 0.3 }}
-          className="mt-5"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.25 }}
+          className="mt-4"
           data-testid="tawaf-step-card"
         >
-          <div className="relative" data-testid="tawaf-visual-3d">
-            {cur.visual}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: cur.accent }} />
+            <span className="text-[10px] uppercase tracking-[0.2em] text-[#8E8F8A]">
+              {isAr ? cur.place_ar : cur.place_en}
+            </span>
           </div>
-
           <h2
-            className={`mt-5 text-[28px] font-medium text-[#1C1D1B] leading-tight ${isAr ? "text-right font-arabic" : ""}`}
+            className={`text-[26px] font-medium text-[#1C1D1B] leading-tight ${isAr ? "text-right font-arabic" : ""}`}
             data-testid="tawaf-headline"
           >
             {isAr ? cur.title_ar : cur.title_en}
@@ -255,7 +226,6 @@ export default function Tawaf() {
         </motion.section>
       </AnimatePresence>
 
-      {/* Big single button */}
       <button
         onClick={onNext}
         className={`mt-6 w-full tap-pulse rounded-full text-white text-[16px] font-medium px-6 py-4 inline-flex items-center justify-center gap-2 ${

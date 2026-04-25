@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, ArrowRight, Check, RotateCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
-import Landmark, { REAL_PHOTOS } from "../components/Sketchfab3D";
+import Inline3DModel from "../components/Inline3DModel";
 
 function speak(text) {
   if (!text) return;
@@ -27,140 +27,82 @@ const SAFA_VERSE = {
   en: "Indeed, Safa and Marwah are among the symbols of Allah… We begin with what Allah began with.",
 };
 
-function buildSteps(trip, isFinalMarwah, isAr) {
+function buildSteps(trip, isFinalMarwah) {
   const onSafa = trip % 2 === 0;
-  const startHillEn = onSafa ? "SAFA" : "MARWAH";
-  const startHillAr = onSafa ? "الصفا" : "المروة";
-  const endHillEn = onSafa ? "MARWAH" : "SAFA";
-  const endHillAr = onSafa ? "المروة" : "الصفا";
+  const startEn = onSafa ? "Safa" : "Marwah";
+  const startAr = onSafa ? "الصفا" : "المروة";
+  const endEn = onSafa ? "Marwah" : "Safa";
+  const endAr = onSafa ? "المروة" : "الصفا";
 
   const steps = [];
-  const safaPhoto = REAL_PHOTOS.masaa;
-  const marwahPhoto = REAL_PHOTOS.masaa;
-  const startPhoto = onSafa ? safaPhoto : marwahPhoto;
-  const endPhoto = onSafa ? marwahPhoto : safaPhoto;
 
   if (trip === 0) {
     steps.push({
-      visual: (
-        <Landmark
-          photo={REAL_PHOTOS.masaa}
-          alt="Mas'a corridor — Safa hill"
-          badge={<><span className="w-2 h-2 rounded-full bg-[#1C1D1B]" /> SAFA · first time</>}
-          caption="Climb up · face the Ka'bah"
-          modelKey="grandMosque"
-          testid="landmark-safa-first"
-        />
-      ),
-      place_en: "SAFA · FIRST TIME",
-      place_ar: "الصفا · أول مرّة",
+      place_en: "1 · Safa — first time",
+      place_ar: "١ · الصفا — أول مرّة",
       title_en: "Read this verse — once",
       title_ar: "اقرأ هذه الآية مرّة واحدة",
       sub_en: "Climb Safa, face the Ka'bah, and read this verse one time only — the very first time you climb Safa.",
       sub_ar: "اصعد الصفا، استقبل الكعبة، واقرأ هذه الآية مرة واحدة فقط في أول مرة تصعد الصفا.",
       dua: SAFA_VERSE,
+      accent: "#1C1D1B",
     });
   }
 
   steps.push({
-    visual: (
-      <Landmark
-        photo={startPhoto}
-        alt={`${startHillEn} hill`}
-        badge={<><span className={`w-2 h-2 rounded-full ${onSafa ? "bg-[#1C1D1B]" : "bg-[#B3884D]"}`} /> ON {startHillEn}</>}
-        caption="Takbir 3× · raise your hands"
-        modelKey="grandMosque"
-        testid={`landmark-on-${startHillEn.toLowerCase()}`}
-      />
-    ),
-    place_en: `ON ${startHillEn}`,
-    place_ar: `على ${startHillAr}`,
+    place_en: `${steps.length + 1} · On ${startEn}`,
+    place_ar: `${steps.length + 1} · على ${startAr}`,
     title_en: "Say takbir 3 times",
     title_ar: "كبّر ثلاث مرّات",
     sub_en: "Raise your hands. Recite 3 times. After 1st & 2nd: make du'a. After 3rd: NO du'a — start walking.",
     sub_ar: "ارفع يديك. اقرأها ثلاث مرات. بعد الأولى والثانية: ادعُ. بعد الثالثة: لا تَدعُ — ابدأ المشي.",
     dua: TAKBIR_TAHLIL,
+    accent: onSafa ? "#1C1D1B" : "#B3884D",
   });
 
   steps.push({
-    visual: (
-      <Landmark
-        photo={REAL_PHOTOS.masaa}
-        alt="Mas'a corridor"
-        badge={<><span className="w-2 h-2 rounded-full bg-[#B3884D]" /> WALKING</>}
-        caption={`Heading to ${endHillEn === "MARWAH" ? "Marwah" : "Safa"}`}
-        modelKey="grandMosque"
-        testid="landmark-walking"
-      />
-    ),
-    place_en: "WALK",
-    place_ar: "المشي",
-    title_en: `Walk to ${endHillEn === "MARWAH" ? "Marwah" : "Safa"}`,
-    title_ar: `امشِ إلى ${endHillEn === "MARWAH" ? "المروة" : "الصفا"}`,
+    place_en: `${steps.length + 1} · Walk toward ${endEn}`,
+    place_ar: `${steps.length + 1} · المشي إلى ${endAr}`,
+    title_en: `Walk to ${endEn}`,
+    title_ar: `امشِ إلى ${endAr}`,
     sub_en: "Walk normally. Make du'a in any language. Watch for the two GREEN markers ahead.",
     sub_ar: "امشِ بمشيك المعتاد. ادعُ بأي لغة. وانتبه للعَلَمين الأخضرين.",
     dua: null,
+    accent: "#5C5D58",
   });
 
   steps.push({
-    visual: (
-      <Landmark
-        photo={REAL_PHOTOS.greenMarkers}
-        alt="Green markers area"
-        badge={<><span className="w-2 h-2 rounded-full bg-[#2A5A4A]" /> GREEN MARKERS</>}
-        caption="Men jog · women walk"
-        modelKey="grandMosque"
-        testid="landmark-green"
-      />
-    ),
-    place_en: "GREEN MARKERS",
-    place_ar: "العَلَمان الأخضران",
+    place_en: `${steps.length + 1} · Green markers`,
+    place_ar: `${steps.length + 1} · العَلَمان الأخضران`,
     title_en: "Men jog briskly here",
     title_ar: "الرجال يَهرولون هنا",
     sub_en: "MEN: jog briskly between the two green pillars. WOMEN: keep walking normally.",
     sub_ar: "الرجال: يَهرولون بين العمودين الأخضرين. النساء: يُكملن المشي العادي.",
     dua: null,
+    accent: "#2A5A4A",
   });
 
   if (isFinalMarwah) {
     steps.push({
-      visual: (
-        <Landmark
-          photo={REAL_PHOTOS.masaa}
-          alt="Marwah final visit"
-          badge={<><span className="w-2 h-2 rounded-full bg-[#8B4540]" /> FINAL MARWAH</>}
-          caption="Long du'a · NO takbir"
-          modelKey="grandMosque"
-          testid="landmark-final"
-        />
-      ),
-      place_en: "FINAL MARWAH",
-      place_ar: "المروة · الأخيرة",
+      place_en: `${steps.length + 1} · Final Marwah`,
+      place_ar: `${steps.length + 1} · المروة الأخيرة`,
       title_en: "Make du'a — no takbir this time",
       title_ar: "ادعُ — لا تكبير هذه المرّة",
       sub_en: "This is the 7th and last visit. Per the Sunnah: do NOT recite the takbir here. Make a long heartfelt du'a, then tap Done.",
       sub_ar: "هذه هي الزيارة السابعة والأخيرة. من السنة: لا تُكرّر التكبير هنا. ادعُ دعاءً مطوّلًا، ثم اضغط «انتهى».",
       dua: null,
+      accent: "#8B4540",
     });
   } else {
     steps.push({
-      visual: (
-        <Landmark
-          photo={endPhoto}
-          alt={`${endHillEn} hill`}
-          badge={<><span className={`w-2 h-2 rounded-full ${endHillEn === "SAFA" ? "bg-[#1C1D1B]" : "bg-[#B3884D]"}`} /> ON {endHillEn}</>}
-          caption="Takbir 3× again"
-          modelKey="grandMosque"
-          testid={`landmark-on-${endHillEn.toLowerCase()}`}
-        />
-      ),
-      place_en: `ON ${endHillEn}`,
-      place_ar: `على ${endHillAr}`,
+      place_en: `${steps.length + 1} · On ${endEn}`,
+      place_ar: `${steps.length + 1} · على ${endAr}`,
       title_en: "Say takbir 3 times again",
       title_ar: "كبّر ثلاث مرّات مرّة أخرى",
       sub_en: "Same as before: 3 times, du'a after 1st & 2nd, no du'a after 3rd.",
       sub_ar: "كما في السابق: ثلاث مرات، دعاء بعد الأولى والثانية، ولا دعاء بعد الثالثة.",
       dua: TAKBIR_TAHLIL,
+      accent: endEn === "Safa" ? "#1C1D1B" : "#B3884D",
     });
   }
 
@@ -181,8 +123,8 @@ export default function Sai() {
   }, [trip]);
 
   const allDone = trip >= 7;
-  const isFinalMarwah = trip === 6; // about to complete trip 7
-  const steps = buildSteps(trip, isFinalMarwah, isAr);
+  const isFinalMarwah = trip === 6;
+  const steps = buildSteps(trip, isFinalMarwah);
   const cur = steps[step];
   const isLastStep = step === steps.length - 1;
 
@@ -205,11 +147,14 @@ export default function Sai() {
   if (allDone) {
     return (
       <div className="max-w-md mx-auto pb-12" data-testid="sai-page">
-        <div className="mt-10 text-center">
-          <div className="inline-flex w-16 h-16 rounded-full bg-[#2A5A4A] text-white items-center justify-center mb-4">
-            <Check className="w-8 h-8" />
+        <div className="mt-2">
+          <Inline3DModel model="grandMosque" caption="Sa'i complete · Alhamdulillah" testid="sai-3d" />
+        </div>
+        <div className="mt-6 text-center">
+          <div className="inline-flex w-14 h-14 rounded-full bg-[#2A5A4A] text-white items-center justify-center mb-3">
+            <Check className="w-7 h-7" />
           </div>
-          <h1 className="text-[28px] font-medium text-[#1C1D1B]">
+          <h1 className="text-[26px] font-medium text-[#1C1D1B]">
             {isAr ? "اكتمل السعي — الحمد لله" : "Sa'i Complete · Alhamdulillah"}
           </h1>
           <p className="mt-3 text-[15px] text-[#5C5D58]">
@@ -219,7 +164,7 @@ export default function Sai() {
           </p>
         </div>
         <div className="mt-6 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4" data-testid="leave-masjid-dua">
-          <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] mb-2">When leaving</div>
+          <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] mb-2">When leaving the masjid</div>
           <p className="font-arabic text-[20px] leading-[2] text-right text-[#1C1D1B]">
             اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ
           </p>
@@ -255,10 +200,21 @@ export default function Sai() {
           <RotateCcw className="w-4 h-4 text-[#1C1D1B]" />
         </button>
       </div>
+
       <div className="mt-3 grid grid-cols-7 gap-1.5" data-testid="sai-pips">
         {Array.from({ length: 7 }).map((_, i) => (
           <div key={i} className={`h-1.5 rounded-full ${i < trip ? "bg-[#B3884D]" : "bg-[#E8E5DD]"}`} />
         ))}
+      </div>
+
+      {/* PERSISTENT 3D — Grand Mosque includes Safa, Marwah, Mas'a corridor */}
+      <div className="mt-4">
+        <Inline3DModel
+          model="grandMosque"
+          height="h-[300px]"
+          caption={isAr ? cur.place_ar : cur.place_en}
+          testid="sai-3d"
+        />
       </div>
 
       <div className="mt-4 flex gap-1.5" data-testid="sai-step-pips">
@@ -270,24 +226,26 @@ export default function Sai() {
       <AnimatePresence mode="wait">
         <motion.section
           key={`${trip}-${step}`}
-          initial={{ opacity: 0, x: 18 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -18 }}
-          transition={{ duration: 0.3 }}
-          className="mt-5"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.25 }}
+          className="mt-4"
           data-testid="sai-step-card"
         >
-          <div className="relative" data-testid="sai-visual-3d">
-            {cur.visual}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: cur.accent }} />
+            <span className="text-[10px] uppercase tracking-[0.2em] text-[#8E8F8A]">
+              {isAr ? cur.place_ar : cur.place_en}
+            </span>
           </div>
-
           <h2
-            className={`mt-5 text-[26px] font-medium text-[#1C1D1B] leading-tight ${isAr ? "text-right font-arabic" : ""}`}
+            className={`text-[24px] font-medium text-[#1C1D1B] leading-tight ${isAr ? "text-right font-arabic" : ""}`}
             data-testid="sai-headline"
           >
             {isAr ? cur.title_ar : cur.title_en}
           </h2>
-          <p className={`mt-2 text-[15px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
+          <p className={`mt-2 text-[14px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
             {isAr ? cur.sub_ar : cur.sub_en}
           </p>
 
