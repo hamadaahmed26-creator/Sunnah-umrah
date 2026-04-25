@@ -1,8 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { RotateCcw, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { RotateCcw, Check, Volume2, ListChecks } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
+import { TAWAF_GUIDE, SAI_GUIDE } from "../lib/lapGuide";
 
 // Reusable counter for both Tawaf (7 laps) and Sa'i (7 trips)
 export default function Counter({ kind = "tawaf", title, total = 7 }) {
@@ -101,7 +102,7 @@ export default function Counter({ kind = "tawaf", title, total = 7 }) {
         </button>
       </div>
 
-      <div className="mt-10 grid grid-cols-7 gap-1.5" data-testid={`${kind}-pips`}>
+      <div className="mt-8 grid grid-cols-7 gap-1.5" data-testid={`${kind}-pips`}>
         {Array.from({ length: total }).map((_, i) => (
           <div
             key={i}
@@ -109,6 +110,91 @@ export default function Counter({ kind = "tawaf", title, total = 7 }) {
           />
         ))}
       </div>
+
+      <LapActions kind={kind} count={count} />
+    </div>
+  );
+}
+
+function LapActions({ kind, count }) {
+  const { lang } = React.useContext(LangContext);
+  const isAr = lang === "ar";
+  const guide = kind === "tawaf" ? TAWAF_GUIDE : SAI_GUIDE;
+  const idx = Math.min(count, guide.length - 1);
+  const item = guide[idx];
+
+  const speak = (text) => {
+    if (!text) return;
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "ar-SA";
+      window.speechSynthesis.speak(u);
+    } catch (_) {}
+  };
+
+  return (
+    <div className="mt-7" data-testid={`${kind}-lap-actions`}>
+      <div className="flex items-center gap-2 mb-3">
+        <ListChecks className="w-4 h-4 text-[#B3884D]" />
+        <div className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
+          {isAr ? "الخطوات الآن" : "What to do now"}
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${kind}-${idx}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.3 }}
+          className="rounded-3xl border border-[#E8E5DD] bg-white p-5"
+          data-testid={`${kind}-lap-card`}
+        >
+          <div className={`text-[16px] font-medium text-[#1C1D1B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+            {isAr ? item.title_ar : item.title_en}
+          </div>
+
+          <ul
+            className={`mt-3 space-y-2 ${isAr ? "font-arabic text-right" : ""}`}
+            data-testid={`${kind}-lap-steps`}
+          >
+            {(isAr ? item.actions_ar : item.actions_en).map((line, i) => (
+              <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-[#1C1D1B]">
+                <span
+                  className="flex-shrink-0 w-5 h-5 rounded-full bg-[#F8F6F0] border border-[#E8E5DD] grid place-items-center text-[10px] font-semibold text-[#B3884D] mt-0.5"
+                  style={{ direction: "ltr" }}
+                >
+                  {i + 1}
+                </span>
+                <span className="flex-1">{line}</span>
+              </li>
+            ))}
+          </ul>
+
+          {item.dua && (
+            <div className="mt-4 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4" data-testid={`${kind}-lap-dua`}>
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
+                  {isAr ? "دعاء" : "Du'a"}
+                </div>
+                <button
+                  onClick={() => speak(item.dua.ar)}
+                  className="tap-pulse w-8 h-8 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
+                  aria-label="play"
+                  data-testid={`${kind}-lap-dua-play`}
+                >
+                  <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
+                </button>
+              </div>
+              <p className="font-arabic text-[20px] text-right leading-[2] text-[#1C1D1B]">{item.dua.ar}</p>
+              <p className="mt-2 text-[12px] italic text-[#5C5D58]">{item.dua.tr}</p>
+              <p className="mt-1 text-[13px] text-[#1C1D1B]">{item.dua.en}</p>
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
