@@ -133,16 +133,6 @@ function LapActions({ kind, count }) {
   const idx = Math.min(count, guide.length - 1);
   const item = guide[idx];
 
-  const speak = (text) => {
-    if (!text) return;
-    try {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = "ar-SA";
-      window.speechSynthesis.speak(u);
-    } catch (_) {}
-  };
-
   return (
     <div className="mt-7" data-testid={`${kind}-lap-actions`}>
       <div className="flex items-center gap-2 mb-3">
@@ -183,28 +173,48 @@ function LapActions({ kind, count }) {
             ))}
           </ul>
 
-          {item.dua && (
-            <div className="mt-4 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4" data-testid={`${kind}-lap-dua`}>
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
-                  {isAr ? "دعاء" : "Du'a"}
-                </div>
-                <button
-                  onClick={() => speak(item.dua.ar)}
-                  className="tap-pulse w-8 h-8 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
-                  aria-label="play"
-                  data-testid={`${kind}-lap-dua-play`}
-                >
-                  <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
-                </button>
-              </div>
-              <p className="font-arabic text-[20px] text-right leading-[2] text-[#1C1D1B]">{item.dua.ar}</p>
-              <p className="mt-2 text-[12px] italic text-[#5C5D58]">{item.dua.tr}</p>
-              <p className="mt-1 text-[13px] text-[#1C1D1B]">{item.dua.en}</p>
-            </div>
-          )}
+          {item.dua && <DuaCard dua={item.dua} kind={kind} />}
+          {Array.isArray(item.duas) &&
+            item.duas.map((d, i) => (
+              <DuaCard key={i} dua={d} kind={kind} />
+            ))}
         </motion.div>
       </AnimatePresence>
+    </div>
+  );
+}
+
+function DuaCard({ dua, kind }) {
+  const speak = (text) => {
+    if (!text) return;
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "ar-SA";
+      window.speechSynthesis.speak(u);
+    } catch (_) {}
+  };
+  return (
+    <div className="mt-4 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4" data-testid={`${kind}-lap-dua`}>
+      <div className="flex items-center justify-between mb-2">
+        <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">Du'a</div>
+        <button
+          onClick={() => speak(dua.ar)}
+          className="tap-pulse w-8 h-8 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
+          aria-label="play"
+          data-testid={`${kind}-lap-dua-play`}
+        >
+          <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
+        </button>
+      </div>
+      <p className="font-arabic text-[20px] text-right leading-[2] text-[#1C1D1B]">{dua.ar}</p>
+      <p className="mt-2 text-[12px] italic text-[#5C5D58]">{dua.tr}</p>
+      <p className="mt-1 text-[13px] text-[#1C1D1B]">{dua.en}</p>
+      {dua.note && (
+        <p className="mt-2 text-[12px] text-[#8B4540] bg-white border border-[#E8E5DD] rounded-xl p-2">
+          {dua.note}
+        </p>
+      )}
     </div>
   );
 }
