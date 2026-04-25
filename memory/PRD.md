@@ -23,16 +23,17 @@
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
 ## Implemented (Feb 2026 — latest session)
-- **One-Button Tawaf & Sa'i mode** — designed for use IN the Haram with sweaty hands, in a crowd, in ihram:
-  - Huge lap/trip counter (e.g. "Lap 3 / 7") at the top
-  - **Animated diagrams in the same style as the user's reference Umrah video:**
-    - Tawaf: top-down Ka'bah (cube + golden band) inside a 7-arc circular path. Done laps fill gold, current lap pulses yellow, remaining grey. Black Stone & Yemeni Corner labeled. Counter-clockwise direction hint.
-    - Sa'i: side-view of Safa ↔ Marwah triangle hills, dotted gold path between, two green pillars marked "JOG", yellow direction arrow, pulsing pilgrim dot on starting hill, alternates per trip
-  - 4 plain instruction cards for the current lap/trip on a single screen (no swiping)
-  - One single du'a per ritual with built-in Arabic TTS button
-  - One **giant sticky button** at thumb-reach: "I passed the Black Stone" / "I reached Marwah" — vibrates + speaks "Allāhu Akbar" on tap
-  - Special handling: first-time Safa verse on trip 1; final Marwah → green completion button + "no takbir, long heartfelt du'a"
-- New `/app/frontend/src/components/RitualMaps.jsx` (TawafMap + SaiMap SVGs)
+- **Tour mode — the whole Umrah on one page, step by step (15 steps):**
+  - Intro · 4 simple steps overview card
+  - Ihram: Miqāt boundary scene, Niyyah with Arabic speech bubble, Talbiyah (group walking with arrow)
+  - Entering Masjid al-Haram (right-foot illustration with mosque arch)
+  - Tawaf: start at Black Stone (figure with raised right hand, Kaaba labeled), animated top-down Tawaf map with **inline 0–7 lap counter** (tap + each time you pass the Black Stone, "Next" disabled until 7/7), Yemeni Corner du'a, Maqam Ibrahim (figure in sujood), Zamzam
+  - Sa'i: Safa start, On-hill takbir (figure with arms raised on triangle hill), animated Safa↔Marwah corridor with **inline 0–7 trip counter**
+  - Halq/Taqsir scissors illustration; Done celebration with glowing Kaaba
+- Each step: illustrated SVG scene + plain instruction + exact Sunnah du'a (with Arabic TTS button) + optional Sunnah tip
+- Progress saved per-step + per-lap/trip in localStorage; pilgrim can close the app and resume on the exact step
+- Replaced bottom nav: Home(Tour) · Plan · Lost · Group · Chat. Old /tawaf, /sai, /guide redirect to /tour.
+- Removed: video-based tour, photo-based scenes, separate Tawaf & Sa'i counter pages.
 
 ## Implemented (earlier in Feb 2026)
 - `/api/gates` — 12 main gates of Masjid al-Haram

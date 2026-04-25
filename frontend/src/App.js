@@ -1,11 +1,8 @@
 import React from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout, { LangProvider } from "./components/Layout";
-import Home from "./pages/Home";
-import Guide from "./pages/Guide";
-import Tawaf from "./pages/Tawaf";
-import Sai from "./pages/Sai";
+import Tour from "./pages/Tour";
 import Lost from "./pages/Lost";
 import Chat from "./pages/Chat";
 import Plan from "./pages/Plan";
@@ -18,14 +15,16 @@ function App() {
         <BrowserRouter>
           <Layout>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/guide" element={<Guide />} />
-              <Route path="/tawaf" element={<Tawaf />} />
-              <Route path="/sai" element={<Sai />} />
+              <Route path="/" element={<Tour />} />
+              <Route path="/tour" element={<Tour />} />
               <Route path="/lost" element={<Lost />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/plan" element={<Plan />} />
               <Route path="/group" element={<Group />} />
+              {/* Old routes redirect into the tour */}
+              <Route path="/guide" element={<Navigate to="/tour" replace />} />
+              <Route path="/tawaf" element={<Navigate to="/tour" replace />} />
+              <Route path="/sai" element={<Navigate to="/tour" replace />} />
             </Routes>
           </Layout>
         </BrowserRouter>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, RefreshCw, Footprints, Compass, MessageCircle, Languages } from "lucide-react";
+import { Home, Compass, MessageCircle, CalendarDays, Users, Languages } from "lucide-react";
 import { useT } from "../lib/i18n";
 
 export const LangContext = React.createContext({ lang: "en", setLang: () => {} });
@@ -20,11 +20,10 @@ export default function Layout({ children }) {
   const t = useT(lang);
   const loc = useLocation();
   const navItems = [
-    { to: "/", icon: Home, label: t("home"), id: "home" },
-    { to: "/guide", icon: BookOpen, label: t("guide"), id: "guide" },
-    { to: "/tawaf", icon: RefreshCw, label: t("tawaf"), id: "tawaf" },
-    { to: "/sai", icon: Footprints, label: t("sai"), id: "sai" },
+    { to: "/", icon: Home, label: t("home"), id: "tour" },
+    { to: "/plan", icon: CalendarDays, label: t("plan") || "Plan", id: "plan" },
     { to: "/lost", icon: Compass, label: t("lost"), id: "lost" },
+    { to: "/group", icon: Users, label: t("group") || "Group", id: "group" },
     { to: "/chat", icon: MessageCircle, label: t("chat"), id: "chat" },
   ];
 
