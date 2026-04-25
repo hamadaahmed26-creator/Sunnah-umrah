@@ -111,7 +111,7 @@ export default function Tour() {
   };
 
   return (
-    <div className="max-w-md mx-auto pb-44 px-1" data-testid="tour-page">
+    <div className="max-w-md mx-auto pb-60 sm:pb-44 px-1" data-testid="tour-page">
       {/* Header */}
       <div className="mt-2 flex items-center justify-between">
         <div>
@@ -162,7 +162,7 @@ export default function Tour() {
             transition={{ duration: 0.4 }}
             className="absolute inset-0"
           >
-            <TourScene scene={step.scene} lap={lap} trip={trip} />
+            <TourScene scene={step.scene} lap={lap} trip={trip} onJump={(i) => setIdx(i)} />
           </motion.div>
         </AnimatePresence>
         {/* Chapter pill */}
@@ -302,8 +302,8 @@ export default function Tour() {
         </motion.section>
       </AnimatePresence>
 
-      {/* STICKY BOTTOM CONTROL */}
-      <div className="fixed inset-x-0 bottom-20 px-4 z-30 pointer-events-none">
+      {/* STICKY BOTTOM CONTROL — positioned ABOVE the bottom nav */}
+      <div className="fixed inset-x-0 bottom-36 sm:bottom-24 px-4 z-[55] pointer-events-none">
         <div className="max-w-md mx-auto pointer-events-auto">
           <div className="flex items-center gap-2">
             <button

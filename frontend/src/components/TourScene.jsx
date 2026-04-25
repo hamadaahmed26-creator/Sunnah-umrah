@@ -305,30 +305,36 @@ function Scene_Done() {
   );
 }
 
-// ─── SCENE: Intro — 4 numbered cards ─────────────────────────
-function Scene_Intro() {
+// ─── SCENE: Intro — 4 numbered tappable cards ────────────────
+function Scene_Intro({ onJump }) {
+  // Step indices in tourSteps.js for each chapter's first step.
   const items = [
-    { n: "1", k: "IHRAM", c: GREEN },
-    { n: "2", k: "TAWAF", c: GOLD },
-    { n: "3", k: "SA'I", c: "#8B4540" },
-    { n: "4", k: "HALQ", c: INK },
+    { n: "1", k: "IHRAM", c: GREEN, jump: 1 },
+    { n: "2", k: "TAWAF", c: GOLD, jump: 5 },
+    { n: "3", k: "SA'I", c: "#8B4540", jump: 11 },
+    { n: "4", k: "HALQ", c: INK, jump: 14 },
   ];
   return (
-    <svg viewBox="0 0 280 160" className="w-full h-full">
-      <rect width="280" height="160" fill={SAND} />
-      <text x="140" y="32" textAnchor="middle" fill={INK} fontSize="13" fontWeight="700" letterSpacing="2.2">UMRAH · 4 STEPS</text>
-      {items.map((it, i) => {
-        const x = 28 + i * 60;
-        return (
-          <g key={i}>
-            <rect x={x} y="50" width="56" height="74" rx="8" fill="white" stroke={STONE} strokeWidth="1" />
-            <circle cx={x + 28} cy="76" r="14" fill={it.c} />
-            <text x={x + 28} y="81" textAnchor="middle" fill="white" fontSize="13" fontWeight="800">{it.n}</text>
-            <text x={x + 28} y="110" textAnchor="middle" fill={INK} fontSize="8" fontWeight="700" letterSpacing="1.2">{it.k}</text>
-          </g>
-        );
-      })}
-    </svg>
+    <div className="absolute inset-0 grid grid-cols-2 gap-3 p-5 bg-[#F8F6F0]">
+      {items.map((it) => (
+        <button
+          key={it.k}
+          onClick={() => onJump && onJump(it.jump)}
+          className="tap-pulse rounded-2xl bg-white border border-[#E8E5DD] flex flex-col items-center justify-center gap-2 py-4 hover:border-[#B3884D] active:scale-[0.97] transition"
+          data-testid={`intro-jump-${it.k.toLowerCase()}`}
+        >
+          <div
+            className="w-10 h-10 rounded-full grid place-items-center text-white text-[16px] font-bold"
+            style={{ background: it.c }}
+          >
+            {it.n}
+          </div>
+          <div className="text-[11px] font-semibold tracking-[0.2em] text-[#1C1D1B]">
+            {it.k}
+          </div>
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -370,7 +376,7 @@ const REGISTRY = {
   done: Scene_Done,
 };
 
-export default function TourScene({ scene, lap, trip }) {
+export default function TourScene({ scene, lap, trip, onJump }) {
   const C = REGISTRY[scene];
   if (!C) {
     return (
@@ -379,5 +385,5 @@ export default function TourScene({ scene, lap, trip }) {
       </div>
     );
   }
-  return <C lap={lap} trip={trip} />;
+  return <C lap={lap} trip={trip} onJump={onJump} />;
 }
