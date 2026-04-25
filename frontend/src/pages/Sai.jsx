@@ -1,9 +1,19 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, ArrowRight, Check, RotateCcw } from "lucide-react";
+import { Volume2, RotateCcw, Check, ArrowDown } from "lucide-react";
 import { LangContext } from "../components/Layout";
-import Inline3DModel from "../components/Inline3DModel";
-import { PHOTOS, ALT } from "../lib/ritualPhotos";
+
+/*
+ ONE-BUTTON SA'I MODE
+ ────────────────────
+ Same kid-friendly idea as Tawaf. The pilgrim sees:
+   • Huge trip counter
+   • Where to head this trip ("Heading to MARWAH")
+   • 4 plain instructions for this trip
+   • The full takbir+tahlil to recite on each hill
+   • One giant button at the bottom: "I REACHED MARWAH"
+ 7 taps → Sa'i complete.
+*/
 
 function speak(text) {
   if (!text) return;
@@ -28,98 +38,78 @@ const SAFA_VERSE = {
   en: "Indeed, Safa and Marwah are among the symbols of Allah… We begin with what Allah began with.",
 };
 
-function buildSteps(trip, isFinalMarwah) {
+function instructionsFor(trip, isAr) {
   const onSafa = trip % 2 === 0;
-  const startEn = onSafa ? "Safa" : "Marwah";
-  const startAr = onSafa ? "الصفا" : "المروة";
-  const endEn = onSafa ? "Marwah" : "Safa";
-  const endAr = onSafa ? "المروة" : "الصفا";
+  const target = onSafa ? (isAr ? "المروة" : "Marwah") : (isAr ? "الصفا" : "Safa");
+  const standing = onSafa ? (isAr ? "الصفا" : "Safa") : (isAr ? "المروة" : "Marwah");
+  const isLast = trip === 6;
 
-  const steps = [];
+  const list = [];
 
   if (trip === 0) {
-    steps.push({
-      place_en: "1 · Safa — first time",
-      place_ar: "١ · الصفا — أول مرّة",
-      title_en: "Read this verse — once",
-      title_ar: "اقرأ هذه الآية مرّة واحدة",
-      sub_en: "Climb Safa, face the Ka'bah, and read this verse one time only — the very first time you climb Safa.",
-      sub_ar: "اصعد الصفا، استقبل الكعبة، واقرأ هذه الآية مرة واحدة فقط في أول مرة تصعد الصفا.",
-      dua: SAFA_VERSE,
-      accent: "#1C1D1B",
-      photo: PHOTOS.mountSafa,
-      alt: ALT.mountSafa,
+    list.push({
+      icon: "✦",
+      title_en: "First time on Safa",
+      title_ar: "أول مرة على الصفا",
+      body_en: "Climb Safa, face the Ka'bah, recite the verse below ONCE only.",
+      body_ar: "اصعد الصفا، استقبل الكعبة، اقرأ الآية بالأسفل مرّة واحدة فقط.",
     });
   }
 
-  steps.push({
-    place_en: `${steps.length + 1} · On ${startEn}`,
-    place_ar: `${steps.length + 1} · على ${startAr}`,
-    title_en: "Say takbir 3 times",
-    title_ar: "كبّر ثلاث مرّات",
-    sub_en: "Raise your hands. Recite 3 times. After 1st & 2nd: make du'a. After 3rd: NO du'a — start walking.",
-    sub_ar: "ارفع يديك. اقرأها ثلاث مرات. بعد الأولى والثانية: ادعُ. بعد الثالثة: لا تَدعُ — ابدأ المشي.",
-    dua: TAKBIR_TAHLIL,
-    accent: onSafa ? "#1C1D1B" : "#B3884D",
-    photo: onSafa ? PHOTOS.onSafa : PHOTOS.onMarwah,
-    alt: onSafa ? ALT.onSafa : ALT.onMarwah,
-  });
-
-  steps.push({
-    place_en: `${steps.length + 1} · Walk toward ${endEn}`,
-    place_ar: `${steps.length + 1} · المشي إلى ${endAr}`,
-    title_en: `Walk to ${endEn}`,
-    title_ar: `امشِ إلى ${endAr}`,
-    sub_en: "Walk normally. Make du'a in any language. Watch for the two GREEN markers ahead.",
-    sub_ar: "امشِ بمشيك المعتاد. ادعُ بأي لغة. وانتبه للعَلَمين الأخضرين.",
-    dua: null,
-    accent: "#5C5D58",
-    photo: PHOTOS.masaaCorridor,
-    alt: ALT.masaaCorridor,
-  });
-
-  steps.push({
-    place_en: `${steps.length + 1} · Green markers`,
-    place_ar: `${steps.length + 1} · العَلَمان الأخضران`,
-    title_en: "Men jog briskly here",
-    title_ar: "الرجال يَهرولون هنا",
-    sub_en: "MEN: jog briskly between the two green pillars. WOMEN: keep walking normally.",
-    sub_ar: "الرجال: يَهرولون بين العمودين الأخضرين. النساء: يُكملن المشي العادي.",
-    dua: null,
-    accent: "#2A5A4A",
-    photo: PHOTOS.masaaGreenMarkers,
-    alt: ALT.masaaGreenMarkers,
-  });
-
-  if (isFinalMarwah) {
-    steps.push({
-      place_en: `${steps.length + 1} · Final Marwah`,
-      place_ar: `${steps.length + 1} · المروة الأخيرة`,
-      title_en: "Make du'a — no takbir this time",
-      title_ar: "ادعُ — لا تكبير هذه المرّة",
-      sub_en: "This is the 7th and last visit. Per the Sunnah: do NOT recite the takbir here. Make a long heartfelt du'a, then tap Done.",
-      sub_ar: "هذه هي الزيارة السابعة والأخيرة. من السنة: لا تُكرّر التكبير هنا. ادعُ دعاءً مطوّلًا، ثم اضغط «انتهى».",
-      dua: null,
-      accent: "#8B4540",
-      photo: PHOTOS.onMarwah,
-      alt: ALT.onMarwah,
+  if (isLast) {
+    list.push({
+      icon: "1",
+      title_en: `Heading to ${target} — final time`,
+      title_ar: `الذهاب إلى ${target} — المرّة الأخيرة`,
+      body_en: "Walk normally. Make heartfelt du'a in any language.",
+      body_ar: "امشِ بمشيك المعتاد. ادعُ من قلبك بأي لغة.",
+    });
+    list.push({
+      icon: "2",
+      title_en: "Green markers",
+      title_ar: "العَلَمان الأخضران",
+      body_en: "MEN: jog briskly between the green pillars. WOMEN: walk normally.",
+      body_ar: "الرجال: يَهرولون بين العمودين الأخضرين. النساء: المشي العادي.",
+    });
+    list.push({
+      icon: "3",
+      title_en: `On ${target} (final)`,
+      title_ar: `على ${target} (الأخيرة)`,
+      body_en: "DO NOT recite the takbir this time. Make a long, heartfelt du'a, then tap Done.",
+      body_ar: "لا تُكرّر التكبير هذه المرّة. ادعُ دعاءً مطوّلًا من القلب، ثم اضغط «انتهى».",
     });
   } else {
-    steps.push({
-      place_en: `${steps.length + 1} · On ${endEn}`,
-      place_ar: `${steps.length + 1} · على ${endAr}`,
-      title_en: "Say takbir 3 times again",
-      title_ar: "كبّر ثلاث مرّات مرّة أخرى",
-      sub_en: "Same as before: 3 times, du'a after 1st & 2nd, no du'a after 3rd.",
-      sub_ar: "كما في السابق: ثلاث مرات، دعاء بعد الأولى والثانية، ولا دعاء بعد الثالثة.",
-      dua: TAKBIR_TAHLIL,
-      accent: endEn === "Safa" ? "#1C1D1B" : "#B3884D",
-      photo: endEn === "Safa" ? PHOTOS.onSafa : PHOTOS.onMarwah,
-      alt: endEn === "Safa" ? ALT.onSafa : ALT.onMarwah,
+    list.push({
+      icon: "1",
+      title_en: `On ${standing}`,
+      title_ar: `على ${standing}`,
+      body_en: "Raise both hands. Recite the takbir 3 times. Make du'a after the 1st & 2nd. NO du'a after the 3rd.",
+      body_ar: "ارفع يديك. اقرأ التكبير ثلاث مرات. ادعُ بعد الأولى والثانية. لا تَدعُ بعد الثالثة.",
+    });
+    list.push({
+      icon: "2",
+      title_en: `Walking to ${target}`,
+      title_ar: `المشي إلى ${target}`,
+      body_en: "Walk normally. Make du'a in any language. Watch for the GREEN markers.",
+      body_ar: "امشِ بمشيك المعتاد. ادعُ بأي لغة. وانتبه للعَلَمين الأخضرين.",
+    });
+    list.push({
+      icon: "3",
+      title_en: "Green markers",
+      title_ar: "العَلَمان الأخضران",
+      body_en: "MEN: jog briskly between the green pillars. WOMEN: walk normally.",
+      body_ar: "الرجال: يَهرولون بين العمودين الأخضرين. النساء: المشي العادي.",
+    });
+    list.push({
+      icon: "4",
+      title_en: `On ${target}`,
+      title_ar: `على ${target}`,
+      body_en: "Same as before: takbir 3 times, du'a after 1st & 2nd, no du'a after 3rd.",
+      body_ar: "كما في السابق: التكبير ثلاث مرات، دعاء بعد الأولى والثانية، ولا دعاء بعد الثالثة.",
     });
   }
 
-  return steps;
+  return { list, target, isLast };
 }
 
 export default function Sai() {
@@ -129,64 +119,48 @@ export default function Sai() {
   const [trip, setTrip] = React.useState(() =>
     parseInt(localStorage.getItem("umrah_sai_count") || "0", 10)
   );
-  const [step, setStep] = React.useState(0);
+  const [pulse, setPulse] = React.useState(0);
 
   React.useEffect(() => {
     localStorage.setItem("umrah_sai_count", String(trip));
   }, [trip]);
 
   const allDone = trip >= 7;
-  const isFinalMarwah = trip === 6;
-  const steps = buildSteps(trip, isFinalMarwah);
-  const cur = steps[step];
-  const isLastStep = step === steps.length - 1;
 
-  const onNext = () => {
-    if (isLastStep) {
-      if (trip >= 7) return;
-      setTrip((t) => Math.min(7, t + 1));
-      setStep(0);
-      if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
-    } else {
-      setStep((s) => s + 1);
-    }
+  const onTripDone = () => {
+    if (trip >= 7) return;
+    if (navigator.vibrate) navigator.vibrate([40, 50, 40]);
+    setPulse((p) => p + 1);
+    setTrip((t) => Math.min(7, t + 1));
   };
 
-  const reset = () => {
-    setTrip(0);
-    setStep(0);
-  };
+  const reset = () => setTrip(0);
 
   if (allDone) {
     return (
-      <div className="max-w-md mx-auto pb-12" data-testid="sai-page">
-        <div className="mt-2">
-          <Inline3DModel src={PHOTOS.masaaCorridor} alt={ALT.masaaCorridor} caption="Sa'i complete · Alhamdulillah" testid="sai-3d" />
+      <div className="max-w-md mx-auto pb-12 text-center" data-testid="sai-page">
+        <div className="mt-12 inline-flex w-20 h-20 rounded-full bg-[#2A5A4A] text-white items-center justify-center">
+          <Check className="w-10 h-10" />
         </div>
-        <div className="mt-6 text-center">
-          <div className="inline-flex w-14 h-14 rounded-full bg-[#2A5A4A] text-white items-center justify-center mb-3">
-            <Check className="w-7 h-7" />
+        <h1 className="mt-6 text-[28px] font-medium text-[#1C1D1B]">
+          {isAr ? "اكتمل السعي" : "Sa'i Complete"}
+        </h1>
+        <p className="mt-1 text-[14px] tracking-[0.18em] uppercase text-[#B3884D]">
+          {isAr ? "الحمد لله" : "Alhamdulillah"}
+        </p>
+        <div className="mt-8 mx-4 rounded-2xl border border-[#E8E5DD] bg-[#F8F6F0] p-5 text-left">
+          <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] mb-3">
+            {isAr ? "آخر خطوة" : "Last step"}
           </div>
-          <h1 className="text-[26px] font-medium text-[#1C1D1B]">
-            {isAr ? "اكتمل السعي — الحمد لله" : "Sa'i Complete · Alhamdulillah"}
-          </h1>
-          <p className="mt-3 text-[15px] text-[#5C5D58]">
+          <p className="text-[15px] text-[#1C1D1B] leading-relaxed">
             {isAr
-              ? "اذهب إلى الحلق أو التقصير لإتمام العمرة."
-              : "Now go for Halq (shave) or Taqsir (trim) to finish your Umrah."}
+              ? "اذهب للحلق أو التقصير لإتمام العمرة."
+              : "Go for Halq (shave) or Taqsir (trim) to finish your Umrah."}
           </p>
-        </div>
-        <div className="mt-6 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4" data-testid="leave-masjid-dua">
-          <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] mb-2">When leaving the masjid</div>
-          <p className="font-arabic text-[20px] leading-[2] text-right text-[#1C1D1B]">
-            اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ
-          </p>
-          <p className="mt-1 text-[12px] italic text-[#5C5D58]">Allāhumma innī as'aluka min faḍlika.</p>
-          <p className="text-[12px] text-[#1C1D1B]">O Allah, I ask You of Your bounty.</p>
         </div>
         <button
           onClick={reset}
-          className="mt-6 w-full tap-pulse inline-flex items-center justify-center gap-2 rounded-full border border-[#E8E5DD] bg-white px-5 py-3 text-sm text-[#1C1D1B]"
+          className="mt-8 inline-flex items-center gap-2 rounded-full border border-[#E8E5DD] bg-white px-5 py-3 text-sm text-[#1C1D1B] tap-pulse"
           data-testid="sai-reset"
         >
           <RotateCcw className="w-4 h-4" /> {isAr ? "إعادة" : "Start over"}
@@ -195,18 +169,25 @@ export default function Sai() {
     );
   }
 
+  const { list, target, isLast } = instructionsFor(trip, isAr);
+  const recitation = trip === 0 ? SAFA_VERSE : TAKBIR_TAHLIL;
+
   return (
-    <div className="max-w-md mx-auto pb-10" data-testid="sai-page">
+    <div className="max-w-md mx-auto pb-44 px-1" data-testid="sai-page">
       <div className="mt-2 flex items-center justify-between">
         <div>
-          <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">Sa'i</div>
-          <div className="mt-0.5 text-[22px] font-medium text-[#1C1D1B]" data-testid="sai-trip-label">
-            {isAr ? `الشوط ${trip + 1} من ٧` : `Trip ${trip + 1} of 7`}
+          <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
+            {isAr ? "السعي" : "Sa'i"}
+          </div>
+          <div className="mt-1 text-[14px] text-[#5C5D58]">
+            {isAr
+              ? `اضغط الزر الكبير عند الوصول إلى ${target}`
+              : `Tap the big button when you reach ${target}`}
           </div>
         </div>
         <button
           onClick={reset}
-          className="tap-pulse w-9 h-9 rounded-full bg-white border border-[#E8E5DD] grid place-items-center"
+          className="tap-pulse w-10 h-10 rounded-full bg-white border border-[#E8E5DD] grid place-items-center"
           aria-label="reset"
           data-testid="sai-reset"
         >
@@ -214,104 +195,117 @@ export default function Sai() {
         </button>
       </div>
 
-      <div className="mt-3 grid grid-cols-7 gap-1.5" data-testid="sai-pips">
-        {Array.from({ length: 7 }).map((_, i) => (
-          <div key={i} className={`h-1.5 rounded-full ${i < trip ? "bg-[#B3884D]" : "bg-[#E8E5DD]"}`} />
-        ))}
-      </div>
-
-      {/* PERSISTENT 3D — Grand Mosque includes Safa, Marwah, Mas'a corridor */}
-      <div className="mt-4">
-        <Inline3DModel
-          src={cur.photo}
-          alt={cur.alt}
-          height="h-[280px]"
-          caption={isAr ? cur.place_ar : cur.place_en}
-          testid="sai-3d"
-        />
-      </div>
-
-      <div className="mt-4 flex gap-1.5" data-testid="sai-step-pips">
-        {steps.map((_, i) => (
-          <div key={i} className={`h-1 flex-1 rounded-full ${i <= step ? "bg-[#1C1D1B]" : "bg-[#E8E5DD]"}`} />
-        ))}
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.section
-          key={`${trip}-${step}`}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.25 }}
-          className="mt-4"
-          data-testid="sai-step-card"
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: cur.accent }} />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#8E8F8A]">
-              {isAr ? cur.place_ar : cur.place_en}
-            </span>
+      {/* HUGE trip counter */}
+      <div className="mt-5 rounded-3xl bg-[#1C1D1B] text-white px-6 py-7 text-center relative overflow-hidden">
+        <AnimatePresence>
+          <motion.div
+            key={pulse}
+            initial={{ scale: 1.2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            className="absolute inset-0 bg-[#B3884D]"
+          />
+        </AnimatePresence>
+        <div className="relative">
+          <div className="text-[10px] uppercase tracking-[0.28em] text-[#B3884D]">
+            {isAr ? "الشوط" : "Trip"}
           </div>
-          <h2
-            className={`text-[24px] font-medium text-[#1C1D1B] leading-tight ${isAr ? "text-right font-arabic" : ""}`}
-            data-testid="sai-headline"
+          <div className="mt-1 flex items-baseline justify-center gap-2">
+            <span className="text-[88px] leading-none font-medium" data-testid="sai-trip-number">
+              {trip + 1}
+            </span>
+            <span className="text-[24px] text-white/55">/ 7</span>
+          </div>
+          <div className="mt-3 text-[12px] tracking-[0.22em] uppercase text-white/70">
+            {isAr ? "متّجه إلى" : "Heading to"}{" "}
+            <span className="text-white font-medium">{target}</span>
+          </div>
+          <div className="mt-4 grid grid-cols-7 gap-1.5" data-testid="sai-pips">
+            {Array.from({ length: 7 }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 rounded-full ${i < trip ? "bg-[#B3884D]" : "bg-white/15"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <ol className="mt-6 space-y-3" data-testid="sai-steps">
+        {list.map((s, i) => (
+          <li
+            key={i}
+            className="flex gap-3 rounded-2xl bg-white border border-[#E8E5DD] p-4"
           >
-            {isAr ? cur.title_ar : cur.title_en}
-          </h2>
-          <p className={`mt-2 text-[14px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
-            {isAr ? cur.sub_ar : cur.sub_en}
-          </p>
-
-          {cur.dua && (
-            <div className="mt-4 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-5" data-testid="sai-dua">
-              <div className="flex items-start justify-between gap-3">
-                <p className="font-arabic text-[20px] leading-[2] text-right flex-1 text-[#1C1D1B]">
-                  {cur.dua.ar}
-                </p>
-                <button
-                  onClick={() => speak(cur.dua.ar)}
-                  className="tap-pulse w-11 h-11 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
-                  aria-label="listen"
-                  data-testid="sai-dua-play"
-                >
-                  <Volume2 className="w-5 h-5 text-[#1C1D1B]" />
-                </button>
-              </div>
-              <p className="mt-3 text-[12px] italic text-[#5C5D58]">{cur.dua.tr}</p>
-              <p className="mt-1 text-[12px] text-[#1C1D1B]">{cur.dua.en}</p>
+            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#F8F6F0] border border-[#E8E5DD] grid place-items-center text-[12px] font-medium text-[#1C1D1B]">
+              {s.icon}
             </div>
-          )}
-        </motion.section>
-      </AnimatePresence>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[13px] font-medium text-[#1C1D1B] ${isAr ? "text-right font-arabic" : ""}`}>
+                {isAr ? s.title_ar : s.title_en}
+              </div>
+              <div className={`text-[14px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
+                {isAr ? s.body_ar : s.body_en}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
 
-      <button
-        onClick={onNext}
-        className={`mt-6 w-full tap-pulse rounded-full text-white text-[16px] font-medium px-6 py-4 inline-flex items-center justify-center gap-2 ${
-          isLastStep ? "bg-[#2A5A4A] hover:bg-[#1f4438]" : "bg-[#1C1D1B] hover:bg-black"
-        }`}
-        data-testid="sai-next"
-      >
-        {isLastStep ? (
-          <>
-            <Check className="w-5 h-5" /> {isAr ? `أكملت الشوط ${trip + 1}` : `Done with Trip ${trip + 1}`}
-          </>
-        ) : (
-          <>
-            {isAr ? "التالي" : "Next"} <ArrowRight className="w-5 h-5" />
-          </>
-        )}
-      </button>
-
-      {step > 0 && (
-        <button
-          onClick={() => setStep((s) => Math.max(0, s - 1))}
-          className="mt-3 w-full tap-pulse rounded-full border border-[#E8E5DD] bg-white text-[14px] text-[#5C5D58] py-2.5"
-          data-testid="sai-back"
-        >
-          ← {isAr ? "السابق" : "Back"}
-        </button>
+      {!isLast && (
+        <div className="mt-4 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-5" data-testid="sai-dua">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1">
+              <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] mb-2">
+                {trip === 0
+                  ? (isAr ? "الآية على الصفا — مرّة فقط" : "Verse on Safa — once only")
+                  : (isAr ? "التكبير على الصفا والمروة" : "Takbir on Safa & Marwah")}
+              </div>
+              <p className="font-arabic text-[19px] leading-[2] text-right text-[#1C1D1B]">
+                {recitation.ar}
+              </p>
+            </div>
+            <button
+              onClick={() => speak(recitation.ar)}
+              className="tap-pulse w-11 h-11 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
+              aria-label="listen"
+              data-testid="sai-dua-play"
+            >
+              <Volume2 className="w-5 h-5 text-[#1C1D1B]" />
+            </button>
+          </div>
+          <p className="mt-3 text-[12px] italic text-[#5C5D58]">{recitation.tr}</p>
+          <p className="mt-1 text-[12px] text-[#1C1D1B]">{recitation.en}</p>
+        </div>
       )}
+
+      <div className="mt-6 flex flex-col items-center text-[11px] tracking-[0.22em] uppercase text-[#B3884D]">
+        <ArrowDown className="w-4 h-4 mb-1" />
+        {isAr ? `اضغط عند الوصول إلى ${target}` : `Tap when you reach ${target}`}
+      </div>
+
+      {/* THE BIG BUTTON */}
+      <div className="fixed inset-x-0 bottom-20 px-4 z-30 pointer-events-none">
+        <div className="max-w-md mx-auto">
+          <motion.button
+            whileTap={{ scale: 0.96 }}
+            onClick={onTripDone}
+            className={`pointer-events-auto w-full rounded-full text-white py-7 shadow-[0_18px_40px_-10px_rgba(28,29,27,0.55)] flex flex-col items-center justify-center ${
+              isLast ? "bg-[#2A5A4A] hover:bg-[#1f4438]" : "bg-[#1C1D1B] hover:bg-black"
+            }`}
+            data-testid="sai-reach-button"
+          >
+            <span className="text-[10px] uppercase tracking-[0.28em] text-[#B3884D]">
+              {isAr ? "الشوط" : "Trip"} {trip + 1}
+            </span>
+            <span className="mt-0.5 text-[20px] font-medium">
+              {isLast
+                ? (isAr ? "أنهيت السعي" : "I finished Sa'i")
+                : (isAr ? `وصلت إلى ${target}` : `I reached ${target}`)}
+            </span>
+          </motion.button>
+        </div>
+      </div>
     </div>
   );
 }

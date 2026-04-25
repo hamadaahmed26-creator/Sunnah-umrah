@@ -23,15 +23,14 @@
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
 ## Implemented (Feb 2026 — latest session)
-- **Tawaf & Sa'i wizard pages** with **per-step landmark photos** at top + step text/duas flowing below:
-  - **Tawaf** (4 photos, 1 per step): Black Stone close-up → aerial Tawaf around Ka'bah → Yemeni Corner (hands touching) → mataf wide shot
-  - **Sa'i** (5 photos cycling per step type): Mount Safa → pilgrims on Safa → Mas'a corridor → green markers → Mount Marwah
-  - Photos cross-fade smoothly when stepping (no flash, no remount)
-  - All images sourced from Wikimedia Commons + Unsplash (CC / free-to-use)
-  - Sunnah-correct duas extracted verbatim from user's PDF (lapGuide.js)
-  - Special handling: no takbir on 7th Marwah; Yemeni Corner = touch only, no kiss/dua
-- New `/app/frontend/src/lib/ritualPhotos.js` central photo registry
-- Removed dead components (`Kaaba3D`, `Masaa3D`, `Sketchfab3D`, `landmarkPhotos`, prior CSS-3D and Sketchfab iframe attempts)
+- **One-Button Tawaf & Sa'i mode** — designed for use IN the Haram with sweaty hands, in a crowd, in ihram:
+  - Huge lap/trip counter (e.g. "Lap 3 / 7") at the top, brass-gold pip row below
+  - 4 plain instruction cards for the current lap/trip on a single screen (no swiping, no scrolling between steps)
+  - One single du'a per ritual with built-in Arabic TTS button
+  - One **giant sticky button** at thumb-reach: "I passed the Black Stone" / "I reached Marwah" — vibrates + speaks "Allāhu Akbar" on tap, lap auto-advances
+  - 7 taps → ritual complete with clear "what's next" card (2 raka'ah, Zamzam, Sa'i for Tawaf; Halq/Taqsir for Sa'i)
+  - Special handling: first-time Safa verse shown only on trip 1; final Marwah instructs "no takbir, long heartfelt du'a" + green completion button
+- Removed all per-step photos/3D/Sketchfab approaches (they were getting in the way, not helping)
 
 ## Implemented (earlier in Feb 2026)
 - `/api/gates` — 12 main gates of Masjid al-Haram
