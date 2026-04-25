@@ -81,15 +81,22 @@ export default function Lost() {
       </div>
 
       {!data && (
-        <button
-          onClick={locate}
-          disabled={loading}
-          className="mt-6 w-full tap-pulse inline-flex items-center justify-center gap-2 rounded-full bg-[#8B4540] hover:bg-[#713934] text-white px-6 py-4 text-sm font-medium"
-          data-testid="locate-btn"
-        >
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <MapPin className="w-4 h-4" />}
-          {loading ? t("locating") : t("enableLocation")}
-        </button>
+        <>
+          <button
+            onClick={locate}
+            disabled={loading}
+            className="mt-6 w-full tap-pulse inline-flex items-center justify-center gap-2 rounded-full bg-[#8B4540] hover:bg-[#713934] text-white px-6 py-4 text-sm font-medium"
+            data-testid="locate-btn"
+          >
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <MapPin className="w-4 h-4" />}
+            {loading ? t("locating") : t("enableLocation")}
+          </button>
+          <p className="mt-3 text-center text-xs text-[#8E8F8A]" data-testid="lost-hint">
+            {isAr
+              ? "يحتاج التطبيق إلى إذن الموقع (GPS) للعمل."
+              : "This feature needs location (GPS) permission to work."}
+          </p>
+        </>
       )}
 
       {error && (

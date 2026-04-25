@@ -52,10 +52,10 @@ export default function Layout({ children }) {
         </button>
       </header>
 
-      <main className="relative z-10 pb-32 px-5" data-testid="app-main">{children}</main>
+      <main className="relative z-10 pb-44 sm:pb-32 px-5" data-testid="app-main">{children}</main>
 
       <nav
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 bg-[#1C1D1B]/95 backdrop-blur-xl rounded-full px-2 py-2 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.18)] flex items-center gap-1"
+        className="fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#1C1D1B]/95 backdrop-blur-xl rounded-full px-2 py-2 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.18)] flex items-center gap-1"
         data-testid="bottom-nav"
         style={{ direction: "ltr" }}
       >
