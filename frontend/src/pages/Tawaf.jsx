@@ -27,7 +27,7 @@ const STEPS = (lap) => [
     dua: { ar: "اللَّهُ أَكْبَر", tr: "Allāhu Akbar", en: "Allah is the Greatest." },
   },
   {
-    visual: <Kaaba3D highlight={null} />,
+    visual: <Kaaba3D highlight="walking" />,
     place_en: "WALK AROUND THE KA'BAH",
     place_ar: "الطواف حول الكعبة",
     title_en: "Walk and make du'a",
@@ -53,7 +53,7 @@ const STEPS = (lap) => [
     dua: null,
   },
   {
-    visual: <Kaaba3D highlight={null} />,
+    visual: <Kaaba3D highlight="between" />,
     place_en: "BETWEEN YEMENI & BLACK STONE",
     place_ar: "بين الركن اليماني والحجر",
     title_en: "Say this prayer",

@@ -66,7 +66,7 @@ function buildSteps(trip, isFinalMarwah, isAr) {
 
   // 3. Walking
   steps.push({
-    visual: <Masaa3D highlight={null} />,
+    visual: <Masaa3D highlight="walking" />,
     place_en: "WALK",
     place_ar: "المشي",
     title_en: `Walk to ${endHillEn === "MARWAH" ? "Marwah" : "Safa"}`,
