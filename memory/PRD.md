@@ -24,13 +24,15 @@
 
 ## Implemented (Feb 2026 — latest session)
 - **One-Button Tawaf & Sa'i mode** — designed for use IN the Haram with sweaty hands, in a crowd, in ihram:
-  - Huge lap/trip counter (e.g. "Lap 3 / 7") at the top, brass-gold pip row below
-  - 4 plain instruction cards for the current lap/trip on a single screen (no swiping, no scrolling between steps)
+  - Huge lap/trip counter (e.g. "Lap 3 / 7") at the top
+  - **Animated diagrams in the same style as the user's reference Umrah video:**
+    - Tawaf: top-down Ka'bah (cube + golden band) inside a 7-arc circular path. Done laps fill gold, current lap pulses yellow, remaining grey. Black Stone & Yemeni Corner labeled. Counter-clockwise direction hint.
+    - Sa'i: side-view of Safa ↔ Marwah triangle hills, dotted gold path between, two green pillars marked "JOG", yellow direction arrow, pulsing pilgrim dot on starting hill, alternates per trip
+  - 4 plain instruction cards for the current lap/trip on a single screen (no swiping)
   - One single du'a per ritual with built-in Arabic TTS button
-  - One **giant sticky button** at thumb-reach: "I passed the Black Stone" / "I reached Marwah" — vibrates + speaks "Allāhu Akbar" on tap, lap auto-advances
-  - 7 taps → ritual complete with clear "what's next" card (2 raka'ah, Zamzam, Sa'i for Tawaf; Halq/Taqsir for Sa'i)
-  - Special handling: first-time Safa verse shown only on trip 1; final Marwah instructs "no takbir, long heartfelt du'a" + green completion button
-- Removed all per-step photos/3D/Sketchfab approaches (they were getting in the way, not helping)
+  - One **giant sticky button** at thumb-reach: "I passed the Black Stone" / "I reached Marwah" — vibrates + speaks "Allāhu Akbar" on tap
+  - Special handling: first-time Safa verse on trip 1; final Marwah → green completion button + "no takbir, long heartfelt du'a"
+- New `/app/frontend/src/components/RitualMaps.jsx` (TawafMap + SaiMap SVGs)
 
 ## Implemented (earlier in Feb 2026)
 - `/api/gates` — 12 main gates of Masjid al-Haram

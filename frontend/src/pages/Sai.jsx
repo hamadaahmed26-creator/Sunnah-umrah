@@ -2,6 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, RotateCcw, Check, ArrowDown } from "lucide-react";
 import { LangContext } from "../components/Layout";
+import { SaiMap } from "../components/RitualMaps";
 
 /*
  ONE-BUTTON SA'I MODE
@@ -211,16 +212,22 @@ export default function Sai() {
             {isAr ? "الشوط" : "Trip"}
           </div>
           <div className="mt-1 flex items-baseline justify-center gap-2">
-            <span className="text-[88px] leading-none font-medium" data-testid="sai-trip-number">
+            <span className="text-[68px] leading-none font-medium" data-testid="sai-trip-number">
               {trip + 1}
             </span>
-            <span className="text-[24px] text-white/55">/ 7</span>
+            <span className="text-[22px] text-white/55">/ 7</span>
           </div>
-          <div className="mt-3 text-[12px] tracking-[0.22em] uppercase text-white/70">
+          <div className="mt-2 text-[12px] tracking-[0.22em] uppercase text-white/70">
             {isAr ? "متّجه إلى" : "Heading to"}{" "}
             <span className="text-white font-medium">{target}</span>
           </div>
-          <div className="mt-4 grid grid-cols-7 gap-1.5" data-testid="sai-pips">
+
+          {/* Animated Safa-Marwah map */}
+          <div className="mt-4 mb-1">
+            <SaiMap trip={trip} />
+          </div>
+
+          <div className="mt-3 grid grid-cols-7 gap-1.5" data-testid="sai-pips">
             {Array.from({ length: 7 }).map((_, i) => (
               <div
                 key={i}

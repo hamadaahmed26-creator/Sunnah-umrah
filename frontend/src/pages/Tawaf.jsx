@@ -2,6 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, RotateCcw, Check, ArrowDown } from "lucide-react";
 import { LangContext } from "../components/Layout";
+import { TawafMap } from "../components/RitualMaps";
 
 /*
  ONE-BUTTON TAWAF MODE
@@ -169,12 +170,18 @@ export default function Tawaf() {
             {isAr ? "الشوط" : "Lap"}
           </div>
           <div className="mt-1 flex items-baseline justify-center gap-2">
-            <span className="text-[88px] leading-none font-medium" data-testid="tawaf-lap-number">
+            <span className="text-[68px] leading-none font-medium" data-testid="tawaf-lap-number">
               {lap + 1}
             </span>
-            <span className="text-[24px] text-white/55">/ 7</span>
+            <span className="text-[22px] text-white/55">/ 7</span>
           </div>
-          <div className="mt-4 grid grid-cols-7 gap-1.5" data-testid="tawaf-pips">
+
+          {/* Animated top-down Kaaba map */}
+          <div className="mt-4 mb-1">
+            <TawafMap lap={lap} />
+          </div>
+
+          <div className="mt-3 grid grid-cols-7 gap-1.5" data-testid="tawaf-pips">
             {Array.from({ length: 7 }).map((_, i) => (
               <div
                 key={i}
