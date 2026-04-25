@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, ArrowRight, Check, RotateCcw, MapPin } from "lucide-react";
 import { LangContext } from "../components/Layout";
-import { PhotoCard, PHOTO } from "../lib/landmarkPhotos";
+import Masaa3D from "../components/Masaa3D";
 
 function speak(text) {
   if (!text) return;
@@ -33,30 +33,28 @@ function buildSteps(trip, isFinalMarwah, isAr) {
   const startHillAr = onSafa ? "الصفا" : "المروة";
   const endHillEn = onSafa ? "MARWAH" : "SAFA";
   const endHillAr = onSafa ? "المروة" : "الصفا";
-  const startPhoto = onSafa ? PHOTO.safa : PHOTO.marwah;
-  const endPhoto = onSafa ? PHOTO.marwah : PHOTO.safa;
+  const startKey = onSafa ? "safa" : "marwah";
+  const endKey = onSafa ? "marwah" : "safa";
 
   const steps = [];
 
   // 1. Verse only on the very first time on Safa
   if (trip === 0) {
     steps.push({
-      photo: PHOTO.safa,
-      photoAlt: "Safa hill",
+      visual: <Masaa3D highlight="safa" />,
       place_en: "SAFA · FIRST TIME",
       place_ar: "الصفا · أول مرّة",
       title_en: "Read this verse — once",
       title_ar: "اقرأ هذه الآية مرّة واحدة",
-      sub_en: "Climb Safa, face the Ka'bah, and read this verse one time only.",
-      sub_ar: "اصعد الصفا، استقبل الكعبة، واقرأ هذه الآية مرة واحدة فقط.",
+      sub_en: "Climb the dark Safa hill (left). Face the Ka'bah. Read this verse one time only.",
+      sub_ar: "اصعد على الصفا (الجبل الأسود يسارًا). استقبل الكعبة. اقرأ هذه الآية مرة واحدة فقط.",
       dua: SAFA_VERSE,
     });
   }
 
   // 2. Takbir on starting hill
   steps.push({
-    photo: startPhoto,
-    photoAlt: `${startHillEn} hill`,
+    visual: <Masaa3D highlight={startKey} />,
     place_en: `ON ${startHillEn}`,
     place_ar: `على ${startHillAr}`,
     title_en: "Say takbir 3 times",
@@ -68,8 +66,7 @@ function buildSteps(trip, isFinalMarwah, isAr) {
 
   // 3. Walking
   steps.push({
-    photo: PHOTO.masaa,
-    photoAlt: "Mas'a corridor between Safa and Marwah",
+    visual: <Masaa3D highlight={null} />,
     place_en: "WALK",
     place_ar: "المشي",
     title_en: `Walk to ${endHillEn === "MARWAH" ? "Marwah" : "Safa"}`,
@@ -81,22 +78,20 @@ function buildSteps(trip, isFinalMarwah, isAr) {
 
   // 4. Green markers
   steps.push({
-    photo: PHOTO.masaa,
-    photoAlt: "Green light markers in the corridor",
+    visual: <Masaa3D highlight="greenMarkers" />,
     place_en: "GREEN MARKERS",
     place_ar: "العَلَمان الأخضران",
     title_en: "Men jog briskly here",
     title_ar: "الرجال يَهرولون هنا",
-    sub_en: "MEN: jog briskly between the two green lights. WOMEN: keep walking normally.",
-    sub_ar: "الرجال: يَهرولون بين العَلَمين الأخضرين. النساء: يُكملن المشي العادي.",
+    sub_en: "MEN: jog briskly between the two green pillars. WOMEN: keep walking normally.",
+    sub_ar: "الرجال: يَهرولون بين العمودين الأخضرين. النساء: يُكملن المشي العادي.",
     dua: null,
   });
 
-  // 5. End hill — final Marwah is special
+  // 5. End hill
   if (isFinalMarwah) {
     steps.push({
-      photo: PHOTO.marwah,
-      photoAlt: "Marwah hill — final visit",
+      visual: <Masaa3D highlight="marwah" />,
       place_en: "FINAL MARWAH",
       place_ar: "المروة · الأخيرة",
       title_en: "Make du'a — no takbir this time",
@@ -107,8 +102,7 @@ function buildSteps(trip, isFinalMarwah, isAr) {
     });
   } else {
     steps.push({
-      photo: endPhoto,
-      photoAlt: `${endHillEn} hill`,
+      visual: <Masaa3D highlight={endKey} />,
       place_en: `ON ${endHillEn}`,
       place_ar: `على ${endHillAr}`,
       title_en: "Say takbir 3 times again",
@@ -232,16 +226,13 @@ export default function Sai() {
           className="mt-5"
           data-testid="sai-step-card"
         >
-          <PhotoCard
-            src={cur.photo}
-            alt={cur.photoAlt}
-            badge={
-              <>
-                <MapPin className="w-3 h-3" />
-                {isAr ? cur.place_ar : cur.place_en}
-              </>
-            }
-          />
+          <div className="relative" data-testid="sai-visual-3d">
+            {cur.visual}
+            <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[11px] font-semibold tracking-wide text-[#1C1D1B]">
+              <MapPin className="w-3 h-3" />
+              {isAr ? cur.place_ar : cur.place_en}
+            </div>
+          </div>
 
           <h2
             className={`mt-5 text-[26px] font-medium text-[#1C1D1B] leading-tight ${isAr ? "text-right font-arabic" : ""}`}

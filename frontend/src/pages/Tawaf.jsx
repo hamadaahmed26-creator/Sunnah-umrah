@@ -2,13 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, ArrowRight, Check, RotateCcw, MapPin } from "lucide-react";
 import { LangContext } from "../components/Layout";
-import { PhotoCard, PHOTO } from "../lib/landmarkPhotos";
-
-/*
- Kid-simple wizard for Tawaf.
- Each lap = 4 steps: Black Stone → Walk → Yemeni Corner → Between Corners.
- ONE big photo + ONE big sentence + ONE big button per step.
-*/
+import Kaaba3D from "../components/Kaaba3D";
 
 function speak(text) {
   if (!text) return;
@@ -21,55 +15,51 @@ function speak(text) {
   } catch (_) {}
 }
 
-const STEPS = (lap, isAr) => [
+const STEPS = (lap) => [
   {
-    photo: PHOTO.blackStone,
-    photoAlt: "Black Stone (Hajar al-Aswad)",
+    visual: <Kaaba3D highlight="blackStone" />,
     place_en: "BLACK STONE",
     place_ar: "الحجر الأسود",
     title_en: "Say Allāhu Akbar",
     title_ar: "قل: اللَّهُ أَكْبَر",
-    sub_en: "Face the Black Stone. Raise your right hand. Say it once.",
-    sub_ar: "استقبل الحجر الأسود وارفع يدك اليمنى وقلها مرّة.",
+    sub_en: "Face the Black Stone (the glowing green corner). Raise your right hand. Say it once.",
+    sub_ar: "استقبل الحجر الأسود (الزاوية المضيئة). ارفع يدك اليمنى وقلها مرّة.",
     dua: { ar: "اللَّهُ أَكْبَر", tr: "Allāhu Akbar", en: "Allah is the Greatest." },
   },
   {
-    photo: PHOTO.mataf,
-    photoAlt: "Mataf — pilgrims walking around the Ka'bah",
+    visual: <Kaaba3D highlight={null} />,
     place_en: "WALK AROUND THE KA'BAH",
     place_ar: "الطواف حول الكعبة",
     title_en: "Walk and make du'a",
     title_ar: "امشِ وادعُ الله",
     sub_en:
       lap < 3
-        ? "Men: walk briskly with shoulders shaken (Raml). Women: walk normally."
-        : "Walk at your normal pace. Make du'a in any language.",
+        ? "Men: walk briskly with shoulders shaken (Raml). Women: walk normally. Keep the Ka'bah on your LEFT."
+        : "Walk at your normal pace. Make du'a in any language. Keep the Ka'bah on your LEFT.",
     sub_ar:
       lap < 3
-        ? "الرجال: امشِ بسرعة مع تحريك الكتفين (الرَّمَل). النساء: المشي العادي."
-        : "امشِ بمشيك المعتاد. ادعُ بأي لغة.",
+        ? "الرجال: امشِ بسرعة مع تحريك الكتفين (الرَّمَل). النساء: المشي العادي. اجعل الكعبة عن يسارك."
+        : "امشِ بمشيك المعتاد. ادعُ بأي لغة. اجعل الكعبة عن يسارك.",
     dua: null,
   },
   {
-    photo: PHOTO.kaabaCorner,
-    photoAlt: "Yemeni Corner of the Ka'bah",
+    visual: <Kaaba3D highlight="yemeniCorner" />,
     place_en: "YEMENI CORNER",
     place_ar: "الركن اليماني",
     title_en: "Touch with right hand only",
     title_ar: "استلم بيدك اليمنى فقط",
-    sub_en: "Just touch — DO NOT kiss it. NO takbir. NO du'a here. If crowded, just walk past.",
-    sub_ar: "المس فقط — لا تُقبّله. لا تكبّر. لا تدعُ. إذا ازدحم فمرّ بدون إشارة.",
+    sub_en: "The corner before the Black Stone. Just touch — DO NOT kiss. NO takbir. NO du'a here. If crowded, just walk past.",
+    sub_ar: "الركن قبل الحجر الأسود. المس فقط — لا تُقبّله. لا تكبّر. لا تدعُ. إذا ازدحم فمرّ بدون إشارة.",
     dua: null,
   },
   {
-    photo: PHOTO.mataf,
-    photoAlt: "Pilgrims between Yemeni Corner and Black Stone",
+    visual: <Kaaba3D highlight={null} />,
     place_en: "BETWEEN YEMENI & BLACK STONE",
     place_ar: "بين الركن اليماني والحجر",
     title_en: "Say this prayer",
     title_ar: "اقرأ هذا الدعاء",
-    sub_en: "Recite this du'a as you walk back toward the Black Stone.",
-    sub_ar: "اقرأ هذا الدعاء وأنت عائد إلى الحجر الأسود.",
+    sub_en: "On the final stretch back to the Black Stone, recite this du'a.",
+    sub_ar: "في الجزء الأخير عائدًا للحجر الأسود اقرأ هذا الدعاء.",
     dua: {
       ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
       tr: "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā 'adhāban-nār.",
@@ -91,7 +81,7 @@ export default function Tawaf() {
   }, [lap]);
 
   const allDone = lap >= 7;
-  const steps = STEPS(lap, isAr);
+  const steps = STEPS(lap);
   const cur = steps[step];
   const isLastStepInLap = step === steps.length - 1;
 
@@ -128,8 +118,8 @@ export default function Tawaf() {
               : "Now pray 2 raka'ah behind Maqam Ibrahim, drink Zamzam, then start Sa'i."}
           </p>
         </div>
-        <div className="mt-8 rounded-3xl overflow-hidden">
-          <img src={PHOTO.maqamIbrahim} alt="Maqam Ibrahim" className="w-full h-56 object-cover" />
+        <div className="mt-8">
+          <Kaaba3D highlight="maqamIbrahim" />
         </div>
         <button
           onClick={reset}
@@ -184,16 +174,13 @@ export default function Tawaf() {
           className="mt-5"
           data-testid="tawaf-step-card"
         >
-          <PhotoCard
-            src={cur.photo}
-            alt={cur.photoAlt}
-            badge={
-              <>
-                <MapPin className="w-3 h-3" />
-                {isAr ? cur.place_ar : cur.place_en}
-              </>
-            }
-          />
+          <div className="relative" data-testid="tawaf-visual-3d">
+            {cur.visual}
+            <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[11px] font-semibold tracking-wide text-[#1C1D1B]">
+              <MapPin className="w-3 h-3" />
+              {isAr ? cur.place_ar : cur.place_en}
+            </div>
+          </div>
 
           <h2
             className={`mt-5 text-[28px] font-medium text-[#1C1D1B] leading-tight ${isAr ? "text-right font-arabic" : ""}`}
