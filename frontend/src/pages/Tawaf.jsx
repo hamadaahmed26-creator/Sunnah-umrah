@@ -1,8 +1,8 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, ArrowRight, Check, RotateCcw, MapPin } from "lucide-react";
+import { Volume2, ArrowRight, Check, RotateCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
-import Kaaba3D from "../components/Kaaba3D";
+import Landmark, { REAL_PHOTOS } from "../components/Sketchfab3D";
 
 function speak(text) {
   if (!text) return;
@@ -17,49 +17,87 @@ function speak(text) {
 
 const STEPS = (lap) => [
   {
-    visual: <Kaaba3D highlight="blackStone" />,
+    visual: (
+      <Landmark
+        photo={REAL_PHOTOS.kaabaAerial}
+        alt="The Ka'bah"
+        badge={<><span className="w-2 h-2 rounded-full bg-[#2A5A4A]" /> BLACK STONE · east corner</>}
+        annotation={{ x: 68, y: 52, color: "#2A5A4A", label: "BLACK STONE" }}
+        caption="Real view · tap 3D to rotate"
+        modelKey="kaaba"
+        testid="landmark-blackstone"
+      />
+    ),
     place_en: "BLACK STONE",
     place_ar: "الحجر الأسود",
     title_en: "Say Allāhu Akbar",
     title_ar: "قل: اللَّهُ أَكْبَر",
-    sub_en: "Face the Black Stone (the glowing green corner). Raise your right hand. Say it once.",
-    sub_ar: "استقبل الحجر الأسود (الزاوية المضيئة). ارفع يدك اليمنى وقلها مرّة.",
+    sub_en: "The Black Stone is at the eastern corner — the corner where each Tawaf lap starts. Face it, raise your right hand, say it once.",
+    sub_ar: "الحجر الأسود في الركن الشرقي — مبدأ كل شوط. استقبله، ارفع يدك اليمنى، قلها مرّة.",
     dua: { ar: "اللَّهُ أَكْبَر", tr: "Allāhu Akbar", en: "Allah is the Greatest." },
   },
   {
-    visual: <Kaaba3D highlight="walking" />,
+    visual: (
+      <Landmark
+        photo={REAL_PHOTOS.kaabaPilgrims}
+        alt="Pilgrims walking around the Ka'bah"
+        badge={<><span className="w-2 h-2 rounded-full bg-[#B3884D]" /> WALKING · counter-clockwise</>}
+        caption="Keep the Ka'bah on your LEFT"
+        modelKey="kaaba"
+        testid="landmark-walking"
+      />
+    ),
     place_en: "WALK AROUND THE KA'BAH",
     place_ar: "الطواف حول الكعبة",
     title_en: "Walk and make du'a",
     title_ar: "امشِ وادعُ الله",
     sub_en:
       lap < 3
-        ? "Men: walk briskly with shoulders shaken (Raml). Women: walk normally. Keep the Ka'bah on your LEFT."
-        : "Walk at your normal pace. Make du'a in any language. Keep the Ka'bah on your LEFT.",
+        ? "Walk counter-clockwise. Men: brisk pace with shoulders shaken (Raml). Women: walk normally."
+        : "Walk counter-clockwise at your normal pace. Make du'a in any language.",
     sub_ar:
       lap < 3
-        ? "الرجال: امشِ بسرعة مع تحريك الكتفين (الرَّمَل). النساء: المشي العادي. اجعل الكعبة عن يسارك."
-        : "امشِ بمشيك المعتاد. ادعُ بأي لغة. اجعل الكعبة عن يسارك.",
+        ? "امشِ عكس عقارب الساعة. الرجال بسرعة مع تحريك الكتفين (الرَّمَل). النساء بمشي عادي."
+        : "امشِ عكس عقارب الساعة بمشيك المعتاد. ادعُ بأي لغة.",
     dua: null,
   },
   {
-    visual: <Kaaba3D highlight="yemeniCorner" />,
+    visual: (
+      <Landmark
+        photo={REAL_PHOTOS.kaabaCorner}
+        alt="Yemeni Corner of the Ka'bah"
+        badge={<><span className="w-2 h-2 rounded-full bg-[#B3884D]" /> YEMENI CORNER · south-west</>}
+        annotation={{ x: 32, y: 60, color: "#B3884D", label: "YEMENI CORNER" }}
+        caption="Touch only · don't kiss"
+        modelKey="kaaba"
+        testid="landmark-yemeni"
+      />
+    ),
     place_en: "YEMENI CORNER",
     place_ar: "الركن اليماني",
     title_en: "Touch with right hand only",
     title_ar: "استلم بيدك اليمنى فقط",
-    sub_en: "The corner before the Black Stone. Just touch — DO NOT kiss. NO takbir. NO du'a here. If crowded, just walk past.",
-    sub_ar: "الركن قبل الحجر الأسود. المس فقط — لا تُقبّله. لا تكبّر. لا تدعُ. إذا ازدحم فمرّ بدون إشارة.",
+    sub_en: "The corner BEFORE the Black Stone (south-west). Just touch with your right hand if easy. DO NOT kiss. NO takbir. NO du'a here.",
+    sub_ar: "الركن قبل الحجر الأسود (الجنوبي الغربي). المسه بيدك اليمنى إن تيسّر — لا تُقبّله. لا تكبّر. لا تدعُ.",
     dua: null,
   },
   {
-    visual: <Kaaba3D highlight="between" />,
+    visual: (
+      <Landmark
+        photo={REAL_PHOTOS.kaabaPilgrims}
+        alt="Final stretch back to the Black Stone"
+        badge={<><span className="w-2 h-2 rounded-full bg-[#8B4540]" /> FINAL STRETCH</>}
+        caption="Yemeni Corner → Black Stone"
+        modelKey="kaaba"
+        testid="landmark-between"
+      />
+    ),
     place_en: "BETWEEN YEMENI & BLACK STONE",
     place_ar: "بين الركن اليماني والحجر",
     title_en: "Say this prayer",
     title_ar: "اقرأ هذا الدعاء",
-    sub_en: "On the final stretch back to the Black Stone, recite this du'a.",
-    sub_ar: "في الجزء الأخير عائدًا للحجر الأسود اقرأ هذا الدعاء.",
+    sub_en: "On the final stretch back to the Black Stone, recite this du'a. When you reach the Black Stone, the lap is complete.",
+    sub_ar: "في الجزء الأخير عائدًا للحجر الأسود اقرأ هذا الدعاء. عند وصولك الحجر يكتمل الشوط.",
     dua: {
       ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
       tr: "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā 'adhāban-nār.",
@@ -119,7 +157,14 @@ export default function Tawaf() {
           </p>
         </div>
         <div className="mt-8">
-          <Kaaba3D highlight="maqamIbrahim" />
+          <Landmark
+            photo={REAL_PHOTOS.kaabaAerial}
+            alt="Ka'bah and Maqam Ibrahim"
+            badge="MAQAM IBRAHIM AHEAD"
+            caption="Pray 2 raka'ah · drink Zamzam"
+            modelKey="grandMosque"
+            testid="landmark-complete"
+          />
         </div>
         <button
           onClick={reset}
@@ -176,10 +221,6 @@ export default function Tawaf() {
         >
           <div className="relative" data-testid="tawaf-visual-3d">
             {cur.visual}
-            <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[11px] font-semibold tracking-wide text-[#1C1D1B]">
-              <MapPin className="w-3 h-3" />
-              {isAr ? cur.place_ar : cur.place_en}
-            </div>
           </div>
 
           <h2

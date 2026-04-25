@@ -1,8 +1,8 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, ArrowRight, Check, RotateCcw, MapPin } from "lucide-react";
+import { Volume2, ArrowRight, Check, RotateCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
-import Masaa3D from "../components/Masaa3D";
+import Landmark, { REAL_PHOTOS } from "../components/Sketchfab3D";
 
 function speak(text) {
   if (!text) return;
@@ -33,28 +33,46 @@ function buildSteps(trip, isFinalMarwah, isAr) {
   const startHillAr = onSafa ? "الصفا" : "المروة";
   const endHillEn = onSafa ? "MARWAH" : "SAFA";
   const endHillAr = onSafa ? "المروة" : "الصفا";
-  const startKey = onSafa ? "safa" : "marwah";
-  const endKey = onSafa ? "marwah" : "safa";
 
   const steps = [];
+  const safaPhoto = REAL_PHOTOS.masaa;
+  const marwahPhoto = REAL_PHOTOS.masaa;
+  const startPhoto = onSafa ? safaPhoto : marwahPhoto;
+  const endPhoto = onSafa ? marwahPhoto : safaPhoto;
 
-  // 1. Verse only on the very first time on Safa
   if (trip === 0) {
     steps.push({
-      visual: <Masaa3D highlight="safa" />,
+      visual: (
+        <Landmark
+          photo={REAL_PHOTOS.masaa}
+          alt="Mas'a corridor — Safa hill"
+          badge={<><span className="w-2 h-2 rounded-full bg-[#1C1D1B]" /> SAFA · first time</>}
+          caption="Climb up · face the Ka'bah"
+          modelKey="grandMosque"
+          testid="landmark-safa-first"
+        />
+      ),
       place_en: "SAFA · FIRST TIME",
       place_ar: "الصفا · أول مرّة",
       title_en: "Read this verse — once",
       title_ar: "اقرأ هذه الآية مرّة واحدة",
-      sub_en: "Climb the dark Safa hill (left). Face the Ka'bah. Read this verse one time only.",
-      sub_ar: "اصعد على الصفا (الجبل الأسود يسارًا). استقبل الكعبة. اقرأ هذه الآية مرة واحدة فقط.",
+      sub_en: "Climb Safa, face the Ka'bah, and read this verse one time only — the very first time you climb Safa.",
+      sub_ar: "اصعد الصفا، استقبل الكعبة، واقرأ هذه الآية مرة واحدة فقط في أول مرة تصعد الصفا.",
       dua: SAFA_VERSE,
     });
   }
 
-  // 2. Takbir on starting hill
   steps.push({
-    visual: <Masaa3D highlight={startKey} />,
+    visual: (
+      <Landmark
+        photo={startPhoto}
+        alt={`${startHillEn} hill`}
+        badge={<><span className={`w-2 h-2 rounded-full ${onSafa ? "bg-[#1C1D1B]" : "bg-[#B3884D]"}`} /> ON {startHillEn}</>}
+        caption="Takbir 3× · raise your hands"
+        modelKey="grandMosque"
+        testid={`landmark-on-${startHillEn.toLowerCase()}`}
+      />
+    ),
     place_en: `ON ${startHillEn}`,
     place_ar: `على ${startHillAr}`,
     title_en: "Say takbir 3 times",
@@ -64,9 +82,17 @@ function buildSteps(trip, isFinalMarwah, isAr) {
     dua: TAKBIR_TAHLIL,
   });
 
-  // 3. Walking
   steps.push({
-    visual: <Masaa3D highlight="walking" />,
+    visual: (
+      <Landmark
+        photo={REAL_PHOTOS.masaa}
+        alt="Mas'a corridor"
+        badge={<><span className="w-2 h-2 rounded-full bg-[#B3884D]" /> WALKING</>}
+        caption={`Heading to ${endHillEn === "MARWAH" ? "Marwah" : "Safa"}`}
+        modelKey="grandMosque"
+        testid="landmark-walking"
+      />
+    ),
     place_en: "WALK",
     place_ar: "المشي",
     title_en: `Walk to ${endHillEn === "MARWAH" ? "Marwah" : "Safa"}`,
@@ -76,9 +102,17 @@ function buildSteps(trip, isFinalMarwah, isAr) {
     dua: null,
   });
 
-  // 4. Green markers
   steps.push({
-    visual: <Masaa3D highlight="greenMarkers" />,
+    visual: (
+      <Landmark
+        photo={REAL_PHOTOS.greenMarkers}
+        alt="Green markers area"
+        badge={<><span className="w-2 h-2 rounded-full bg-[#2A5A4A]" /> GREEN MARKERS</>}
+        caption="Men jog · women walk"
+        modelKey="grandMosque"
+        testid="landmark-green"
+      />
+    ),
     place_en: "GREEN MARKERS",
     place_ar: "العَلَمان الأخضران",
     title_en: "Men jog briskly here",
@@ -88,10 +122,18 @@ function buildSteps(trip, isFinalMarwah, isAr) {
     dua: null,
   });
 
-  // 5. End hill
   if (isFinalMarwah) {
     steps.push({
-      visual: <Masaa3D highlight="marwah" />,
+      visual: (
+        <Landmark
+          photo={REAL_PHOTOS.masaa}
+          alt="Marwah final visit"
+          badge={<><span className="w-2 h-2 rounded-full bg-[#8B4540]" /> FINAL MARWAH</>}
+          caption="Long du'a · NO takbir"
+          modelKey="grandMosque"
+          testid="landmark-final"
+        />
+      ),
       place_en: "FINAL MARWAH",
       place_ar: "المروة · الأخيرة",
       title_en: "Make du'a — no takbir this time",
@@ -102,7 +144,16 @@ function buildSteps(trip, isFinalMarwah, isAr) {
     });
   } else {
     steps.push({
-      visual: <Masaa3D highlight={endKey} />,
+      visual: (
+        <Landmark
+          photo={endPhoto}
+          alt={`${endHillEn} hill`}
+          badge={<><span className={`w-2 h-2 rounded-full ${endHillEn === "SAFA" ? "bg-[#1C1D1B]" : "bg-[#B3884D]"}`} /> ON {endHillEn}</>}
+          caption="Takbir 3× again"
+          modelKey="grandMosque"
+          testid={`landmark-on-${endHillEn.toLowerCase()}`}
+        />
+      ),
       place_en: `ON ${endHillEn}`,
       place_ar: `على ${endHillAr}`,
       title_en: "Say takbir 3 times again",
@@ -228,10 +279,6 @@ export default function Sai() {
         >
           <div className="relative" data-testid="sai-visual-3d">
             {cur.visual}
-            <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[11px] font-semibold tracking-wide text-[#1C1D1B]">
-              <MapPin className="w-3 h-3" />
-              {isAr ? cur.place_ar : cur.place_en}
-            </div>
           </div>
 
           <h2
