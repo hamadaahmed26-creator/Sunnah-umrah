@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 */
 
 const TILT = -22;
+const ORBIT_DURATION = 28; // seconds for one full pilgrim orbit
 const TARGETS = {
   blackStone: -45,    // front-right edge faces viewer
   yemeniCorner: 45,   // front-left edge faces viewer
@@ -98,20 +99,15 @@ export default function Kaaba3D({ highlight = null }) {
           </div>
         </motion.div>
 
-        {/* Orbiting pilgrim dot — only during walking step */}
+        {/* Orbiting pilgrim dot — only during walking step. Pure CSS animation for stability. */}
         {isWalking && (
-          <motion.div
-            className="absolute"
+          <div
+            className="absolute pointer-events-none kaaba-orbit"
             style={{
               width: 168,
               height: 168,
               transformStyle: "preserve-3d",
-              pointerEvents: "none",
-            }}
-            animate={{ rotateX: TILT, rotateY: [-25, -25 - 360] }}
-            transition={{
-              rotateY: { duration: ORBIT_DURATION, repeat: Infinity, ease: "linear" },
-              rotateX: { duration: 0.6 },
+              transform: `rotateX(${TILT}deg)`,
             }}
             data-testid="pilgrim-orbit"
           >
@@ -119,15 +115,27 @@ export default function Kaaba3D({ highlight = null }) {
               className="absolute left-1/2 top-1/2"
               style={{ transform: "translate(-50%, -50%) translateZ(118px)" }}
             >
-              <motion.span
-                className="block w-3.5 h-3.5 rounded-full bg-[#8B4540] border-[2.5px] border-white shadow-[0_0_10px_rgba(139,69,64,0.6)]"
-                animate={{ scale: [1, 1.25, 1] }}
-                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-              />
+              <span className="block w-3.5 h-3.5 rounded-full bg-[#8B4540] border-[2.5px] border-white shadow-[0_0_10px_rgba(139,69,64,0.6)] kaaba-pilgrim-pulse" />
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
+      <style>{`
+        @keyframes kaabaOrbitSpin {
+          from { transform: rotateX(${TILT}deg) rotateY(-25deg); }
+          to   { transform: rotateX(${TILT}deg) rotateY(-385deg); }
+        }
+        .kaaba-orbit {
+          animation: kaabaOrbitSpin ${ORBIT_DURATION}s linear infinite;
+        }
+        @keyframes kaabaPilgrimPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.25); }
+        }
+        .kaaba-pilgrim-pulse {
+          animation: kaabaPilgrimPulse 1.4s ease-in-out infinite;
+        }
+      `}</style>
 
       {/* Floating Maqam Ibrahim dome (right side) */}
       <div className="absolute right-6 bottom-12 flex flex-col items-center" data-testid="maqam-ibrahim">
