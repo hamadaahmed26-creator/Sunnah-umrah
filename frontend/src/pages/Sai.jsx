@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, ArrowRight, Check, RotateCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import Inline3DModel from "../components/Inline3DModel";
+import { PHOTOS, ALT } from "../lib/ritualPhotos";
 
 function speak(text) {
   if (!text) return;
@@ -46,6 +47,8 @@ function buildSteps(trip, isFinalMarwah) {
       sub_ar: "اصعد الصفا، استقبل الكعبة، واقرأ هذه الآية مرة واحدة فقط في أول مرة تصعد الصفا.",
       dua: SAFA_VERSE,
       accent: "#1C1D1B",
+      photo: PHOTOS.mountSafa,
+      alt: ALT.mountSafa,
     });
   }
 
@@ -58,6 +61,8 @@ function buildSteps(trip, isFinalMarwah) {
     sub_ar: "ارفع يديك. اقرأها ثلاث مرات. بعد الأولى والثانية: ادعُ. بعد الثالثة: لا تَدعُ — ابدأ المشي.",
     dua: TAKBIR_TAHLIL,
     accent: onSafa ? "#1C1D1B" : "#B3884D",
+    photo: onSafa ? PHOTOS.onSafa : PHOTOS.onMarwah,
+    alt: onSafa ? ALT.onSafa : ALT.onMarwah,
   });
 
   steps.push({
@@ -69,6 +74,8 @@ function buildSteps(trip, isFinalMarwah) {
     sub_ar: "امشِ بمشيك المعتاد. ادعُ بأي لغة. وانتبه للعَلَمين الأخضرين.",
     dua: null,
     accent: "#5C5D58",
+    photo: PHOTOS.masaaCorridor,
+    alt: ALT.masaaCorridor,
   });
 
   steps.push({
@@ -80,6 +87,8 @@ function buildSteps(trip, isFinalMarwah) {
     sub_ar: "الرجال: يَهرولون بين العمودين الأخضرين. النساء: يُكملن المشي العادي.",
     dua: null,
     accent: "#2A5A4A",
+    photo: PHOTOS.masaaGreenMarkers,
+    alt: ALT.masaaGreenMarkers,
   });
 
   if (isFinalMarwah) {
@@ -92,6 +101,8 @@ function buildSteps(trip, isFinalMarwah) {
       sub_ar: "هذه هي الزيارة السابعة والأخيرة. من السنة: لا تُكرّر التكبير هنا. ادعُ دعاءً مطوّلًا، ثم اضغط «انتهى».",
       dua: null,
       accent: "#8B4540",
+      photo: PHOTOS.onMarwah,
+      alt: ALT.onMarwah,
     });
   } else {
     steps.push({
@@ -103,6 +114,8 @@ function buildSteps(trip, isFinalMarwah) {
       sub_ar: "كما في السابق: ثلاث مرات، دعاء بعد الأولى والثانية، ولا دعاء بعد الثالثة.",
       dua: TAKBIR_TAHLIL,
       accent: endEn === "Safa" ? "#1C1D1B" : "#B3884D",
+      photo: endEn === "Safa" ? PHOTOS.onSafa : PHOTOS.onMarwah,
+      alt: endEn === "Safa" ? ALT.onSafa : ALT.onMarwah,
     });
   }
 
@@ -148,7 +161,7 @@ export default function Sai() {
     return (
       <div className="max-w-md mx-auto pb-12" data-testid="sai-page">
         <div className="mt-2">
-          <Inline3DModel model="grandMosque" caption="Sa'i complete · Alhamdulillah" testid="sai-3d" />
+          <Inline3DModel src={PHOTOS.masaaCorridor} alt={ALT.masaaCorridor} caption="Sa'i complete · Alhamdulillah" testid="sai-3d" />
         </div>
         <div className="mt-6 text-center">
           <div className="inline-flex w-14 h-14 rounded-full bg-[#2A5A4A] text-white items-center justify-center mb-3">
@@ -210,8 +223,9 @@ export default function Sai() {
       {/* PERSISTENT 3D — Grand Mosque includes Safa, Marwah, Mas'a corridor */}
       <div className="mt-4">
         <Inline3DModel
-          model="grandMosque"
-          height="h-[300px]"
+          src={cur.photo}
+          alt={cur.alt}
+          height="h-[280px]"
           caption={isAr ? cur.place_ar : cur.place_en}
           testid="sai-3d"
         />

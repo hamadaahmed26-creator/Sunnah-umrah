@@ -23,12 +23,14 @@
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
 ## Implemented (Feb 2026 — latest session)
-- **Tawaf & Sa'i wizard pages** with persistent landmark photo at top + step text/duas flowing below:
-  - Iconic Kaaba photo (Unsplash CDN) for Tawaf
-  - Mas'a corridor photo (Wikimedia Commons) for Sa'i
-  - Single `<img>` mounted once per page → no flicker between laps/steps
+- **Tawaf & Sa'i wizard pages** with **per-step landmark photos** at top + step text/duas flowing below:
+  - **Tawaf** (4 photos, 1 per step): Black Stone close-up → aerial Tawaf around Ka'bah → Yemeni Corner (hands touching) → mataf wide shot
+  - **Sa'i** (5 photos cycling per step type): Mount Safa → pilgrims on Safa → Mas'a corridor → green markers → Mount Marwah
+  - Photos cross-fade smoothly when stepping (no flash, no remount)
+  - All images sourced from Wikimedia Commons + Unsplash (CC / free-to-use)
   - Sunnah-correct duas extracted verbatim from user's PDF (lapGuide.js)
   - Special handling: no takbir on 7th Marwah; Yemeni Corner = touch only, no kiss/dua
+- New `/app/frontend/src/lib/ritualPhotos.js` central photo registry
 - Removed dead components (`Kaaba3D`, `Masaa3D`, `Sketchfab3D`, `landmarkPhotos`, prior CSS-3D and Sketchfab iframe attempts)
 
 ## Implemented (earlier in Feb 2026)

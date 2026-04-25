@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, ArrowRight, Check, RotateCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import Inline3DModel from "../components/Inline3DModel";
+import { PHOTOS, ALT } from "../lib/ritualPhotos";
 
 function speak(text) {
   if (!text) return;
@@ -25,6 +26,8 @@ const STEPS = (lap) => [
     sub_ar: "قف عند الركن الشرقي حيث الحجر الأسود. استقبله، ارفع يدك اليمنى، قلها مرّة. كل شوط يبدأ من هنا.",
     dua: { ar: "اللَّهُ أَكْبَر", tr: "Allāhu Akbar", en: "Allah is the Greatest." },
     accent: "#2A5A4A",
+    photo: PHOTOS.blackStone,
+    alt: ALT.blackStone,
   },
   {
     place_en: "2 · Walk around the Ka'bah",
@@ -41,6 +44,8 @@ const STEPS = (lap) => [
         : "امشِ عكس عقارب الساعة، والكعبة عن يسارك. بمشيك المعتاد. ادعُ بأي لغة.",
     dua: null,
     accent: "#B3884D",
+    photo: PHOTOS.tawafCircle,
+    alt: ALT.tawafCircle,
   },
   {
     place_en: "3 · Yemeni Corner — south-west",
@@ -51,6 +56,8 @@ const STEPS = (lap) => [
     sub_ar: "الركن قبل الحجر الأسود. المسه بيدك اليمنى إن تيسّر. لا تُقبّله. لا تكبّر. لا تدعُ. إذا ازدحم فمرّ.",
     dua: null,
     accent: "#B3884D",
+    photo: PHOTOS.yemeniCorner,
+    alt: ALT.yemeniCorner,
   },
   {
     place_en: "4 · Yemeni → Black Stone",
@@ -65,6 +72,8 @@ const STEPS = (lap) => [
       en: "Our Lord, give us good in this world and good in the Hereafter, and protect us from the Fire.",
     },
     accent: "#8B4540",
+    photo: PHOTOS.kaabaWide,
+    alt: ALT.kaabaWide,
   },
 ];
 
@@ -107,7 +116,7 @@ export default function Tawaf() {
       <div className="max-w-md mx-auto pb-12" data-testid="tawaf-page">
         <div className="mt-2">
           {/* Persistent 3D model */}
-          <Inline3DModel model="kaaba" caption="Tawaf complete · drag to rotate" testid="tawaf-3d" />
+          <Inline3DModel src={PHOTOS.kaabaWide} alt={ALT.kaabaWide} caption="Tawaf complete · Alhamdulillah" testid="tawaf-3d" />
         </div>
         <div className="mt-6 text-center">
           <div className="inline-flex w-14 h-14 rounded-full bg-[#2A5A4A] text-white items-center justify-center mb-3">
@@ -163,8 +172,9 @@ export default function Tawaf() {
       {/* PERSISTENT 3D — stays mounted across all steps */}
       <div className="mt-4">
         <Inline3DModel
-          model="kaaba"
-          height="h-[300px]"
+          src={cur.photo}
+          alt={cur.alt}
+          height="h-[280px]"
           caption={isAr ? cur.place_ar : cur.place_en}
           testid="tawaf-3d"
         />
