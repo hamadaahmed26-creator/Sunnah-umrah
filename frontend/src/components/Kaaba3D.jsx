@@ -52,16 +52,8 @@ export default function Kaaba3D({ highlight = null }) {
         <motion.div
           className="relative"
           style={{ width: 168, height: 168, transformStyle: "preserve-3d" }}
-          animate={
-            isWalking
-              ? { rotateX: TILT, rotateY: [0, -360] }
-              : { rotateX: TILT, rotateY: targetY }
-          }
-          transition={
-            isWalking
-              ? { rotateY: { duration: 14, repeat: Infinity, ease: "linear" }, rotateX: { duration: 0.6 } }
-              : { type: "spring", stiffness: 35, damping: 14 }
-          }
+          animate={{ rotateX: TILT, rotateY: isWalking ? -25 : targetY }}
+          transition={{ type: "spring", stiffness: 28, damping: 16 }}
         >
           {/* 6 faces: half-size offset = 84 */}
           <Face transform="translateZ(84px)" hasDoor />
@@ -105,6 +97,36 @@ export default function Kaaba3D({ highlight = null }) {
             />
           </div>
         </motion.div>
+
+        {/* Orbiting pilgrim dot — only during walking step */}
+        {isWalking && (
+          <motion.div
+            className="absolute"
+            style={{
+              width: 168,
+              height: 168,
+              transformStyle: "preserve-3d",
+              pointerEvents: "none",
+            }}
+            animate={{ rotateX: TILT, rotateY: [-25, -25 - 360] }}
+            transition={{
+              rotateY: { duration: ORBIT_DURATION, repeat: Infinity, ease: "linear" },
+              rotateX: { duration: 0.6 },
+            }}
+            data-testid="pilgrim-orbit"
+          >
+            <div
+              className="absolute left-1/2 top-1/2"
+              style={{ transform: "translate(-50%, -50%) translateZ(118px)" }}
+            >
+              <motion.span
+                className="block w-3.5 h-3.5 rounded-full bg-[#8B4540] border-[2.5px] border-white shadow-[0_0_10px_rgba(139,69,64,0.6)]"
+                animate={{ scale: [1, 1.25, 1] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* Floating Maqam Ibrahim dome (right side) */}
@@ -147,7 +169,8 @@ export default function Kaaba3D({ highlight = null }) {
       {/* Direction hint when walking */}
       {isWalking && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B]/90 px-3 py-1 text-[10px] font-semibold tracking-[0.2em] uppercase text-white">
-          Walking · counter-clockwise
+          <span className="block w-2 h-2 rounded-full bg-[#8B4540]" />
+          You · walking counter-clockwise
         </div>
       )}
     </div>
