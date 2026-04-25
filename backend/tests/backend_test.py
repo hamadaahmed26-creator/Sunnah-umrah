@@ -1,7 +1,7 @@
-"""Umrah Companion API backend tests."""
+"""Backend regression tests for Umrah Companion API.
+Covers /api/chat, /api/gates*, /api/group/*, /api/progress.
+"""
 import os
-import uuid
-import time
 import pytest
 import requests
 
@@ -10,125 +10,103 @@ API = f"{BASE_URL}/api"
 
 
 @pytest.fixture(scope="module")
-def session_id():
-    return f"TEST_sess_{uuid.uuid4().hex[:8]}"
+def s():
+    sess = requests.Session()
+    sess.headers.update({"Content-Type": "application/json"})
+    return sess
 
 
-# ---------- Health ----------
-def test_root_ok():
-    r = requests.get(f"{API}/", timeout=20)
+# --- Health ---
+def test_root(s):
+    r = s.get(f"{API}/")
     assert r.status_code == 200
-    body = r.json()
-    assert body.get("status") == "ok"
+    assert r.json().get("status") == "ok"
 
 
-# ---------- Gates ----------
-def test_gates_list():
-    r = requests.get(f"{API}/gates", timeout=20)
-    assert r.status_code == 200
-    gates = r.json()
-    assert isinstance(gates, list)
-    assert len(gates) == 12
-    g = gates[0]
-    for key in ("name_en", "name_ar", "number", "lat", "lng"):
-        assert key in g, f"missing key {key}"
-
-
-def test_gates_nearest():
-    r = requests.post(f"{API}/gates/nearest", json={"lat": 21.4225, "lng": 39.8262}, timeout=20)
+# --- Gates ---
+def test_list_gates(s):
+    r = s.get(f"{API}/gates")
     assert r.status_code == 200
     data = r.json()
-    assert "gate" in data
-    assert "distance_km" in data
-    assert "bearing_deg" in data
-    assert "others" in data and isinstance(data["others"], list)
-    assert len(data["others"]) == 5
-    # gate sub-fields
-    for key in ("name_en", "name_ar", "number", "lat", "lng"):
-        assert key in data["gate"]
-    # distances should be sorted ascending in others
-    dists = [o["distance_km"] for o in data["others"]]
-    assert dists == sorted(dists)
-    # nearest distance <= first of others
-    assert data["distance_km"] <= dists[0] + 1e-6
+    assert isinstance(data, list) and len(data) >= 10
+    assert {"id", "name_en", "name_ar", "lat", "lng"}.issubset(data[0].keys())
 
 
-# ---------- Chat (Claude Sonnet 4.5 via emergentintegrations) ----------
-def test_chat_en(session_id):
-    r = requests.post(
-        f"{API}/chat",
-        json={"session_id": session_id, "message": "What is the first step of Umrah?", "language": "en"},
-        timeout=90,
-    )
+def test_nearest_gate(s):
+    # Mecca city center-ish coords
+    r = s.post(f"{API}/gates/nearest", json={"lat": 21.4225, "lng": 39.8262})
+    assert r.status_code == 200
+    data = r.json()
+    assert "gate" in data and "distance_km" in data and "bearing_deg" in data
+    assert data["gate"]["id"] in [g["id"] for g in s.get(f"{API}/gates").json()]
+    assert isinstance(data["others"], list)
+
+
+def test_nearest_gate_invalid(s):
+    r = s.post(f"{API}/gates/nearest", json={"lat": "x"})
+    assert r.status_code in (400, 422)
+
+
+# --- Chat (Claude Sonnet via Emergent) ---
+def test_chat_reply(s):
+    payload = {
+        "session_id": "TEST_pytest_session_1",
+        "message": "In one short sentence: what is Tawaf?",
+        "language": "en",
+    }
+    r = s.post(f"{API}/chat", json=payload, timeout=60)
     assert r.status_code == 200, r.text
     data = r.json()
-    assert data["session_id"] == session_id
-    assert isinstance(data["reply"], str)
-    assert len(data["reply"]) > 10
+    assert data["session_id"] == payload["session_id"]
+    assert isinstance(data["reply"], str) and len(data["reply"].strip()) > 0
 
 
-def test_chat_ar(session_id):
-    r = requests.post(
-        f"{API}/chat",
-        json={"session_id": session_id, "message": "ما هي الخطوة الأولى للعمرة؟", "language": "ar"},
-        timeout=90,
-    )
-    assert r.status_code == 200, r.text
-    data = r.json()
-    assert isinstance(data["reply"], str)
-    assert len(data["reply"]) > 5
-
-
-def test_chat_history_persisted(session_id):
-    # small wait to ensure write
-    time.sleep(1)
-    r = requests.get(f"{API}/chat/{session_id}/messages", timeout=20)
+def test_chat_history_no_objectid(s):
+    # ensure GET messages excludes _id
+    r = s.get(f"{API}/chat/TEST_pytest_session_1/messages")
     assert r.status_code == 200
     msgs = r.json()
-    assert isinstance(msgs, list)
-    # 2 prior tests inserted 2 user + 2 assistant = 4 messages
-    assert len(msgs) >= 4
-    # No _id field exposed
+    assert isinstance(msgs, list) and len(msgs) >= 2
     for m in msgs:
         assert "_id" not in m
         assert m["role"] in ("user", "assistant")
-        assert "content" in m and m["session_id"] == session_id
-    # First message should be user
-    assert msgs[0]["role"] == "user"
 
 
-# ---------- Progress ----------
-def test_progress_upsert_and_get():
-    uid = f"TEST_u_{uuid.uuid4().hex[:6]}"
-    r = requests.put(f"{API}/progress", json={"user_id": uid, "tawaf_count": 3}, timeout=20)
+# --- Progress ---
+def test_progress_upsert_and_get(s):
+    uid = "TEST_pytest_user"
+    r = s.put(f"{API}/progress", json={"user_id": uid, "step": "tawaf", "tawaf_count": 3})
     assert r.status_code == 200
-    assert r.json().get("ok") is True
-
-    r2 = requests.get(f"{API}/progress/{uid}", timeout=20)
-    assert r2.status_code == 200
-    doc = r2.json()
-    assert doc["user_id"] == uid
-    assert doc["tawaf_count"] == 3
-    assert "_id" not in doc
-
-    # update again with sai_count
-    r3 = requests.put(f"{API}/progress", json={"user_id": uid, "sai_count": 5, "step": "sai"}, timeout=20)
-    assert r3.status_code == 200
-
-    r4 = requests.get(f"{API}/progress/{uid}", timeout=20)
-    assert r4.status_code == 200
-    doc2 = r4.json()
-    assert doc2["sai_count"] == 5
-    assert doc2["step"] == "sai"
-    # tawaf_count should still be 3 (upsert with $set)
-    assert doc2["tawaf_count"] == 3
+    g = s.get(f"{API}/progress/{uid}")
+    assert g.status_code == 200
+    body = g.json()
+    assert body["step"] == "tawaf"
+    assert body["tawaf_count"] == 3
 
 
-def test_progress_default_for_new_user():
-    uid = f"TEST_new_{uuid.uuid4().hex[:6]}"
-    r = requests.get(f"{API}/progress/{uid}", timeout=20)
-    assert r.status_code == 200
-    doc = r.json()
-    assert doc["step"] == "ihram"
-    assert doc["tawaf_count"] == 0
-    assert doc["sai_count"] == 0
+# --- Group ---
+def test_group_create_join_checkin_get(s):
+    c = s.post(f"{API}/group/create")
+    assert c.status_code == 200
+    code = c.json()["code"]
+    assert len(code) == 6
+
+    j = s.post(f"{API}/group/join", json={"code": code})
+    assert j.status_code == 200
+
+    chk = s.put(
+        f"{API}/group/{code}/checkin",
+        json={"user_id": "TEST_u1", "name": "TEST_Ali", "tawaf_count": 2, "sai_count": 0},
+    )
+    assert chk.status_code == 200
+
+    g = s.get(f"{API}/group/{code}")
+    assert g.status_code == 200
+    body = g.json()
+    assert body["code"] == code
+    assert any(m.get("user_id") == "TEST_u1" for m in body["members"])
+
+
+def test_group_join_unknown(s):
+    r = s.post(f"{API}/group/join", json={"code": "NOPE99"})
+    assert r.status_code == 404

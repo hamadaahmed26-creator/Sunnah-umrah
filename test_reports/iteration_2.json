@@ -1,0 +1,56 @@
+{
+  "summary": "Tested Umrah Companion app post-major-refactor (Tour-only ritual page). Backend pytest suite: 9/9 passed (chat with Claude Sonnet 4.5, gates, nearest gate, group create/join/checkin, progress upsert, history exclusion of _id). Frontend Playwright on 414x896 mobile: 33/35 effective passes — Tour loads, intro-jump cards work (3 of 4 testids match spec), tour-next/prev advance, lap counter on step 7 increments to 7 with proper disable→enable transition on tour-next, decrement works, du'a card renders, localStorage persistence works across refresh, AskHelper FAB opens sheet, suggestions populate input, /api/chat returns reply rendered in ask-answer, all 5 bottom-nav links navigate correctly (overlap bug from iteration_1 is fixed — nav is at bottom-20 above the Emergent badge), old routes /tawaf /sai /guide redirect to /tour, /lost shows lost-error in headless when geolocation denied, /chat returns assistant reply, /plan and /group render. Found ONE real bug: data-testid for the SA'I intro card is 'intro-jump-sa'i' (with apostrophe) instead of 'intro-jump-sai' as specified.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "TourScene · Scene_Intro",
+        "issue": "data-testid for SA'I card is generated as `intro-jump-sa'i` (apostrophe in key 'SA\\'I' lowercased) but the spec/contract requires `intro-jump-sai`. This breaks any external test or analytics that targets the documented selector. Fix: change the items array key from 'SA\\'I' to use a separate label/testid pair, e.g. `{ n:'3', k:'SA\\'I', testid:'sai', c:..., jump:11 }` and use that for data-testid; or set an explicit `data-testid={`intro-jump-${(it.testid||it.k).toLowerCase()}`}`.",
+        "selector": "[data-testid=\"intro-jump-sai\"]",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Tour page (mobile 414x896)",
+        "issues": [
+          "On the AskHelper bottom sheet at certain heights, the close (X) button can sit at the very top of the sheet panel — Playwright reported it as 'outside of viewport' on a 414x896 viewport once, suggesting the header may need a small min-height/sticky position when sheet content is short, so close is always reachable without manual scroll inside the sheet."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Fix the SA'I intro card data-testid to be exactly `intro-jump-sai` (no apostrophe) so it matches the contract used by automated tests. Smallest patch: in /app/frontend/src/components/TourScene.jsx Scene_Intro, replace `${it.k.toLowerCase()}` with a sanitized slug or add a separate testid field.",
+    "Optional: ensure AskHelper sheet header (and close button) remain in viewport regardless of content height (sticky top header inside the sheet)."
+  ],
+  "critical_code_review_comments": [
+    "Tour.jsx (~360 lines) is acceptable; if it grows, extract WalkCounter and DuaCard into their own components.",
+    "AskHelper.jsx uses axios.post on every send — no AbortController; rapid re-sends could race. Consider tracking the last request id and ignoring stale responses.",
+    "server.py /api/chat persists the user message BEFORE the LLM call; if LLM throws the user msg is orphaned with no assistant reply. Consider either persisting both atomically after success, or marking orphans for retry.",
+    "/api/progress PUT does not validate tawaf_count/sai_count bounds (can exceed 7); add Field(ge=0, le=7) on ProgressUpdate.",
+    "Tour.jsx restart() does not also clear `umrah_tour_step` synchronously — relies on the useEffect running after state update; that's fine but consider explicit localStorage.removeItem for defensive UX.",
+    "Layout.jsx fixed bottom-20 nav now sits above the Emergent badge — verified clicks on all 5 nav items work. Z-index 60 is sufficient."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/iteration_2.json"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "97%"
+  },
+  "test_credentials": "none required (EMERGENT_LLM_KEY present in backend/.env)",
+  "seed_data_creation": "Test data prefixed TEST_ created in MongoDB (chat_messages session=TEST_pytest_session_1, progress user_id=TEST_pytest_user, group_members user_id=TEST_u1). Small footprint.",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend regression: `pytest /app/backend/tests/backend_test.py -v` (9 tests, ~5s + 1 LLM call). Frontend Playwright must run on 414x896 viewport. Confirmed-working selectors: tour-page, tour-step-label, tour-chapter, tour-progress, tour-scene, tour-title, tour-what, tour-prev, tour-next, tour-reset, tour-walk-counter, tour-walk-count, tour-walk-inc, tour-walk-dec, tour-walk-label, tour-dua, tour-dua-play, tour-tip, ask-helper-fab, ask-helper-sheet, ask-helper-close, ask-helper-input, ask-helper-send, ask-suggestion-0..2, ask-answer, intro-jump-ihram, intro-jump-tawaf, intro-jump-halq, nav-tour, nav-plan, nav-lost, nav-group, nav-chat, locate-btn, lost-error, chat-input, chat-send. The SA'I intro card uses `intro-jump-sa'i` (with apostrophe) — known mismatch. Walking steps are at indices 6 (Tawaf, Step 7 of 15) and 12 (Sa'i, Step 13 of 15). tour-next is correctly disabled until walk count >= 7.",
+  "rca_of_the_issue": "intro-jump-sai testid mismatch RCA: In /app/frontend/src/components/TourScene.jsx (Scene_Intro), each intro card's data-testid is generated as `intro-jump-${it.k.toLowerCase()}` where `it.k` is the user-visible label string. For the Sa'i card, the label is 'SA\\'I' which lowercases to `sa'i`, producing the testid `intro-jump-sa'i` instead of the contractual `intro-jump-sai`. Fix: introduce a slug field per item (e.g. slug: 'sai') and use it for data-testid, decoupling the visible label from the test selector. Alternatively, replace non-alphanumeric chars before lowercasing: `it.k.toLowerCase().replace(/[^a-z0-9]/g,'')`."
+}

@@ -12,6 +12,7 @@ import {
 import { LangContext } from "../components/Layout";
 import { TOUR_STEPS } from "../lib/tourSteps";
 import TourScene from "../components/TourScene";
+import AskHelper from "../components/AskHelper";
 
 /*
  ONE PAGE = THE WHOLE UMRAH.
@@ -355,6 +356,8 @@ export default function Tour() {
           </div>
         </div>
       </div>
+      {/* Floating "Ask the Companion" button — context-aware */}
+      <AskHelper stepLabel={isAr ? step.title_ar : step.title_en} />
     </div>
   );
 }
