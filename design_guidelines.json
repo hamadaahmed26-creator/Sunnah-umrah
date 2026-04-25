@@ -1,0 +1,119 @@
+{
+  "project_name": "Umrah Spiritual Companion App",
+  "theme": "light",
+  "archetype": "Archetype 1 (Organic & Earthy)",
+  "design_philosophy": "Calm, spiritual, highly legible, and tactile. A mobile-first utility app designed for ease of use in bright sunlight (Mecca) while minimizing cognitive load during religious rituals. Focus on large touch targets for counters, and clear, contrasting directions for navigation.",
+  "colors": {
+    "background": {
+      "default": "#F8F6F0",
+      "description": "Warm off-white/desert sand, reduces glare."
+    },
+    "surface": {
+      "card": "#FFFFFF",
+      "floating_bar": "#1C1D1B",
+      "description": "Cards are pure white for contrast against the warm background. Floating action bars use deep Kaaba Charcoal."
+    },
+    "primary": {
+      "default": "#B3884D",
+      "hover": "#997441",
+      "foreground": "#FFFFFF",
+      "description": "Subtle Brass/Gold for CTAs, active states, and counter progress."
+    },
+    "secondary": {
+      "default": "#1C1D1B",
+      "hover": "#2B2D29",
+      "foreground": "#F8F6F0",
+      "description": "Kaaba Charcoal for high-contrast secondary actions and bottom sheets."
+    },
+    "accent": {
+      "success": "#2A5A4A",
+      "error": "#8B4540",
+      "description": "Prophetic Green for correct compass heading/success states; Terracotta for 'Lost' or warning states."
+    },
+    "text": {
+      "primary": "#1C1D1B",
+      "secondary": "#5C5D58",
+      "muted": "#8E8F8A"
+    },
+    "border": {
+      "default": "#E8E5DD",
+      "focus": "#B3884D"
+    }
+  },
+  "typography": {
+    "font_family": {
+      "english": "Manrope, sans-serif",
+      "arabic": "Noto Naskh Arabic, serif"
+    },
+    "scale": {
+      "h1": "text-3xl md:text-4xl font-light tracking-tight text-[#1C1D1B]",
+      "h2": "text-2xl md:text-3xl font-medium tracking-tight",
+      "h3": "text-xl md:text-2xl font-medium",
+      "body": "text-base leading-relaxed text-[#5C5D58]",
+      "small": "text-sm uppercase tracking-[0.2em] font-bold text-[#8E8F8A]",
+      "dua_arabic": "text-3xl md:text-4xl leading-[2.5] text-[#1C1D1B] text-right"
+    },
+    "rules": [
+      "Never center headings unless it's a specific counter or compass UI.",
+      "Arabic text must use a significantly larger line-height (leading-[2.5]) to accommodate diacritics.",
+      "Ensure English and Arabic typography visually balance each other when displayed side-by-side or toggled."
+    ]
+  },
+  "spacing_and_layout": {
+    "philosophy": "Generous spacing. Since users are walking and moving, touch targets must be massive. Reduce UI clutter.",
+    "containers": "Use p-6 or p-8 for standard cards. Counter screens should dedicate 60-70% of viewport height to the button.",
+    "bento_grid": "For the dashboard: 1-col on mobile. Stacked full-width cards. Top card: Current Step (col-span-1). Second row: Map/Gate Locator. Bottom: Floating navigation.",
+    "radius": "rounded-2xl or rounded-3xl for cards. rounded-full for counters and floating buttons."
+  },
+  "components": {
+    "cards": {
+      "style": "Flat solid surfaces. 1px border (#E8E5DD). No heavy drop shadows. Use shadow-sm for subtle elevation.",
+      "implementation": "Shadcn Card heavily customized via Tailwind for the organic archetype."
+    },
+    "counters_tawaf_sai": {
+      "style": "Massive circular touch area. Use aspect-square w-full max-w-[280px] mx-auto. Ring border that fills up as laps progress (0/7).",
+      "interaction": "On tap, scale-95 (Framer Motion) and haptic visual pulse (bg color brief flash).",
+      "colors": "Border stroke in #E8E5DD, active stroke in #B3884D."
+    },
+    "compass_navigation": {
+      "style": "Minimalist digital compass. Concentric circles.",
+      "interaction": "Outer ring rotates smoothly (react-spring or framer-motion) based on device bearing. When facing correct gate/Kaaba, highlight in Success Green (#2A5A4A)."
+    },
+    "bottom_navigation": {
+      "style": "Floating pill at the bottom of the screen (bottom-6 left-1/2 -translate-x-1/2). Glassmorphism (backdrop-blur-xl bg-white/80) to save screen space while keeping it accessible."
+    },
+    "buttons": {
+      "primary": "rounded-full bg-[#B3884D] text-white px-8 py-4 font-medium",
+      "im_lost_fab": "Absolute bottom-right or floating sticky red/terracotta button (#8B4540) ensuring instant access to GPS gate routing."
+    }
+  },
+  "media_and_assets": {
+    "icons": "Use @phosphor-icons/react (Duotone or Regular weight). They feel slightly more rounded and premium, fitting the organic archetype.",
+    "images": {
+      "hero_background": {
+        "url": "https://images.unsplash.com/photo-1719194981461-fa0ec450999e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwxfHxpc2xhbWljJTIwZ2VvbWV0cmljJTIwcGF0dGVybiUyMGFic3RyYWN0fGVufDB8fHx8MTc3NzEzNzE4NHww&ixlib=rb-4.1.0&q=85",
+        "description": "White wall with intricate geometric pattern, use as extremely subtle 10% opacity background overlay in headers or onboarding."
+      },
+      "kaaba_reference": {
+        "url": "https://images.unsplash.com/photo-1591604157118-b94e2684f857?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwyfHxtZWNjYSUyMGthYWJhJTIwbWFzamlkJTIwYWwlMjBoYXJhbXxlbnwwfHx8fDE3NzcxMzcxNzN8MA&ixlib=rb-4.1.0&q=85",
+        "description": "People near Masjid Al Haram, useful for onboarding or 'I'm Lost' visual aid context."
+      },
+      "desert_sand_texture": {
+        "url": "https://images.unsplash.com/photo-1749223062893-0c583c9b8806?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwyfHxkZXNlcnQlMjBzYW5kJTIwdGV4dHVyZSUyMG1pbmltYWx8ZW58MHx8fHwxNzc3MTM3MTg0fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Sand dunes under sky. Use as soft visual texture for empty states or spiritual reflection screens."
+      }
+    }
+  },
+  "rtl_and_accessibility": {
+    "rtl_support": "Wrap application in standard dir='rtl' when Arabic is active. Use Tailwind logical properties (e.g., ms-4, pe-4 instead of ml-4, pr-4) to ensure seamless bi-directional layouts.",
+    "contrast": "Ensure all text meets APCA guidelines, specifically Arabic text which can be harder to read in bright sunlight. Do not use weights below 'medium' for UI elements.",
+    "data_testid": "MANDATORY on all buttons, tabs, counter tap areas, and navigation items."
+  },
+  "instructions_to_main_agent": [
+    "Install and use @phosphor-icons/react for iconography.",
+    "Install and use framer-motion for page transitions and the massive counter button scale-down effect.",
+    "Implement language toggle natively triggering LTR/RTL changes.",
+    "For the compass/gate locator, use a mock GPS bearing logic, but visually build the directional ring as described in the guidelines.",
+    "Ensure the UI uses 'h-screen flex flex-col' appropriately so the app feels like a native PWA, locking the scroll for counter pages."
+  ]
+}
