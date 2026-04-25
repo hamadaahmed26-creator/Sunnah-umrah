@@ -68,12 +68,12 @@ export default function Guide() {
           )}
           {step.id === "tawaf" && (
             <div className="mt-5" data-testid="guide-tawaf-visual">
-              <TawafVisual count={0} total={7} />
+              <TawafVisual count={0} total={7} segment={0} />
             </div>
           )}
           {step.id === "sai" && (
             <div className="mt-5" data-testid="guide-sai-visual">
-              <SaiVisual count={0} total={7} />
+              <SaiVisual trips={0} total={7} segment={0} />
             </div>
           )}
           {step.id === "halq" && (
