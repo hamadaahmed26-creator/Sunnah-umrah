@@ -186,26 +186,22 @@ function Scene_YemeniCorner() {
   );
 }
 
-// ─── SCENE: Maqam Ibrahim ────────────────────────────────────
+// ─── SCENE: Maqam Ibrahim (real photo) ───────────────────────
 function Scene_Maqam() {
   return (
-    <svg viewBox="0 0 280 160" className="w-full h-full">
-      <rect width="280" height="160" fill={SAND} />
-      <line x1="0" y1="130" x2="280" y2="130" stroke={STONE} strokeWidth="1.5" />
-      <Kaaba x={210} y={130} w={68} h={76} />
-      {/* Maqam — small gold dome */}
-      <g>
-        <rect x="105" y="108" width="32" height="22" fill={INK} stroke={GOLD} strokeWidth="1.5" />
-        <path d="M 105 108 Q 121 90 137 108" fill={GOLD} stroke={INK} strokeWidth="1" />
-      </g>
-      <text x="121" y="148" textAnchor="middle" fill={INK} fontSize="7.5" fontWeight="700" letterSpacing="1.2">MAQAM IBRAHIM</text>
-      {/* Pilgrim praying (kneeling shape) */}
-      <g transform="translate(60,130)">
-        <ellipse cx="0" cy="-3" rx="14" ry="6" fill="white" stroke={INK} strokeWidth="1.2" />
-        <circle cx="-2" cy="-13" r="5" fill="#E8C9A1" stroke={INK} strokeWidth="1" />
-      </g>
-      <text x="60" y="148" textAnchor="middle" fill={GREEN} fontSize="7.5" fontWeight="700" letterSpacing="1.2">2 RAKAʿAH</text>
-    </svg>
+    <div className="absolute inset-0 bg-[#1C1D1B]">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Maqam_Ibrahim_2008.jpg/1280px-Maqam_Ibrahim_2008.jpg"
+        alt="Maqam Ibrahim — the Station of Abraham"
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B]/85 backdrop-blur px-3 py-1 text-[10px] font-semibold tracking-[0.2em] uppercase text-white">
+        MAQAM IBRAHIM · 2 RAKA'AH
+      </div>
+    </div>
   );
 }
 

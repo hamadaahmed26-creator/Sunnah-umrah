@@ -25,6 +25,17 @@ const TAKBIR_BS = {
   en: "In the name of Allah; Allah is the Greatest.",
 };
 
+const PHOTOS = {
+  blackStone:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Black_Stone_frame.jpg/1280px-Black_Stone_frame.jpg",
+  tawafCircle:
+    "https://images.unsplash.com/photo-1577889933775-33b8571874c4?w=1200&q=80&auto=format",
+  yemeniCorner:
+    "https://upload.wikimedia.org/wikipedia/commons/f/f1/Rukn_al-Yamani_01.jpg",
+  kaabaWide:
+    "https://images.unsplash.com/photo-1554794470-42d3cd193ecc?w=1200&q=80&auto=format",
+};
+
 function speak(text) {
   if (!text) return;
   try {
@@ -101,6 +112,8 @@ export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
           }
           isAr={isAr}
           dua={TAKBIR_BS}
+          image={PHOTOS.blackStone}
+          alt="Hajar al-Aswad — the Black Stone"
         />
 
         <Step
@@ -117,6 +130,8 @@ export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
               : "Ka'bah on your LEFT. Walk at normal pace. Make du'a in any language."
           }
           isAr={isAr}
+          image={PHOTOS.tawafCircle}
+          alt="Pilgrims circling the Ka'bah during Tawaf"
         />
 
         <Step
@@ -129,6 +144,8 @@ export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
               : "Touch with your right hand if easy. DO NOT kiss it. NO takbir, NO du'a here."
           }
           isAr={isAr}
+          image={PHOTOS.yemeniCorner}
+          alt="The Yemeni Corner of the Ka'bah"
         />
 
         <Step
@@ -142,6 +159,8 @@ export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
           }
           isAr={isAr}
           dua={RABBANA}
+          image={PHOTOS.kaabaWide}
+          alt="The Ka'bah inside Masjid al-Haram"
         />
 
         {/* Sticky-ish "Lap N complete" button (sits inside content so it scrolls naturally) */}
@@ -179,43 +198,57 @@ export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
   );
 }
 
-function Step({ n, color, title, body, isAr, dua }) {
+function Step({ n, color, title, body, isAr, dua, image, alt }) {
   return (
-    <div className="rounded-2xl bg-white border border-[#E8E5DD] p-4">
-      <div className="flex items-start gap-3">
-        <div
-          className="flex-shrink-0 w-7 h-7 rounded-full grid place-items-center text-[12px] font-bold text-white"
-          style={{ background: color }}
-        >
-          {n}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "text-right font-arabic" : ""}`}>
-            {title}
-          </div>
-          <div className={`mt-0.5 text-[13px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
-            {body}
-          </div>
-        </div>
-      </div>
-      {dua && (
-        <div className="mt-3 rounded-xl bg-[#F8F6F0] border border-[#E8E5DD] p-3">
-          <div className="flex items-start justify-between gap-2">
-            <p className="font-arabic text-[18px] leading-[1.9] text-right text-[#1C1D1B] flex-1">
-              {dua.ar}
-            </p>
-            <button
-              onClick={() => speak(dua.ar)}
-              className="tap-pulse w-9 h-9 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
-              aria-label="listen"
-            >
-              <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
-            </button>
-          </div>
-          <p className="mt-2 text-[11px] italic text-[#5C5D58]">{dua.tr}</p>
-          <p className="mt-0.5 text-[11px] text-[#1C1D1B]">{dua.en}</p>
+    <div className="rounded-2xl bg-white border border-[#E8E5DD] overflow-hidden">
+      {image && (
+        <div className="relative w-full h-32 bg-[#1C1D1B]">
+          <img
+            src={image}
+            alt={alt || title}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/55 to-transparent pointer-events-none" />
         </div>
       )}
+      <div className="p-4">
+        <div className="flex items-start gap-3">
+          <div
+            className="flex-shrink-0 w-7 h-7 rounded-full grid place-items-center text-[12px] font-bold text-white"
+            style={{ background: color }}
+          >
+            {n}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "text-right font-arabic" : ""}`}>
+              {title}
+            </div>
+            <div className={`mt-0.5 text-[13px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
+              {body}
+            </div>
+          </div>
+        </div>
+        {dua && (
+          <div className="mt-3 rounded-xl bg-[#F8F6F0] border border-[#E8E5DD] p-3">
+            <div className="flex items-start justify-between gap-2">
+              <p className="font-arabic text-[18px] leading-[1.9] text-right text-[#1C1D1B] flex-1">
+                {dua.ar}
+              </p>
+              <button
+                onClick={() => speak(dua.ar)}
+                className="tap-pulse w-9 h-9 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
+                aria-label="listen"
+              >
+                <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
+              </button>
+            </div>
+            <p className="mt-2 text-[11px] italic text-[#5C5D58]">{dua.tr}</p>
+            <p className="mt-0.5 text-[11px] text-[#1C1D1B]">{dua.en}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

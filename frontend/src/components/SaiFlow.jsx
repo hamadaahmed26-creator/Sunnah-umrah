@@ -23,6 +23,17 @@ const SAFA_VERSE = {
   en: "Indeed, Safa and Marwah are among the symbols of Allah. We begin with what Allah began with.",
 };
 
+const PHOTOS = {
+  safa:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Mount_Safa_Mecca.jpg/1280px-Mount_Safa_Mecca.jpg",
+  marwah:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Mount_Marwah%2C_Mecca_mosque.JPG/1280px-Mount_Marwah%2C_Mecca_mosque.JPG",
+  masaa:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Mas%27aa2.jpg/1280px-Mas%27aa2.jpg",
+  greenMarkers:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Mas%27aa3.jpg/1280px-Mas%27aa3.jpg",
+};
+
 function speak(text) {
   if (!text) return;
   try {
@@ -106,6 +117,8 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
             }
             isAr={isAr}
             dua={SAFA_VERSE}
+            image={PHOTOS.safa}
+            alt="Mount Safa inside Masjid al-Haram"
           />
         )}
 
@@ -120,6 +133,8 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
           }
           isAr={isAr}
           dua={TAKBIR_TAHLIL}
+          image={onSafa ? PHOTOS.safa : PHOTOS.marwah}
+          alt={onSafa ? "Mount Safa" : "Mount Marwah"}
         />
 
         <Step
@@ -132,6 +147,8 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
               : "Walk normally. Make du'a in any language. Watch for the two GREEN markers."
           }
           isAr={isAr}
+          image={PHOTOS.masaa}
+          alt="The Mas'a corridor between Safa and Marwah"
         />
 
         <Step
@@ -144,6 +161,8 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
               : "MEN: jog briskly between the green pillars. WOMEN: walk normally."
           }
           isAr={isAr}
+          image={PHOTOS.greenMarkers}
+          alt="The two green markers in the Mas'a where men jog"
         />
 
         {isLastTrip ? (
@@ -157,6 +176,8 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
                 : "DO NOT recite the takbir this time. Make a long, heartfelt du'a, then tap the button."
             }
             isAr={isAr}
+            image={PHOTOS.marwah}
+            alt="Mount Marwah"
           />
         ) : (
           <Step
@@ -170,6 +191,8 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
             }
             isAr={isAr}
             dua={TAKBIR_TAHLIL}
+            image={onSafa ? PHOTOS.marwah : PHOTOS.safa}
+            alt={onSafa ? "Mount Marwah" : "Mount Safa"}
           />
         )}
 
@@ -196,43 +219,57 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
   );
 }
 
-function Step({ n, color, title, body, isAr, dua }) {
+function Step({ n, color, title, body, isAr, dua, image, alt }) {
   return (
-    <div className="rounded-2xl bg-white border border-[#E8E5DD] p-4">
-      <div className="flex items-start gap-3">
-        <div
-          className="flex-shrink-0 w-7 h-7 rounded-full grid place-items-center text-[12px] font-bold text-white"
-          style={{ background: color }}
-        >
-          {n}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "text-right font-arabic" : ""}`}>
-            {title}
-          </div>
-          <div className={`mt-0.5 text-[13px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
-            {body}
-          </div>
-        </div>
-      </div>
-      {dua && (
-        <div className="mt-3 rounded-xl bg-[#F8F6F0] border border-[#E8E5DD] p-3">
-          <div className="flex items-start justify-between gap-2">
-            <p className="font-arabic text-[17px] leading-[1.9] text-right text-[#1C1D1B] flex-1">
-              {dua.ar}
-            </p>
-            <button
-              onClick={() => speak(dua.ar)}
-              className="tap-pulse w-9 h-9 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
-              aria-label="listen"
-            >
-              <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
-            </button>
-          </div>
-          <p className="mt-2 text-[11px] italic text-[#5C5D58]">{dua.tr}</p>
-          <p className="mt-0.5 text-[11px] text-[#1C1D1B]">{dua.en}</p>
+    <div className="rounded-2xl bg-white border border-[#E8E5DD] overflow-hidden">
+      {image && (
+        <div className="relative w-full h-32 bg-[#1C1D1B]">
+          <img
+            src={image}
+            alt={alt || title}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/55 to-transparent pointer-events-none" />
         </div>
       )}
+      <div className="p-4">
+        <div className="flex items-start gap-3">
+          <div
+            className="flex-shrink-0 w-7 h-7 rounded-full grid place-items-center text-[12px] font-bold text-white"
+            style={{ background: color }}
+          >
+            {n}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "text-right font-arabic" : ""}`}>
+              {title}
+            </div>
+            <div className={`mt-0.5 text-[13px] text-[#5C5D58] leading-relaxed ${isAr ? "text-right font-arabic" : ""}`}>
+              {body}
+            </div>
+          </div>
+        </div>
+        {dua && (
+          <div className="mt-3 rounded-xl bg-[#F8F6F0] border border-[#E8E5DD] p-3">
+            <div className="flex items-start justify-between gap-2">
+              <p className="font-arabic text-[17px] leading-[1.9] text-right text-[#1C1D1B] flex-1">
+                {dua.ar}
+              </p>
+              <button
+                onClick={() => speak(dua.ar)}
+                className="tap-pulse w-9 h-9 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
+                aria-label="listen"
+              >
+                <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
+              </button>
+            </div>
+            <p className="mt-2 text-[11px] italic text-[#5C5D58]">{dua.tr}</p>
+            <p className="mt-0.5 text-[11px] text-[#1C1D1B]">{dua.en}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
