@@ -304,11 +304,12 @@ function Scene_Done() {
 // ─── SCENE: Intro — 4 numbered tappable cards ────────────────
 function Scene_Intro({ onJump }) {
   // Step indices in tourSteps.js for each chapter's first step.
+  // Layout: 0 intro · 1-3 ihram · 4 enter-masjid · 5-6 tawaf · 7 maqam · 8 zamzam · 9-11 sa'i · 12 halq · 13 done
   const items = [
     { n: "1", k: "IHRAM", slug: "ihram", c: GREEN, jump: 1 },
     { n: "2", k: "TAWAF", slug: "tawaf", c: GOLD, jump: 5 },
-    { n: "3", k: "SA'I", slug: "sai", c: "#8B4540", jump: 11 },
-    { n: "4", k: "HALQ", slug: "halq", c: INK, jump: 14 },
+    { n: "3", k: "SA'I", slug: "sai", c: "#8B4540", jump: 9 },
+    { n: "4", k: "HALQ", slug: "halq", c: INK, jump: 12 },
   ];
   return (
     <div className="absolute inset-0 grid grid-cols-2 gap-3 p-5 bg-[#F8F6F0]">

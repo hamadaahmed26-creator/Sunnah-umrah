@@ -91,6 +91,13 @@ export default function Tour() {
     setLap(0);
     setTrip(0);
   };
+  const finishUmrah = () => {
+    if (navigator.vibrate) navigator.vibrate([60, 80, 60, 80, 200]);
+    speak("تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُم");
+    // Small celebration delay, then reset back to the beginning so the next
+    // pilgrim (or another visit) starts fresh.
+    setTimeout(() => restart(), 1200);
+  };
 
   const accent = CHAPTER_COLOR[step.chapter] || "#B3884D";
   const title = isAr ? step.title_ar : step.title_en;
@@ -180,7 +187,12 @@ export default function Tour() {
             transition={{ duration: 0.4 }}
             className="absolute inset-0"
           >
-            <TourScene scene={step.scene} lap={lap} trip={trip} onJump={(i) => setIdx(i)} />
+            <TourScene
+              scene={step.scene}
+              lap={lap}
+              trip={trip}
+              onJump={(i) => setIdx(Math.max(0, Math.min(total - 1, i)))}
+            />
           </motion.div>
         </AnimatePresence>
         {/* Chapter pill */}
@@ -390,11 +402,11 @@ export default function Tour() {
 
             <motion.button
               whileTap={{ scale: 0.97 }}
-              onClick={next}
-              disabled={idx === total - 1 || !canAdvance}
+              onClick={idx === total - 1 ? finishUmrah : next}
+              disabled={!canAdvance}
               className={`flex-1 rounded-full text-white py-4 shadow-[0_18px_40px_-10px_rgba(28,29,27,0.55)] flex flex-col items-center justify-center transition-opacity ${
-                idx === total - 1 || !canAdvance ? "bg-[#1C1D1B] opacity-50" : "bg-[#1C1D1B] hover:bg-black"
-              } ${idx === total - 1 ? "bg-[#2A5A4A]" : ""}`}
+                !canAdvance ? "bg-[#1C1D1B] opacity-50" : "bg-[#1C1D1B] hover:bg-black"
+              } ${idx === total - 1 ? "bg-[#2A5A4A] hover:bg-[#1f4438]" : ""}`}
               data-testid="tour-next"
             >
               <span className="text-[10px] uppercase tracking-[0.28em] text-[#B3884D]">
