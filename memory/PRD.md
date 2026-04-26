@@ -22,6 +22,11 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (Feb 26, 2026 — corner-accurate photos)
+- **Tawaf — angle-specific Ka'bah photos:** the 4 micro-steps inside `TawafFlow.jsx` now show locally-hosted, hyper-realistic photos of the EXACT corner / face the pilgrim is at (① Black Stone with pilgrims touching the silver frame, ② wide tawaf walking view, ③ Rukn al-Yamani with pilgrims touching, ④ Yemeni→Black Stone stretch).
+- **Sa'i — scene-specific photos:** `SaiFlow.jsx` migrated from external Wikimedia hotlinks to local files (Mount Safa, Mount Marwah, Mas'a corridor, green-marker run zone).
+- **Offline-safe asset pipeline:** all 8 step photos saved under `/app/frontend/public/images/{kaaba,sai}/` and added to the service worker's APP_SHELL precache list (`umrah-v1.2.0`). No CORS / 429 / 404 risk inside the Haram.
+
 ## Implemented (Feb 2026 — latest session)
 - **Lap-by-lap Tawaf & Sa'i flows** — each lap/trip is now its own screen showing the 4 sub-actions in order:
   - **Tawaf** (per lap): ① At the Black Stone (takbir + audio) → ② Walking (Raml info on laps 1-3) → ③ Yemeni Corner (touch only) → ④ Final stretch with Rabbanā ātinā du'a + audio. Big "Lap N complete" button at the bottom advances to next lap.
@@ -64,6 +69,8 @@
 - P2: Audio recitation for talbiyah from a renowned qari
 
 ## Next Tasks
-- Add Qibla compass page (use device orientation + computed bearing to Kaaba)
-- Add Adhan times API integration
-- Add ability to share progress with companions / pilgrim group
+- P1: Surface the existing `/api/gates/nearest` endpoint as an "I'm lost — find my gate" button inside the unified Tour
+- P1: Capacitor wrapper for iOS / Android App Store deployment
+- P2: Verify Arabic TTS audio plays on iOS Safari inside TawafFlow / SaiFlow
+- P2: Smart GPS-based auto-advance of laps (waypoint detection)
+- P2: Qibla compass + prayer times (Adhan API)

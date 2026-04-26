@@ -25,15 +25,19 @@ const TAKBIR_BS = {
   en: "In the name of Allah; Allah is the Greatest.",
 };
 
+// Locally-hosted, hyper-realistic photos of the Ka'bah at the EXACT corner / side
+// the pilgrim is at during each micro-step of a Tawaf lap. Stored under
+// /public/images/kaaba so the PWA service worker caches them for offline use
+// inside the Haram (no CORS, 429, or 404 risk).
 const PHOTOS = {
-  blackStone:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Black_Stone_frame.jpg/1280px-Black_Stone_frame.jpg",
-  tawafCircle:
-    "https://images.unsplash.com/photo-1577889933775-33b8571874c4?w=1200&q=80&auto=format",
-  yemeniCorner:
-    "https://upload.wikimedia.org/wikipedia/commons/f/f1/Rukn_al-Yamani_01.jpg",
-  kaabaWide:
-    "https://images.unsplash.com/photo-1554794470-42d3cd193ecc?w=1200&q=80&auto=format",
+  // ① Black Stone corner — pilgrims facing/touching the silver-framed Hajar al-Aswad
+  blackStone: "/images/kaaba/01-black-stone.jpg",
+  // ② Walking — wide tawaf view with Ka'bah on the left, crowd circling
+  tawafCircle: "/images/kaaba/02-walking.jpg",
+  // ③ Yemeni Corner — pilgrims touching the Rukn al-Yamani
+  yemeniCorner: "/images/kaaba/03-yemeni-corner.jpg",
+  // ④ Yemeni → Black Stone stretch — the final side every lap (Rabbana du'a)
+  kaabaWide: "/images/kaaba/04-yemeni-to-stone.jpg",
 };
 
 function speak(text) {

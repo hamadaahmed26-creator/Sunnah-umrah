@@ -2,12 +2,22 @@
    Cache-first for the app shell, network-first for /api calls.
    Bump CACHE_VERSION to force clients to update.
 */
-const CACHE_VERSION = "umrah-v1.0.0";
+const CACHE_VERSION = "umrah-v1.2.0";
 const APP_SHELL = [
   "/",
   "/manifest.json",
   "/icon.svg",
   "/apple-touch-icon.png",
+  // Tawaf step photos — needed offline inside the Haram
+  "/images/kaaba/01-black-stone.jpg",
+  "/images/kaaba/02-walking.jpg",
+  "/images/kaaba/03-yemeni-corner.jpg",
+  "/images/kaaba/04-yemeni-to-stone.jpg",
+  // Sa'i step photos
+  "/images/sai/01-safa.jpg",
+  "/images/sai/02-marwah.jpg",
+  "/images/sai/03-masaa.jpg",
+  "/images/sai/04-green-markers.jpg",
 ];
 
 self.addEventListener("install", (event) => {

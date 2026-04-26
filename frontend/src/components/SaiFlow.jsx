@@ -23,15 +23,13 @@ const SAFA_VERSE = {
   en: "Indeed, Safa and Marwah are among the symbols of Allah. We begin with what Allah began with.",
 };
 
+// Locally-hosted Sa'i scene photos — pre-cached by the service worker so they
+// remain available offline inside Masjid al-Haram (no CORS / 429 / 404).
 const PHOTOS = {
-  safa:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Mount_Safa_Mecca.jpg/1280px-Mount_Safa_Mecca.jpg",
-  marwah:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Mount_Marwah%2C_Mecca_mosque.JPG/1280px-Mount_Marwah%2C_Mecca_mosque.JPG",
-  masaa:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Mas%27aa2.jpg/1280px-Mas%27aa2.jpg",
-  greenMarkers:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Mas%27aa3.jpg/1280px-Mas%27aa3.jpg",
+  safa: "/images/sai/01-safa.jpg",
+  marwah: "/images/sai/02-marwah.jpg",
+  masaa: "/images/sai/03-masaa.jpg",
+  greenMarkers: "/images/sai/04-green-markers.jpg",
 };
 
 function speak(text) {
