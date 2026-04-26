@@ -71,7 +71,7 @@ function Hill({ x, y, w = 60, h = 32, label, labelColor = "white" }) {
 }
 
 // ─── SCENE: Miqat boundary ───────────────────────────────────
-function Scene_Miqat() {
+function Scene_Miqat({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -82,13 +82,13 @@ function Scene_Miqat() {
       {/* Boundary post */}
       <line x1="140" y1="40" x2="140" y2="120" stroke={GOLD} strokeWidth="3" strokeDasharray="3 3" />
       <rect x="120" y="38" width="40" height="14" rx="2" fill={INK} />
-      <text x="140" y="48" textAnchor="middle" fill="white" fontSize="7" fontWeight="700" letterSpacing="1.3">MIQĀT</text>
+      <text x="140" y="48" textAnchor="middle" fill="white" fontSize={isAr ? 9 : 7} fontWeight="700" letterSpacing="1.3">{isAr ? "الميقات" : "MIQĀT"}</text>
       {/* Pilgrim on right side, facing left */}
       <Pilgrim x={200} y={120} faceLeft />
       <Pilgrim x={220} y={120} faceLeft />
       {/* Direction arrow */}
       <path d="M 195 90 L 165 90 M 165 90 L 170 86 M 165 90 L 170 94" stroke={YELLOW} strokeWidth="1.8" strokeLinecap="round" fill="none" />
-      <text x="180" y="80" textAnchor="middle" fill={INK} fontSize="7.5" fontWeight="600" letterSpacing="1">TO MECCA</text>
+      <text x="180" y="80" textAnchor="middle" fill={INK} fontSize={isAr ? 9 : 7.5} fontWeight="600" letterSpacing="1">{isAr ? "إلى مكة" : "TO MECCA"}</text>
     </svg>
   );
 }
@@ -110,7 +110,7 @@ function Scene_Niyyah() {
 }
 
 // ─── SCENE: Talbiyah (group walking) ─────────────────────────
-function Scene_Talbiyah() {
+function Scene_Talbiyah({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -122,13 +122,13 @@ function Scene_Talbiyah() {
       {/* Walking arrow */}
       <path d="M 30 70 L 250 70" stroke={YELLOW} strokeWidth="2" strokeLinecap="round" strokeDasharray="4 4" />
       <path d="M 250 70 L 244 65 M 250 70 L 244 75" stroke={YELLOW} strokeWidth="2" strokeLinecap="round" fill="none" />
-      <text x="140" y="55" textAnchor="middle" fill={INK} fontSize="9" fontWeight="600" letterSpacing="2">TO MASJID AL-HARAM</text>
+      <text x="140" y="55" textAnchor="middle" fill={INK} fontSize={isAr ? 11 : 9} fontWeight="600" letterSpacing={isAr ? "0" : "2"}>{isAr ? "إلى المسجد الحرام" : "TO MASJID AL-HARAM"}</text>
     </svg>
   );
 }
 
 // ─── SCENE: Enter Masjid ─────────────────────────────────────
-function Scene_EnterMasjid() {
+function Scene_EnterMasjid({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -143,13 +143,13 @@ function Scene_EnterMasjid() {
       <Pilgrim x={120} y={130} />
       <path d="M 130 130 L 155 130" stroke={YELLOW} strokeWidth="2" strokeLinecap="round" />
       <path d="M 155 130 L 149 126 M 155 130 L 149 134" stroke={YELLOW} strokeWidth="2" strokeLinecap="round" fill="none" />
-      <text x="142" y="120" textAnchor="middle" fill={GREEN} fontSize="7" fontWeight="700" letterSpacing="1.4">RIGHT FOOT</text>
+      <text x="142" y="120" textAnchor="middle" fill={GREEN} fontSize={isAr ? 10 : 7} fontWeight="700" letterSpacing={isAr ? "0" : "1.4"}>{isAr ? "بالقدم اليمنى" : "RIGHT FOOT"}</text>
     </svg>
   );
 }
 
 // ─── SCENE: Tawaf start at Black Stone ───────────────────────
-function Scene_TawafStart() {
+function Scene_TawafStart({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -159,7 +159,7 @@ function Scene_TawafStart() {
       <g>
         <circle cx="129" cy="105" r="6" fill={YELLOW} stroke={INK} strokeWidth="1.4" />
         <line x1="129" y1="100" x2="105" y2="78" stroke={INK} strokeWidth="0.8" />
-        <text x="60" y="76" fill={INK} fontSize="8" fontWeight="700" letterSpacing="1.3">BLACK STONE</text>
+        <text x="60" y="76" fill={INK} fontSize={isAr ? 10 : 8} fontWeight="700" letterSpacing={isAr ? "0" : "1.3"}>{isAr ? "الحجر الأسود" : "BLACK STONE"}</text>
       </g>
       <Pilgrim x={88} y={130} action="raise-right" />
     </svg>
@@ -167,7 +167,7 @@ function Scene_TawafStart() {
 }
 
 // ─── SCENE: Yemeni Corner ────────────────────────────────────
-function Scene_YemeniCorner() {
+function Scene_YemeniCorner({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -176,18 +176,18 @@ function Scene_YemeniCorner() {
       {/* Yemeni Corner — left near corner */}
       <circle cx="129" cy="120" r="5" fill={GOLD} />
       <line x1="129" y1="120" x2="100" y2="55" stroke={INK} strokeWidth="0.8" />
-      <text x="40" y="54" fill={INK} fontSize="8" fontWeight="700" letterSpacing="1.2">YEMENI CORNER</text>
+      <text x="40" y="54" fill={INK} fontSize={isAr ? 10 : 8} fontWeight="700" letterSpacing={isAr ? "0" : "1.2"}>{isAr ? "الركن اليماني" : "YEMENI CORNER"}</text>
       {/* Hand reaching out */}
       <Pilgrim x={88} y={130} action="raise-right" />
       {/* Du'a hint */}
-      <text x="222" y="50" textAnchor="end" fill={GOLD} fontSize="7.5" fontWeight="700" letterSpacing="1.2">RABBANĀ ĀTINĀ…</text>
+      <text x="222" y="50" textAnchor="end" fill={GOLD} fontSize={isAr ? 11 : 7.5} fontWeight="700" letterSpacing={isAr ? "0" : "1.2"}>{isAr ? "ربّنا آتنا…" : "RABBANĀ ĀTINĀ…"}</text>
       <path d="M 222 55 Q 200 65 175 95" stroke={GOLD} strokeWidth="1" strokeDasharray="2 2" fill="none" />
     </svg>
   );
 }
 
 // ─── SCENE: Maqam Ibrahim (real photo) ───────────────────────
-function Scene_Maqam() {
+function Scene_Maqam({ isAr }) {
   return (
     <div className="absolute inset-0 bg-[#1C1D1B]">
       <img
@@ -198,15 +198,15 @@ function Scene_Maqam() {
         decoding="async"
       />
       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B]/85 backdrop-blur px-3 py-1 text-[10px] font-semibold tracking-[0.2em] uppercase text-white">
-        MAQAM IBRAHIM · 2 RAKA'AH
+      <div className={`absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B]/85 backdrop-blur px-3 py-1 text-[10px] font-semibold tracking-[0.2em] uppercase text-white ${isAr ? "font-arabic" : ""}`}>
+        {isAr ? "مقام إبراهيم · ركعتان" : "MAQAM IBRAHIM · 2 RAKA'AH"}
       </div>
     </div>
   );
 }
 
 // ─── SCENE: Zamzam ───────────────────────────────────────────
-function Scene_Zamzam() {
+function Scene_Zamzam({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -214,7 +214,7 @@ function Scene_Zamzam() {
       {/* Zamzam dispenser */}
       <g>
         <rect x="60" y="60" width="60" height="70" rx="6" fill={INK} stroke={GOLD} strokeWidth="2" />
-        <text x="90" y="85" textAnchor="middle" fill={GOLD} fontSize="9" fontWeight="700" letterSpacing="1.4">ZAMZAM</text>
+        <text x="90" y="85" textAnchor="middle" fill={GOLD} fontSize={isAr ? 11 : 9} fontWeight="700" letterSpacing={isAr ? "0" : "1.4"}>{isAr ? "زمزم" : "ZAMZAM"}</text>
         <rect x="78" y="100" width="24" height="6" fill={GOLD} />
         {/* Tap */}
         <rect x="86" y="106" width="8" height="8" fill={GOLD} />
@@ -224,32 +224,32 @@ function Scene_Zamzam() {
       {/* Person drinking */}
       <Pilgrim x={170} y={130} action="raise-right" />
       <circle cx="180" cy="92" r="6" fill="white" stroke={INK} strokeWidth="1.2" />
-      <text x="220" y="90" textAnchor="middle" fill={GREEN} fontSize="8" fontWeight="700" letterSpacing="1.2">DRINK FULLY</text>
+      <text x="220" y="90" textAnchor="middle" fill={GREEN} fontSize={isAr ? 10 : 8} fontWeight="700" letterSpacing={isAr ? "0" : "1.2"}>{isAr ? "اشرب حتى الارتواء" : "DRINK FULLY"}</text>
     </svg>
   );
 }
 
 // ─── SCENE: Safa start ───────────────────────────────────────
-function Scene_SafaStart() {
+function Scene_SafaStart({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
       <line x1="0" y1="130" x2="280" y2="130" stroke={STONE} strokeWidth="1.5" />
-      <Hill x={70} y={130} w={80} h={50} label="SAFA" />
-      <Hill x={210} y={130} w={80} h={50} label="MARWAH" />
+      <Hill x={70} y={130} w={80} h={50} label={isAr ? "الصفا" : "SAFA"} />
+      <Hill x={210} y={130} w={80} h={50} label={isAr ? "المروة" : "MARWAH"} />
       {/* dotted path */}
       <line x1="110" y1="130" x2="170" y2="130" stroke={GOLD} strokeDasharray="3 3" strokeWidth="1.5" opacity="0.7" />
       {/* Start mark on Safa */}
       <circle cx="70" cy="80" r="5" fill={YELLOW} stroke={INK} strokeWidth="1.2">
         <animate attributeName="r" values="4;7;4" dur="1.6s" repeatCount="indefinite" />
       </circle>
-      <text x="70" y="62" textAnchor="middle" fill={INK} fontSize="8" fontWeight="700" letterSpacing="1.4">START HERE</text>
+      <text x="70" y="62" textAnchor="middle" fill={INK} fontSize={isAr ? 10 : 8} fontWeight="700" letterSpacing={isAr ? "0" : "1.4"}>{isAr ? "ابدأ هنا" : "START HERE"}</text>
     </svg>
   );
 }
 
 // ─── SCENE: Takbir on hill ───────────────────────────────────
-function Scene_HillTakbir() {
+function Scene_HillTakbir({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -260,14 +260,14 @@ function Scene_HillTakbir() {
       {/* 3x markers */}
       <g>
         <text x="40" y="40" fill={GOLD} fontSize="11" fontWeight="800" letterSpacing="1.4">×3</text>
-        <text x="240" y="40" textAnchor="end" fill={GOLD} fontSize="8" fontWeight="700" letterSpacing="1.2">RAISE HANDS</text>
+        <text x="240" y="40" textAnchor="end" fill={GOLD} fontSize={isAr ? 10 : 8} fontWeight="700" letterSpacing={isAr ? "0" : "1.2"}>{isAr ? "ارفع يديك" : "RAISE HANDS"}</text>
       </g>
     </svg>
   );
 }
 
 // ─── SCENE: Halq / Taqsir ────────────────────────────────────
-function Scene_Halq() {
+function Scene_Halq({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -280,14 +280,14 @@ function Scene_Halq() {
         <line x1="-4" y1="-3" x2="32" y2="-12" stroke={INK} strokeWidth="2" strokeLinecap="round" />
         <line x1="4" y1="-3" x2="32" y2="-8" stroke={INK} strokeWidth="2" strokeLinecap="round" />
       </g>
-      <text x="220" y="110" textAnchor="middle" fill={GREEN} fontSize="9" fontWeight="700" letterSpacing="1.2">SHAVE</text>
-      <text x="220" y="125" textAnchor="middle" fill={GOLD} fontSize="7" fontWeight="700" letterSpacing="1.2">OR TRIM</text>
+      <text x="220" y="110" textAnchor="middle" fill={GREEN} fontSize={isAr ? 11 : 9} fontWeight="700" letterSpacing={isAr ? "0" : "1.2"}>{isAr ? "احلق" : "SHAVE"}</text>
+      <text x="220" y="125" textAnchor="middle" fill={GOLD} fontSize={isAr ? 10 : 7} fontWeight="700" letterSpacing={isAr ? "0" : "1.2"}>{isAr ? "أو قصّر" : "OR TRIM"}</text>
     </svg>
   );
 }
 
 // ─── SCENE: Done ─────────────────────────────────────────────
-function Scene_Done() {
+function Scene_Done({ isAr }) {
   return (
     <svg viewBox="0 0 280 160" className="w-full h-full">
       <rect width="280" height="160" fill={SAND} />
@@ -296,20 +296,20 @@ function Scene_Done() {
       <circle cx="140" cy="80" r="60" fill={YELLOW} opacity="0.15">
         <animate attributeName="r" values="50;65;50" dur="2.8s" repeatCount="indefinite" />
       </circle>
-      <text x="140" y="150" textAnchor="middle" fill={GREEN} fontSize="11" fontWeight="800" letterSpacing="2">ALHAMDULILLAH</text>
+      <text x="140" y="150" textAnchor="middle" fill={GREEN} fontSize={isAr ? 13 : 11} fontWeight="800" letterSpacing={isAr ? "0" : "2"}>{isAr ? "الحمد لله" : "ALHAMDULILLAH"}</text>
     </svg>
   );
 }
 
 // ─── SCENE: Intro — 4 numbered tappable cards ────────────────
-function Scene_Intro({ onJump }) {
+function Scene_Intro({ onJump, isAr }) {
   // Step indices in tourSteps.js for each chapter's first step.
   // Layout: 0 intro · 1-3 ihram · 4 enter-masjid · 5-6 tawaf · 7 maqam · 8 zamzam · 9-11 sa'i · 12 halq · 13 done
   const items = [
-    { n: "1", k: "IHRAM", slug: "ihram", c: GREEN, jump: 1 },
-    { n: "2", k: "TAWAF", slug: "tawaf", c: GOLD, jump: 5 },
-    { n: "3", k: "SA'I", slug: "sai", c: "#8B4540", jump: 9 },
-    { n: "4", k: "HALQ", slug: "halq", c: INK, jump: 12 },
+    { n: "1", k: "IHRAM", k_ar: "الإحرام", slug: "ihram", c: GREEN, jump: 1 },
+    { n: "2", k: "TAWAF", k_ar: "الطواف", slug: "tawaf", c: GOLD, jump: 5 },
+    { n: "3", k: "SA'I", k_ar: "السعي", slug: "sai", c: "#8B4540", jump: 9 },
+    { n: "4", k: "HALQ", k_ar: "الحلق", slug: "halq", c: INK, jump: 12 },
   ];
   return (
     <div className="absolute inset-0 grid grid-cols-2 gap-3 p-5 bg-[#F8F6F0]">
@@ -326,8 +326,8 @@ function Scene_Intro({ onJump }) {
           >
             {it.n}
           </div>
-          <div className="text-[11px] font-semibold tracking-[0.2em] text-[#1C1D1B]">
-            {it.k}
+          <div className={`text-[11px] font-semibold tracking-[0.2em] text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
+            {isAr ? it.k_ar : it.k}
           </div>
         </button>
       ))}
@@ -373,7 +373,7 @@ const REGISTRY = {
   done: Scene_Done,
 };
 
-export default function TourScene({ scene, lap, trip, onJump }) {
+export default function TourScene({ scene, lap, trip, onJump, isAr }) {
   const C = REGISTRY[scene];
   if (!C) {
     return (
@@ -382,5 +382,5 @@ export default function TourScene({ scene, lap, trip, onJump }) {
       </div>
     );
   }
-  return <C lap={lap} trip={trip} onJump={onJump} />;
+  return <C lap={lap} trip={trip} onJump={onJump} isAr={isAr} />;
 }

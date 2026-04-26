@@ -38,7 +38,9 @@ export default function Layout({ children }) {
             <div className="text-[15px] font-semibold tracking-tight text-[#1C1D1B]" data-testid="app-name">
               {t("appName")}
             </div>
-            <div className="text-[11px] uppercase tracking-[0.18em] text-[#8E8F8A]">Sunnah · Step by step</div>
+            <div className={`text-[11px] uppercase tracking-[0.18em] text-[#8E8F8A] ${lang === "ar" ? "font-arabic" : ""}`}>
+              {lang === "ar" ? "على السنّة · خطوة بخطوة" : "Sunnah · Step by step"}
+            </div>
           </div>
         </Link>
         <button

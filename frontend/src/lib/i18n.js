@@ -39,6 +39,8 @@ export const DICT = {
     chatHint: "Ask about rituals, duas, etiquette — answers grounded in the Sunnah.",
     step: "Step",
     progress: "Progress",
+    plan: "Plan",
+    group: "Group",
   },
   ar: {
     appName: "العمرة على السنة",
@@ -80,6 +82,8 @@ export const DICT = {
     chatHint: "اسأل عن المناسك، الأدعية، الآداب — إجابات على هدي السنة.",
     step: "خطوة",
     progress: "التقدّم",
+    plan: "الخطة",
+    group: "المجموعة",
   },
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Volume2,
   ArrowRight,
@@ -8,6 +9,7 @@ import {
   Check,
   Lightbulb,
   Plus,
+  Compass,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { TOUR_STEPS } from "../lib/tourSteps";
@@ -42,6 +44,15 @@ const CHAPTER_COLOR = {
   "Sa'i": "#8B4540",
   Halq: "#1C1D1B",
   Done: "#2A5A4A",
+};
+
+const CHAPTER_AR = {
+  Intro: "مقدمة",
+  Ihram: "الإحرام",
+  Tawaf: "الطواف",
+  "Sa'i": "السعي",
+  Halq: "الحلق",
+  Done: "تمّت",
 };
 
 export default function Tour() {
@@ -100,6 +111,7 @@ export default function Tour() {
   };
 
   const accent = CHAPTER_COLOR[step.chapter] || "#B3884D";
+  const chapterLabel = isAr ? (CHAPTER_AR[step.chapter] || step.chapter) : step.chapter;
   const title = isAr ? step.title_ar : step.title_en;
   const what = isAr ? step.what_ar : step.what_en;
 
@@ -140,11 +152,11 @@ export default function Tour() {
       <div className="mt-2 flex items-center justify-between">
         <div>
           <div
-            className="text-[10px] uppercase tracking-[0.22em]"
+            className={`text-[10px] uppercase tracking-[0.22em] ${isAr ? "font-arabic" : ""}`}
             style={{ color: accent }}
             data-testid="tour-chapter"
           >
-            {step.chapter}
+            {chapterLabel}
           </div>
           <div className="mt-1 text-[14px] text-[#5C5D58]" data-testid="tour-step-label">
             {isAr ? `الخطوة ${idx + 1} من ${total}` : `Step ${idx + 1} of ${total}`}
@@ -159,6 +171,19 @@ export default function Tour() {
           <RotateCcw className="w-4 h-4 text-[#1C1D1B]" />
         </button>
       </div>
+
+      {/* "I'm lost" — quick GPS gate finder. Saves tour state via localStorage. */}
+      <Link
+        to="/lost"
+        className="mt-3 group inline-flex items-center gap-2 rounded-full bg-[#8B4540] hover:bg-[#713934] text-white px-4 py-2 text-[12px] font-medium shadow-sm tap-pulse"
+        data-testid="tour-im-lost"
+      >
+        <Compass className="w-3.5 h-3.5" />
+        <span className={isAr ? "font-arabic" : ""}>
+          {isAr ? "أنا تائه — أوجدْ بابي" : "I'm lost — find my gate"}
+        </span>
+        <ArrowRight className={`w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 transition ${isAr ? "rotate-180" : ""}`} />
+      </Link>
 
       {/* Progress bar */}
       <div className="mt-3 h-1.5 rounded-full bg-[#E8E5DD] overflow-hidden" data-testid="tour-progress">
@@ -191,14 +216,15 @@ export default function Tour() {
               scene={step.scene}
               lap={lap}
               trip={trip}
+              isAr={isAr}
               onJump={(i) => setIdx(Math.max(0, Math.min(total - 1, i)))}
             />
           </motion.div>
         </AnimatePresence>
         {/* Chapter pill */}
-        <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] font-semibold tracking-[0.2em] uppercase text-[#1C1D1B] border border-[#E8E5DD]">
+        <div className={`absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[10px] font-semibold tracking-[0.2em] uppercase text-[#1C1D1B] border border-[#E8E5DD] ${isAr ? "font-arabic" : ""}`}>
           <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
-          {step.chapter}
+          {chapterLabel}
         </div>
         </div>
       )}
