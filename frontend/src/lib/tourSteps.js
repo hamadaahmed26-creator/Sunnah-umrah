@@ -30,19 +30,20 @@ export const TOUR_STEPS = [
   {
     chapter: "Ihram",
     scene: "niyyah",
-    title_en: "Make your intention (Niyyah)",
-    title_ar: "النية",
+    title_en: "Make your intention (Niyyah) — in the heart",
+    title_ar: "النية — في القلب",
     what_en:
-      "Stand still, raise your hand to your heart, and say the Niyyah for Umrah out loud — once.",
+      "Niyyah is in the HEART — never said out loud (Ibn Taymiyyah, Ibn Bāz, al-Albānī). Simply intend ʿUmrah in your heart, then say the phrase below ONCE out loud — this is the start of your Talbiyah, not a verbal niyyah.",
     what_ar:
-      "قف ساكنًا، ضع يدك على قلبك، وانطق نية العمرة جهرًا — مرّة واحدة.",
+      "النيّة محلّها القلب — لا تُنطق باللسان (ابن تيمية، ابن باز، الألباني). انوِ العمرة بقلبك، ثم قل العبارة التالية مرّة واحدة جهرًا — وهي بداية التلبية، وليست تلفّظًا بالنية.",
     dua: {
       ar: "لَبَّيْكَ اللَّهُمَّ عُمْرَة",
       tr: "Labbayk Allāhumma ʿumrah.",
-      en: "Here I am, O Allah, for Umrah.",
-      label_en: "Niyyah for Umrah",
-      label_ar: "نية العمرة",
+      en: "Here I am, O Allah, for ʿUmrah.",
+      label_en: "Start of Talbiyah for ʿUmrah",
+      label_ar: "بداية التلبية بالعمرة",
     },
+    tip: "Niyyah is silent — the heart only. Saying the niyyah aloud is not from the Sunnah.",
   },
   {
     chapter: "Ihram",
@@ -72,9 +73,9 @@ export const TOUR_STEPS = [
     title_en: "Enter Masjid al-Haram",
     title_ar: "دخول المسجد الحرام",
     what_en:
-      "Step in with your RIGHT foot first and recite the entry du'a. Stop the Talbiyah — you've arrived.",
+      "Step in with your RIGHT foot first and recite the entry du'a. KEEP reciting the Talbiyah — it doesn't stop until you reach the Black Stone to begin Tawaf.",
     what_ar:
-      "ادخل بقدمك اليمنى وقل دعاء الدخول. توقّف عن التلبية — فقد وصلت.",
+      "ادخل بقدمك اليمنى وقل دعاء الدخول. استمر في التلبية — لا تتوقف حتى تصل الحجر الأسود لبدء الطواف.",
     dua: {
       ar:
         "بِسْمِ اللَّهِ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ اغْفِرْ لِي ذُنُوبِي وَافْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
@@ -114,26 +115,6 @@ export const TOUR_STEPS = [
       "Now you'll go around 7 times. We'll walk you through each lap step by step — Black Stone, the Yemeni Corner, and the du'a between them.",
     what_ar:
       "ستطوف الآن سبعة أشواط. سنرافقك في كل شوط خطوة بخطوة — الحجر الأسود، الركن اليماني، والدعاء بينهما.",
-  },
-  {
-    chapter: "Tawaf",
-    scene: "yemeni-corner",
-    title_en: "Du'a between the corners",
-    title_ar: "الدعاء بين الركنين",
-    what_en:
-      "Every lap, on the final stretch — between the Yemeni Corner and the Black Stone — recite this du'a. Touch the Yemeni Corner with your RIGHT hand only if easy. Don't kiss it.",
-    what_ar:
-      "في الجزء الأخير من كل شوط — بين الركن اليماني والحجر الأسود — اقرأ هذا الدعاء. استلم الركن اليماني بيدك اليمنى إن تيسّر. لا تُقبّله.",
-    dua: {
-      ar:
-        "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
-      tr:
-        "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā ʿadhāban-nār.",
-      en:
-        "Our Lord, give us good in this world and good in the Hereafter, and protect us from the Fire.",
-      label_en: "Between Yemeni Corner & Black Stone",
-      label_ar: "بين الركن اليماني والحجر",
-    },
   },
   {
     chapter: "Tawaf",

@@ -166,14 +166,15 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
         {isLastTrip ? (
           <Step
             n="4"
-            color="#8B4540"
-            title={isAr ? "على المروة — الأخيرة" : "On Marwah — final time"}
+            color="#2A5A4A"
+            title={isAr ? "على المروة — الشوط السابع" : "On Marwah — final trip"}
             body={
               isAr
-                ? "لا تُكرّر التكبير هذه المرّة. ادعُ دعاءً مطوّلًا من القلب، ثم اضغط الزر."
-                : "DO NOT recite the takbir this time. Make a long, heartfelt du'a, then tap the button."
+                ? "اصعد، استقبل القبلة، ارفع يديك، واقرأ التكبير ثلاث مرات كما في كل شوط — مع الدعاء بين الأولى والثانية. ثم بعد الثالثة، ادعُ بما شئت من القلب، وقد تمّ سعيك."
+                : "Climb Marwah, face the Qiblah, raise both hands, and recite the takbir 3 times AS IN EVERY TRIP — with personal du'a between the 1st & 2nd. Then after the 3rd, make a long heartfelt du'a — your Sa'i is complete."
             }
             isAr={isAr}
+            dua={TAKBIR_TAHLIL}
             image={PHOTOS.marwah}
             alt="Mount Marwah"
           />
