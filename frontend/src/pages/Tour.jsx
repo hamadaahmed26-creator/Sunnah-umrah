@@ -13,6 +13,8 @@ import { LangContext } from "../components/Layout";
 import { TOUR_STEPS } from "../lib/tourSteps";
 import TourScene from "../components/TourScene";
 import AskHelper from "../components/AskHelper";
+import TawafFlow from "../components/TawafFlow";
+import SaiFlow from "../components/SaiFlow";
 
 /*
  ONE PAGE = THE WHOLE UMRAH.
@@ -64,6 +66,11 @@ export default function Tour() {
 
   React.useEffect(() => {
     localStorage.setItem("umrah_tour_step", String(idx));
+    // Reset lap/trip whenever the user (re)enters a flow step from outside
+    const cur = TOUR_STEPS[idx];
+    if (cur?.scene === "tawaf-flow" && lap >= 7) setLap(0);
+    if (cur?.scene === "sai-flow" && trip >= 7) setTrip(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx]);
   React.useEffect(() => {
     localStorage.setItem("umrah_tawaf_count", String(lap));
@@ -88,6 +95,15 @@ export default function Tour() {
   const accent = CHAPTER_COLOR[step.chapter] || "#B3884D";
   const title = isAr ? step.title_ar : step.title_en;
   const what = isAr ? step.what_ar : step.what_en;
+
+  // Detect flow scenes — these get a custom rich UI instead of standard step layout
+  const isTawafFlow = step.scene === "tawaf-flow";
+  const isSaiFlow = step.scene === "sai-flow";
+  const isFlowStep = isTawafFlow || isSaiFlow;
+
+  const advanceToNextStep = () => {
+    if (idx < total - 1) setIdx(idx + 1);
+  };
 
   // For walking steps, the NEXT button only enables once the count is hit
   const isWalkStep = step.counter === "tawaf" || step.counter === "sai";
@@ -148,12 +164,13 @@ export default function Tour() {
         />
       </div>
 
-      {/* SCENE */}
-      <div
-        className="mt-4 relative rounded-3xl overflow-hidden bg-[#F8F6F0] border border-[#E8E5DD]"
-        style={{ aspectRatio: "16 / 10" }}
-        data-testid="tour-scene"
-      >
+      {/* SCENE — hidden for flow steps (they have their own header/map) */}
+      {!isFlowStep && (
+        <div
+          className="mt-4 relative rounded-3xl overflow-hidden bg-[#F8F6F0] border border-[#E8E5DD]"
+          style={{ aspectRatio: "16 / 10" }}
+          data-testid="tour-scene"
+        >
         <AnimatePresence mode="wait">
           <motion.div
             key={step.scene + idx}
@@ -171,10 +188,58 @@ export default function Tour() {
           <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
           {step.chapter}
         </div>
-      </div>
+        </div>
+      )}
 
-      {/* Title + instruction */}
-      <AnimatePresence mode="wait">
+      {/* TAWAF FLOW (replaces the regular step body) */}
+      {isTawafFlow && (
+        <div className="mt-4" data-testid="tawaf-flow">
+          <h1
+            className={`text-[22px] font-medium text-[#1C1D1B] leading-tight ${
+              isAr ? "text-right font-arabic" : ""
+            }`}
+          >
+            {title}
+          </h1>
+          <p
+            className={`mt-1.5 text-[13px] text-[#5C5D58] leading-relaxed ${
+              isAr ? "text-right font-arabic" : ""
+            }`}
+          >
+            {what}
+          </p>
+          <div className="mt-4">
+            <TawafFlow lap={lap} setLap={setLap} isAr={isAr} onComplete={advanceToNextStep} />
+          </div>
+        </div>
+      )}
+
+      {/* SA'I FLOW */}
+      {isSaiFlow && (
+        <div className="mt-4" data-testid="sai-flow">
+          <h1
+            className={`text-[22px] font-medium text-[#1C1D1B] leading-tight ${
+              isAr ? "text-right font-arabic" : ""
+            }`}
+          >
+            {title}
+          </h1>
+          <p
+            className={`mt-1.5 text-[13px] text-[#5C5D58] leading-relaxed ${
+              isAr ? "text-right font-arabic" : ""
+            }`}
+          >
+            {what}
+          </p>
+          <div className="mt-4">
+            <SaiFlow trip={trip} setTrip={setTrip} isAr={isAr} onComplete={advanceToNextStep} />
+          </div>
+        </div>
+      )}
+
+      {/* Title + instruction (hidden for flow steps — they render their own) */}
+      {!isFlowStep && (
+        <AnimatePresence mode="wait">
         <motion.section
           key={idx}
           initial={{ opacity: 0, y: 10 }}
@@ -301,9 +366,11 @@ export default function Tour() {
             </div>
           )}
         </motion.section>
-      </AnimatePresence>
+        </AnimatePresence>
+      )}
 
-      {/* STICKY BOTTOM CONTROL — positioned ABOVE the bottom nav */}
+      {/* STICKY BOTTOM CONTROL — hide on flow steps (they have their own action button) */}
+      {!isFlowStep && (
       <div className="fixed inset-x-0 bottom-36 sm:bottom-24 px-4 z-[55] pointer-events-none">
         <div className="max-w-md mx-auto pointer-events-auto">
           <div className="flex items-center gap-2">
@@ -356,8 +423,22 @@ export default function Tour() {
           </div>
         </div>
       </div>
+      )}
+
+      {/* On flow steps: show a small "back" button at top-right next to reset since the flow has its own forward button */}
+      {isFlowStep && idx > 0 && (
+        <button
+          onClick={prev}
+          className="fixed bottom-36 sm:bottom-24 left-4 z-[55] tap-pulse rounded-full w-12 h-12 grid place-items-center border border-[#E8E5DD] bg-white text-[#1C1D1B] shadow-md"
+          aria-label="previous step"
+          data-testid="tour-prev"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+      )}
+
       {/* Floating "Ask the Companion" button — context-aware */}
-      <AskHelper stepLabel={isAr ? step.title_ar : step.title_en} />
+      <AskHelper stepLabel={isAr ? step.title_ar : step.title_en} lowerPosition={isFlowStep} />
     </div>
   );
 }

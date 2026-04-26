@@ -107,15 +107,13 @@ export const TOUR_STEPS = [
   },
   {
     chapter: "Tawaf",
-    scene: "tawaf-walk",
+    scene: "tawaf-flow",
     title_en: "Walk around the Ka'bah — 7 laps",
     title_ar: "طُف حول الكعبة سبعة أشواط",
     what_en:
-      "Keep the Ka'bah on your LEFT and walk counter-clockwise. MEN — first 3 laps: brisk pace, right shoulder uncovered (Iḍṭibāʿ + Raml). After 3 laps: walk normally and cover the shoulder.",
+      "Now you'll go around 7 times. We'll walk you through each lap step by step — Black Stone, the Yemeni Corner, and the du'a between them.",
     what_ar:
-      "اجعل الكعبة عن يسارك وامشِ عكس عقارب الساعة. الرجال — الأشواط الثلاثة الأولى: الإسراع مع كشف الكتف الأيمن (الاضطباع + الرَّمَل). بعد ذلك: المشي العادي وتغطية الكتف.",
-    tip: "You must have wudu. Make any du'a in any language as you walk. Each tap of the lap counter on this screen marks one full lap.",
-    counter: "tawaf",
+      "ستطوف الآن سبعة أشواط. سنرافقك في كل شوط خطوة بخطوة — الحجر الأسود، الركن اليماني، والدعاء بينهما.",
   },
   {
     chapter: "Tawaf",
@@ -201,15 +199,13 @@ export const TOUR_STEPS = [
   },
   {
     chapter: "Sa'i",
-    scene: "sai-walk",
+    scene: "sai-flow",
     title_en: "Walk between Safa & Marwah — 7 trips",
     title_ar: "اسعَ بين الصفا والمروة سبعة أشواط",
     what_en:
-      "Safa → Marwah is trip 1. Marwah → Safa is trip 2. Continue until trip 7 — finishing on Marwah. MEN: jog briskly between the two GREEN markers. WOMEN: walk normally.",
+      "We'll walk you through each of the 7 trips one by one — the takbir on each hill, the green markers, and the final Marwah du'a.",
     what_ar:
-      "من الصفا إلى المروة شوط، ومن المروة إلى الصفا شوط. أكمل سبعة أشواط تنتهي عند المروة. الرجال: يَهرولون بين العَلَمين الأخضرين. النساء: المشي العادي.",
-    tip: "On the 7th (final) Marwah: do NOT recite the takbir again. Just make heartfelt du'a.",
-    counter: "sai",
+      "سنرافقك في كل شوط من الأشواط السبعة — التكبير على كل جبل، العَلَمان الأخضران، ودعاء المروة الأخير.",
   },
 
   // ─── 5. HALQ / TAQSIR ──────────────────────────────────────

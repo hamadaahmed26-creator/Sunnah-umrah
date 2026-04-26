@@ -21,7 +21,7 @@ function getSession() {
  ask "what if my wudu breaks during Tawaf?" right from inside the
  tour, without losing their place.
 */
-export default function AskHelper({ stepLabel }) {
+export default function AskHelper({ stepLabel, lowerPosition = false }) {
   const { lang } = React.useContext(LangContext);
   const isAr = lang === "ar";
   const [open, setOpen] = React.useState(false);
@@ -63,7 +63,7 @@ export default function AskHelper({ stepLabel }) {
       {/* Floating button — sits above the bottom nav */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-[16rem] sm:bottom-44 right-4 z-[60] rounded-full bg-[#B3884D] hover:bg-[#a07939] text-white shadow-lg w-14 h-14 grid place-items-center tap-pulse"
+        className={`fixed ${lowerPosition ? "bottom-32 sm:bottom-24" : "bottom-[16rem] sm:bottom-44"} right-4 z-[60] rounded-full bg-[#B3884D] hover:bg-[#a07939] text-white shadow-lg w-14 h-14 grid place-items-center tap-pulse`}
         aria-label={isAr ? "اسأل" : "ask"}
         data-testid="ask-helper-fab"
       >

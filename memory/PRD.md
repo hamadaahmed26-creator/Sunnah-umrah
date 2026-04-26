@@ -23,12 +23,11 @@
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
 ## Implemented (Feb 2026 — latest session)
-- **PWA polish — installable, works offline:**
-  - manifest.json with proper Umrah branding (icons 32/192/512, maskable SVG, apple-touch-icon 180×180 with Ka'bah artwork)
-  - Service worker (`/sw.js`) using cache-first for app shell, network-first for /api, graceful offline fallback
-  - iOS-specific meta tags (apple-mobile-web-app-capable, status-bar style, viewport-fit=cover)
-  - InstallPrompt component: native `beforeinstallprompt` flow on Android/desktop, "Add to Home Screen" hint on iOS, dismissible (30-day snooze)
-  - Title: "Sunnah Umrah — Step by Step", theme #1C1D1B, background #F8F6F0
+- **Lap-by-lap Tawaf & Sa'i flows** — each lap/trip is now its own screen showing the 4 sub-actions in order:
+  - **Tawaf** (per lap): ① At the Black Stone (takbir + audio) → ② Walking (Raml info on laps 1-3) → ③ Yemeni Corner (touch only) → ④ Final stretch with Rabbanā ātinā du'a + audio. Big "Lap N complete" button at the bottom advances to next lap.
+  - **Sa'i** (per trip): "Heading to Marwah/Safa" indicator + 4 sub-actions. Trip 1 includes the first-time Safa verse card. Trip 7 special-cases the final Marwah ("no takbir, long heartfelt du'a"). Big "Trip N complete" button.
+  - Animated mini-map at top of each lap/trip card. After 7 laps/trips, auto-advances to the next tour step (Maqam Ibrahim, Halq, etc.)
+- **PWA polish:** manifest.json, service worker (cache-first shell, network-first /api), iOS home-screen support, install prompt (native on Android, hint on iOS), Ka'bah icon, "Sunnah Umrah — Step by Step" title
 - **Tour mode — single page, 15 illustrated steps, walks the whole Umrah:**
   - Intro: 4 tappable section cards (IHRAM/TAWAF/SA'I/HALQ) jump straight to that chapter
   - Ihram: Miqāt boundary, Niyyah with Arabic speech bubble, Talbiyah (group walking)
