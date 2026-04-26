@@ -32,9 +32,12 @@ export default function Layout({ children }) {
     <div className="min-h-screen pattern-bg grain relative" data-testid="app-shell">
       <header className="relative z-10 px-5 pt-6 pb-4 flex items-center justify-between" data-testid="app-header">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-2xl bg-[#1C1D1B] grid place-items-center">
-            <span className="block w-3 h-3 bg-[#B3884D] rotate-45" />
-          </div>
+          <img
+            src="/apple-touch-icon.png"
+            alt="Sunnah Umrah"
+            className="w-9 h-9 rounded-[10px] shadow-sm"
+            data-testid="app-logo"
+          />
           <div className="leading-tight">
             <div className="text-[15px] font-semibold tracking-tight text-[#1C1D1B]" data-testid="app-name">
               {t("appName")}
