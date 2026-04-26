@@ -206,11 +206,11 @@ function Step({ n, color, title, body, isAr, dua, image, alt }) {
   return (
     <div className="rounded-2xl bg-white border border-[#E8E5DD] overflow-hidden">
       {image && (
-        <div className="relative w-full h-32 bg-[#1C1D1B]">
+        <div className="relative w-full aspect-[16/9] bg-[#1C1D1B]">
           <img
             src={image}
             alt={alt || title}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-center"
             loading="lazy"
             decoding="async"
           />
