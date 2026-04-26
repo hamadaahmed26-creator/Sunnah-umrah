@@ -25,7 +25,7 @@ export const TOUR_STEPS = [
       "Before crossing the Miqāt boundary into Mecca, change into Ihram. Men: two unstitched white sheets, head uncovered. Women: any modest clothing — no niqab, no gloves.",
     what_ar:
       "قبل تجاوز الميقات إلى مكة، ارتدِ الإحرام. الرجال: إزار ورداء أبيضان والرأس مكشوف. النساء: ملابس محتشمة، بلا نقاب ولا قفّازين.",
-    tip: "The Miqāt is the boundary line outside Mecca — Ihram begins there.",
+    tip: "There are 5 official Mīqāt boundaries — plus Masjid Aisha (Tan'eem) for those already in Makkah. See all of them in the Ziyārah tab (📍 in the bottom nav).",
   },
   {
     chapter: "Ihram",

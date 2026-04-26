@@ -41,6 +41,7 @@ export const DICT = {
     progress: "Progress",
     plan: "Plan",
     group: "Group",
+    places: "Places",
   },
   ar: {
     appName: "العمرة على السنة",
@@ -84,6 +85,7 @@ export const DICT = {
     progress: "التقدّم",
     plan: "الخطة",
     group: "المجموعة",
+    places: "زيارات",
   },
 };
 
