@@ -24,6 +24,7 @@ function App() {
               <Route path="/chat" element={<Chat />} />
               <Route path="/plan" element={<Plan />} />
               <Route path="/group" element={<Group />} />
+              <Route path="/group/join/:code" element={<Group />} />
               <Route path="/places" element={<Places />} />
               <Route path="/places/:slug" element={<PlaceDetail />} />
               {/* Old routes redirect into the tour */}

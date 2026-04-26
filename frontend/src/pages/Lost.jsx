@@ -96,6 +96,13 @@ export default function Lost() {
               ? "يحتاج التطبيق إلى إذن الموقع (GPS) للعمل."
               : "This feature needs location (GPS) permission to work."}
           </p>
+          <div className="mt-4 rounded-2xl border border-[#E8E5DD] bg-white p-3 text-[12px] text-[#5C5D58] leading-relaxed">
+            <p className={isAr ? "font-arabic text-right" : ""}>
+              {isAr
+                ? "يعمل الـ GPS بدقّة على هاتفك حين تكون في الخارج. نُغطّي ١٢ بابًا رئيسيًا للمسجد الحرام (الملك عبد العزيز، السلام، الفتح، العمرة، الملك فهد، أم هانئ، أجياد، الصفا، بني شيبة، المروة، القرارة، النبي ﷺ)."
+                : "GPS works most accurately on your phone outdoors. We cover the 12 main gates of Masjid al-Haram (King Abdulaziz, Salam, Fath, Umrah, King Fahd, Umm Hani, Ajyad, Safa, Bani Shaybah, Marwah, Qarara, Nabi)."}
+            </p>
+          </div>
         </>
       )}
 

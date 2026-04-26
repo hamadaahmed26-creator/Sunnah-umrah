@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Users, Copy, Check, Loader2, RefreshCw } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import QRCode from "qrcode";
+import { Users, Copy, Check, Loader2, RefreshCw, Share2, QrCode } from "lucide-react";
 import { LangContext } from "../components/Layout";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -8,6 +10,8 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 export default function Group() {
   const { lang } = React.useContext(LangContext);
   const isAr = lang === "ar";
+  const navigate = useNavigate();
+  const { code: codeFromUrl } = useParams();
 
   const [code, setCode] = React.useState(() => localStorage.getItem("umrah_group_code") || "");
   const [name, setName] = React.useState(() => localStorage.getItem("umrah_user_name") || "");
@@ -16,6 +20,18 @@ export default function Group() {
   const [loading, setLoading] = React.useState(false);
   const [err, setErr] = React.useState("");
   const [copied, setCopied] = React.useState(false);
+  const [showQr, setShowQr] = React.useState(false);
+  const [qrDataUrl, setQrDataUrl] = React.useState("");
+
+  const inviteUrl = code ? `${window.location.origin}/group/join/${code}` : "";
+
+  // Generate QR for the invite link whenever the user opens the QR panel.
+  React.useEffect(() => {
+    if (!showQr || !inviteUrl) return;
+    QRCode.toDataURL(inviteUrl, { width: 320, margin: 1, color: { dark: "#1C1D1B", light: "#F8F6F0" } })
+      .then(setQrDataUrl)
+      .catch(() => setQrDataUrl(""));
+  }, [showQr, inviteUrl]);
 
   const userId = React.useMemo(() => {
     let u = localStorage.getItem("umrah_user_id");
@@ -83,6 +99,33 @@ export default function Group() {
     }
   }, [code, name, checkin, refresh]);
 
+  // Deep-link auto-join: if /group/join/:code is opened, prefill and try to join.
+  React.useEffect(() => {
+    if (!codeFromUrl) return;
+    const c = codeFromUrl.toUpperCase();
+    setJoinInput(c);
+    // Strip the join URL once consumed so refreshes don't keep retrying.
+    navigate("/group", { replace: true });
+    if (!name.trim()) {
+      setErr(isAr ? "أدخل اسمك أولًا، ثم اضغط انضم." : "Enter your name first, then tap Join.");
+      return;
+    }
+    (async () => {
+      setLoading(true); setErr("");
+      try {
+        const res = await axios.post(`${API}/group/join`, { code: c });
+        if (res.data?.ok) {
+          setCode(c);
+          await checkin(c);
+        }
+      } catch (e) {
+        setErr(e?.response?.status === 404 ? "Group code not found." : "Could not join group.");
+      }
+      setLoading(false);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [codeFromUrl]);
+
   const createGroup = async () => {
     if (!name.trim()) { setErr("Please enter your name first."); return; }
     setLoading(true); setErr("");
@@ -123,6 +166,22 @@ export default function Group() {
     navigator.clipboard?.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
+  };
+
+  const shareInvite = async () => {
+    const shareText = isAr
+      ? `انضم إلى مجموعتي في تطبيق "العمرة على السنة" — الرمز: ${code}\n${inviteUrl}`
+      : `Join my Sunnah Umrah group — code: ${code}\n${inviteUrl}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Sunnah Umrah", text: shareText, url: inviteUrl });
+        return;
+      } catch (_) { /* user cancelled */ }
+    }
+    // Fallback: copy invite text to clipboard
+    try { await navigator.clipboard.writeText(shareText); } catch (_) {}
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
 
   return (
@@ -191,14 +250,55 @@ export default function Group() {
               <div className="mt-1 text-[32px] font-light tracking-[0.3em] tabular-nums" data-testid="group-code">{code}</div>
             </div>
             <div className="flex gap-2">
-              <button onClick={copyCode} className="tap-pulse w-10 h-10 rounded-full bg-[#F8F6F0] border border-[#E8E5DD] grid place-items-center" data-testid="group-copy">
+              <button onClick={copyCode} className="tap-pulse w-10 h-10 rounded-full bg-[#F8F6F0] border border-[#E8E5DD] grid place-items-center" data-testid="group-copy" aria-label="copy code">
                 {copied ? <Check className="w-4 h-4 text-[#2A5A4A]" /> : <Copy className="w-4 h-4 text-[#1C1D1B]" />}
               </button>
-              <button onClick={() => refresh(code)} className="tap-pulse w-10 h-10 rounded-full bg-[#F8F6F0] border border-[#E8E5DD] grid place-items-center" data-testid="group-refresh">
+              <button onClick={() => refresh(code)} className="tap-pulse w-10 h-10 rounded-full bg-[#F8F6F0] border border-[#E8E5DD] grid place-items-center" data-testid="group-refresh" aria-label="refresh">
                 <RefreshCw className={`w-4 h-4 text-[#1C1D1B] ${loading ? "animate-spin" : ""}`} />
               </button>
             </div>
           </div>
+
+          {/* Add-people actions */}
+          <div className="mt-4 grid grid-cols-2 gap-2" data-testid="group-actions">
+            <button
+              onClick={shareInvite}
+              className="tap-pulse rounded-full bg-[#1C1D1B] text-white text-[13px] font-medium px-4 py-2.5 inline-flex items-center justify-center gap-2"
+              data-testid="group-share"
+            >
+              <Share2 className="w-4 h-4" />
+              <span className={isAr ? "font-arabic" : ""}>
+                {isAr ? "شارك مع العائلة" : "Share with family"}
+              </span>
+            </button>
+            <button
+              onClick={() => setShowQr((v) => !v)}
+              className="tap-pulse rounded-full bg-white border border-[#E8E5DD] text-[#1C1D1B] text-[13px] font-medium px-4 py-2.5 inline-flex items-center justify-center gap-2"
+              data-testid="group-qr-toggle"
+            >
+              <QrCode className="w-4 h-4" />
+              <span className={isAr ? "font-arabic" : ""}>
+                {isAr ? (showQr ? "أخفِ الرمز" : "اعرض الرمز") : (showQr ? "Hide QR" : "Show QR")}
+              </span>
+            </button>
+          </div>
+
+          {showQr && (
+            <div className="mt-4 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4 flex flex-col items-center" data-testid="group-qr-panel">
+              {qrDataUrl ? (
+                <img src={qrDataUrl} alt="Join QR code" className="w-56 h-56 rounded-xl" data-testid="group-qr-image" />
+              ) : (
+                <div className="w-56 h-56 grid place-items-center text-[12px] text-[#8E8F8A]">
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                </div>
+              )}
+              <p className={`mt-3 text-center text-[12px] text-[#5C5D58] leading-relaxed max-w-[28ch] ${isAr ? "font-arabic" : ""}`}>
+                {isAr
+                  ? "اطلب من رفيقك مسح هذا الرمز بكاميرته للانضمام فورًا."
+                  : "Have your family scan this with their phone camera — they'll join instantly."}
+              </p>
+            </div>
+          )}
 
           <div className="mt-5">
             <div className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-2">
