@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#1C1D1B"/>
+  <g transform="translate(256,288)">
+    <!-- Ka'bah cube -->
+    <rect x="-110" y="-150" width="220" height="220" fill="#0F1010" stroke="#000" stroke-width="2"/>
+    <!-- Golden band (kiswah hizam) -->
+    <rect x="-110" y="-90" width="220" height="22" fill="#B3884D"/>
+    <!-- Door -->
+    <rect x="60" y="-50" width="22" height="60" fill="#B3884D" opacity="0.7"/>
+    <!-- Top tassels -->
+    <rect x="-110" y="-150" width="220" height="6" fill="#B3884D" opacity="0.4"/>
+  </g>
+  <!-- Star -->
+  <circle cx="256" cy="120" r="6" fill="#F5C44A"/>
+  <text x="256" y="430" text-anchor="middle" fill="#B3884D" font-family="Georgia,serif" font-size="34" font-weight="600" letter-spacing="6">UMRAH</text>
+</svg>

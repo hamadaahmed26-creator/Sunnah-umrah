@@ -2,6 +2,7 @@ import React from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout, { LangProvider } from "./components/Layout";
+import InstallPrompt from "./components/InstallPrompt";
 import Tour from "./pages/Tour";
 import Lost from "./pages/Lost";
 import Chat from "./pages/Chat";
@@ -26,6 +27,7 @@ function App() {
               <Route path="/tawaf" element={<Navigate to="/tour" replace />} />
               <Route path="/sai" element={<Navigate to="/tour" replace />} />
             </Routes>
+            <InstallPrompt />
           </Layout>
         </BrowserRouter>
       </LangProvider>

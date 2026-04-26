@@ -23,6 +23,12 @@
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
 ## Implemented (Feb 2026 — latest session)
+- **PWA polish — installable, works offline:**
+  - manifest.json with proper Umrah branding (icons 32/192/512, maskable SVG, apple-touch-icon 180×180 with Ka'bah artwork)
+  - Service worker (`/sw.js`) using cache-first for app shell, network-first for /api, graceful offline fallback
+  - iOS-specific meta tags (apple-mobile-web-app-capable, status-bar style, viewport-fit=cover)
+  - InstallPrompt component: native `beforeinstallprompt` flow on Android/desktop, "Add to Home Screen" hint on iOS, dismissible (30-day snooze)
+  - Title: "Sunnah Umrah — Step by Step", theme #1C1D1B, background #F8F6F0
 - **Tour mode — single page, 15 illustrated steps, walks the whole Umrah:**
   - Intro: 4 tappable section cards (IHRAM/TAWAF/SA'I/HALQ) jump straight to that chapter
   - Ihram: Miqāt boundary, Niyyah with Arabic speech bubble, Talbiyah (group walking)
