@@ -60,7 +60,7 @@ export default function Layout({ children }) {
       <main className="relative z-10 pb-44 sm:pb-32 px-5" data-testid="app-main">{children}</main>
 
       <nav
-        className="fixed bottom-16 sm:bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#1C1D1B]/95 backdrop-blur-xl rounded-3xl px-2 py-2 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.18)] flex items-end gap-0.5"
+        className="fixed bottom-16 sm:bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-white/85 backdrop-blur-xl rounded-3xl px-2 py-2 border border-[#E8E5DD] shadow-[0_10px_40px_-8px_rgba(28,29,27,0.18)] flex items-end gap-0.5"
         data-testid="bottom-nav"
         style={{ direction: "ltr" }}
       >
@@ -71,13 +71,13 @@ export default function Layout({ children }) {
             <Link
               key={it.id}
               to={it.to}
-              className={`tap-pulse rounded-2xl px-2.5 py-1.5 flex flex-col items-center gap-0.5 min-w-[52px] transition-colors ${
-                active ? "bg-[#B3884D] text-white" : "text-white/70 hover:text-white"
+              className={`tap-pulse rounded-2xl px-2.5 py-1.5 flex flex-col items-center gap-0.5 min-w-[58px] transition-colors ${
+                active ? "bg-[#B3884D] text-white shadow-[0_4px_12px_-2px_rgba(179,136,77,0.45)]" : "text-[#5C5D58] hover:text-[#1C1D1B]"
               }`}
               data-testid={`nav-${it.id}`}
               aria-label={it.label}
             >
-              <Icon className="w-[18px] h-[18px]" strokeWidth={2.2} />
+              <Icon className="w-[19px] h-[19px]" strokeWidth={2.1} />
               <span className={`text-[9.5px] leading-none font-medium tracking-tight ${lang === "ar" ? "font-arabic text-[10px]" : ""}`}>
                 {it.label}
               </span>
