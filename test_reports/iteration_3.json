@@ -1,0 +1,71 @@
+{
+  "summary": "Backend-only test for the new Sadaqah/Stripe monetization feature plus regression on existing endpoints. Pytest run against external REACT_APP_BACKEND_URL: 18 of 19 tests passed. New Sadaqah checkout creation works perfectly for all 4 packages (small=$3, medium=$7, large=$20, custom=$15.50) — each returns a real cs_test_... session_id and a https://checkout.stripe.com/c/pay/... URL. Server-side price-tampering protection works: custom_amount<$1, custom_amount>$1000, unknown package, and missing custom_amount with package=custom all return 400. MongoDB payment_transactions row is correctly inserted with status='initiated', payment_status='pending', amount, package, currency='usd' and metadata at the moment the session is created (verified directly against MongoDB). Regression: /api/chat (Claude Sonnet 4.5 via Emergent), /api/group/create + /join + /checkin + /get, /api/gates and /api/gates/nearest, /api/progress upsert/get all still pass. ONE backend bug found: GET /api/sadaqah/status/{session_id} returns 500 for sessions that were just successfully created — the Emergent Stripe proxy raises 'No such checkout.session' on stripe.checkout.Session.retrieve. Reproduced consistently with delays of 0s/2s/5s/10s after creation; not eventual consistency. Frontend SadaqahSuccess.jsx polling will fail because of this. The /api/webhook/stripe endpoint was intentionally not exercised per the request notes.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "GET /api/sadaqah/status/{session_id}",
+        "issue": "Returns 500 Internal Server Error for sessions that were JUST successfully created by POST /api/sadaqah/checkout. Stripe (via the Emergent integrations proxy at https://integrations.emergentagent.com/stripe) responds with 'No such checkout.session: cs_test_...' on stripe.checkout.Session.retrieve, even though the same proxy created the session and returned a valid checkout URL. This breaks the SadaqahSuccess polling flow — after a real donor pays, the frontend will keep polling and getting 500s. Reproduced 4 times in a row over 0/2/5/10s delays. Root cause is most likely on the Emergent Stripe proxy side (the test-mode proxy may not implement Session.retrieve, or sessions are not persisted on its side), but the route ALSO has no error handling — emergentintegrations.payments.stripe.checkout.CheckoutError bubbles up as a bare 500. Two-part fix recommended: (1) wrap the get_checkout_status call in try/except and return a structured JSON ({status:'unknown', payment_status:'pending'}) plus 200 so the frontend can keep polling without breaking, OR return 404 with a clear detail; (2) confirm with Emergent integrations team whether Session.retrieve is supported on sk_test_emergent. As an interim mitigation, the polling endpoint can also fall back to reading payment_transactions from MongoDB and (for sessions still in 'initiated') return {status:'open', payment_status:'pending'} until the webhook flips it to paid.",
+        "priority": "HIGH"
+      }
+    ],
+    "minor": [
+      {
+        "endpoint": "POST /api/sadaqah/checkout",
+        "issue": "amount=0 or amount<0 path is partially blocked: if package==custom + custom_amount<=0, our code returns 400 (good), but emergentintegrations also enforces amount>0 inside CheckoutSessionRequest validator. The two layers should be consolidated; current code is fine but redundant validation on amount<=0 is split across files."
+      },
+      {
+        "endpoint": "POST /api/sadaqah/checkout",
+        "issue": "Pydantic SadaqahCheckoutRequest accepts custom_amount as float without bounds-clamping at the model level (only inside the route). If someone reuses this model elsewhere later, the amount-cap can be missed. Consider Field(ge=1, le=1000) on custom_amount."
+      },
+      {
+        "endpoint": "POST /api/webhook/stripe",
+        "issue": "Not tested per request brief, but a quick code-read shows the route uses request.headers.get('Stripe-Signature', '') — Stripe sends the header lowercase 'stripe-signature' which Starlette is case-insensitive about (this is fine), but the StripeCheckout.handle_webhook signature-verification path needs webhook_secret to be set on the StripeCheckout instance — currently _stripe_for() does NOT pass webhook_secret, so any inbound webhook signature verification is effectively a no-op or will fail. Set STRIPE_WEBHOOK_SECRET in env and pass it to StripeCheckout(api_key=..., webhook_secret=..., webhook_url=...) before going to production."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {
+        "flow": "Sadaqah donation → SadaqahSuccess polling",
+        "issue": "Once the user lands on /sadaqah/success?session_id=cs_test_..., the page polls /api/sadaqah/status/{session_id} which currently 500s. So even after a successful Stripe payment, the success page will not show the 'paid' confirmation. This is caused by the backend issue above, not by the frontend code.",
+        "affected_selectors": ["/sadaqah/success polling endpoint /api/sadaqah/status/{session_id}"]
+      }
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Fix /api/sadaqah/status/{session_id} so it does not return a bare 500 when Stripe.retrieve fails. Wrap the call in try/except CheckoutError; on error, fall back to reading payment_transactions from MongoDB and return {status:'open', payment_status:'pending'} (or whatever was last persisted by the webhook) with HTTP 200, so the frontend SadaqahSuccess polling does not break.",
+    "Investigate why the Emergent Stripe proxy says 'No such checkout.session' for sessions it just minted (sk_test_emergent + https://integrations.emergentagent.com/stripe). Either the proxy doesn't support Session.retrieve, or the session is created on a different Stripe account than the one used for retrieve. Without this working end-to-end, paid status will only flip via webhook, so make sure the webhook route is signature-verified and idempotent.",
+    "Set STRIPE_WEBHOOK_SECRET in /app/backend/.env and pass it through _stripe_for() so /api/webhook/stripe can verify Stripe-Signature header.",
+    "Add Pydantic-level bounds (ge=1, le=1000) on SadaqahCheckoutRequest.custom_amount as defense-in-depth alongside the route-level check."
+  ],
+  "critical_code_review_comments": [
+    "server.py /api/sadaqah/status has no try/except — any error from the Stripe integration becomes a 500 with no structure; the polling frontend cannot distinguish 'not found' from 'server down' from 'still pending'.",
+    "server.py /api/webhook/stripe constructs StripeCheckout without webhook_secret, so signature verification in handle_webhook is unreliable. Move STRIPE_WEBHOOK_SECRET out of env and into _stripe_for().",
+    "server.py SADAQAH_PACKAGES is hardcoded — fine for v1, but as soon as you add a 4th preset or run a Ramadan campaign, it should move to a config collection or env JSON to avoid redeploys.",
+    "server.py file is ~470 lines and growing; consider splitting routers: routes/chat.py, routes/group.py, routes/sadaqah.py once it crosses 600 lines.",
+    "The payment_transactions row writes both 'status' and 'payment_status' — webhook handler sets status='complete' when payment_status=='paid', but for refund/expired flows there is no path. Add an explicit mapping (status from Stripe event_type) so the DB can show 'expired'/'refunded' too.",
+    "_stripe_for() recomputes webhook_url from request.base_url — in K8s behind a proxy this can sometimes be http:// internal — explicitly use REACT_APP_BACKEND_URL or a new BACKEND_PUBLIC_URL env var so the webhook URL Stripe sees is always correct.",
+    "Pydantic SadaqahCheckoutRequest.origin_url is required but not URL-validated; pass it through HttpUrl for safety, otherwise an attacker can craft a phishing redirect via the success_url (Stripe will reject obvious mismatches but defense-in-depth is cheap)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/iteration_3.json",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "success_rate": {
+    "backend": "94.7% (18/19 pytest tests pass; 1 hard failure on /api/sadaqah/status due to Stripe proxy retrieve)",
+    "frontend": "not tested (backend-only run per request)"
+  },
+  "test_credentials": "STRIPE_API_KEY=sk_test_emergent (already in /app/backend/.env), EMERGENT_LLM_KEY (already set). No user creds required.",
+  "seed_data_creation": "Created ~6 payment_transactions rows in MongoDB during the run (one per checkout test) — all have status='initiated', payment_status='pending'. Safe to leave; or clean with: db.payment_transactions.deleteMany({metadata.source:'sunnah_umrah_app', payment_status:'pending'}).",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Run: pytest /app/backend/tests/backend_test.py -v --tb=short --junitxml=/app/test_reports/pytest/pytest_results.xml. The single failing test is test_sadaqah_status — it depends on Stripe Session.retrieve working through the Emergent proxy. Once main agent fixes the route to fall back on the MongoDB payment_transactions row when Stripe retrieve fails, that test will need to be updated to expect a 200 with {status, payment_status} fields. The Stripe Checkout URL pattern confirmed working: https://checkout.stripe.com/c/pay/cs_test_a1HjEXUZkr4N... All 4 packages (small/medium/large/custom) successfully create sessions. Tampering protection (custom<$1, custom>$1000, unknown package, missing custom_amount) all return 400 as required. MongoDB payment_transactions persistence verified via direct motor query inside the test.",
+  "rca_of_the_issue": "/api/sadaqah/status returns 500. Reproduction: 1) POST /api/sadaqah/checkout {package:'small', origin_url:'https://...'} → 200 with {url:'https://checkout.stripe.com/c/pay/cs_test_...', session_id:'cs_test_...'}. 2) Immediately GET /api/sadaqah/status/{that session_id} → 500 'Internal Server Error'. Backend log: emergentintegrations.payments.stripe.checkout.CheckoutError: Failed to retrieve session status: Request req_xxx: No such checkout.session: cs_test_xxx. The error originates in stripe.checkout.Session.retrieve() inside the emergentintegrations library, going through stripe.api_base='https://integrations.emergentagent.com/stripe' (set when api_key contains 'sk_test_emergent'). Both create and retrieve hit the same proxy with the same key; create succeeds, retrieve says session doesn't exist. Root cause is on the Emergent Stripe proxy side — likely the proxy does not implement Session.retrieve in test mode, or stores sessions in a way retrieve cannot find them. Mitigation in our code: catch CheckoutError, fall back to MongoDB payment_transactions row, and return whatever was last set by the webhook (which is the source of truth for production anyway). Long-term: confirm with Emergent integrations support whether retrieve is supported, and if not, document that polling /api/sadaqah/status is webhook-driven only (not Stripe-driven)."
+}

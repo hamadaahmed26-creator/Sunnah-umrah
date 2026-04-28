@@ -12,6 +12,11 @@ import uuid
 from datetime import datetime, timezone
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+from emergentintegrations.payments.stripe.checkout import (
+    StripeCheckout,
+    CheckoutSessionRequest,
+)
+from fastapi import Request
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -22,6 +27,18 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
+STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY', '')
+
+# Fixed Sadaqah amounts (USD). Backend-controlled to prevent price tampering.
+# Custom amount is also allowed via the "custom" key — frontend passes the chosen
+# amount and we clamp it to a min/max range here on the server.
+SADAQAH_PACKAGES = {
+    "small":  3.00,
+    "medium": 7.00,
+    "large":  20.00,
+}
+SADAQAH_CUSTOM_MIN = 1.00
+SADAQAH_CUSTOM_MAX = 1000.00
 
 # Static gate data — Masjid al-Haram main gates (King Abdul Aziz / Bab numbers)
 # Coordinates approximate; sourced from public OSM/Saudi Hajj sources.
@@ -61,6 +78,12 @@ def bearing_deg(lat1, lng1, lat2, lng2):
 # Create the main app without a prefix
 app = FastAPI(title="Umrah Companion API")
 api_router = APIRouter(prefix="/api")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 
 # ---------- Models ----------
@@ -310,6 +333,125 @@ async def group_get(code: str):
     return {"code": code, "members": members}
 
 
+# ─── Sadaqah / Donations (Stripe Checkout) ────────────────────────────────
+class SadaqahCheckoutRequest(BaseModel):
+    package: str  # "small" | "medium" | "large" | "custom"
+    custom_amount: Optional[float] = None
+    origin_url: str  # window.location.origin from the frontend
+
+
+def _stripe_for(http_request: Request) -> StripeCheckout:
+    if not STRIPE_API_KEY:
+        raise HTTPException(status_code=500, detail="Stripe not configured")
+    host_url = str(http_request.base_url)
+    webhook_url = f"{host_url}api/webhook/stripe"
+    return StripeCheckout(api_key=STRIPE_API_KEY, webhook_url=webhook_url)
+
+
+@api_router.post("/sadaqah/checkout")
+async def sadaqah_checkout(body: SadaqahCheckoutRequest, http_request: Request):
+    # Resolve amount on the SERVER — never trust the frontend.
+    if body.package in SADAQAH_PACKAGES:
+        amount = SADAQAH_PACKAGES[body.package]
+    elif body.package == "custom":
+        if body.custom_amount is None:
+            raise HTTPException(status_code=400, detail="custom_amount required")
+        amount = float(body.custom_amount)
+        if amount < SADAQAH_CUSTOM_MIN or amount > SADAQAH_CUSTOM_MAX:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Custom amount must be between ${SADAQAH_CUSTOM_MIN:.2f} and ${SADAQAH_CUSTOM_MAX:.2f}",
+            )
+    else:
+        raise HTTPException(status_code=400, detail="Invalid package")
+
+    # Round to 2dp; Stripe accepts float.
+    amount = round(amount, 2)
+
+    origin = body.origin_url.rstrip("/")
+    success_url = f"{origin}/sadaqah/success?session_id={{CHECKOUT_SESSION_ID}}"
+    cancel_url = f"{origin}/sadaqah"
+
+    stripe_checkout = _stripe_for(http_request)
+    metadata = {
+        "source": "sunnah_umrah_app",
+        "purpose": "sadaqah_donation",
+        "package": body.package,
+    }
+    req = CheckoutSessionRequest(
+        amount=amount,
+        currency="usd",
+        success_url=success_url,
+        cancel_url=cancel_url,
+        metadata=metadata,
+    )
+    session = await stripe_checkout.create_checkout_session(req)
+
+    # Persist the pending transaction BEFORE redirecting the user to Stripe.
+    await db.payment_transactions.insert_one({
+        "session_id": session.session_id,
+        "amount": amount,
+        "currency": "usd",
+        "package": body.package,
+        "metadata": metadata,
+        "status": "initiated",
+        "payment_status": "pending",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    })
+
+    return {"url": session.url, "session_id": session.session_id}
+
+
+@api_router.get("/sadaqah/status/{session_id}")
+async def sadaqah_status(session_id: str, http_request: Request):
+    stripe_checkout = _stripe_for(http_request)
+    status = await stripe_checkout.get_checkout_status(session_id)
+
+    # Only update the DB row once — guards against double-credit on parallel polls.
+    txn = await db.payment_transactions.find_one({"session_id": session_id}, {"_id": 0})
+    if txn and txn.get("payment_status") != "paid":
+        await db.payment_transactions.update_one(
+            {"session_id": session_id},
+            {"$set": {
+                "status": status.status,
+                "payment_status": status.payment_status,
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            }},
+        )
+    return {
+        "status": status.status,
+        "payment_status": status.payment_status,
+        "amount_total": status.amount_total,
+        "currency": status.currency,
+    }
+
+
+@api_router.post("/webhook/stripe")
+async def stripe_webhook(request: Request):
+    body = await request.body()
+    sig = request.headers.get("Stripe-Signature", "")
+    stripe_checkout = _stripe_for(request)
+    try:
+        event = await stripe_checkout.handle_webhook(body, sig)
+    except Exception as e:
+        logger.warning(f"Stripe webhook error: {e}")
+        raise HTTPException(status_code=400, detail="Invalid webhook")
+
+    if event and event.session_id:
+        txn = await db.payment_transactions.find_one({"session_id": event.session_id}, {"_id": 0})
+        if txn and txn.get("payment_status") != "paid":
+            await db.payment_transactions.update_one(
+                {"session_id": event.session_id},
+                {"$set": {
+                    "payment_status": event.payment_status,
+                    "status": "complete" if event.payment_status == "paid" else event.payment_status,
+                    "updated_at": datetime.now(timezone.utc).isoformat(),
+                }},
+            )
+    return {"ok": True}
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
@@ -320,12 +462,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 
 @app.on_event("shutdown")

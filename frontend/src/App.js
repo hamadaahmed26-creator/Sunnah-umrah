@@ -10,6 +10,10 @@ import Plan from "./pages/Plan";
 import Group from "./pages/Group";
 import Places from "./pages/Places";
 import PlaceDetail from "./pages/PlaceDetail";
+import Sadaqah from "./pages/Sadaqah";
+import SadaqahSuccess from "./pages/SadaqahSuccess";
+import Hotels from "./pages/Hotels";
+import Packages from "./pages/Packages";
 
 function App() {
   return (
@@ -27,6 +31,10 @@ function App() {
               <Route path="/group/join/:code" element={<Group />} />
               <Route path="/places" element={<Places />} />
               <Route path="/places/:slug" element={<PlaceDetail />} />
+              <Route path="/sadaqah" element={<Sadaqah />} />
+              <Route path="/sadaqah/success" element={<SadaqahSuccess />} />
+              <Route path="/hotels" element={<Hotels />} />
+              <Route path="/packages" element={<Packages />} />
               {/* Old routes redirect into the tour */}
               <Route path="/guide" element={<Navigate to="/tour" replace />} />
               <Route path="/tawaf" element={<Navigate to="/tour" replace />} />

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Sun, Moon, Loader2, ArrowRight, RefreshCw, Footprints } from "lucide-react";
+import { Sun, Moon, Loader2, ArrowRight, Heart, Hotel, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LangContext } from "../components/Layout";
 
@@ -18,9 +18,6 @@ export default function Plan() {
   const [data, setData] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [err, setErr] = React.useState("");
-
-  const tawafCount = parseInt(localStorage.getItem("umrah_tawaf_count") || "0", 10);
-  const saiCount = parseInt(localStorage.getItem("umrah_sai_count") || "0", 10);
 
   React.useEffect(() => {
     setLoading(true);
@@ -112,38 +109,73 @@ export default function Plan() {
         </div>
       )}
 
-      <div className="mt-7">
-        <div className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-2">
-          {isAr ? "متابعة العمرة" : "Resume your Umrah"}
+      <div className="mt-7" data-testid="plan-trip-section">
+        <div className={`text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-3 ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "خطّط لرحلتك" : "Plan your trip"}
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <Link
-            to="/tawaf"
-            className="tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D]"
-            data-testid="resume-tawaf"
-          >
-            <div className="flex items-center gap-2 text-[#5C5D58] text-[11px] uppercase tracking-[0.18em]">
-              <RefreshCw className="w-3.5 h-3.5" /> Tawaf
+
+        <Link
+          to="/hotels"
+          className="block tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition active:scale-[0.99]"
+          data-testid="plan-hotels"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#F8F6F0] grid place-items-center flex-shrink-0">
+              <Hotel className="w-4 h-4 text-[#B3884D]" />
             </div>
-            <div className="mt-2 text-[28px] font-light text-[#1C1D1B] tabular-nums">{tawafCount}/7</div>
-            <div className="mt-1 text-[12px] text-[#B3884D] inline-flex items-center gap-1">
-              {tawafCount === 0 ? "Start" : tawafCount >= 7 ? "Complete" : "Continue"} <ArrowRight className="w-3 h-3" />
+            <div className="flex-1 min-w-0">
+              <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "احجز فندقًا" : "Book a hotel"}
+              </div>
+              <div className={`text-[12px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "مكة والمدينة على Booking.com" : "Makkah & Madīnah · Booking.com"}
+              </div>
             </div>
-          </Link>
-          <Link
-            to="/sai"
-            className="tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D]"
-            data-testid="resume-sai"
-          >
-            <div className="flex items-center gap-2 text-[#5C5D58] text-[11px] uppercase tracking-[0.18em]">
-              <Footprints className="w-3.5 h-3.5" /> Sa'i
+            <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
+
+        <Link
+          to="/packages"
+          className="mt-2 block tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition active:scale-[0.99]"
+          data-testid="plan-packages"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#F8F6F0] grid place-items-center flex-shrink-0">
+              <Briefcase className="w-4 h-4 text-[#8B4540]" />
             </div>
-            <div className="mt-2 text-[28px] font-light text-[#1C1D1B] tabular-nums">{saiCount}/7</div>
-            <div className="mt-1 text-[12px] text-[#B3884D] inline-flex items-center gap-1">
-              {saiCount === 0 ? "Start" : saiCount >= 7 ? "Complete" : "Continue"} <ArrowRight className="w-3 h-3" />
+            <div className="flex-1 min-w-0">
+              <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "باقات العمرة" : "Umrah packages"}
+              </div>
+              <div className={`text-[12px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "وكلاء سفر موثوقون" : "Hand-picked agencies"}
+              </div>
             </div>
-          </Link>
-        </div>
+            <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
+
+        <Link
+          to="/sadaqah"
+          className="mt-2 block tap-pulse rounded-2xl bg-[#1C1D1B] text-white p-4 hover:bg-black transition active:scale-[0.99]"
+          data-testid="plan-sadaqah"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#2A5A4A] grid place-items-center flex-shrink-0">
+              <Heart className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[14px] font-semibold ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "ادعمنا بصدقة" : "Support with sadaqah"}
+              </div>
+              <div className={`text-[12px] text-white/70 ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "صدقة جارية إن شاء الله" : "Keep the app free for everyone"}
+              </div>
+            </div>
+            <ArrowRight className={`w-4 h-4 text-white/60 ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
       </div>
     </div>
   );
