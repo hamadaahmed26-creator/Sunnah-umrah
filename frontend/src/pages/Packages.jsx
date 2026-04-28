@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Briefcase, Mail, Star } from "lucide-react";
+import { ArrowLeft, ExternalLink, Mail, Star, Sparkles } from "lucide-react";
 import { LangContext } from "../components/Layout";
 
 /* Umrah Packages — partner agency cards.
@@ -97,28 +97,86 @@ export default function Packages() {
           ))}
         </div>
       ) : (
-        // Empty state — invites the user to partner with you.
-        <div className="mt-8 rounded-2xl bg-white border border-[#E8E5DD] p-6 text-center" data-testid="packages-empty">
-          <div className="w-12 h-12 mx-auto rounded-full bg-[#F8F6F0] grid place-items-center">
-            <Briefcase className="w-5 h-5 text-[#B3884D]" />
+        // Empty state — pitch to travel agencies to become the first partner.
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-6 rounded-3xl overflow-hidden bg-white border border-[#E8E5DD]"
+          data-testid="packages-empty"
+        >
+          <div className="relative aspect-[16/9] bg-[#1C1D1B]">
+            <img
+              src="/images/places/masjid-nabawi.jpg"
+              alt="Masjid an-Nabawī"
+              className="absolute inset-0 w-full h-full object-cover opacity-90"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-5">
+              <div className={`inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[10px] font-semibold tracking-[0.22em] uppercase text-white ${isAr ? "font-arabic" : ""}`}>
+                <Sparkles className="w-3 h-3" />
+                {isAr ? "كن شريكنا الأول" : "Be our first partner"}
+              </div>
+              <h2 className={`mt-3 text-white text-[22px] font-semibold leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr
+                  ? "وكلاء العمرة الموثوقون، عرّفوا بأنفسكم"
+                  : "Trusted Umrah agencies — get featured here"}
+              </h2>
+            </div>
           </div>
-          <h2 className={`mt-4 text-[16px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
-            {isAr ? "نختار شركاءنا بعناية" : "We're choosing our partners carefully"}
-          </h2>
-          <p className={`mt-2 text-[13px] text-[#5C5D58] leading-[1.7] ${isAr ? "font-arabic" : ""}`}>
-            {isAr
-              ? "نُفضّل أن نوصي بوكلاء عمرة موثوقين فقط. سنُضيفهم هنا قريبًا."
-              : "We'd rather recommend a few trusted agencies than dozens of random ones. Coming soon."}
-          </p>
-          <a
-            href="mailto:partners@sunnahumrah.com?subject=Umrah%20package%20partnership"
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#1C1D1B] text-white px-5 py-2.5 text-[12px] font-medium"
-            data-testid="packages-partner-cta"
-          >
-            <Mail className="w-3.5 h-3.5" />
-            <span className={isAr ? "font-arabic" : ""}>{isAr ? "هل تدير وكالة سفر؟" : "Run a travel agency?"}</span>
-          </a>
-        </div>
+
+          <div className="p-5">
+            <p className={`text-[13px] text-[#3A3B36] leading-[1.85] ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr
+                ? "نُفضّل أن نوصي بوكلاء معدودين تثق بهم. إن كنتم تقدّمون باقات عمرة وتلتزمون بالإحسان لضيوف الرحمن، نسرّ بشراكتكم."
+                : "We'd rather recommend a few agencies we trust than dozens of random ones. If you offer Umrah packages and care about treating Allah's guests well, we'd love to feature you."}
+            </p>
+
+            <div className={`mt-5 grid grid-cols-3 gap-3 ${isAr ? "text-right" : ""}`}>
+              <div className="rounded-xl bg-[#F8F6F0] p-3">
+                <div className="text-[18px] font-semibold text-[#1C1D1B] tabular-nums">↑</div>
+                <div className={`text-[10px] uppercase tracking-[0.16em] text-[#5C5D58] mt-1 ${isAr ? "font-arabic" : ""}`}>
+                  {isAr ? "حركة نموّ" : "Growing"}
+                </div>
+                <div className={`text-[11px] text-[#3A3B36] mt-1 leading-tight ${isAr ? "font-arabic" : ""}`}>
+                  {isAr ? "آلاف الحجاج" : "Pilgrim downloads"}
+                </div>
+              </div>
+              <div className="rounded-xl bg-[#F8F6F0] p-3">
+                <div className="text-[18px] font-semibold text-[#1C1D1B]">EN/AR</div>
+                <div className={`text-[10px] uppercase tracking-[0.16em] text-[#5C5D58] mt-1 ${isAr ? "font-arabic" : ""}`}>
+                  {isAr ? "ثنائي اللغة" : "Bilingual"}
+                </div>
+                <div className={`text-[11px] text-[#3A3B36] mt-1 leading-tight ${isAr ? "font-arabic" : ""}`}>
+                  {isAr ? "إنجليزي وعربي" : "Global reach"}
+                </div>
+              </div>
+              <div className="rounded-xl bg-[#F8F6F0] p-3">
+                <div className="text-[18px] font-semibold text-[#2A5A4A]">5–10%</div>
+                <div className={`text-[10px] uppercase tracking-[0.16em] text-[#5C5D58] mt-1 ${isAr ? "font-arabic" : ""}`}>
+                  {isAr ? "عمولة" : "Commission"}
+                </div>
+                <div className={`text-[11px] text-[#3A3B36] mt-1 leading-tight ${isAr ? "font-arabic" : ""}`}>
+                  {isAr ? "بسيطة وعادلة" : "Simple, fair"}
+                </div>
+              </div>
+            </div>
+
+            <a
+              href={`mailto:partners@sunnahumrah.com?subject=${encodeURIComponent("Umrah package partnership · Sunnah Umrah")}&body=${encodeURIComponent("Asalāmu ʿalaykum,\n\nWe run an Umrah travel agency and we'd like to be featured in the Sunnah Umrah app.\n\nAgency name:\nCountries we serve:\nDeparture cities:\nWebsite:\nPackage tiers (with prices):\nBooking link / referral system:\n\nJazākallāhu khayran")}`}
+              className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#1C1D1B] hover:bg-black text-white px-5 py-3.5 text-[13px] font-medium"
+              data-testid="packages-partner-cta"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              <span className={isAr ? "font-arabic" : ""}>
+                {isAr ? "ابدأ الشراكة" : "Become a partner"}
+              </span>
+            </a>
+            <p className={`mt-3 text-center text-[11px] text-[#8E8F8A] ${isAr ? "font-arabic" : ""}`}>
+              {isAr ? "ردّنا خلال 48 ساعة" : "We reply within 48 hours"}
+            </p>
+          </div>
+        </motion.div>
       )}
     </div>
   );

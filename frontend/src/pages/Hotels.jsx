@@ -1,13 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Hotel, ArrowLeft, ExternalLink, Calendar, Users, Building2 } from "lucide-react";
+import { Hotel, ArrowLeft, ExternalLink, Calendar, Users, Building2, Wifi } from "lucide-react";
 import { LangContext } from "../components/Layout";
 
 // Booking.com Affiliate ID — sign up free at https://www.booking.com/affiliate-program
 // then paste your AID below (or set REACT_APP_BOOKING_AID in .env). Until set,
 // the search still works but the user pays full price (no commission to you).
 const BOOKING_AID = process.env.REACT_APP_BOOKING_AID || "";
+
+// Airalo eSIM affiliate referral code — sign up free at
+// https://www.airalo.com/affiliate-program. Paste your code below or set
+// REACT_APP_AIRALO_REF in .env. Default is the Airalo deep link to the
+// Saudi Arabia eSIM page so users can buy data before their trip.
+const AIRALO_REF = process.env.REACT_APP_AIRALO_REF || "";
 
 const CITIES = [
   {
@@ -161,14 +167,43 @@ export default function Hotels() {
         ))}
       </div>
 
+      {/* eSIM data — Airalo affiliate */}
+      <div className="mt-5">
+        <div className={`text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-2 ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "بيانات الهاتف" : "Mobile data"}
+        </div>
+        <a
+          href={`https://www.airalo.com/saudi-arabia-esim${AIRALO_REF ? `?utm_source=sunnahumrah&utm_medium=affiliate&ref=${encodeURIComponent(AIRALO_REF)}` : ""}`}
+          target="_blank"
+          rel="noreferrer"
+          className="block rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition active:scale-[0.99]"
+          data-testid="hotels-esim"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#F8F6F0] grid place-items-center flex-shrink-0">
+              <Wifi className="w-4 h-4 text-[#2A5A4A]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "شريحة eSIM للسعودية" : "Saudi Arabia eSIM"}
+              </div>
+              <div className={`text-[12px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "بيانات فورية على هاتفك — Airalo" : "Instant data on your phone · Airalo"}
+              </div>
+            </div>
+            <ExternalLink className="w-4 h-4 text-[#8E8F8A]" />
+          </div>
+        </a>
+      </div>
+
       {/* Disclosure — required by Booking.com affiliate terms */}
       <div className="mt-6 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4">
         <div className="flex items-start gap-2 text-[11px] text-[#5C5D58] leading-relaxed">
           <Building2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#8E8F8A]" />
           <p className={isAr ? "font-arabic text-right" : ""}>
             {isAr
-              ? "نتعاون مع Booking.com — قد نحصل على عمولة صغيرة عند الحجز عبر هذا الزر، بدون أيّ تكلفة إضافية عليك."
-              : "We partner with Booking.com — we may earn a small commission on bookings made through these links, at no extra cost to you."}
+              ? "نتعاون مع Booking.com وAiralo — قد نحصل على عمولة صغيرة عند الحجز عبر هذه الروابط، بدون أيّ تكلفة إضافية عليك."
+              : "We partner with Booking.com and Airalo — we may earn a small commission on bookings made through these links, at no extra cost to you."}
           </p>
         </div>
       </div>
