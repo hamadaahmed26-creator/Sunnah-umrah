@@ -435,14 +435,21 @@ export default function Tour() {
               } ${idx === total - 1 ? "bg-[#2A5A4A] hover:bg-[#1f4438]" : ""}`}
               data-testid="tour-next"
             >
-              <span className="text-[10px] uppercase tracking-[0.28em] text-[#B3884D]">
-                {idx + 1} / {total}
-              </span>
+              {idx > 0 && idx < total - 1 && (
+                <span className="text-[10px] uppercase tracking-[0.28em] text-[#B3884D]">
+                  {idx + 1} / {total}
+                </span>
+              )}
               <span className="mt-0.5 text-[16px] font-medium inline-flex items-center gap-2">
                 {idx === total - 1 ? (
                   <>
                     <Check className="w-5 h-5" />
                     {isAr ? "اكتملت العمرة" : "Umrah Complete"}
+                  </>
+                ) : idx === 0 ? (
+                  <>
+                    {isAr ? "ابدأ عمرتي" : "Begin my Umrah"}
+                    <ArrowRight className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                   </>
                 ) : isWalkStep && !walkDone ? (
                   <>
@@ -453,7 +460,7 @@ export default function Tour() {
                 ) : (
                   <>
                     {isAr ? "أنا جاهز — التالي" : "I'm done — next step"}
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                   </>
                 )}
               </span>

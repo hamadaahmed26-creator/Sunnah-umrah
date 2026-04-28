@@ -20,12 +20,12 @@ export default function Layout({ children }) {
   const t = useT(lang);
   const loc = useLocation();
   const navItems = [
-    { to: "/", icon: Home, label: t("home"), id: "tour" },
-    { to: "/plan", icon: CalendarDays, label: t("plan") || "Plan", id: "plan" },
-    { to: "/places", icon: MapPin, label: t("places") || "Places", id: "places" },
-    { to: "/lost", icon: Compass, label: t("lost"), id: "lost" },
-    { to: "/group", icon: Users, label: t("group") || "Group", id: "group" },
-    { to: "/chat", icon: MessageCircle, label: t("chat"), id: "chat" },
+    { to: "/", icon: Home, label: lang === "ar" ? "الرئيسية" : "Home", id: "tour" },
+    { to: "/plan", icon: CalendarDays, label: lang === "ar" ? "اليوم" : "Plan", id: "plan" },
+    { to: "/places", icon: MapPin, label: lang === "ar" ? "زيارات" : "Places", id: "places" },
+    { to: "/lost", icon: Compass, label: lang === "ar" ? "تائه" : "Lost", id: "lost" },
+    { to: "/group", icon: Users, label: lang === "ar" ? "المجموعة" : "Group", id: "group" },
+    { to: "/chat", icon: MessageCircle, label: lang === "ar" ? "اسأل" : "Ask", id: "chat" },
   ];
 
   return (
@@ -60,7 +60,7 @@ export default function Layout({ children }) {
       <main className="relative z-10 pb-44 sm:pb-32 px-5" data-testid="app-main">{children}</main>
 
       <nav
-        className="fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#1C1D1B]/95 backdrop-blur-xl rounded-full px-2 py-2 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.18)] flex items-center gap-1"
+        className="fixed bottom-16 sm:bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-[#1C1D1B]/95 backdrop-blur-xl rounded-3xl px-2 py-2 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.18)] flex items-end gap-0.5"
         data-testid="bottom-nav"
         style={{ direction: "ltr" }}
       >
@@ -71,13 +71,16 @@ export default function Layout({ children }) {
             <Link
               key={it.id}
               to={it.to}
-              className={`tap-pulse rounded-full px-3 py-2 grid place-items-center text-[10px] font-medium transition-colors ${
+              className={`tap-pulse rounded-2xl px-2.5 py-1.5 flex flex-col items-center gap-0.5 min-w-[52px] transition-colors ${
                 active ? "bg-[#B3884D] text-white" : "text-white/70 hover:text-white"
               }`}
               data-testid={`nav-${it.id}`}
               aria-label={it.label}
             >
               <Icon className="w-[18px] h-[18px]" strokeWidth={2.2} />
+              <span className={`text-[9.5px] leading-none font-medium tracking-tight ${lang === "ar" ? "font-arabic text-[10px]" : ""}`}>
+                {it.label}
+              </span>
             </Link>
           );
         })}
