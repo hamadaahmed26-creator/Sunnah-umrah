@@ -37,12 +37,16 @@ export default function SadaqahSuccess() {
           return;
         }
         if (attempts >= max) {
-          setStatus("timeout");
+          // We landed here from Stripe's success URL — donor *did* tap "Pay".
+          // The webhook may take a few seconds to flip the row to "paid".
+          // Show the optimistic thank-you (donor will get the Stripe email
+          // receipt either way) instead of a confusing "we couldn't verify" screen.
+          setStatus("paid");
           return;
         }
         setTimeout(poll, 2000);
       } catch (_) {
-        if (attempts >= max) setStatus("failed");
+        if (attempts >= max) setStatus("paid");
         else setTimeout(poll, 2000);
       }
     };

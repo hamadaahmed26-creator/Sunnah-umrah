@@ -336,7 +336,7 @@ async def group_get(code: str):
 # ─── Sadaqah / Donations (Stripe Checkout) ────────────────────────────────
 class SadaqahCheckoutRequest(BaseModel):
     package: str  # "small" | "medium" | "large" | "custom"
-    custom_amount: Optional[float] = None
+    custom_amount: Optional[float] = Field(None, ge=SADAQAH_CUSTOM_MIN, le=SADAQAH_CUSTOM_MAX)
     origin_url: str  # window.location.origin from the frontend
 
 
@@ -405,11 +405,33 @@ async def sadaqah_checkout(body: SadaqahCheckoutRequest, http_request: Request):
 
 @api_router.get("/sadaqah/status/{session_id}")
 async def sadaqah_status(session_id: str, http_request: Request):
-    stripe_checkout = _stripe_for(http_request)
-    status = await stripe_checkout.get_checkout_status(session_id)
+    """Frontend polls this from /sadaqah/success.
 
-    # Only update the DB row once — guards against double-credit on parallel polls.
-    txn = await db.payment_transactions.find_one({"session_id": session_id}, {"_id": 0})
+    We try to read live status from Stripe first; if the proxy can't find the
+    session (test-mode quirk) or any other error happens, we fall back to the
+    most recent payment_transactions row for that session_id. The webhook
+    keeps that row in sync once the donor actually pays. We always return 200
+    so the frontend's polling loop never hard-fails.
+    """
+    txn = await db.payment_transactions.find_one(
+        {"session_id": session_id}, {"_id": 0}
+    )
+    fallback = {
+        "status": (txn or {}).get("status", "open"),
+        "payment_status": (txn or {}).get("payment_status", "pending"),
+        "amount_total": int(round((txn or {}).get("amount", 0) * 100)),
+        "currency": (txn or {}).get("currency", "usd"),
+        "source": "db",
+    }
+
+    try:
+        stripe_checkout = _stripe_for(http_request)
+        status = await stripe_checkout.get_checkout_status(session_id)
+    except Exception as e:
+        logger.info(f"Stripe status retrieve failed for {session_id}: {e} — using DB fallback")
+        return fallback
+
+    # Idempotently update the DB only if we're flipping to paid.
     if txn and txn.get("payment_status") != "paid":
         await db.payment_transactions.update_one(
             {"session_id": session_id},
@@ -424,6 +446,7 @@ async def sadaqah_status(session_id: str, http_request: Request):
         "payment_status": status.payment_status,
         "amount_total": status.amount_total,
         "currency": status.currency,
+        "source": "stripe",
     }
 
 
