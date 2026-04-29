@@ -86,11 +86,51 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+# ---------- Rate limiting ----------
+# Simple in-memory rate limiter — keeps a tiny LLM-cost guardrail without
+# requiring redis. Resets on backend restart, which is fine for our scale.
+import time
+from collections import defaultdict, deque
+
+_RATE_BUCKETS: dict[str, deque] = defaultdict(deque)
+_RATE_LIMITS = {
+    "chat":          {"max": 30,  "window": 60},   # 30 chat msgs per IP per minute
+    "chat_hour":     {"max": 200, "window": 3600}, # 200 / hour
+    "group_create":  {"max": 5,   "window": 600},  # 5 group creations per IP / 10 min
+    "sadaqah":       {"max": 10,  "window": 600},  # 10 checkout attempts / 10 min
+}
+
+
+def _client_ip(request: Request) -> str:
+    fwd = request.headers.get("x-forwarded-for") or request.headers.get("x-real-ip")
+    if fwd:
+        return fwd.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _rate_check(bucket_key: str, ip: str, kind: str):
+    """Raises HTTPException 429 if the IP exceeded its allowance for `kind`."""
+    cfg = _RATE_LIMITS[kind]
+    now = time.time()
+    key = f"{kind}:{ip}"
+    dq = _RATE_BUCKETS[key]
+    # purge expired
+    cutoff = now - cfg["window"]
+    while dq and dq[0] < cutoff:
+        dq.popleft()
+    if len(dq) >= cfg["max"]:
+        raise HTTPException(
+            status_code=429,
+            detail=f"Too many requests. Slow down — try again in a minute.",
+        )
+    dq.append(now)
+
+
 # ---------- Models ----------
 class ChatRequest(BaseModel):
-    session_id: str
-    message: str
-    language: Optional[str] = "en"  # "en" or "ar"
+    session_id: str = Field(min_length=1, max_length=100)
+    message: str = Field(min_length=1, max_length=2000)
+    language: Optional[str] = Field("en", pattern="^(en|ar)$")
 
 
 class ChatMessage(BaseModel):
@@ -136,12 +176,12 @@ class ProgressUpdate(BaseModel):
 
 
 class GroupJoinRequest(BaseModel):
-    code: str
+    code: str = Field(min_length=4, max_length=10, pattern="^[A-Za-z0-9]+$")
 
 
 class GroupCheckin(BaseModel):
-    user_id: str
-    name: str
+    user_id: str = Field(min_length=1, max_length=100)
+    name: str = Field(min_length=1, max_length=60)
     tawaf_count: int = 0
     sai_count: int = 0
     lat: Optional[float] = None
@@ -181,9 +221,15 @@ async def nearest_gate(req: NearestGateRequest):
 
 
 @api_router.post("/chat", response_model=ChatResponse)
-async def chat(req: ChatRequest):
+async def chat(req: ChatRequest, http_request: Request):
     if not EMERGENT_LLM_KEY:
         raise HTTPException(status_code=500, detail="LLM key not configured")
+
+    # Per-IP rate-limit — both 1-minute burst and 1-hour sustained caps so a
+    # malicious actor can't drain LLM credits with a tight loop or a slow drip.
+    ip = _client_ip(http_request)
+    _rate_check("chat_minute", ip, "chat")
+    _rate_check("chat_hour", ip, "chat_hour")
 
     lang_instr = (
         "Respond primarily in clear Arabic (Modern Standard) using authentic Islamic etiquette. Cite source briefly when applicable."
@@ -276,7 +322,8 @@ def _ago(iso_ts: str) -> str:
 
 
 @api_router.post("/group/create")
-async def group_create():
+async def group_create(http_request: Request):
+    _rate_check("group_create", _client_ip(http_request), "group_create")
     for _ in range(8):
         code = _gen_code()
         existing = await db.groups.find_one({"code": code})
@@ -350,6 +397,7 @@ def _stripe_for(http_request: Request) -> StripeCheckout:
 
 @api_router.post("/sadaqah/checkout")
 async def sadaqah_checkout(body: SadaqahCheckoutRequest, http_request: Request):
+    _rate_check("sadaqah", _client_ip(http_request), "sadaqah")
     # Resolve amount on the SERVER — never trust the frontend.
     if body.package in SADAQAH_PACKAGES:
         amount = SADAQAH_PACKAGES[body.package]
