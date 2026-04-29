@@ -149,11 +149,11 @@ export const TOUR_STEPS = [
       "اتّجه إلى الصفا. عند الاقتراب، اقرأ الآية التالية في المرّة الأولى فقط.",
     dua: {
       ar:
-        "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ ۖ نَبْدَأُ بِمَا بَدَأَ اللَّهُ بِه",
+        "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ ۖ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا ۚ وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ — نَبْدَأُ بِمَا بَدَأَ اللَّهُ بِه",
       tr:
-        "Innaṣ-Ṣafā wal-Marwata min shaʿāʾirillāh. Nabdaʾu bimā badaʾallāhu bih.",
+        "Innaṣ-Ṣafā wal-Marwata min shaʿāʾirillāh. Faman ḥajjal-bayta awiʿtamara falā junāḥa ʿalayhi an yaṭṭawwafa bihimā. Wa man taṭawwaʿa khayran fa-innallāha shākirun ʿalīm. Nabdaʾu bimā badaʾallāhu bih.",
       en:
-        "Indeed, Safa and Marwah are among the symbols of Allah. We begin with what Allah began with.",
+        "Indeed, Safa and Marwah are among the symbols of Allah. So whoever makes Ḥajj or ʿUmrah of the House — there is no blame upon him for walking between them. And whoever does good voluntarily, then indeed Allah is Appreciative and Knowing. (We begin with what Allah began with.)",
       label_en: "On approach to Safa — once",
       label_ar: "آية الصفا — مرّة واحدة",
     },
