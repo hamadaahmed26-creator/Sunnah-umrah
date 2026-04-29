@@ -27,7 +27,20 @@
 - **Sa'i — scene-specific photos:** `SaiFlow.jsx` migrated from external Wikimedia hotlinks to local files (Mount Safa, Mount Marwah, Mas'a corridor, green-marker run zone).
 - **Offline-safe asset pipeline:** all 8 step photos saved under `/app/frontend/public/images/{kaaba,sai}/` and added to the service worker's APP_SHELL precache list (`umrah-v1.2.0`). No CORS / 429 / 404 risk inside the Haram.
 
-## Implemented (Feb 2026 — latest session)
+## Implemented (Apr 29, 2026 — Live group location sharing)
+- **"Stay together" now shows where each member actually is**, not just their counts:
+  - **Privacy-first opt-in toggle** ("Share my live location") per member, persisted in localStorage. OFF by default.
+  - **Privacy banner** appears when toggle is ON: *"Your location is shared only with your group, and never stored long-term."*
+  - **Per-member distance + direction** (e.g., "120 m · NE") computed client-side from haversine + bearing.
+  - **Radar map** (`GroupRadar.jsx`): SVG-based concentric range rings with members positioned by relative bearing, gold "you" pulse at centre. Auto-scales to farthest member. **No external map tiles** — works on weak Haram signal, fully offline.
+  - Stale locations (>5 min old) are auto-stripped from API responses.
+  - Toggling sharing OFF actively `$unset`s previously-stored coordinates (privacy-by-default).
+  - Live updates every 20 s while sharing is ON; 10 s otherwise.
+- Backend (`/api/group/{code}/checkin`): added `share_loc`, `accuracy`, lat/lng bounds; coordinates only persisted on opt-in.
+- New helper: `lib/geo.js` — haversine, bearing, 8-point compass, localised distance formatter.
+- SW cache bumped to `umrah-v1.10.0`.
+
+## Implemented (Feb 2026 — earlier in this session)
 - **Lap-by-lap Tawaf & Sa'i flows** — each lap/trip is now its own screen showing the 4 sub-actions in order:
   - **Tawaf** (per lap): ① At the Black Stone (takbir + audio) → ② Walking (Raml info on laps 1-3) → ③ Yemeni Corner (touch only) → ④ Final stretch with Rabbanā ātinā du'a + audio. Big "Lap N complete" button at the bottom advances to next lap.
   - **Sa'i** (per trip): "Heading to Marwah/Safa" indicator + 4 sub-actions. Trip 1 includes the first-time Safa verse card. Trip 7 special-cases the final Marwah ("no takbir, long heartfelt du'a"). Big "Trip N complete" button.

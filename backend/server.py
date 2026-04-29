@@ -184,8 +184,10 @@ class GroupCheckin(BaseModel):
     name: str = Field(min_length=1, max_length=60)
     tawaf_count: int = 0
     sai_count: int = 0
-    lat: Optional[float] = None
-    lng: Optional[float] = None
+    lat: Optional[float] = Field(None, ge=-90, le=90)
+    lng: Optional[float] = Field(None, ge=-180, le=180)
+    accuracy: Optional[float] = Field(None, ge=0, le=100000)
+    share_loc: bool = False
 
 
 # ---------- Routes ----------
@@ -351,16 +353,29 @@ async def group_checkin(code: str, c: GroupCheckin):
     g = await db.groups.find_one({"code": code})
     if not g:
         raise HTTPException(status_code=404, detail="Group not found")
+    now_iso = datetime.now(timezone.utc).isoformat()
     doc = {
         "code": code,
         "user_id": c.user_id,
         "name": c.name,
         "tawaf_count": c.tawaf_count,
         "sai_count": c.sai_count,
-        "lat": c.lat,
-        "lng": c.lng,
-        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "share_loc": bool(c.share_loc),
+        "updated_at": now_iso,
     }
+    # Only persist coordinates if the member opted in to share. Otherwise,
+    # actively wipe any previously-stored coordinates (privacy-by-default).
+    if c.share_loc and c.lat is not None and c.lng is not None:
+        doc["lat"] = c.lat
+        doc["lng"] = c.lng
+        doc["accuracy"] = c.accuracy
+        doc["loc_updated_at"] = now_iso
+    else:
+        # Unset stale coordinates if user just turned sharing off
+        await db.group_members.update_one(
+            {"code": code, "user_id": c.user_id},
+            {"$unset": {"lat": "", "lng": "", "accuracy": "", "loc_updated_at": ""}},
+        )
     await db.group_members.update_one(
         {"code": code, "user_id": c.user_id}, {"$set": doc}, upsert=True
     )
@@ -374,10 +389,33 @@ async def group_get(code: str):
     if not g:
         raise HTTPException(status_code=404, detail="Group not found")
     members = await db.group_members.find({"code": code}, {"_id": 0}).to_list(50)
+    now = datetime.now(timezone.utc)
+    LOC_TTL = 300  # 5 minutes — drop stale coordinates from the response
+    cleaned = []
     for m in members:
         m["last_ago"] = _ago(m.get("updated_at", ""))
-    members.sort(key=lambda x: x.get("updated_at", ""), reverse=True)
-    return {"code": code, "members": members}
+        # Strip location data when sharing is off, missing coords, or stale
+        if not m.get("share_loc") or m.get("lat") is None or m.get("lng") is None:
+            m.pop("lat", None); m.pop("lng", None); m.pop("accuracy", None)
+            m["loc_age_sec"] = None
+        else:
+            try:
+                t = datetime.fromisoformat(m.get("loc_updated_at", ""))
+                if t.tzinfo is None:
+                    t = t.replace(tzinfo=timezone.utc)
+                age = int((now - t).total_seconds())
+                if age > LOC_TTL:
+                    m.pop("lat", None); m.pop("lng", None); m.pop("accuracy", None)
+                    m["loc_age_sec"] = None
+                else:
+                    m["loc_age_sec"] = age
+            except Exception:
+                m.pop("lat", None); m.pop("lng", None); m.pop("accuracy", None)
+                m["loc_age_sec"] = None
+        m.pop("loc_updated_at", None)
+        cleaned.append(m)
+    cleaned.sort(key=lambda x: x.get("updated_at", ""), reverse=True)
+    return {"code": code, "members": cleaned}
 
 
 # ─── Sadaqah / Donations (Stripe Checkout) ────────────────────────────────
