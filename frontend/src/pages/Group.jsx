@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
-import { Users, Copy, Check, Loader2, RefreshCw, Share2, QrCode, MapPin, ShieldCheck, Map as MapIcon, X } from "lucide-react";
+import { Users, Copy, Check, Loader2, RefreshCw, Share2, QrCode, MapPin, ShieldCheck, Map as MapIcon, X, Navigation } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import GroupRadar from "../components/GroupRadar";
 import { haversine, bearing, compass8Localised, formatDistance } from "../lib/geo";
@@ -450,41 +450,62 @@ export default function Group() {
                 const dist = canMeasure ? haversine(myCoords.lat, myCoords.lng, m.lat, m.lng) : null;
                 const brg = canMeasure ? bearing(myCoords.lat, myCoords.lng, m.lat, m.lng) : null;
                 const locAge = m.loc_age_sec;
+                // Universal "open in maps" link. iOS Maps & Android Google Maps both
+                // accept the geo: URI on Android and respect Apple's maps.apple.com on iOS.
+                // We use the Google Maps URL — iOS opens it in Safari but offers an
+                // "Open in Maps" sheet, and Android opens directly in Google Maps.
+                const walkUrl = hasLoc
+                  ? `https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}&travelmode=walking`
+                  : null;
                 return (
-                  <li key={m.user_id} className="flex items-center justify-between px-4 py-3 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD]" data-testid={`member-row-${m.user_id}`}>
-                    <div className="min-w-0">
-                      <div className="text-[14px] font-medium text-[#1C1D1B] flex items-center gap-1.5" data-testid={`member-name-${m.user_id}`}>
-                        <span className="truncate">{m.name || "Unnamed"}</span>
-                        {isMe && (
-                          <span className="text-[9px] uppercase tracking-wider text-[#B3884D]">
-                            {isAr ? "أنت" : "you"}
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-[11px] text-[#5C5D58]">
-                        Tawaf {m.tawaf_count ?? 0}/7 · Sa'i {m.sai_count ?? 0}/7
-                      </div>
-                      {canMeasure && (
-                        <div className="text-[11px] text-[#2A5A4A] mt-0.5 inline-flex items-center gap-1" data-testid={`member-dist-${m.user_id}`}>
-                          <MapPin className="w-3 h-3" />
-                          {formatDistance(dist, isAr)} · {compass8Localised(brg, isAr)}
-                          {locAge != null && locAge > 60 && (
-                            <span className="text-[#8E8F8A]"> · {Math.floor(locAge / 60)}m</span>
+                  <li key={m.user_id} className="px-4 py-3 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD]" data-testid={`member-row-${m.user_id}`}>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="text-[14px] font-medium text-[#1C1D1B] flex items-center gap-1.5" data-testid={`member-name-${m.user_id}`}>
+                          <span className="truncate">{m.name || "Unnamed"}</span>
+                          {isMe && (
+                            <span className="text-[9px] uppercase tracking-wider text-[#B3884D]">
+                              {isAr ? "أنت" : "you"}
+                            </span>
                           )}
                         </div>
-                      )}
-                      {!isMe && hasLoc && !myCoords && (
-                        <div className="text-[10px] text-[#8E8F8A] mt-0.5">
-                          {isAr ? "فعّل المشاركة لرؤية المسافة" : "Enable sharing to see distance"}
+                        <div className="text-[11px] text-[#5C5D58]">
+                          Tawaf {m.tawaf_count ?? 0}/7 · Sa'i {m.sai_count ?? 0}/7
                         </div>
-                      )}
-                      {!isMe && !hasLoc && (
-                        <div className="text-[10px] text-[#8E8F8A] mt-0.5">
-                          {isAr ? "لا يشارك الموقع" : "Not sharing location"}
-                        </div>
-                      )}
+                        {canMeasure && (
+                          <div className="text-[11px] text-[#2A5A4A] mt-0.5 inline-flex items-center gap-1" data-testid={`member-dist-${m.user_id}`}>
+                            <MapPin className="w-3 h-3" />
+                            {formatDistance(dist, isAr)} · {compass8Localised(brg, isAr)}
+                            {locAge != null && locAge > 60 && (
+                              <span className="text-[#8E8F8A]"> · {Math.floor(locAge / 60)}m</span>
+                            )}
+                          </div>
+                        )}
+                        {!isMe && hasLoc && !myCoords && (
+                          <div className="text-[10px] text-[#8E8F8A] mt-0.5">
+                            {isAr ? "فعّل المشاركة لرؤية المسافة" : "Enable sharing to see distance"}
+                          </div>
+                        )}
+                        {!isMe && !hasLoc && (
+                          <div className="text-[10px] text-[#8E8F8A] mt-0.5">
+                            {isAr ? "لا يشارك الموقع" : "Not sharing location"}
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-[10px] text-[#8E8F8A] flex-shrink-0">{m.last_ago || ""}</div>
                     </div>
-                    <div className="text-[10px] text-[#8E8F8A]">{m.last_ago || ""}</div>
+                    {!isMe && hasLoc && (
+                      <a
+                        href={walkUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 w-full tap-pulse rounded-full bg-[#1C1D1B] text-white text-[12px] font-medium px-4 py-2 inline-flex items-center justify-center gap-1.5 active:scale-[0.98]"
+                        data-testid={`member-walk-${m.user_id}`}
+                      >
+                        <Navigation className="w-3.5 h-3.5" />
+                        {isAr ? `امشِ إلى ${m.name || "العضو"}` : `Walk to ${m.name || "them"}`}
+                      </a>
+                    )}
                   </li>
                 );
               })}

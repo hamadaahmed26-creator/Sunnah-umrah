@@ -27,7 +27,19 @@
 - **Sa'i — scene-specific photos:** `SaiFlow.jsx` migrated from external Wikimedia hotlinks to local files (Mount Safa, Mount Marwah, Mas'a corridor, green-marker run zone).
 - **Offline-safe asset pipeline:** all 8 step photos saved under `/app/frontend/public/images/{kaaba,sai}/` and added to the service worker's APP_SHELL precache list (`umrah-v1.2.0`). No CORS / 429 / 404 risk inside the Haram.
 
-## Implemented (Apr 29, 2026 — Live group location sharing)
+## Implemented (Apr 29, 2026 — second session) — Live location, Qibla, eSIM surfacing
+- **NEW: `/qibla` Qibla compass page**
+  - Calculates true bearing from user GPS → Ka'bah (21.4225°N, 39.8262°E) using haversine + bearing
+  - Live needle that rotates with device heading (uses `deviceorientationabsolute` + iOS `webkitCompassHeading`)
+  - iOS 13+ permission gating: shows "Enable compass" CTA that triggers `DeviceOrientationEvent.requestPermission()`
+  - Cardinal letters rotate to true north; "You're facing the Qibla" indicator when ±5° aligned
+  - Distance to Makkah readout, figure-8 calibration tip
+  - Reachable from `Plan` → "Qibla compass" card
+- **eSIM (Airalo) surfaced on Plan page** as its own top-level card under "Plan your trip" — was previously hidden inside `/hotels` only. Deep-links to Airalo's Saudi-Arabia eSIM with `utm_source=sunnahumrah&ref=...` for affiliate tracking.
+- **"Walk to them" button** on each member card in `/group` — opens Google Maps walking directions to the member's last shared location (works on iOS Safari + Android Chrome).
+- SW cache bumped to `umrah-v1.12.0`.
+
+## Implemented (Apr 29, 2026 — first session) — Live group location sharing
 - **"Stay together" now shows where each member actually is**, not just their counts:
   - **Privacy-first opt-in toggle** ("Share my live location") per member, persisted in localStorage. OFF by default.
   - **Privacy banner** appears when toggle is ON: *"Your location is shared only with your group, and never stored long-term."*

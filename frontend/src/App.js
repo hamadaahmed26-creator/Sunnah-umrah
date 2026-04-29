@@ -14,6 +14,7 @@ import Sadaqah from "./pages/Sadaqah";
 import SadaqahSuccess from "./pages/SadaqahSuccess";
 import Hotels from "./pages/Hotels";
 import Packages from "./pages/Packages";
+import Qibla from "./pages/Qibla";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               <Route path="/sadaqah/success" element={<SadaqahSuccess />} />
               <Route path="/hotels" element={<Hotels />} />
               <Route path="/packages" element={<Packages />} />
+              <Route path="/qibla" element={<Qibla />} />
               {/* Old routes redirect into the tour */}
               <Route path="/guide" element={<Navigate to="/tour" replace />} />
               <Route path="/tawaf" element={<Navigate to="/tour" replace />} />

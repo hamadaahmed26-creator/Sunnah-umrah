@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Sun, Moon, Loader2, ArrowRight, Heart, Hotel, Briefcase } from "lucide-react";
+import { Sun, Moon, Loader2, ArrowRight, Heart, Hotel, Briefcase, Wifi, Compass } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LangContext } from "../components/Layout";
 
@@ -129,6 +129,50 @@ export default function Plan() {
               </div>
               <div className={`text-[12px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
                 {isAr ? "مكة والمدينة على Booking.com" : "Makkah & Madīnah · Booking.com"}
+              </div>
+            </div>
+            <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
+
+        <a
+          href={`https://www.airalo.com/saudi-arabia-esim${process.env.REACT_APP_AIRALO_REF ? `?utm_source=sunnahumrah&utm_medium=affiliate&ref=${encodeURIComponent(process.env.REACT_APP_AIRALO_REF)}` : ""}`}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          className="mt-2 block tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition active:scale-[0.99]"
+          data-testid="plan-esim"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#F8F6F0] grid place-items-center flex-shrink-0">
+              <Wifi className="w-4 h-4 text-[#2A5A4A]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "شريحة eSIM للسعودية" : "Saudi Arabia eSIM"}
+              </div>
+              <div className={`text-[12px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "بيانات فورية — Airalo" : "Instant mobile data · Airalo"}
+              </div>
+            </div>
+            <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </a>
+
+        <Link
+          to="/qibla"
+          className="mt-2 block tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition active:scale-[0.99]"
+          data-testid="plan-qibla"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#F8F6F0] grid place-items-center flex-shrink-0">
+              <Compass className="w-4 h-4 text-[#B3884D]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "بوصلة القبلة" : "Qibla compass"}
+              </div>
+              <div className={`text-[12px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "اتجاه الكعبة من موقعك" : "Direction to the Ka'bah from anywhere"}
               </div>
             </div>
             <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
