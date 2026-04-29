@@ -20,9 +20,9 @@ const RABBANA = {
   en: "Our Lord, give us good in this world and good in the Hereafter, and protect us from the Fire.",
 };
 const TAKBIR_BS = {
-  ar: "بِسْمِ اللَّهِ، وَاللَّهُ أَكْبَر",
-  tr: "Bismillāh, Allāhu Akbar.",
-  en: "In the name of Allah; Allah is the Greatest.",
+  ar: "اللَّهُ أَكْبَر",
+  tr: "Allāhu Akbar.",
+  en: "Allah is the Greatest.",
 };
 
 // Locally-hosted, hyper-realistic photos of the Ka'bah at the EXACT corner / side
@@ -103,6 +103,17 @@ export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
             ))}
           </div>
         </div>
+
+        {lap === 0 && (
+          <div className="rounded-2xl border border-[#B3884D]/30 bg-[#FAF6EC] px-4 py-3 text-[12px] leading-[1.7] text-[#5C4A2A]" data-testid="tawaf-sunnah-tip">
+            <p className={isAr ? "font-arabic text-right" : ""}>
+              <span className="font-semibold">{isAr ? "للرجال — قبل الشوط الأول:" : "Men — before lap 1:"}</span>{" "}
+              {isAr
+                ? "اكشف الكتف الأيمن (الاضطباع) في كل الأشواط السبعة. واهرول (الرَّمَل) في الأشواط ١-٢-٣، وامشِ عاديًا في ٤-٥-٦-٧."
+                : "Uncover your right shoulder (Idhtibāʿ) for all 7 laps. Walk briskly / jog (Raml) for laps 1, 2, 3 — then walk normally for 4, 5, 6, 7."}
+            </p>
+          </div>
+        )}
 
         {/* 4 micro-action cards */}
         <Step

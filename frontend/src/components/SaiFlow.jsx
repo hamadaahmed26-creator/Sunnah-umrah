@@ -12,10 +12,10 @@ import { SaiMap } from "./RitualMaps";
 
 const TAKBIR_TAHLIL = {
   ar:
-    "اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، لَا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ يُحْيِي وَيُمِيتُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِير، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الأَحْزَابَ وَحْدَهُ",
+    "اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ يُحْيِي وَيُمِيتُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
   tr:
-    "Allāhu Akbar (×3). Lā ilāha illallāhu waḥdahu lā sharīka lah, lahul-mulku wa lahul-ḥamdu, yuḥyī wa yumītu, wa huwa ʿalā kulli shayʾin qadīr.",
-  en: "Allah is the Greatest (×3). There is no god but Allah alone…",
+    "Allāhu Akbar (×3). Lā ilāha illallāhu waḥdahu lā sharīka lah, lahul-mulku wa lahul-ḥamdu, yuḥyī wa yumītu, wa huwa ʿalā kulli shayʾin qadīr. Lā ilāha illallāhu waḥdahu lā sharīka lah, anjaza waʿdahu wa naṣara ʿabdahu wa hazamal-aḥzāba waḥdah.",
+  en: "Allah is the Greatest (×3). There is no god but Allah alone, He has no partner. To Him belongs all sovereignty and praise. He gives life and death and has power over all things. There is no god but Allah alone, He has no partner — He fulfilled His promise, aided His servant, and alone defeated the confederates.",
 };
 const SAFA_VERSE = {
   ar: "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ ۖ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا ۚ وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ — نَبْدَأُ بِمَا بَدَأَ اللَّهُ بِه",
@@ -166,15 +166,14 @@ export default function SaiFlow({ trip, setTrip, isAr, onComplete }) {
         {isLastTrip ? (
           <Step
             n="4"
-            color="#2A5A4A"
-            title={isAr ? "على المروة — الشوط السابع" : "On Marwah — final trip"}
+            color="#8B4540"
+            title={isAr ? "على المروة — الشوط السابع (الأخير)" : "On Marwah — final 7th trip"}
             body={
               isAr
-                ? "اصعد، استقبل القبلة، ارفع يديك، واقرأ التكبير ثلاث مرات كما في كل شوط — مع الدعاء بين الأولى والثانية. ثم بعد الثالثة، ادعُ بما شئت من القلب، وقد تمّ سعيك."
-                : "Climb Marwah, face the Qiblah, raise both hands, and recite the takbir 3 times AS IN EVERY TRIP — with personal du'a between the 1st & 2nd. Then after the 3rd, make a long heartfelt du'a — your Sa'i is complete."
+                ? "لا تُكرّر التكبير هذه المرّة. فقط ادعُ بما شئت من القلب — بأي لغة — ثم اضغط الزر، وقد تمّ سعيُك."
+                : "DO NOT recite the takbir this time — make a long, heartfelt du'a in any language. Then tap the button — your Sa'i is complete."
             }
             isAr={isAr}
-            dua={TAKBIR_TAHLIL}
             image={PHOTOS.marwah}
             alt="Mount Marwah"
           />

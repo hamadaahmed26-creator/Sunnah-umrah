@@ -37,8 +37,8 @@ export const TOUR_STEPS = [
     what_ar:
       "النيّة محلّها القلب — لا تُنطق باللسان (ابن تيمية، ابن باز، الألباني). انوِ العمرة بقلبك، ثم قل العبارة التالية مرّة واحدة جهرًا — وهي بداية التلبية، وليست تلفّظًا بالنية.",
     dua: {
-      ar: "لَبَّيْكَ اللَّهُمَّ عُمْرَة",
-      tr: "Labbayk Allāhumma ʿumrah.",
+      ar: "لَبَّيْكَ اللَّهُمَّ بِعُمْرَة",
+      tr: "Labbayk Allāhumma bi-ʿumrah.",
       en: "Here I am, O Allah, for ʿUmrah.",
       label_en: "Start of Talbiyah for ʿUmrah",
       label_ar: "بداية التلبية بالعمرة",
@@ -56,7 +56,7 @@ export const TOUR_STEPS = [
       "ابدأ بترديد التلبية جهرًا (للرجال) أو سرًّا (للنساء). استمر في ترديدها حتى تصل المسجد الحرام.",
     dua: {
       ar:
-        "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
+        "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكُ، لَا شَرِيكَ لَكَ",
       tr:
         "Labbayk Allāhumma labbayk. Labbayk lā sharīka laka labbayk. Innal-ḥamda wan-niʿmata laka wal-mulk, lā sharīka lak.",
       en:
@@ -95,13 +95,13 @@ export const TOUR_STEPS = [
     title_en: "Step 2 · Tawaf — start at the Black Stone",
     title_ar: "الخطوة ٢ · الطواف — ابدأ من الحجر الأسود",
     what_en:
-      "Stand facing the Black Stone (east corner of the Ka'bah). Raise your right hand toward it and say 'Bismillāh, Allāhu Akbar' — once. This marks the start of every lap.",
+      "Stand facing the Black Stone (east corner of the Ka'bah). Raise your right hand toward it and say 'Allāhu Akbar' — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhtibāʿ) by placing the iḥrām under your right armpit — keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml) like a brisk jog; for laps 4–7, walk normally.",
     what_ar:
-      "قف مستقبلًا الحجر الأسود (الركن الشرقي للكعبة)، ارفع يدك اليمنى نحوه وقل: 'بِسْمِ اللَّهِ، وَاللَّهُ أَكْبَر' — مرّة واحدة. وهذه بداية كل شوط.",
+      "قف مستقبلًا الحجر الأسود (الركن الشرقي للكعبة)، ارفع يدك اليمنى نحوه وقل: 'اللَّهُ أَكْبَر' — مرّة واحدة. وهذه بداية كل شوط.\n\nالرجال: اكشف الكتف الأيمن (الاضطباع) بجعل الإحرام تحت الإبط الأيمن، وأبقِه كذلك حتى نهاية الأشواط السبعة. وفي الأشواط الثلاثة الأولى: امشِ بسرعة (الرَّمَل) وكأنّك تهرول؛ وفي الأشواط ٤–٧: امشِ عاديًا.",
     dua: {
-      ar: "بِسْمِ اللَّهِ، وَاللَّهُ أَكْبَر",
-      tr: "Bismillāh, Allāhu Akbar.",
-      en: "In the name of Allah; Allah is the Greatest.",
+      ar: "اللَّهُ أَكْبَر",
+      tr: "Allāhu Akbar.",
+      en: "Allah is the Greatest.",
       label_en: "At the Black Stone — every lap",
       label_ar: "عند الحجر الأسود — كل شوط",
     },
@@ -132,9 +132,9 @@ export const TOUR_STEPS = [
     title_en: "Drink Zamzam water",
     title_ar: "اشرب من ماء زمزم",
     what_en:
-      "Drink Zamzam to your fill, in three breaths. Make any du'a you wish before the first sip — in any language.",
+      "Drink Zamzam to your fill, in three breaths. Pour some over your head too — both are Sunnah. Make any du'a you wish before the first sip — in any language.",
     what_ar:
-      "اشرب من زمزم حتى تكتفي، على ثلاث جُرعات. ادعُ بما شئت قبل أول رشفة بأي لغة.",
+      "اشرب من زمزم حتى تكتفي، على ثلاث جُرعات، واصبب على رأسك منها — كلاهما من السنّة. ادعُ بما شئت قبل أول رشفة بأي لغة.",
   },
 
   // ─── 4. SA'I ───────────────────────────────────────────────
@@ -169,11 +169,11 @@ export const TOUR_STEPS = [
       "اصعد الجبل، استقبل الكعبة، ارفع يديك، واقرأ هذا الدعاء ثلاث مرات. بعد الأولى والثانية: ادعُ بما شئت. بعد الثالثة: ابدأ المشي.",
     dua: {
       ar:
-        "اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، لَا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ يُحْيِي وَيُمِيتُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِير، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الأَحْزَابَ وَحْدَهُ",
+        "اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ يُحْيِي وَيُمِيتُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
       tr:
-        "Allāhu Akbar (×3). Lā ilāha illallāhu waḥdahu lā sharīka lah, lahul-mulku wa lahul-ḥamdu, yuḥyī wa yumītu, wa huwa ʿalā kulli shayʾin qadīr. Lā ilāha illallāhu waḥdahu, anjaza waʿdahu wa naṣara ʿabdahu wa hazamal-aḥzāba waḥdah.",
+        "Allāhu Akbar (×3). Lā ilāha illallāhu waḥdahu lā sharīka lah, lahul-mulku wa lahul-ḥamdu, yuḥyī wa yumītu, wa huwa ʿalā kulli shayʾin qadīr. Lā ilāha illallāhu waḥdahu lā sharīka lah, anjaza waʿdahu wa naṣara ʿabdahu wa hazamal-aḥzāba waḥdah.",
       en:
-        "Allah is the Greatest (×3). There is no god but Allah alone, He has no partner. To Him belongs all sovereignty and praise. He gives life and death and has power over all things. There is no god but Allah alone — He fulfilled His promise, aided His servant, and alone defeated the confederates.",
+        "Allah is the Greatest (×3). There is no god but Allah alone, He has no partner. To Him belongs all sovereignty and praise. He gives life and death and has power over all things. There is no god but Allah alone, He has no partner — He fulfilled His promise, aided His servant, and alone defeated the confederates.",
       label_en: "On each hill — 3 times",
       label_ar: "على كل جبل — ٣ مرّات",
     },
