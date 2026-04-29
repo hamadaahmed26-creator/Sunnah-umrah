@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Compass, Loader2, Smartphone, RotateCcw } from "lucide-react";
+import { Compass, Loader2, Smartphone, RotateCcw, MapPin } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { bearing, formatDistance, haversine } from "../lib/geo";
 
@@ -14,26 +14,49 @@ export default function Qibla() {
 
   const [coords, setCoords] = React.useState(null);
   const [geoErr, setGeoErr] = React.useState("");
+  const [geoDenied, setGeoDenied] = React.useState(false); // permission was explicitly denied
+  const [geoLoading, setGeoLoading] = React.useState(false);
   const [heading, setHeading] = React.useState(null); // device heading (deg, 0=N)
   const [needsPermission, setNeedsPermission] = React.useState(false);
   const [orientationErr, setOrientationErr] = React.useState("");
 
-  // Get user coordinates
-  React.useEffect(() => {
+  // Detect if iOS (so we show iOS-specific settings instructions when location is blocked)
+  const isIOS = typeof navigator !== "undefined" &&
+    /iPad|iPhone|iPod/.test(navigator.userAgent || "");
+
+  // Wrap in a function so we can re-trigger when the user taps "Allow location"
+  const requestLocation = React.useCallback(() => {
     if (!navigator.geolocation) {
       setGeoErr(isAr ? "متصفّحك لا يدعم تحديد الموقع." : "Geolocation not supported on this browser.");
       return;
     }
+    setGeoLoading(true);
+    setGeoErr("");
     navigator.geolocation.getCurrentPosition(
-      (p) => setCoords({ lat: p.coords.latitude, lng: p.coords.longitude }),
-      (e) => setGeoErr(
-        e.code === 1
-          ? (isAr ? "تم رفض إذن الموقع." : "Location permission denied.")
-          : (isAr ? "تعذّر الحصول على الموقع." : "Could not get your location.")
-      ),
+      (p) => {
+        setCoords({ lat: p.coords.latitude, lng: p.coords.longitude });
+        setGeoDenied(false);
+        setGeoLoading(false);
+      },
+      (e) => {
+        setGeoLoading(false);
+        if (e.code === 1) {
+          // Permission denied — user must change it in browser settings
+          setGeoDenied(true);
+          setGeoErr(isAr ? "تم رفض إذن الموقع." : "Location permission denied.");
+        } else {
+          setGeoErr(isAr ? "تعذّر الحصول على الموقع." : "Could not get your location.");
+        }
+      },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
     );
   }, [isAr]);
+
+  // Auto-attempt on first load (this triggers the browser's native permission popup
+  // ONCE if the user hasn't decided yet; otherwise it falls through to the error path).
+  React.useEffect(() => {
+    requestLocation();
+  }, [requestLocation]);
 
   // Listen to device orientation for live compass needle. iOS 13+ requires an
   // explicit user gesture before granting permission.
@@ -109,21 +132,63 @@ export default function Qibla() {
 
       {/* Compass dial */}
       <div className="mt-6 rounded-3xl bg-white border border-[#E8E5DD] p-6 flex flex-col items-center">
-        {!coords && !geoErr ? (
+        {!coords && !geoErr && geoLoading ? (
           <div className="h-[280px] flex items-center justify-center text-[#8E8F8A] text-sm">
             <Loader2 className="w-5 h-5 animate-spin" />
           </div>
         ) : geoErr ? (
-          <div className="h-[200px] flex flex-col items-center justify-center text-center px-4">
+          <div className="h-auto py-8 flex flex-col items-center justify-center text-center px-4">
             <Compass className="w-8 h-8 text-[#B3884D] mb-3" />
-            <div className="text-[14px] text-[#1C1D1B] font-medium">{geoErr}</div>
-            <div className="text-[12px] text-[#8E8F8A] mt-1 max-w-[28ch]">
-              {isAr
-                ? "اسمح بالوصول إلى الموقع في إعدادات المتصفح."
-                : "Allow location access in your browser settings."}
+            <div className="text-[15px] text-[#1C1D1B] font-medium">
+              {isAr ? "نحتاج إذن الموقع" : "We need your location"}
             </div>
+            <div className="text-[12px] text-[#8E8F8A] mt-1.5 max-w-[30ch] leading-relaxed">
+              {isAr
+                ? "لحساب اتجاه الكعبة من مكانك بدقّة. لن نخزّن موقعك."
+                : "So we can calculate the exact direction to the Ka'bah from where you are. We never store your location."}
+            </div>
+            {!geoDenied ? (
+              <button
+                onClick={requestLocation}
+                className="mt-5 tap-pulse rounded-full bg-[#1C1D1B] text-white text-sm font-medium px-6 py-3 inline-flex items-center justify-center gap-2"
+                data-testid="qibla-allow-location"
+              >
+                <MapPin className="w-4 h-4" />
+                {isAr ? "السماح بالوصول إلى موقعي" : "Allow location"}
+              </button>
+            ) : (
+              <div className="mt-5 w-full">
+                <div className="rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3 text-left">
+                  <div className="text-[12px] font-semibold text-[#1C1D1B] mb-1.5">
+                    {isAr ? "لإعادة تفعيل الموقع:" : "To re-enable location:"}
+                  </div>
+                  {isIOS ? (
+                    <ol className="text-[11px] text-[#5C5D58] space-y-1 list-decimal pl-4 leading-relaxed">
+                      <li>{isAr ? "افتح إعدادات الـ iPhone" : "Open iPhone Settings"}</li>
+                      <li>{isAr ? "اذهب إلى Safari → الموقع" : "Tap Apps → Safari → Location"}</li>
+                      <li>{isAr ? "اختَر «اسأل» أو «اسمح»" : 'Choose "Ask" or "Allow"'}</li>
+                      <li>{isAr ? "ارجع إلى التطبيق وحدِّث" : "Return to this app and tap Refresh"}</li>
+                    </ol>
+                  ) : (
+                    <ol className="text-[11px] text-[#5C5D58] space-y-1 list-decimal pl-4 leading-relaxed">
+                      <li>{isAr ? "اضغط على القفل 🔒 في شريط العنوان" : "Tap the lock 🔒 icon in the address bar"}</li>
+                      <li>{isAr ? "اختَر إعدادات الموقع → السماح" : 'Set "Location" to "Allow"'}</li>
+                      <li>{isAr ? "حدِّث الصفحة" : "Refresh the page"}</li>
+                    </ol>
+                  )}
+                </div>
+                <button
+                  onClick={requestLocation}
+                  className="mt-3 w-full tap-pulse rounded-full bg-white border border-[#E8E5DD] text-[#1C1D1B] text-sm font-medium px-5 py-2.5 inline-flex items-center justify-center gap-2"
+                  data-testid="qibla-retry-location"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  {isAr ? "حاول مرة أخرى" : "Try again"}
+                </button>
+              </div>
+            )}
           </div>
-        ) : (
+        ) : coords ? (
           <>
             <div className="relative w-[280px] h-[280px]" data-testid="qibla-dial">
               <svg viewBox="0 0 280 280" className="w-full h-full">
@@ -202,7 +267,7 @@ export default function Qibla() {
               )}
             </div>
           </>
-        )}
+        ) : null}
       </div>
 
       {/* iOS permission prompt */}

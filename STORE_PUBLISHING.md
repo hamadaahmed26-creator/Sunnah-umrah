@@ -118,6 +118,31 @@ This auto-generates every required size for both iOS (29×29 to 1024×1024) and 
 
 ## 7 · Store listing assets (you'll need to prepare these once)
 
+### Generate screenshots automatically ✅
+
+The repo includes an automated screenshot generator that uses realistic mock
+content (Ahmed, Sara, group code "MAKKAH") at exact App Store / Play Store
+dimensions. Run it once your dev server or production deploy is up:
+
+```bash
+cd /app/frontend
+yarn screenshots
+```
+
+Output: `/app/store_screenshots/`
+* `ios-01-tour-home.png` … `ios-08-chat.png` — 8 iPhone 6.7" screenshots (1290×2796)
+* `android-01-tour-home.png` … `android-08-chat.png` — 8 Android phone screenshots (1080×2400)
+
+Captions for each screenshot (paste into App Store Connect / Play Console):
+1. Step-by-step Umrah, the Sunnah way.
+2. Lap-by-lap Tawaf with authentic du'as.
+3. Qibla compass, anywhere in the world.
+4. Prayer times for Makkah, eSIM & hotels in one place.
+5. Stay together with your family — safely.
+6. Lost in the crowd? Find your nearest gate.
+7. 26 historic Ziyārah sites in Makkah & Madīnah.
+8. Ask anything — AI grounded in the Sunnah.
+
 ### App Store
 * App icon — 1024×1024 PNG, no transparency, no rounded corners (Apple rounds them)
 * Screenshots — at minimum: 6.7" iPhone (1290×2796) and 6.5" iPad. 3-10 per device.
@@ -138,21 +163,47 @@ This auto-generates every required size for both iOS (29×29 to 1024×1024) and 
 
 ---
 
-## 8 · Privacy policy (legally required)
+## 8 · Privacy policy (legally required) ✅ DONE
 
-Both stores reject apps without one. Sunnah Umrah collects very little, so
-yours can be short. Use a free generator:
-* https://app-privacy-policy-generator.firebaseapp.com/
-* https://www.termsfeed.com/privacy-policy-generator/
+Both stores reject apps without one. Sunnah Umrah's policy is **already
+published live** at:
 
-**What to declare:**
-* GPS location → used **only on-device** to find the nearest Bāb (gate); never sent to a server beyond computing the nearest gate response (no storage)
-* Group code feature → stores the user's chosen display name, tawaf/sai count, and approximate location (only when they share with their group)
-* AI chat (Claude Sonnet 4.5) → questions are sent to Anthropic via Emergent; no PII required
-* No ads, no analytics tracking, no third-party SDKs that profile users
+**👉 https://sunnahumrah.app/privacy**
 
-Host the policy at `https://yourwebsite.com/privacy` (or use a free GitHub
-Pages site). Both stores require the URL during submission.
+Source: `/app/frontend/src/pages/Privacy.jsx`. To update wording, edit that file
+and redeploy. Use this URL in both App Store Connect and Play Console
+submission forms.
+
+---
+
+## 8a · iOS permission strings ✅ DONE (template ready)
+
+iOS **requires** custom permission strings in `Info.plist` for any sensitive
+API. The exact strings to add — and where — are documented in
+[`/app/IOS_INFO_PLIST.md`](./IOS_INFO_PLIST.md). After running
+`yarn cap:add:ios` on a Mac, copy those keys into `ios/App/App/Info.plist`
+**before** archiving for App Store.
+
+---
+
+## 8b · Android permissions ✅ DONE
+
+`AndroidManifest.xml` already declares:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+```
+
+When Play Console asks why you need fine location, paste:
+
+> Sunnah Umrah uses precise location to (1) compute the exact direction to the
+> Holy Ka'bah for the Qibla compass, (2) detect the nearest gate of Masjid
+> al-Haram when a pilgrim is lost, and (3) optionally share the user's
+> position with their family group when they explicitly opt in. Location is
+> never tracked in the background and is never shared with third parties.
 
 ---
 

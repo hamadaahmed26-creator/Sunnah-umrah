@@ -27,7 +27,16 @@
 - **Sa'i — scene-specific photos:** `SaiFlow.jsx` migrated from external Wikimedia hotlinks to local files (Mount Safa, Mount Marwah, Mas'a corridor, green-marker run zone).
 - **Offline-safe asset pipeline:** all 8 step photos saved under `/app/frontend/public/images/{kaaba,sai}/` and added to the service worker's APP_SHELL precache list (`umrah-v1.2.0`). No CORS / 429 / 404 risk inside the Haram.
 
-## Implemented (Apr 29, 2026 — second session) — Live location, Qibla, eSIM surfacing
+## Implemented (Apr 29, 2026 — third session) — App Store polish + better location UX
+- **Improved Qibla location-permission UX**: replaced dead-end "go to settings" with a real "Allow location" CTA + iOS-specific 4-step instructions if previously denied + "Try again" button. Friendly headline "We need your location" with privacy reassurance.
+- **NEW: `/privacy` page** — formatted React rendering of `/app/PRIVACY_POLICY.md`, reachable at `https://sunnahumrah.app/privacy`. Required URL for App Store + Play Store submissions. Added to sitemap.
+- **Android permissions added** to `AndroidManifest.xml`: `ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`, `ACCESS_NETWORK_STATE` for Qibla / Lost / Group features.
+- **NEW: `/app/IOS_INFO_PLIST.md`** — exact iOS permission strings to paste into Info.plist after running `cap add ios` on a Mac. Includes Apple App Privacy questionnaire answers.
+- **NEW: `/app/frontend/scripts/generate_store_screenshots.js`** — automated screenshot generator using Playwright + realistic mock content (Ahmed, Sara, group code "MAKKAH"). Produces 8 screenshots × 2 device sizes (iPhone 6.7" 1290×2796, Android 1080×2400) with App Store / Play Store-ready captions. Run via `yarn screenshots`.
+- **STORE_PUBLISHING.md updated**: privacy policy section now references the live URL; Android permissions documented with Play Console rationale paste-text; screenshot section auto-generated with captions.
+- SW cache → `umrah-v1.14.0`.
+
+## Implemented (Apr 29, 2026 — second session)
 - **NEW: `/qibla` Qibla compass page**
   - Calculates true bearing from user GPS → Ka'bah (21.4225°N, 39.8262°E) using haversine + bearing
   - Live needle that rotates with device heading (uses `deviceorientationabsolute` + iOS `webkitCompassHeading`)
