@@ -19,13 +19,24 @@ export const TOUR_STEPS = [
   {
     chapter: "Ihram",
     scene: "miqat",
-    title_en: "Step 1 · Ihram — at the Miqāt",
+    title_en: "Before Iḥrām — prepare yourself",
+    title_ar: "قبل الإحرام — استعدّ",
+    what_en:
+      "Before putting on Iḥrām, do these as part of the Sunnah: (1) Ghusl — a full-body wash, (2) trim nails, (3) shave armpit / pubic hair, (4) men — trim moustache, (5) apply perfume to the body and hair — NOT to the cloth. Once you put on Iḥrām and enter its state, these nine things become forbidden until Taḥallul:",
+    what_ar:
+      "قبل ارتداء الإحرام، من السنّة: ١) الاغتسال، ٢) تقليم الأظفار، ٣) حلق شعر العانة ونتف الإبط، ٤) للرجال: قصّ الشّارب، ٥) التّطيّب في البدن والرّأس — لا في الثّوب. بعد الدّخول في الإحرام تحرم عليك تسعة أمور حتى التّحلّل:",
+    tip: "Once in Iḥrām, these are forbidden: 1) perfume, 2) trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqab & gloves (women), 7) marriage contracts, 8) intimacy, 9) hunting. Most first-timers forget to clip nails and perfume themselves BEFORE putting on Iḥrām — do it now.",
+  },
+  {
+    chapter: "Ihram",
+    scene: "miqat",
+    title_en: "Step 1 · Iḥrām — at the Mīqāt",
     title_ar: "الخطوة ١ · الإحرام — عند الميقات",
     what_en:
-      "Before crossing the Miqāt boundary into Mecca, change into Ihram. Men: two unstitched white sheets, head uncovered. Women: any modest clothing — no niqab, no gloves.",
+      "At the Mīqāt boundary, change into Iḥrām. MEN: two unstitched white sheets — izār (bottom) + ridāʾ (top) — head uncovered. WOMEN: any modest clothing — no niqab, no gloves.",
     what_ar:
-      "قبل تجاوز الميقات إلى مكة، ارتدِ الإحرام. الرجال: إزار ورداء أبيضان والرأس مكشوف. النساء: ملابس محتشمة، بلا نقاب ولا قفّازين.",
-    tip: "There are 5 official Mīqāt boundaries — plus Masjid Aisha (Tan'eem) for those already in Makkah. See all of them in the Ziyārah tab (📍 in the bottom nav).",
+      "عند الميقات، ارتدِ الإحرام. الرّجال: قطعتان بيضاوان غير مخيطتين (إزار ورداء) والرّأس مكشوف. النّساء: ملابس محتشمة، بلا نقاب ولا قفّازين.",
+    tip: "There are 5 official Mīqāt boundaries — plus Masjid ʿĀʾishah (Tanʿīm) for those already in Makkah. See all of them in the Ziyārah tab (📍 in the bottom nav).",
   },
   {
     chapter: "Ihram",
@@ -105,6 +116,7 @@ export const TOUR_STEPS = [
       label_en: "At the Black Stone — every lap",
       label_ar: "عند الحجر الأسود — كل شوط",
     },
+    tip: "Istilām (greeting the Black Stone) has a Sunnah order of preference: 1) Touch AND kiss it — if easily possible. 2) Touch it with your hand, then kiss your hand. 3) Touch it with a stick, then kiss the stick. 4) From a distance, point towards it with your right hand and say Allāhu Akbar ONLY — DO NOT kiss your hand afterwards. This last point is a common mistake, with no basis in the Sunnah. Never push or harm others trying to reach it.",
   },
   {
     chapter: "Tawaf",
@@ -119,12 +131,12 @@ export const TOUR_STEPS = [
   {
     chapter: "Tawaf",
     scene: "maqam",
-    title_en: "After Tawaf — pray behind Maqam Ibrahim",
+    title_en: "After Tawaf — pray 2 rakʿah behind Maqām Ibrāhīm",
     title_ar: "بعد الطواف — صلِّ ركعتين خلف المقام",
     what_en:
-      "After 7 laps, walk to Maqam Ibrahim and pray 2 raka'ah behind it. 1st raka'ah: Surah Al-Kāfirūn after Al-Fātiḥah. 2nd raka'ah: Surah Al-Ikhlāṣ.",
+      "After 7 laps, pray 2 rakʿah behind Maqām Ibrāhīm — or, if it is crowded, ANYWHERE in the masjid facing the Ka'bah. Both Ibn Bāz and al-Albānī permitted this; do not push or harm others to stand behind the Maqām. 1st rakʿah: Sūrat al-Kāfirūn after al-Fātiḥah. 2nd rakʿah: Sūrat al-Ikhlāṣ.",
     what_ar:
-      "بعد سبعة أشواط، اذهب إلى مقام إبراهيم وصلِّ ركعتين خلفه. الأولى: الفاتحة ثم الكافرون. الثانية: الفاتحة ثم الإخلاص.",
+      "بعد سبعة أشواط، صلِّ ركعتين خلف مقام إبراهيم — أو في أيّ مكان من المسجد إذا كان الزّحام شديدًا مستقبلًا الكعبة. أفتى بذلك ابن باز والألباني رحمهما الله؛ لا تدفع النّاس ولا تؤذهم لتقف خلف المقام. الأولى: الفاتحة ثم الكافرون. الثّانية: الفاتحة ثم الإخلاص.",
   },
   {
     chapter: "Tawaf",
@@ -177,6 +189,7 @@ export const TOUR_STEPS = [
       label_en: "On each hill — 3 times",
       label_ar: "على كل جبل — ٣ مرّات",
     },
+    tip: "The green pillars: between the two green-lit pillars along the Masʿā, MEN should jog briskly (a brisk sunnah run, not a sprint) on each of the 7 trips. Outside the green pillars, walk normally. WOMEN walk normally throughout — no jogging.",
   },
   {
     chapter: "Sa'i",
