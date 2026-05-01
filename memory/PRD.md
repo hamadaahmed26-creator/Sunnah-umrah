@@ -27,6 +27,25 @@
 - **Sa'i — scene-specific photos:** `SaiFlow.jsx` migrated from external Wikimedia hotlinks to local files (Mount Safa, Mount Marwah, Mas'a corridor, green-marker run zone).
 - **Offline-safe asset pipeline:** all 8 step photos saved under `/app/frontend/public/images/{kaaba,sai}/` and added to the service worker's APP_SHELL precache list (`umrah-v1.2.0`). No CORS / 429 / 404 risk inside the Haram.
 
+## Implemented (May 1, 2026 — fourth session) — Quiz + Ramadan reminders
+- **NEW: `/quiz` Umrah knowledge quiz**
+  - 30+ vetted questions sourced from Sahih al-Bukhari, Sahih Muslim, Hisn al-Muslim, Bulugh al-Maram, Manasik al-Albani
+  - 5 categories (Ihram, Tawaf, Sa'i, Halq/Taqsīr, General) × 3 difficulties (Beginner, Intermediate, Advanced)
+  - 10 questions per round, randomised; immediate feedback with Sunnah-source citation under each answer
+  - Persistent best-score in localStorage; native share-button (`I scored 8/10 on Sunnah Umrah quiz!`)
+  - Bilingual (EN+AR), 100% offline, no backend cost
+  - File: `/app/frontend/src/lib/quiz.js` (questions data, owner must review before launch)
+- **NEW: `/ramadan` Ramadan reminders**
+  - Pre-Ramadan countdown (`Ramadan begins in N days, in shāʾa Allāh`) — auto-detects current Hijri year from `RAMADAN_GREGORIAN_START` lookup table
+  - During Ramadan: live Iftar countdown (h:m:s) using Aladhan API for Makkah Maghrib + daily Sunnah-grounded reminder card
+  - 30 daily reminders (welcome, sahūr du'a, hadith of generosity, Tarāwīḥ, last 10 nights, Laylatu-l-Qadr, zakāt al-fiṭr, etc.) sourced from Bukhari/Muslim
+  - Browse-all 5×6 grid; previous/next navigation between days
+  - Bilingual (EN+AR)
+  - File: `/app/frontend/src/lib/ramadan.js` (content + Hijri-Greg conversion table)
+- **Plan page**: 3 new cards added — Qibla compass, Umrah quiz, Ramadan reminders
+- Sitemap updated with `/quiz`, `/ramadan`
+- SW cache → `umrah-v1.15.0`
+
 ## Implemented (Apr 29, 2026 — third session) — App Store polish + better location UX
 - **Improved Qibla location-permission UX**: replaced dead-end "go to settings" with a real "Allow location" CTA + iOS-specific 4-step instructions if previously denied + "Try again" button. Friendly headline "We need your location" with privacy reassurance.
 - **NEW: `/privacy` page** — formatted React rendering of `/app/PRIVACY_POLICY.md`, reachable at `https://sunnahumrah.app/privacy`. Required URL for App Store + Play Store submissions. Added to sitemap.

@@ -16,6 +16,8 @@ import Hotels from "./pages/Hotels";
 import Packages from "./pages/Packages";
 import Qibla from "./pages/Qibla";
 import Privacy from "./pages/Privacy";
+import Quiz from "./pages/Quiz";
+import Ramadan from "./pages/Ramadan";
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
               <Route path="/packages" element={<Packages />} />
               <Route path="/qibla" element={<Qibla />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/ramadan" element={<Ramadan />} />
               {/* Old routes redirect into the tour */}
               <Route path="/guide" element={<Navigate to="/tour" replace />} />
               <Route path="/tawaf" element={<Navigate to="/tour" replace />} />
