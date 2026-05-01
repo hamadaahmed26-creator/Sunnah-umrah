@@ -14,15 +14,24 @@ export default function Shop() {
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="shop-page">
       <div className="mt-2">
-        <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{isAr ? "المتجر" : "Shop"}</p>
+        <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{isAr ? "متجر السّفر" : "Pre-trip shop"}</p>
         <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
-          {isAr ? "كلّ ما يحتاجه الحاجّ" : "Everything pilgrims need"}
+          {isAr ? "كلّ ما تحتاجه قبل الإقلاع" : "Pack what you'll need — before you fly"}
         </h1>
         <p className="mt-2 text-[14px] text-[#5C5D58] max-w-[34ch]">
           {isAr
-            ? "منتقاة بعناية من قِبل سنّة عمرة — ليس مجرّد روابط عشوائيّة."
-            : "Hand-picked by Sunnah Umrah — not random affiliate junk."}
+            ? "منتقاة بعناية. تُشحن إلى منزلك من Amazon UK قبل سفرك."
+            : "Hand-picked. Delivered to your UK door from Amazon UK — before you fly."}
         </p>
+        {/* Reality reminder — important so users aren't confused about Zamzam */}
+        <div className="mt-3 rounded-xl bg-[#FFF8EE] border border-[#EBD9B0] p-3 flex items-start gap-2">
+          <span className="text-[14px] flex-shrink-0">💡</span>
+          <p className={`text-[11px] text-[#6E5424] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+            {isAr
+              ? "هذه أدوات قبل السّفر. لا يمكن شحن ماء زمزم تجاريًّا — ستحصل على ٥ لتر مجّانيّة من مطار جدّة عند العودة."
+              : "These are pre-trip essentials shipped in the UK. Zamzam water itself can't be sold or shipped — you'll receive a free 5L bottle at Jeddah airport on the way home."}
+          </p>
+        </div>
       </div>
 
       {/* Category tabs */}
@@ -88,7 +97,7 @@ function ProductCard({ product, isAr }) {
             )}
             {tag === "souvenir" && (
               <span className="inline-flex items-center gap-0.5 text-[9px] uppercase tracking-wider text-[#8B4540] bg-[#F4E1DF] rounded-full px-1.5 py-0.5 font-semibold">
-                {isAr ? "هديّة من السّفر" : "Bring back as a gift"}
+                {isAr ? "سنّة يوميّة" : "Sunnah daily essentials"}
               </span>
             )}
           </div>

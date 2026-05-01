@@ -5,10 +5,11 @@ import { motion } from "framer-motion";
 import {
   ArrowRight, Compass, Users, MapPin, Sparkles,
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
-  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen,
+  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
+import { todaysReminder } from "../lib/dailyReminders";
 
 // Home dashboard — every feature visible at a glance.
 // Hero: continue / start tour. Below: 3 priority cards (Plan / Stay together / Ask).
@@ -27,6 +28,12 @@ export default function Home() {
   const inProgress = tawafCount > 0 || saiCount > 0;
 
   const ramadan = React.useMemo(() => ramadanStatus(), []);
+  const reminder = React.useMemo(() => todaysReminder(), []);
+
+  // First-time vs returning user — controls section ordering. A user who has
+  // already started their Tawaf/Saʿi sees Tools first; a fresh visitor sees
+  // travel options first because they're still planning.
+  const toolsFirst = inProgress;
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="home-page">
@@ -150,14 +157,83 @@ export default function Home() {
         />
       </div>
 
-      {/* Section header */}
+      {/* Today's Sunnah reminder — rotates daily. Designed to make this app
+          a quiet daily habit, not just a one-off Umrah tool. */}
+      <Link
+        to="/about"
+        className="mt-3 block rounded-2xl bg-gradient-to-br from-[#FBF8F1] to-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.99] tap-pulse"
+        data-testid="home-daily-reminder"
+      >
+        <div className="flex items-start gap-2.5">
+          <div className="w-8 h-8 rounded-full bg-[#FBF1DD] grid place-items-center flex-shrink-0">
+            <Quote className="w-3.5 h-3.5 text-[#B3884D]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className={`text-[10px] uppercase tracking-[0.22em] text-[#B3884D] ${isAr ? "font-arabic" : ""}`}>
+              {isAr ? "تذكير اليوم" : "Today's reminder"}
+            </div>
+            <p
+              dir={isAr ? "rtl" : "ltr"}
+              className={`mt-1.5 text-[13px] text-[#1C1D1B] leading-[1.55] ${isAr ? "font-arabic" : ""}`}
+            >
+              {isAr ? `«${reminder.ar}»` : `"${reminder.en}"`}
+            </p>
+            <div className="mt-1.5 text-[10px] text-[#8E8F8A] tracking-wide">
+              {reminder.source}
+            </div>
+          </div>
+        </div>
+      </Link>
+
+      {toolsFirst ? (
+        <>
+          <ToolsSection isAr={isAr} />
+          <TravelSection isAr={isAr} />
+        </>
+      ) : (
+        <>
+          <TravelSection isAr={isAr} />
+          <ToolsSection isAr={isAr} />
+        </>
+      )}
+
+      {/* About / Sources footer — reassures the user (and Apple reviewers)
+          that every ruling in the app is sourced. */}
+      <Link
+        to="/about"
+        className="mt-7 block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition tap-pulse"
+        data-testid="home-about"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
+            <BookOpen className="w-4 h-4 text-[#7B5C24]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className={`text-[13px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr ? "المصادر والمنهج" : "Sources & methodology"}
+            </div>
+            <div className={`text-[11px] text-[#5C5D58] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr
+                ? "البخاري، مسلم، حصن المسلم، الألباني..."
+                : "Bukhārī · Muslim · Ḥiṣn al-Muslim · al-Albānī"}
+            </div>
+          </div>
+          <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+        </div>
+      </Link>
+    </div>
+  );
+}
+
+// ─── Tools grid (Qibla / Lost / Ziyārah / Quiz / Ramadan / Shop) ────
+function ToolsSection({ isAr }) {
+  return (
+    <>
       <div className="mt-7 flex items-center justify-between">
         <h2 className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
           {isAr ? "الأدوات" : "Tools"}
         </h2>
       </div>
-
-      {/* 2-column tile grid */}
       <div className="mt-2 grid grid-cols-2 gap-2">
         <Tile to="/qibla"   icon={Compass}    en="Qibla compass"  ar="بوصلة القبلة"   sub_en="Direction to Ka'bah" sub_ar="اتجاه الكعبة" testid="home-qibla" />
         <Tile to="/lost"    icon={MapPin}     en="I'm lost"        ar="أنا تائه"        sub_en="Find nearest gate"   sub_ar="أقرب باب" testid="home-lost" />
@@ -166,8 +242,14 @@ export default function Home() {
         <Tile to="/ramadan" icon={Moon}       en="Ramadan"         ar="رمضان"           sub_en="Reminders & countdown" sub_ar="تذكيرات وعدّ تنازلي" testid="home-ramadan" />
         <Tile to="/shop"    icon={ShoppingBag} en="Shop"           ar="المتجر"          sub_en="Ihram, books, eSIM"  sub_ar="إحرام، كتب، شريحة" testid="home-shop" badge={isAr ? "جديد" : "New"} />
       </div>
+    </>
+  );
+}
 
-      {/* Section header — How will you travel? */}
+// ─── Travel section (Packages vs DIY) ───────────────────────────────
+function TravelSection({ isAr }) {
+  return (
+    <>
       <div className="mt-7 flex items-center justify-between">
         <h2 className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
           {isAr ? "كيف ستسافر؟" : "How will you travel?"}
@@ -214,32 +296,7 @@ export default function Home() {
           </div>
         </Link>
       </div>
-
-      {/* About / Sources footer — reassures the user (and Apple reviewers)
-          that every ruling in the app is sourced. */}
-      <Link
-        to="/about"
-        className="mt-7 block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition tap-pulse"
-        data-testid="home-about"
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
-            <BookOpen className="w-4 h-4 text-[#7B5C24]" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className={`text-[13px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr ? "المصادر والمنهج" : "Sources & methodology"}
-            </div>
-            <div className={`text-[11px] text-[#5C5D58] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr
-                ? "البخاري، مسلم، حصن المسلم، الألباني..."
-                : "Bukhārī · Muslim · Ḥiṣn al-Muslim · al-Albānī"}
-            </div>
-          </div>
-          <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
-        </div>
-      </Link>
-    </div>
+    </>
   );
 }
 

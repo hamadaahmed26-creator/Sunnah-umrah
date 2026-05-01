@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Compass, MessageCircle, Users, Languages, MapPin } from "lucide-react";
 import { useT } from "../lib/i18n";
+import QuickDuas from "./QuickDuas";
 
 export const LangContext = React.createContext({ lang: "en", setLang: () => {} });
 
@@ -89,6 +90,7 @@ export default function Layout({ children }) {
         })}
       </nav>
       )}
+      <QuickDuas isAr={lang === "ar"} />
     </div>
   );
 }

@@ -22,7 +22,27 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
-## Implemented (May 2, 2026 — sixth session) — Sadaqah removed + App Store protections
+## Implemented (May 2, 2026 — sixth session, part 2) — Daily reminder + Quick Duʿāʾ + adaptive home + shop reframe
+- **NEW: Today's Reminder card** on Home — rotating Sunnah hadith/duʿāʾ that
+  changes once per UTC day, cycling through 30 ṣaḥīḥ entries from Bukhārī /
+  Muslim / al-Albānī. Designed to convert a one-off Umrah app into a daily
+  habit. File: `frontend/src/lib/dailyReminders.js`.
+- **NEW: Quick Duʿāʾ floating sheet** (`frontend/src/components/QuickDuas.jsx`).
+  Heart-shaped FAB bottom-right opens a slide-up sheet with 5 most-needed
+  authentic duʿāʾs: Sayyid al-Istighfār, entering masjid, travel, anxiety/worry,
+  evening adhkār. Each shows Arabic + transliteration + meaning + source.
+  Hidden on focus pages (`/tour`, `/chat`, `/quiz`, `/qibla`, `/places/*`).
+- **Home adapts to first-time vs returning users.** If `umrah_tawaf_count > 0`
+  or `umrah_sai_count > 0` the **Tools** grid renders first (the user is
+  actively using the app). Otherwise **How will you travel?** renders first
+  (the user is still planning).
+- **Shop reframed for clarity.** Page hero is now *"Pack what you'll need —
+  before you fly"* with a yellow Zamzam-reality tip ("free 5L bottle at Jeddah
+  airport — can't be sold/shipped"). Souvenir badge changed from "Bring back
+  as a gift" → "Sunnah daily essentials" (more accurate — these ship from
+  Amazon UK, they're not flown back from Saudi). Zamzam carrier title and
+  description rewritten to make the empty-container distinction unambiguous.
+- SW cache → `umrah-v1.20.0`.
 - **Sadaqah completely removed from frontend** (per user decision to avoid Apple App Store
   review risk under Guideline 3.2.1(vii) / 4.5.4 — "donations to developer" trigger IAP /
   rejection unless 100% pass-through to a named approved nonprofit). Removed from Home,
