@@ -19,6 +19,7 @@ import Privacy from "./pages/Privacy";
 import Quiz from "./pages/Quiz";
 import Ramadan from "./pages/Ramadan";
 import Home from "./pages/Home";
+import Shop from "./pages/Shop";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/ramadan" element={<Ramadan />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/shop" element={<Shop />} />
               {/* Old routes redirect into the tour */}
               <Route path="/guide" element={<Navigate to="/tour" replace />} />
               <Route path="/tawaf" element={<Navigate to="/tour" replace />} />

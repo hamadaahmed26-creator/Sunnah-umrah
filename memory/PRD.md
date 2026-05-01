@@ -27,6 +27,17 @@
 - **Sa'i — scene-specific photos:** `SaiFlow.jsx` migrated from external Wikimedia hotlinks to local files (Mount Safa, Mount Marwah, Mas'a corridor, green-marker run zone).
 - **Offline-safe asset pipeline:** all 8 step photos saved under `/app/frontend/public/images/{kaaba,sai}/` and added to the service worker's APP_SHELL precache list (`umrah-v1.2.0`). No CORS / 429 / 404 risk inside the Haram.
 
+## Implemented (May 1, 2026 — fifth session) — Home dashboard + Marketplace Layer 1
+- **NEW: `/` (default Home dashboard)** — replaces Tour as the landing page. Warm cream-to-gold gradient hero with subtle Islamic geometric pattern overlay + small Ka'bah glyph; "Continue / Start" CTA that auto-detects in-progress Tawaf/Sa'i state from localStorage; Ramadan banner; 3 priority cards (Plan / Family / Ask); 6-tile tools grid (Qibla, I'm lost, Ziyārah, Quiz, Ramadan, Shop with NEW badge); 3-tile booking row (Hotels / Packages / eSIM); Sadaqah CTA card. Bottom nav HIDDEN on home only — tiles do the navigation.
+- **NEW: `/shop` Affiliate marketplace (Layer 1)** — 6 categories × ~15 hand-curated products: Ihram & travel kit (Ihram set, miswak, Zamzam carrier, prayer mat, rihla bag), Islamic books (Hisn al-Muslim, Bulūgh al-Marām, Manāsik al-Albānī, Riyāḍ aṣ-Ṣāliḥīn, Tafsīr as-Saʿdī), Halal food kit (Sidr honey, Ajwa dates, olive oil, black seed), Hotels (Booking.com), Flights (London→Jeddah, London→Madinah via Skyscanner), Saudi eSIM (Airalo).
+  - Mix display: physical products show price ("From £22.99"), travel/eSIM does not (just "Browse")
+  - "CURATED" gold badge on every item (trust signal)
+  - Affiliate disclosure footer (Amazon UK / Booking / Airalo / Skyscanner — required by FTC + Amazon TOS)
+  - Tag system: `REACT_APP_AMAZON_TAG`, `REACT_APP_AIRALO_REF`, `REACT_APP_SKYSCANNER_TAG` — links work without tags (no commission), commission lands once tags are filled
+- **Mīqāt entries enriched** — every Mīqāt now has a soft maroon "WHY ENTER IḤRĀM HERE" callout above the description, explaining in plain language *exactly* who must use that Mīqāt (e.g. "If you fly from Egypt or the Levant... declare niyyah on the plane ~1h before landing" for al-Juḥfah). Critical for first-time pilgrims.
+- **NEW: `/app/AFFILIATE_SIGNUPS.md`** — kid-level step-by-step signup guides for Amazon Associates UK (instant, free, ~10 min) and Travelpayouts → Skyscanner (free, 2-7 day approval). Includes Amazon's banned behaviours, 180-day rule, and projected earnings (~£150/month with 1k users).
+- SW cache → `umrah-v1.17.0`. Sitemap updated with `/shop`.
+
 ## Implemented (May 1, 2026 — fourth session) — Quiz + Ramadan reminders
 - **NEW: `/quiz` Umrah knowledge quiz**
   - 30+ vetted questions sourced from Sahih al-Bukhari, Sahih Muslim, Hisn al-Muslim, Bulugh al-Maram, Manasik al-Albani
