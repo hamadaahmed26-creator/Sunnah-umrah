@@ -69,18 +69,28 @@ export default function Shop() {
 }
 
 function ProductCard({ product, isAr }) {
-  const { name_en, name_ar, desc_en, desc_ar, price, url, internal, source } = product;
+  const { name_en, name_ar, desc_en, desc_ar, price, url, internal, source, tag } = product;
   const cls =
     "block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.99] p-4";
   const Inner = (
     <>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 mb-1.5">
+          <div className="flex items-center flex-wrap gap-1.5 mb-1.5">
             <span className="inline-flex items-center gap-0.5 text-[9px] uppercase tracking-wider text-[#B3884D] bg-[#FBF1DD] rounded-full px-1.5 py-0.5 font-semibold">
               <Sparkles className="w-2.5 h-2.5" />
               {isAr ? "مختار" : "Curated"}
             </span>
+            {tag === "before" && (
+              <span className="inline-flex items-center gap-0.5 text-[9px] uppercase tracking-wider text-[#2A5A4A] bg-[#E7F1EB] rounded-full px-1.5 py-0.5 font-semibold">
+                {isAr ? "قبل السّفر" : "Pack before you fly"}
+              </span>
+            )}
+            {tag === "souvenir" && (
+              <span className="inline-flex items-center gap-0.5 text-[9px] uppercase tracking-wider text-[#8B4540] bg-[#F4E1DF] rounded-full px-1.5 py-0.5 font-semibold">
+                {isAr ? "هديّة من السّفر" : "Bring back as a gift"}
+              </span>
+            )}
           </div>
           <h3 className={`text-[15px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`} data-testid={`product-name-${product.id}`}>
             {isAr ? name_ar : name_en}

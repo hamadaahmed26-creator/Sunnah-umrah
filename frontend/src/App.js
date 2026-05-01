@@ -6,7 +6,6 @@ import InstallPrompt from "./components/InstallPrompt";
 import Tour from "./pages/Tour";
 import Lost from "./pages/Lost";
 import Chat from "./pages/Chat";
-import Plan from "./pages/Plan";
 import Group from "./pages/Group";
 import Places from "./pages/Places";
 import PlaceDetail from "./pages/PlaceDetail";
@@ -32,7 +31,7 @@ function App() {
               <Route path="/tour" element={<Tour />} />
               <Route path="/lost" element={<Lost />} />
               <Route path="/chat" element={<Chat />} />
-              <Route path="/plan" element={<Plan />} />
+              <Route path="/plan" element={<Navigate to="/" replace />} />
               <Route path="/group" element={<Group />} />
               <Route path="/group/join/:code" element={<Group />} />
               <Route path="/places" element={<Places />} />

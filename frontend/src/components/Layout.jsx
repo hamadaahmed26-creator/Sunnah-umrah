@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Compass, MessageCircle, CalendarDays, Users, Languages, MapPin } from "lucide-react";
+import { Home, Compass, MessageCircle, Users, Languages, MapPin } from "lucide-react";
 import { useT } from "../lib/i18n";
 
 export const LangContext = React.createContext({ lang: "en", setLang: () => {} });
@@ -21,7 +21,6 @@ export default function Layout({ children }) {
   const loc = useLocation();
   const navItems = [
     { to: "/", icon: Home, label: lang === "ar" ? "الرئيسية" : "Home", id: "tour" },
-    { to: "/plan", icon: CalendarDays, label: lang === "ar" ? "اليوم" : "Plan", id: "plan" },
     { to: "/places", icon: MapPin, label: lang === "ar" ? "زيارات" : "Places", id: "places" },
     { to: "/lost", icon: Compass, label: lang === "ar" ? "تائه" : "Lost", id: "lost" },
     { to: "/group", icon: Users, label: lang === "ar" ? "المجموعة" : "Group", id: "group" },

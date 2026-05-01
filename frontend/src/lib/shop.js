@@ -33,9 +33,6 @@ export const SHOP_CATEGORIES = [
   { id: "ihram",   icon_emoji: "🕋", label_en: "Ihram & travel kit", label_ar: "إحرام ومستلزمات السّفر" },
   { id: "books",   icon_emoji: "📚", label_en: "Islamic books",       label_ar: "الكتب الإسلاميّة" },
   { id: "food",    icon_emoji: "🍯", label_en: "Halal food kit",       label_ar: "أطعمة حلال" },
-  { id: "hotels",  icon_emoji: "🏨", label_en: "Hotels",                label_ar: "الفنادق" },
-  { id: "flights", icon_emoji: "✈️", label_en: "Flights",              label_ar: "الطّيران" },
-  { id: "esim",    icon_emoji: "🌐", label_en: "Saudi eSIM",            label_ar: "شريحة سعوديّة" },
 ];
 
 // Each product:
@@ -54,6 +51,7 @@ export const SHOP_PRODUCTS = [
     price: 22.99,
     url: amzUk("B07NRSPJX1"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "ihram-belt",
@@ -65,6 +63,7 @@ export const SHOP_PRODUCTS = [
     price: 12.99,
     url: amzUk("B0BG5WS1FX"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "prayer-mat-pocket",
@@ -76,6 +75,7 @@ export const SHOP_PRODUCTS = [
     price: 8.99,
     url: amzUk("B08XPMG2QV"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "miswak-pack",
@@ -87,17 +87,19 @@ export const SHOP_PRODUCTS = [
     price: 5.99,
     url: amzUk("B07BF1V47G"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "zamzam-bottle",
     category: "ihram",
-    name_en: "Zamzam carry bottle (5L food-safe)",
-    name_ar: "قارورة زمزم (٥ لتر آمنة للطّعام)",
-    desc_en: "Sealed 5-litre container designed for airline check-in to carry Zamzam water home safely.",
-    desc_ar: "حاوية محكمة سعة ٥ لتر، مصمّمة لشحن ماء زمزم في الطّيران بأمان.",
+    name_en: "Zamzam carry bottle (5L food-safe, checked luggage)",
+    name_ar: "قارورة زمزم (٥ لتر آمنة للطّعام — للأمتعة المسجّلة)",
+    desc_en: "REQUIRED to legally carry Zamzam home in checked luggage. Saudi airline rules confiscate any Zamzam not in a sealed, food-safe container at the airport — most first-time pilgrims don't know this and lose theirs. Pack one before you fly out.",
+    desc_ar: "ضروريّة لشحن ماء زمزم في الأمتعة المسجّلة. لوائح الطّيران السّعوديّة تصادر زمزم غير المعبّأة في حاوية محكمة آمنة للطّعام — معظم المعتمرين لأوّل مرّة يجهلون ذلك ويخسرونها. خذها معك قبل السّفر.",
     price: 14.99,
     url: amzUk("B07RJPB8HN"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "rihla-bag",
@@ -109,6 +111,7 @@ export const SHOP_PRODUCTS = [
     price: 39.99,
     url: amzUk("B08KH53NTL"),
     source: "amazon",
+    tag: "before",
   },
 
   // ─── Islamic books ──────────────────────────────────────────────
@@ -122,6 +125,7 @@ export const SHOP_PRODUCTS = [
     price: 4.99,
     url: amzUk("B07Q8RNTF8"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "manasik-albani",
@@ -133,6 +137,7 @@ export const SHOP_PRODUCTS = [
     price: 7.50,
     url: amzUk("B0BHFDJKJV"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "bulugh-al-maram",
@@ -144,6 +149,7 @@ export const SHOP_PRODUCTS = [
     price: 14.99,
     url: amzUk("B0789ZTQ1H"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "riyadh-saliheen",
@@ -155,6 +161,7 @@ export const SHOP_PRODUCTS = [
     price: 16.99,
     url: amzUk("B07KQF2MKH"),
     source: "amazon",
+    tag: "before",
   },
   {
     id: "tafsir-as-sadi",
@@ -166,6 +173,7 @@ export const SHOP_PRODUCTS = [
     price: 19.99,
     url: amzUk("B083RTFP15"),
     source: "amazon",
+    tag: "before",
   },
 
   // ─── Halal food kit ──────────────────────────────────────────────
@@ -179,6 +187,7 @@ export const SHOP_PRODUCTS = [
     price: 24.99,
     url: amzUk("B08BP6CDLM"),
     source: "amazon",
+    tag: "souvenir",
   },
   {
     id: "ajwa-dates",
@@ -190,6 +199,7 @@ export const SHOP_PRODUCTS = [
     price: 13.99,
     url: amzUk("B07CWJM5B5"),
     source: "amazon",
+    tag: "souvenir",
   },
   {
     id: "barakah-zaytun-oil",
@@ -201,6 +211,7 @@ export const SHOP_PRODUCTS = [
     price: 14.99,
     url: amzUk("B08H1V6Y9P"),
     source: "amazon",
+    tag: "souvenir",
   },
   {
     id: "black-seed-oil",
@@ -212,66 +223,7 @@ export const SHOP_PRODUCTS = [
     price: 9.99,
     url: amzUk("B0875D5ZVF"),
     source: "amazon",
-  },
-
-  // ─── Hotels ───────────────────────────────────────────────────────
-  {
-    id: "booking-makkah",
-    category: "hotels",
-    name_en: "Hotels near Masjid al-Ḥaram",
-    name_ar: "فنادق قرب المسجد الحرام",
-    desc_en: "Browse and book hotels in Makkah with prices, photos, and reviews — sorted by distance from the Ḥaram.",
-    desc_ar: "تصفّح واحجز فنادق مكّة بالأسعار والصّور والتّقييمات — مرتّبة بالمسافة من الحرم.",
-    url: "/hotels",
-    internal: true,
-    source: "booking",
-  },
-  {
-    id: "booking-madinah",
-    category: "hotels",
-    name_en: "Hotels near Masjid an-Nabawī",
-    name_ar: "فنادق قرب المسجد النّبوي",
-    desc_en: "Browse and book hotels in Madīnah with prices, photos, and reviews — sorted by distance from the Masjid.",
-    desc_ar: "تصفّح واحجز فنادق المدينة بالأسعار والصّور والتّقييمات — مرتّبة بالمسافة من المسجد.",
-    url: "/hotels",
-    internal: true,
-    source: "booking",
-  },
-
-  // ─── Flights ──────────────────────────────────────────────────────
-  {
-    id: "flight-london-jeddah",
-    category: "flights",
-    name_en: "London → Jeddah (JED)",
-    name_ar: "لندن → جدّة",
-    desc_en: "Compare hundreds of airlines for flights to Jeddah, the gateway to Makkah. Direct & multi-stop options.",
-    desc_ar: "قارن مئات شركات الطّيران للسّفر إلى جدّة، البوّابة إلى مكّة. رحلات مباشرة ومتعدّدة التّوقّفات.",
-    url: skySearch("LOND", "JED"),
-    source: "skyscanner",
-  },
-  {
-    id: "flight-london-medina",
-    category: "flights",
-    name_en: "London → Madīnah (MED)",
-    name_ar: "لندن → المدينة",
-    desc_en: "Direct flights to Prince Mohammad bin Abdulaziz Airport — closest to the Prophet's Masjid.",
-    desc_ar: "رحلات إلى مطار الأمير محمد بن عبد العزيز — الأقرب إلى مسجد رسول الله ﷺ.",
-    url: skySearch("LOND", "MED"),
-    source: "skyscanner",
-  },
-
-  // ─── Saudi eSIM ───────────────────────────────────────────────────
-  {
-    id: "airalo-saudi",
-    category: "esim",
-    name_en: "Airalo Saudi Arabia eSIM",
-    name_ar: "شريحة Airalo للسّعوديّة",
-    desc_en: "Instant mobile data in Saudi Arabia. Activate in 2 minutes. From £4 for 1GB / 7 days. No physical SIM swap needed.",
-    desc_ar: "بيانات فوريّة في السّعوديّة. تفعيل خلال دقيقتين. من ٤£ لـ١GB لمدّة ٧ أيّام. بدون تبديل شريحة.",
-    url: AIRALO_REF
-      ? `https://www.airalo.com/saudi-arabia-esim?ref=${AIRALO_REF}`
-      : "https://www.airalo.com/saudi-arabia-esim",
-    source: "airalo",
+    tag: "souvenir",
   },
 ];
 

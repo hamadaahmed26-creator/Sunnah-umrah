@@ -1,9 +1,10 @@
 import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowRight, Compass, Users, MapPin, BookOpen, Heart, Sparkles,
-  Hotel, Wifi, Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
+  Hotel, Wifi, Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag, Sunrise, Sunset, Sun, Loader2,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -124,9 +125,11 @@ export default function Home() {
         </Link>
       )}
 
-      {/* 3 priority cards — Plan, Group, Ask */}
-      <div className="mt-5 grid grid-cols-3 gap-2" data-testid="home-priority">
-        <PriorityCard to="/plan"  icon={Briefcase}        label={isAr ? "خطّط"   : "Plan"}    accent="#2A5A4A" testid="home-plan" />
+      {/* Prayer times — Makkah, refreshes every minute */}
+      <PrayerTimesCard isAr={isAr} />
+
+      {/* 2 priority cards — Family + Ask (Plan removed; Plan tools live on this dashboard now) */}
+      <div className="mt-3 grid grid-cols-2 gap-2" data-testid="home-priority">
         <PriorityCard to="/group" icon={Users}            label={isAr ? "العائلة" : "Family"} accent="#B3884D" testid="home-group" />
         <PriorityCard to="/chat"  icon={MessageSquare}    label={isAr ? "اسأل"  : "Ask"}     accent="#8B4540" testid="home-chat" />
       </div>
@@ -258,3 +261,88 @@ function SmallTile({ to, href, icon: Icon, en, ar, testid, external = false }) {
     <Link to={to} className={cls} data-testid={testid}>{inner}</Link>
   );
 }
+
+// ─── Prayer times card — fetches Makkah times once + highlights "next prayer" ──
+function PrayerTimesCard({ isAr }) {
+  const [data, setData] = React.useState(null);
+  const [now, setNow] = React.useState(() => new Date());
+
+  React.useEffect(() => {
+    axios
+      .get("https://api.aladhan.com/v1/timingsByCity", {
+        params: { city: "Makkah", country: "SA", method: 4 },
+      })
+      .then((r) => setData(r.data?.data?.timings))
+      .catch(() => {});
+  }, []);
+
+  React.useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (!data) {
+    return (
+      <div className="mt-3 rounded-2xl bg-white border border-[#E8E5DD] p-4 flex items-center gap-2 text-[12px] text-[#8E8F8A]" data-testid="home-prayer-loading">
+        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+        {isAr ? "تحميل أوقات الصّلاة..." : "Loading Makkah prayer times…"}
+      </div>
+    );
+  }
+
+  // Pick the next upcoming prayer time
+  const items = [
+    { id: "Fajr",    icon: Sunrise, en: "Fajr",    ar: "الفجر",    t: data.Fajr },
+    { id: "Dhuhr",   icon: Sun,     en: "Dhuhr",   ar: "الظّهر",    t: data.Dhuhr },
+    { id: "Asr",     icon: Sun,     en: "Asr",     ar: "العصر",     t: data.Asr },
+    { id: "Maghrib", icon: Sunset,  en: "Maghrib", ar: "المغرب",   t: data.Maghrib },
+    { id: "Isha",    icon: Moon,    en: "Isha",    ar: "العشاء",    t: data.Isha },
+  ];
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const next =
+    items.find((p) => {
+      const [h, m] = p.t.split(":").map((n) => parseInt(n, 10));
+      return h * 60 + m > nowMin;
+    }) || items[0];
+
+  return (
+    <div
+      className="mt-3 rounded-2xl bg-white border border-[#E8E5DD] p-3.5"
+      data-testid="home-prayer-times"
+    >
+      <div className="flex items-center justify-between mb-2.5">
+        <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] inline-flex items-center gap-1">
+          <MapPin className="w-2.5 h-2.5" />
+          {isAr ? "أوقات مكّة" : "Makkah times"}
+        </div>
+        <div className="text-[10px] text-[#8E8F8A]">
+          {isAr ? "التّالية" : "Next"}: <span className="font-semibold text-[#1C1D1B]">{isAr ? next.ar : next.en} · {next.t}</span>
+        </div>
+      </div>
+      <div className="grid grid-cols-5 gap-1.5">
+        {items.map((p) => {
+          const isNext = p.id === next.id;
+          const Icon = p.icon;
+          return (
+            <div
+              key={p.id}
+              className={`text-center rounded-xl px-1.5 py-2 transition ${
+                isNext
+                  ? "bg-[#1C1D1B] text-white"
+                  : "bg-[#F8F6F0] text-[#1C1D1B]"
+              }`}
+              data-testid={`prayer-${p.id.toLowerCase()}`}
+            >
+              <Icon className={`w-3.5 h-3.5 mx-auto ${isNext ? "text-[#B3884D]" : "text-[#8E8F8A]"}`} />
+              <div className={`mt-1 text-[10px] uppercase tracking-wider ${isNext ? "text-[#B3884D]" : "text-[#8E8F8A]"} ${isAr ? "font-arabic" : ""}`}>
+                {isAr ? p.ar : p.en}
+              </div>
+              <div className="mt-0.5 text-[12px] font-medium tabular-nums">{p.t}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
