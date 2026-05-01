@@ -48,7 +48,7 @@ export default function About() {
           </li>
           <li>
             <strong>Manāsik al-Ḥajj wal-ʿUmrah</strong> by Shaykh Muḥammad Nāṣir al-Dīn
-            al-Albānī — concise rites of Hajj and ʿUmrah on the Sunnah.
+            al-Albānī — a concise guide to the rites of Hajj and ʿUmrah following the Sunnah.
           </li>
           <li>
             <strong>Riyāḍ aṣ-Ṣāliḥīn</strong> by al-Imām al-Nawawī — used for general adab

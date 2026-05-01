@@ -64,7 +64,7 @@ export default function WelcomeSheet({ open, onClose, isAr }) {
               <p className={`mt-3 text-[14px] text-[#5C5D58] leading-[1.7] ${isAr ? "font-arabic text-right" : ""}`}>
                 {isAr
                   ? "رفيقك الهادئ في رحلة العمرة — على السنّة، خطوة بخطوة، باللغتين العربية والإنجليزية."
-                  : "Your gentle companion for ʿUmrah — on the Sunnah, step by step, in English and Arabic."}
+                  : "Your gentle companion for ʿUmrah — following the Sunnah, step by step, in English and Arabic."}
               </p>
 
               <ul className="mt-6 space-y-3" data-testid="welcome-features">

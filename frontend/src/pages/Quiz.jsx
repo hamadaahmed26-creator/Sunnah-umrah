@@ -76,7 +76,7 @@ export default function Quiz() {
           <p className="mt-2 text-[14px] text-[#5C5D58] max-w-[34ch]">
             {isAr
               ? "اختبر معرفتك بأحكام العمرة وفق السنّة. كلّ سؤال يأتي مع المصدر."
-              : "Test your knowledge of ʿUmrah on the Sunnah. Every question shows its source."}
+              : "Test your knowledge of ʿUmrah according to the Sunnah. Every question shows its source."}
           </p>
         </div>
 

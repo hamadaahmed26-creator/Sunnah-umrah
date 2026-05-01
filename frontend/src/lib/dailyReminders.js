@@ -131,9 +131,9 @@ export const DAILY_REMINDERS = [
     source: "Bukhārī 450 · Muslim 533",
   },
   {
-    en: "Pray your duty to Allah; what He has decreed for you will reach you.",
-    ar: "اعمل لآخرتك كأنّك تموت غدًا، واعمل لدنياك كأنّك تعيش أبدًا.",
-    source: "Bayhaqī · ḥasan",
+    en: "The supplication of a Muslim for his brother in his absence is answered — an angel by his side says: Āmīn, and may you have the same.",
+    ar: "دعوةُ المرءِ المسلم لأخيه بظهر الغيب مستجابة، عند رأسه ملكٌ موكَّل، كلّما دعا لأخيه بخيرٍ قال الملك الموكّل به: آمين ولك بمثل.",
+    source: "Muslim 2733",
   },
   {
     en: "When one of you sneezes, let him say Al-ḥamdulillāh; let his brother say Yarḥamuk-Allāh; and let him reply Yahdīkum-ullāhu wa yuṣliḥu bālakum.",

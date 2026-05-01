@@ -207,7 +207,7 @@ export default function Tour() {
         >
           {isAr
             ? "رفيقك الهادئ في رحلة العمرة — على السنّة، خطوة بخطوة، مع أماكن للزيارة، الأدعية الصحيحة، فنادق، رفيق ذكي للأسئلة، وطريقة لا تضيع بها عن مجموعتك."
-            : "Your gentle companion for ʿUmrah — guided step by step on the Sunnah, with places to visit, the right du'as, hotels, an AI companion for your questions, and a way to never lose your group."}
+            : "Your gentle companion for ʿUmrah — guided step by step following the Sunnah, with places to visit, the right du'as, hotels, an AI companion for your questions, and a way to never lose your group."}
         </p>
       )}
 

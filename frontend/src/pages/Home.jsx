@@ -81,7 +81,7 @@ export default function Home() {
           <p className="mt-2 text-[14px] text-[#3F3722] max-w-[36ch]">
             {isAr
               ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
-              : "Everything you need to perform Umrah on the Sunnah — in one place."}
+              : "Everything you need to perform Umrah according to the Sunnah — in one place."}
           </p>
         </div>
       </motion.div>
