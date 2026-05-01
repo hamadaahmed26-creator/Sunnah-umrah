@@ -22,10 +22,10 @@ export const TOUR_STEPS = [
     title_en: "Before Iḥrām — prepare yourself",
     title_ar: "قبل الإحرام — استعدّ",
     what_en:
-      "Before putting on Iḥrām, do these as part of the Sunnah: (1) Ghusl — a full-body wash, (2) trim nails, (3) shave armpit / pubic hair, (4) men — trim moustache, (5) apply perfume to the body and hair — NOT to the cloth. Once you put on Iḥrām and enter its state, these nine things become forbidden until Taḥallul:",
+      "Before putting on Iḥrām, do the following — all from the Sunnah: (1) Ghusl, a full-body wash, (2) trim your nails, (3) remove armpit and pubic hair, (4) men: trim the moustache, (5) apply perfume to the body and hair, but NOT to the iḥrām cloth itself. Once you put on Iḥrām, the nine things listed below become forbidden until Taḥallul.",
     what_ar:
-      "قبل ارتداء الإحرام، من السنّة: ١) الاغتسال، ٢) تقليم الأظفار، ٣) حلق شعر العانة ونتف الإبط، ٤) للرجال: قصّ الشّارب، ٥) التّطيّب في البدن والرّأس — لا في الثّوب. بعد الدّخول في الإحرام تحرم عليك تسعة أمور حتى التّحلّل:",
-    tip: "Once in Iḥrām, these are forbidden: 1) perfume, 2) trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqab & gloves (women), 7) marriage contracts, 8) intimacy, 9) hunting. Most first-timers forget to clip nails and perfume themselves BEFORE putting on Iḥrām — do it now.",
+      "قبل ارتداء الإحرام، افعل ما يلي من السنّة: ١) الاغتسال، ٢) تقليم الأظفار، ٣) إزالة شعر الإبط والعانة، ٤) للرجال: قصّ الشّارب، ٥) التّطيّب في البدن والرّأس — لا في ثوب الإحرام نفسه. وإذا دخلتَ في الإحرام حرمت عليك الأمور التّسعة المذكورة في التّنبيه أدناه حتّى التّحلّل.",
+    tip: "Forbidden once in Iḥrām: 1) using perfume, 2) trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqāb and gloves (women), 7) signing a marriage contract, 8) intimacy with one's spouse, 9) hunting. Most first-time pilgrims forget to clip their nails and apply perfume BEFORE putting on Iḥrām — do it now, while you still can.",
   },
   {
     chapter: "Ihram",
@@ -50,7 +50,7 @@ export const TOUR_STEPS = [
     dua: {
       ar: "لَبَّيْكَ اللَّهُمَّ بِعُمْرَة",
       tr: "Labbayk Allāhumma bi-ʿumrah.",
-      en: "Here I am, O Allah, for ʿUmrah.",
+      en: "Here I am at Your service, O Allah, for ʿUmrah.",
       label_en: "Start of Talbiyah for ʿUmrah",
       label_ar: "بداية التلبية بالعمرة",
     },
@@ -71,7 +71,7 @@ export const TOUR_STEPS = [
       tr:
         "Labbayk Allāhumma labbayk. Labbayk lā sharīka laka labbayk. Innal-ḥamda wan-niʿmata laka wal-mulk, lā sharīka lak.",
       en:
-        "Here I am, O Allah, here I am. Here I am — You have no partner — here I am. All praise, blessing, and sovereignty belong to You. You have no partner.",
+        "Here I am at Your service, O Allah, here I am at Your service. Here I am at Your service — You have no partner — here I am at Your service. Truly all praise, blessing, and sovereignty belong to You. You have no partner.",
       label_en: "Talbiyah — keep repeating",
       label_ar: "التلبية — كرّرها",
     },
@@ -106,15 +106,15 @@ export const TOUR_STEPS = [
     title_en: "Step 2 · Tawaf — start at the Black Stone",
     title_ar: "الخطوة ٢ · الطواف — ابدأ من الحجر الأسود",
     what_en:
-      "Stand facing the Black Stone (east corner of the Ka'bah). Raise your right hand toward it and say 'Allāhu Akbar' — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhtibāʿ) by placing the iḥrām under your right armpit — keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml) like a brisk jog; for laps 4–7, walk normally.",
+      "Stand facing the Black Stone (the eastern corner of the Ka'bah). Raise your right hand toward it and say 'Bismillāh, Allāhu Akbar' — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhṭibāʿ) by passing the iḥrām under your right armpit — keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml) like a brisk jog; for laps 4–7, walk normally.",
     what_ar:
-      "قف مستقبلًا الحجر الأسود (الركن الشرقي للكعبة)، ارفع يدك اليمنى نحوه وقل: 'اللَّهُ أَكْبَر' — مرّة واحدة. وهذه بداية كل شوط.\n\nالرجال: اكشف الكتف الأيمن (الاضطباع) بجعل الإحرام تحت الإبط الأيمن، وأبقِه كذلك حتى نهاية الأشواط السبعة. وفي الأشواط الثلاثة الأولى: امشِ بسرعة (الرَّمَل) وكأنّك تهرول؛ وفي الأشواط ٤–٧: امشِ عاديًا.",
+      "قف مستقبلًا الحجر الأسود (الرّكن الشّرقي للكعبة)، ارفع يدك اليمنى نحوه وقل: «بِسْمِ اللَّهِ، اللَّهُ أَكْبَر» — مرّة واحدة. وهذه بداية كلّ شوط.\n\nالرّجال: اكشف الكتف الأيمن (الاضطباع) بجعل الإحرام تحت الإبط الأيمن، وأبقِه كذلك حتّى نهاية الأشواط السّبعة. وفي الأشواط الثّلاثة الأولى: امشِ بسرعة (الرَّمَل) كالهرولة الخفيفة؛ وفي الأشواط ٤–٧: امشِ عاديًّا.",
     dua: {
-      ar: "اللَّهُ أَكْبَر",
-      tr: "Allāhu Akbar.",
-      en: "Allah is the Greatest.",
+      ar: "بِسْمِ اللَّهِ، اللَّهُ أَكْبَر",
+      tr: "Bismillāh, Allāhu Akbar.",
+      en: "In the name of Allah; Allah is the Greatest.",
       label_en: "At the Black Stone — every lap",
-      label_ar: "عند الحجر الأسود — كل شوط",
+      label_ar: "عند الحجر الأسود — كلّ شوط",
     },
     tip: "Istilām (greeting the Black Stone) has a Sunnah order of preference: 1) Touch AND kiss it — if easily possible. 2) Touch it with your hand, then kiss your hand. 3) Touch it with a stick, then kiss the stick. 4) From a distance, point towards it with your right hand and say Allāhu Akbar ONLY — DO NOT kiss your hand afterwards. This last point is a common mistake, with no basis in the Sunnah. Never push or harm others trying to reach it.",
   },
@@ -134,9 +134,10 @@ export const TOUR_STEPS = [
     title_en: "After Tawaf — pray 2 rakʿah behind Maqām Ibrāhīm",
     title_ar: "بعد الطواف — صلِّ ركعتين خلف المقام",
     what_en:
-      "After 7 laps, pray 2 rakʿah behind Maqām Ibrāhīm — or, if it is crowded, ANYWHERE in the masjid facing the Ka'bah. Both Ibn Bāz and al-Albānī permitted this; do not push or harm others to stand behind the Maqām. 1st rakʿah: Sūrat al-Kāfirūn after al-Fātiḥah. 2nd rakʿah: Sūrat al-Ikhlāṣ.",
+      "After 7 laps, pray 2 rakʿah behind Maqām Ibrāhīm — or, if it is crowded, ANYWHERE in the masjid facing the Ka'bah. Both Ibn Bāz and al-Albānī permitted this; do not push or harm others to stand behind the Maqām. 1st rakʿah: al-Fātiḥah, then Sūrat al-Kāfirūn. 2nd rakʿah: al-Fātiḥah, then Sūrat al-Ikhlāṣ.",
     what_ar:
-      "بعد سبعة أشواط، صلِّ ركعتين خلف مقام إبراهيم — أو في أيّ مكان من المسجد إذا كان الزّحام شديدًا مستقبلًا الكعبة. أفتى بذلك ابن باز والألباني رحمهما الله؛ لا تدفع النّاس ولا تؤذهم لتقف خلف المقام. الأولى: الفاتحة ثم الكافرون. الثّانية: الفاتحة ثم الإخلاص.",
+      "بعد سبعة أشواط، صلِّ ركعتين خلف مقام إبراهيم — أو في أيّ مكان من المسجد إذا كان الزّحام شديدًا مستقبلًا الكعبة. أفتى بذلك ابن باز والألباني رحمهما الله؛ لا تدفع النّاس ولا تؤذهم لتقف خلف المقام. الأولى: الفاتحة ثمّ الكافرون. الثّانية: الفاتحة ثمّ الإخلاص.",
+    tip: "After the two rakʿahs (and before going to Zamzam), if you can return to the Black Stone and greet it again with takbīr, that is sunnah — but it is optional and was not done by the Prophet ﷺ in every narration. If the crowd is heavy, skip it without guilt and proceed to Zamzam.",
   },
   {
     chapter: "Tawaf",
