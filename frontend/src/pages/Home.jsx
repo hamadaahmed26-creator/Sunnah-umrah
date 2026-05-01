@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import {
   ArrowRight, Compass, Users, MapPin, Sparkles,
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
-  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote,
+  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -159,31 +159,7 @@ export default function Home() {
 
       {/* Today's Sunnah reminder — rotates daily. Designed to make this app
           a quiet daily habit, not just a one-off Umrah tool. */}
-      <Link
-        to="/about"
-        className="mt-3 block rounded-2xl bg-gradient-to-br from-[#FBF8F1] to-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.99] tap-pulse"
-        data-testid="home-daily-reminder"
-      >
-        <div className="flex items-start gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-[#FBF1DD] grid place-items-center flex-shrink-0">
-            <Quote className="w-3.5 h-3.5 text-[#B3884D]" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className={`text-[10px] uppercase tracking-[0.22em] text-[#B3884D] ${isAr ? "font-arabic" : ""}`}>
-              {isAr ? "تذكير اليوم" : "Today's reminder"}
-            </div>
-            <p
-              dir={isAr ? "rtl" : "ltr"}
-              className={`mt-1.5 text-[13px] text-[#1C1D1B] leading-[1.55] ${isAr ? "font-arabic" : ""}`}
-            >
-              {isAr ? `«${reminder.ar}»` : `"${reminder.en}"`}
-            </p>
-            <div className="mt-1.5 text-[10px] text-[#8E8F8A] tracking-wide">
-              {reminder.source}
-            </div>
-          </div>
-        </div>
-      </Link>
+      <DailyReminderCard reminder={reminder} isAr={isAr} />
 
       {toolsFirst ? (
         <>
@@ -221,6 +197,85 @@ export default function Home() {
           <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
         </div>
       </Link>
+    </div>
+  );
+}
+
+// ─── Today's reminder card with share action ─────────────────────────
+function DailyReminderCard({ reminder, isAr }) {
+  const [shared, setShared] = React.useState(false);
+
+  const handleShare = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const text = isAr
+      ? `«${reminder.ar}»\n\n— ${reminder.source}\n\nمن تطبيق سنّة عمرة`
+      : `"${reminder.en}"\n\n— ${reminder.source}\n\nFrom the Sunnah Umrah app`;
+    const url = "https://sunnahumrah.app";
+    const shareData = {
+      title: isAr ? "تذكير اليوم — سنّة عمرة" : "Today's reminder — Sunnah Umrah",
+      text,
+      url,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(`${text}\n\n${url}`);
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      }
+    } catch (_) {
+      // User cancelled share — silent.
+    }
+  };
+
+  return (
+    <div
+      className="mt-3 rounded-2xl bg-gradient-to-br from-[#FBF8F1] to-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition"
+      data-testid="home-daily-reminder"
+    >
+      <div className="flex items-start gap-2.5">
+        <div className="w-8 h-8 rounded-full bg-[#FBF1DD] grid place-items-center flex-shrink-0">
+          <Quote className="w-3.5 h-3.5 text-[#B3884D]" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className={`text-[10px] uppercase tracking-[0.22em] text-[#B3884D] ${isAr ? "font-arabic" : ""}`}>
+              {isAr ? "تذكير اليوم" : "Today's reminder"}
+            </div>
+            <button
+              onClick={handleShare}
+              className="inline-flex items-center gap-1 rounded-full bg-white border border-[#E8E5DD] hover:border-[#B3884D] px-2 py-0.5 text-[10px] uppercase tracking-[0.14em] text-[#5C5D58] hover:text-[#1C1D1B] transition tap-pulse"
+              aria-label={isAr ? "مشاركة التّذكير" : "Share reminder"}
+              data-testid="home-reminder-share"
+            >
+              {shared ? (
+                <>
+                  <Check className="w-2.5 h-2.5 text-[#2A5A4A]" />
+                  <span className="text-[#2A5A4A]">{isAr ? "تمّ النّسخ" : "Copied"}</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-2.5 h-2.5" />
+                  <span>{isAr ? "شارك" : "Share"}</span>
+                </>
+              )}
+            </button>
+          </div>
+          <p
+            dir={isAr ? "rtl" : "ltr"}
+            className={`mt-1.5 text-[13px] text-[#1C1D1B] leading-[1.55] ${isAr ? "font-arabic" : ""}`}
+          >
+            {isAr ? `«${reminder.ar}»` : `"${reminder.en}"`}
+          </p>
+          <div className="mt-1.5 text-[10px] text-[#8E8F8A] tracking-wide">
+            {reminder.source}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
