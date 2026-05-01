@@ -9,12 +9,13 @@ import Chat from "./pages/Chat";
 import Group from "./pages/Group";
 import Places from "./pages/Places";
 import PlaceDetail from "./pages/PlaceDetail";
-import Sadaqah from "./pages/Sadaqah";
-import SadaqahSuccess from "./pages/SadaqahSuccess";
+import Sadaqah from "./pages/Sadaqah";  // eslint-disable-line no-unused-vars -- kept for future re-enable
+import SadaqahSuccess from "./pages/SadaqahSuccess";  // eslint-disable-line no-unused-vars -- kept for future re-enable
 import Hotels from "./pages/Hotels";
 import Packages from "./pages/Packages";
 import Qibla from "./pages/Qibla";
 import Privacy from "./pages/Privacy";
+import About from "./pages/About";
 import Quiz from "./pages/Quiz";
 import Ramadan from "./pages/Ramadan";
 import Home from "./pages/Home";
@@ -36,12 +37,17 @@ function App() {
               <Route path="/group/join/:code" element={<Group />} />
               <Route path="/places" element={<Places />} />
               <Route path="/places/:slug" element={<PlaceDetail />} />
-              <Route path="/sadaqah" element={<Sadaqah />} />
-              <Route path="/sadaqah/success" element={<SadaqahSuccess />} />
+              {/* Sadaqah temporarily removed from the app — donations create
+                  Apple App Store risk. Old URLs redirect home so we don't
+                  break anyone's existing bookmark or share link. The page
+                  components remain in the repo for when we re-enable. */}
+              <Route path="/sadaqah" element={<Navigate to="/" replace />} />
+              <Route path="/sadaqah/success" element={<Navigate to="/" replace />} />
               <Route path="/hotels" element={<Hotels />} />
               <Route path="/packages" element={<Packages />} />
               <Route path="/qibla" element={<Qibla />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/about" element={<About />} />
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/ramadan" element={<Ramadan />} />
               <Route path="/home" element={<Home />} />

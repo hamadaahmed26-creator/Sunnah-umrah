@@ -22,6 +22,25 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (May 2, 2026 — sixth session) — Sadaqah removed + App Store protections
+- **Sadaqah completely removed from frontend** (per user decision to avoid Apple App Store
+  review risk under Guideline 3.2.1(vii) / 4.5.4 — "donations to developer" trigger IAP /
+  rejection unless 100% pass-through to a named approved nonprofit). Removed from Home,
+  WelcomeSheet, Privacy policy, sitemap. `/sadaqah` and `/sadaqah/success` now `Navigate`
+  redirect to `/`. Page components (`Sadaqah.jsx`, `SadaqahSuccess.jsx`) and backend
+  Stripe routes left in place for easy re-enable when re-architected as charity-passthrough.
+- **NEW: `/about` Sources & methodology page** — required for App Store approval of
+  religious apps. Cites: Bukhārī, Muslim, Bulūgh al-Marām, Ḥiṣn al-Muslim, Manāsik
+  al-Albānī, Riyāḍ aṣ-Ṣāliḥīn, Tafsīr as-Saʿdī. Names Salafī scholars consulted
+  (Ibn Bāz, al-ʿUthaymīn, al-Albānī, Ibn Jibrīn). Includes religious-accuracy
+  disclaimer (app is a guide, not a fatwā; AI assistant ≠ muftī). Linked from Home
+  footer.
+- **Home dashboard refined** — "Family" card → "Stay Together" with subtitle
+  *"Don't lose anyone in the crowd"*. New 2-card "How will you travel?" section
+  cleanly separates 🧳 *Umrah packages (all-inclusive)* from 🛫 *Hotels & flights (DIY)*.
+  Old 3-tile booking row removed.
+- SW cache → `umrah-v1.19.0`. Sitemap updated.
+
 ## Implemented (Feb 26, 2026 — corner-accurate photos)
 - **Tawaf — angle-specific Ka'bah photos:** the 4 micro-steps inside `TawafFlow.jsx` now show locally-hosted, hyper-realistic photos of the EXACT corner / face the pilgrim is at (① Black Stone with pilgrims touching the silver frame, ② wide tawaf walking view, ③ Rukn al-Yamani with pilgrims touching, ④ Yemeni→Black Stone stretch).
 - **Sa'i — scene-specific photos:** `SaiFlow.jsx` migrated from external Wikimedia hotlinks to local files (Mount Safa, Mount Marwah, Mas'a corridor, green-marker run zone).

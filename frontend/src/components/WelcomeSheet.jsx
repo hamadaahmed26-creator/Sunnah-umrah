@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  X, ArrowRight, BookOpen, MapPin, Compass, MessageCircle, Users, Plane, Heart,
+  X, ArrowRight, BookOpen, MapPin, Compass, MessageCircle, Users, Plane,
 } from "lucide-react";
 
 /* WelcomeSheet — slide-up sheet shown the first time someone opens the app.
@@ -17,7 +17,6 @@ const FEATURES = [
   { icon: MessageCircle,  en: "AI Companion — ask any Fiqh question",       ar: "رفيق ذكي يجيب على أسئلتك الفقهية",         tint: "#1C1D1B" },
   { icon: Users,          en: "Stay together with your family · QR invite", ar: "ابقَ مع عائلتك — دعوة QR",                  tint: "#5C5D58" },
   { icon: Plane,          en: "Hotels, Umrah packages & eSIM",               ar: "فنادق، باقات عمرة، شريحة eSIM",           tint: "#B3884D" },
-  { icon: Heart,          en: "Support the app with sadaqah",                ar: "ادعم التطبيق بصدقة جارية",                tint: "#2A5A4A" },
 ];
 
 export default function WelcomeSheet({ open, onClose, isAr }) {

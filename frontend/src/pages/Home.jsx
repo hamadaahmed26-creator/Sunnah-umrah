@@ -3,8 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  ArrowRight, Compass, Users, MapPin, BookOpen, Heart, Sparkles,
-  Hotel, Wifi, Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag, Sunrise, Sunset, Sun, Loader2,
+  ArrowRight, Compass, Users, MapPin, Sparkles,
+  Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
+  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -128,10 +129,25 @@ export default function Home() {
       {/* Prayer times — Makkah, refreshes every minute */}
       <PrayerTimesCard isAr={isAr} />
 
-      {/* 2 priority cards — Family + Ask (Plan removed; Plan tools live on this dashboard now) */}
+      {/* 2 priority cards — Stay together + Ask. The first one is the big
+          differentiator for families travelling in the Haram crowd. */}
       <div className="mt-3 grid grid-cols-2 gap-2" data-testid="home-priority">
-        <PriorityCard to="/group" icon={Users}            label={isAr ? "العائلة" : "Family"} accent="#B3884D" testid="home-group" />
-        <PriorityCard to="/chat"  icon={MessageSquare}    label={isAr ? "اسأل"  : "Ask"}     accent="#8B4540" testid="home-chat" />
+        <PriorityCard
+          to="/group"
+          icon={Users}
+          label={isAr ? "ابقَ معًا" : "Stay together"}
+          sublabel={isAr ? "لا تَضِع في الزحام" : "Don't lose anyone in the crowd"}
+          accent="#B3884D"
+          testid="home-group"
+        />
+        <PriorityCard
+          to="/chat"
+          icon={MessageSquare}
+          label={isAr ? "اسأل" : "Ask"}
+          sublabel={isAr ? "أسئلة الفقه والعمرة" : "Fiqh & Umrah questions"}
+          accent="#8B4540"
+          testid="home-chat"
+        />
       </div>
 
       {/* Section header */}
@@ -151,41 +167,73 @@ export default function Home() {
         <Tile to="/shop"    icon={ShoppingBag} en="Shop"           ar="المتجر"          sub_en="Ihram, books, eSIM"  sub_ar="إحرام، كتب، شريحة" testid="home-shop" badge={isAr ? "جديد" : "New"} />
       </div>
 
-      {/* Section header — Plan & save */}
+      {/* Section header — How will you travel? */}
       <div className="mt-7 flex items-center justify-between">
         <h2 className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
-          {isAr ? "الحجز والتخفيض" : "Book & save"}
+          {isAr ? "كيف ستسافر؟" : "How will you travel?"}
         </h2>
       </div>
-      <div className="mt-2 grid grid-cols-3 gap-2">
-        <SmallTile to="/hotels"   icon={Hotel}    en="Hotels"  ar="فنادق"  testid="home-hotels" />
-        <SmallTile to="/packages" icon={Briefcase} en="Packages" ar="باقات"  testid="home-packages" />
-        <SmallTile
-          href={`https://www.airalo.com/saudi-arabia-esim${process.env.REACT_APP_AIRALO_REF ? `?ref=${process.env.REACT_APP_AIRALO_REF}` : ""}`}
-          icon={Wifi}
-          en="eSIM"
-          ar="شريحة"
-          testid="home-esim"
-          external
-        />
+      <div className="mt-2 grid grid-cols-2 gap-2" data-testid="home-travel">
+        {/* All-inclusive package */}
+        <Link
+          to="/packages"
+          className="block tap-pulse rounded-2xl bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1] border border-[#EBD9B0] p-4 hover:border-[#B3884D] hover:shadow-[0_10px_24px_-14px_rgba(179,136,77,0.5)] transition active:scale-[0.98]"
+          data-testid="home-travel-package"
+        >
+          <div className="w-10 h-10 rounded-full bg-white/70 grid place-items-center mb-2 border border-[#EBD9B0]">
+            <Briefcase className="w-[18px] h-[18px] text-[#7B5C24]" />
+          </div>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-[#8B6A1F]">
+            {isAr ? "شامل" : "All-inclusive"}
+          </div>
+          <div className="mt-0.5 text-[14px] font-semibold text-[#1C1D1B] leading-tight">
+            {isAr ? "باقات العمرة" : "Umrah packages"}
+          </div>
+          <div className="mt-1 text-[11px] text-[#6E5424] leading-snug">
+            {isAr ? "رحلة + فندق + توجيه" : "Flight + hotel + guide"}
+          </div>
+        </Link>
+
+        {/* DIY */}
+        <Link
+          to="/shop"
+          className="block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#F1F4F1] border border-[#DDE4DC] p-4 hover:border-[#2A5A4A] hover:shadow-[0_10px_24px_-14px_rgba(42,90,74,0.4)] transition active:scale-[0.98]"
+          data-testid="home-travel-diy"
+        >
+          <div className="w-10 h-10 rounded-full bg-white grid place-items-center mb-2 border border-[#DDE4DC]">
+            <Plane className="w-[18px] h-[18px] text-[#2A5A4A]" />
+          </div>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-[#2A5A4A]">
+            {isAr ? "بنفسك" : "DIY"}
+          </div>
+          <div className="mt-0.5 text-[14px] font-semibold text-[#1C1D1B] leading-tight">
+            {isAr ? "احجز بنفسك" : "Hotels & flights"}
+          </div>
+          <div className="mt-1 text-[11px] text-[#3F584F] leading-snug">
+            {isAr ? "فنادق · رحلات · شريحة eSIM" : "Hotels · flights · eSIM"}
+          </div>
+        </Link>
       </div>
 
-      {/* Sadaqah strip — calm, intentional, never pushy */}
+      {/* About / Sources footer — reassures the user (and Apple reviewers)
+          that every ruling in the app is sourced. */}
       <Link
-        to="/sadaqah"
-        className="mt-7 block tap-pulse rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition"
-        data-testid="home-sadaqah"
+        to="/about"
+        className="mt-7 block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition tap-pulse"
+        data-testid="home-about"
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
-            <Heart className="w-4 h-4 text-[#8B4540]" />
+            <BookOpen className="w-4 h-4 text-[#7B5C24]" />
           </div>
           <div className="flex-1 min-w-0">
-            <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr ? "تصدّق" : "Give Sadaqah"}
+            <div className={`text-[13px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr ? "المصادر والمنهج" : "Sources & methodology"}
             </div>
-            <div className={`text-[11px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr ? "في أيّام الحرم العشرة" : "On these blessed days"}
+            <div className={`text-[11px] text-[#5C5D58] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr
+                ? "البخاري، مسلم، حصن المسلم، الألباني..."
+                : "Bukhārī · Muslim · Ḥiṣn al-Muslim · al-Albānī"}
             </div>
           </div>
           <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
@@ -195,21 +243,24 @@ export default function Home() {
   );
 }
 
-function PriorityCard({ to, icon: Icon, label, accent, testid }) {
+function PriorityCard({ to, icon: Icon, label, sublabel, accent, testid }) {
   return (
     <Link
       to={to}
       className="block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.45)] transition active:scale-[0.97]"
       data-testid={testid}
     >
-      <div className="flex flex-col items-center text-center gap-2">
+      <div className="flex flex-col items-center text-center gap-1.5">
         <div
-          className="w-11 h-11 rounded-full grid place-items-center ring-1 ring-inset"
-          style={{ background: `${accent}1A`, ringColor: `${accent}33` }}
+          className="w-11 h-11 rounded-full grid place-items-center"
+          style={{ background: `${accent}1A`, boxShadow: `inset 0 0 0 1px ${accent}33` }}
         >
           <Icon className="w-[18px] h-[18px]" style={{ color: accent }} />
         </div>
-        <div className="text-[12px] font-semibold text-[#1C1D1B]">{label}</div>
+        <div className="text-[12px] font-semibold text-[#1C1D1B] leading-tight">{label}</div>
+        {sublabel && (
+          <div className="text-[10px] text-[#8E8F8A] leading-snug px-1">{sublabel}</div>
+        )}
       </div>
     </Link>
   );
@@ -239,26 +290,6 @@ function Tile({ to, icon: Icon, en, ar, sub_en, sub_ar, testid, badge }) {
         <span className="lang-ar font-arabic hidden">{sub_ar}</span>
       </div>
     </Link>
-  );
-}
-
-function SmallTile({ to, href, icon: Icon, en, ar, testid, external = false }) {
-  const inner = (
-    <>
-      <div className="mx-auto w-8 h-8 rounded-full bg-[#F8F0DD] grid place-items-center">
-        <Icon className="w-[15px] h-[15px] text-[#7B5C24]" />
-      </div>
-      <div className="mt-1.5 text-[12px] font-medium text-[#1C1D1B]">
-        <span className="lang-en">{en}</span>
-        <span className="lang-ar font-arabic hidden">{ar}</span>
-      </div>
-    </>
-  );
-  const cls = "block text-center rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] p-3 hover:border-[#B3884D] hover:shadow-[0_6px_14px_-10px_rgba(179,136,77,0.4)] transition active:scale-[0.97] tap-pulse";
-  return external ? (
-    <a href={href} target="_blank" rel="noopener noreferrer sponsored" className={cls} data-testid={testid}>{inner}</a>
-  ) : (
-    <Link to={to} className={cls} data-testid={testid}>{inner}</Link>
   );
 }
 

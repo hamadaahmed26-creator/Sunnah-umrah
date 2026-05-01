@@ -2,7 +2,7 @@
    Cache-first for the app shell, network-first for /api calls.
    Bump CACHE_VERSION to force clients to update.
 */
-const CACHE_VERSION = "umrah-v1.18.0";
+const CACHE_VERSION = "umrah-v1.19.0";
 const APP_SHELL = [
   "/",
   "/manifest.json",
