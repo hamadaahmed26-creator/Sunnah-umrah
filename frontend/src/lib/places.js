@@ -153,6 +153,10 @@ export const PLACES = [
     name_ar: "ذو الحُليفة · آبار علي",
     subtitle_en: "Mīqāt of the people of Madīnah",
     subtitle_ar: "ميقات أهل المدينة",
+    why_en:
+      "This is where you must enter iḥrām (the state of pilgrimage) if you are travelling from Madīnah. Crossing this boundary without iḥrām while intending ʿUmrah is forbidden — pray two rakʿahs at the masjid, change into your iḥrām cloth, declare your niyyah ('Labbayka ʿumratan'), and begin the Talbiyah here.",
+    why_ar:
+      "هنا يجب أن تُحرم إن كنتَ قادمًا من المدينة. لا يجوز تجاوز هذا الحدّ بلا إحرامٍ وأنت تنوي العمرة. صلِّ ركعتين بالمسجد، والبس ثوب الإحرام، وانوِ بقلبك («لبيّك عمرة») ثم ابدأ التلبية من هنا.",
     description_en:
       "The Mīqāt for those coming from Madīnah and beyond — about 13 km south of Madīnah and the farthest of all the Mīqāts from Makkah (≈420 km). The Prophet ﷺ entered iḥrām here in his Farewell Pilgrimage.",
     description_ar:
@@ -167,6 +171,10 @@ export const PLACES = [
     name_ar: "الجُحفة · رابغ",
     subtitle_en: "Mīqāt of Levant, Egypt, Maghrib",
     subtitle_ar: "ميقات أهل الشام ومصر والمغرب",
+    why_en:
+      "This is your iḥrām entry point if you fly from Egypt, the Levant, North Africa, or Europe. Most international flights now request you to declare your niyyah and put on iḥrām while still on the plane — about 1 hour before landing in Jeddah — because flying over Rābigh on the way down crosses this boundary.",
+    why_ar:
+      "هذا هو ميقاتك إن كنتَ قادمًا من مصر أو الشام أو شمال أفريقيا أو أوروبا. وعلى الطائرات الدولية الإحرام والنيّة قبل الهبوط في جدّة بنحو ساعة، لأنّ المرور فوق رابغ يعني تجاوز الميقات.",
     description_en:
       "The Mīqāt for those coming from Shām, Egypt, Sudan, and the Maghrib. The original village of al-Juḥfah is in ruins; today most pilgrims enter iḥrām at Rābigh, the modern coastal town that lies on the same line.",
     description_ar:
@@ -181,6 +189,10 @@ export const PLACES = [
     name_ar: "قرن المنازل · السيل الكبير",
     subtitle_en: "Mīqāt of Najd & the Gulf",
     subtitle_ar: "ميقات أهل نجد والخليج",
+    why_en:
+      "If you live in or fly from the GCC (Saudi central, UAE, Qatar, Kuwait, Bahrain, Oman) or Tā'if, this is where you must enter iḥrām. Coming by car from Riyadh or Dubai, you will pass a designated stop at as-Sayl with a masjid, washrooms, and changing rooms — pray two rakʿahs and declare your niyyah here, NOT in Makkah.",
+    why_ar:
+      "إن كنتَ من دول الخليج (الرياض ووسط السعودية، الإمارات، قطر، الكويت، البحرين، عُمان) أو الطائف، فهذا ميقاتك. القادم بالسيارة من الرياض أو دبي يمرّ بالسيل حيث المسجد والمطاهر والملابس — أحرم هنا، لا في مكّة.",
     description_en:
       "The Mīqāt for pilgrims arriving from Najd, Riyadh, the Gulf states (UAE, Qatar, Bahrain, Kuwait), and Tā'if. Located at as-Sayl al-Kabīr on the Tā'if road, about 75 km east of Makkah.",
     description_ar:
@@ -195,6 +207,10 @@ export const PLACES = [
     name_ar: "يَلَمْلَم · السعدية",
     subtitle_en: "Mīqāt of Yemen",
     subtitle_ar: "ميقات أهل اليمن",
+    why_en:
+      "If you fly from Yemen, India, Pakistan, Bangladesh, Sri Lanka, Indonesia, or Malaysia, your plane crosses Yalamlam on its descent into Jeddah. Cabin crew typically announce when iḥrām should be put on. Declare your niyyah and begin the Talbiyah at this moment — well before landing.",
+    why_ar:
+      "إن كنتَ قادمًا من اليمن أو الهند أو باكستان أو بنغلاديش أو إندونيسيا أو ماليزيا، فإنّ طائرتك تعبر يَلَملم في طريقها إلى جدّة. وعادةً يُعلن طاقم الطّائرة وقت الإحرام. انوِ وابدأ التلبية في تلك اللّحظة قبل النّزول بكثير.",
     description_en:
       "The Mīqāt for pilgrims coming from Yemen and South Asia by sea. A wadi about 92 km south-east of Makkah on the road to Yemen.",
     description_ar:
@@ -209,6 +225,10 @@ export const PLACES = [
     name_ar: "ذات عِرق",
     subtitle_en: "Mīqāt of Iraq & the East",
     subtitle_ar: "ميقات أهل العراق والمشرق",
+    why_en:
+      "If you come from Iraq, Iran, Central Asia, Turkey, or further east, this is your designated iḥrām entry point. ʿUmar ibn al-Khaṭṭāb (RA) appointed it for these new lands when Islam spread eastward. Pilgrims today often pass it on long road trips from Iraq through northern Saudi Arabia.",
+    why_ar:
+      "إن كنتَ قادمًا من العراق أو إيران أو آسيا الوسطى أو تركيا أو أبعد من ذلك، فهذا ميقاتك. وقّته عمر بن الخطاب رضي الله عنه لأهل هذه البلاد بعد فتح الإسلام شرقًا. ويعبره الحجّاج اليوم في الرّحلات البرّيّة الطّويلة من العراق عبر شمال السّعوديّة.",
     description_en:
       "The Mīqāt for pilgrims coming from Iraq and points east — appointed by ʿUmar (RA) when iḥrām became necessary for those new lands. About 100 km north-east of Makkah.",
     description_ar:
@@ -223,6 +243,10 @@ export const PLACES = [
     name_ar: "التنعيم · مسجد عائشة",
     subtitle_en: "Mīqāt for those already in Makkah",
     subtitle_ar: "ميقات من كان بمكة",
+    why_en:
+      "If you have already finished one ʿUmrah and want to perform another (e.g., for a parent who has passed, or simply for extra reward), you cannot enter iḥrām from your hotel — you must leave the boundary of the Ḥaram. Tanʿīm (Masjid ʿĀʾishah) is the closest valid spot, ~7 km away. Take a taxi, change into iḥrām, declare niyyah, return for Tawaf.",
+    why_ar:
+      "إن أتممتَ عمرة وأردتَ أخرى (مثلًا لوالدٍ متوفّى أو لزيادة الأجر)، فلا يجوز الإحرام من فندقك بل يجب الخروج إلى خارج حدود الحرم. والتنعيم (مسجد عائشة) هو أقرب نقطة، نحو ٧ كم. خذ سيّارة أجرة، ثمّ ألبس الإحرام، ثمّ انوِ، ثم ارجع للطّواف.",
     description_en:
       "Not one of the five primary Mīqāts, but the closest valid point of iḥrām for someone already in Makkah who wishes to perform an additional ʿUmrah — about 7 km from the Ḥaram.",
     description_ar:

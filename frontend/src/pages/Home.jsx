@@ -28,29 +28,59 @@ export default function Home() {
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="home-page">
-      {/* Hero */}
+      {/* Hero — warm cream-to-gold gradient + subtle Islamic geometric pattern overlay */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mt-2"
+        className="relative mt-2 -mx-1 rounded-3xl overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #F8E9CE 0%, #EFD6A8 38%, #E5C58A 72%, #D4B070 100%)",
+        }}
       >
-        <p className="text-xs uppercase tracking-[0.22em] text-[#B3884D]">
-          {isAr ? "السلام عليكم" : "Salām ʿalaykum"}
-        </p>
-        <h1 className="mt-2 text-[34px] font-medium leading-tight tracking-tight text-[#1C1D1B]">
-          {isAr ? "مرحبًا بك في رحلتك" : "Welcome to your journey"}
-        </h1>
-        <p className="mt-2 text-[14px] text-[#5C5D58] max-w-[36ch]">
-          {isAr
-            ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
-            : "Everything you need to perform Umrah on the Sunnah — in one place."}
-        </p>
+        {/* Geometric pattern overlay — quiet, not noisy */}
+        <svg
+          className="absolute inset-0 w-full h-full opacity-[0.16] pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <defs>
+            <pattern id="hero-pat" x="0" y="0" width="64" height="64" patternUnits="userSpaceOnUse">
+              <path
+                d="M32 4 L60 32 L32 60 L4 32 Z M32 16 L48 32 L32 48 L16 32 Z"
+                fill="none"
+                stroke="#1C1D1B"
+                strokeWidth="0.7"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-pat)" />
+        </svg>
+        {/* Floating Ka'bah glyph — top-right accent */}
+        <div className="absolute -top-2 -right-2 w-32 h-32 rounded-full bg-[#1C1D1B]/5 blur-2xl pointer-events-none" />
+        <div className="absolute top-6 right-6 w-12 h-12 rounded-md bg-[#1C1D1B] grid place-items-center shadow-[0_8px_24px_-8px_rgba(28,29,27,0.4)]">
+          <div className="w-10 h-2 bg-[#B3884D] mt-1" />
+        </div>
+
+        <div className="relative px-6 pt-8 pb-7">
+          <p className="text-xs uppercase tracking-[0.22em] text-[#7B5C24]">
+            {isAr ? "السلام عليكم" : "Salām ʿalaykum"}
+          </p>
+          <h1 className="mt-2 text-[34px] font-medium leading-tight tracking-tight text-[#1C1D1B] max-w-[12ch]">
+            {isAr ? "مرحبًا بك في رحلتك" : "Welcome to your journey"}
+          </h1>
+          <p className="mt-2 text-[14px] text-[#3F3722] max-w-[36ch]">
+            {isAr
+              ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
+              : "Everything you need to perform Umrah on the Sunnah — in one place."}
+          </p>
+        </div>
       </motion.div>
 
-      {/* Continue / Start tour — biggest CTA */}
+      {/* Continue / Start tour — biggest CTA (charcoal anchor under warm hero) */}
       <Link
         to="/tour"
-        className="mt-6 block tap-pulse rounded-3xl bg-[#1C1D1B] text-white p-5 active:scale-[0.99] transition"
+        className="mt-3 block tap-pulse rounded-3xl bg-[#1C1D1B] text-white p-5 active:scale-[0.99] transition shadow-[0_12px_30px_-12px_rgba(28,29,27,0.45)]"
         data-testid="home-tour"
       >
         <div className="flex items-center justify-between gap-4">
@@ -71,7 +101,7 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="w-12 h-12 rounded-full bg-[#B3884D] grid place-items-center flex-shrink-0">
+          <div className="w-12 h-12 rounded-full bg-[#B3884D] grid place-items-center flex-shrink-0 shadow-[0_4px_12px_-2px_rgba(179,136,77,0.6)]">
             <Footprints className="w-5 h-5 text-white" />
           </div>
         </div>
@@ -166,12 +196,15 @@ function PriorityCard({ to, icon: Icon, label, accent, testid }) {
   return (
     <Link
       to={to}
-      className="block tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition active:scale-[0.97]"
+      className="block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.45)] transition active:scale-[0.97]"
       data-testid={testid}
     >
       <div className="flex flex-col items-center text-center gap-2">
-        <div className="w-10 h-10 rounded-full grid place-items-center" style={{ background: `${accent}1A` }}>
-          <Icon className="w-4 h-4" style={{ color: accent }} />
+        <div
+          className="w-11 h-11 rounded-full grid place-items-center ring-1 ring-inset"
+          style={{ background: `${accent}1A`, ringColor: `${accent}33` }}
+        >
+          <Icon className="w-[18px] h-[18px]" style={{ color: accent }} />
         </div>
         <div className="text-[12px] font-semibold text-[#1C1D1B]">{label}</div>
       </div>
@@ -183,16 +216,18 @@ function Tile({ to, icon: Icon, en, ar, sub_en, sub_ar, testid, badge }) {
   return (
     <Link
       to={to}
-      className="block relative tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition active:scale-[0.98]"
+      className="block relative tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.98]"
       data-testid={testid}
     >
       {badge && (
-        <span className="absolute top-2 right-2 text-[9px] uppercase tracking-wider text-white bg-[#B3884D] rounded-full px-1.5 py-0.5">
+        <span className="absolute top-2 right-2 text-[9px] uppercase tracking-wider text-white bg-[#B3884D] rounded-full px-1.5 py-0.5 shadow-[0_2px_6px_-1px_rgba(179,136,77,0.6)]">
           {badge}
         </span>
       )}
-      <Icon className="w-4 h-4 text-[#1C1D1B]" />
-      <div className="mt-2 text-[13px] font-semibold text-[#1C1D1B] leading-tight">
+      <div className="w-9 h-9 rounded-full bg-[#F8F0DD] grid place-items-center">
+        <Icon className="w-[17px] h-[17px] text-[#7B5C24]" />
+      </div>
+      <div className="mt-2.5 text-[13px] font-semibold text-[#1C1D1B] leading-tight">
         <span className="lang-en">{en}</span>
         <span className="lang-ar font-arabic hidden">{ar}</span>
       </div>
@@ -207,14 +242,16 @@ function Tile({ to, icon: Icon, en, ar, sub_en, sub_ar, testid, badge }) {
 function SmallTile({ to, href, icon: Icon, en, ar, testid, external = false }) {
   const inner = (
     <>
-      <Icon className="w-4 h-4 text-[#1C1D1B]" />
+      <div className="mx-auto w-8 h-8 rounded-full bg-[#F8F0DD] grid place-items-center">
+        <Icon className="w-[15px] h-[15px] text-[#7B5C24]" />
+      </div>
       <div className="mt-1.5 text-[12px] font-medium text-[#1C1D1B]">
         <span className="lang-en">{en}</span>
         <span className="lang-ar font-arabic hidden">{ar}</span>
       </div>
     </>
   );
-  const cls = "block text-center rounded-2xl bg-white border border-[#E8E5DD] p-3 hover:border-[#B3884D] transition active:scale-[0.97] tap-pulse";
+  const cls = "block text-center rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] p-3 hover:border-[#B3884D] hover:shadow-[0_6px_14px_-10px_rgba(179,136,77,0.4)] transition active:scale-[0.97] tap-pulse";
   return external ? (
     <a href={href} target="_blank" rel="noopener noreferrer sponsored" className={cls} data-testid={testid}>{inner}</a>
   ) : (

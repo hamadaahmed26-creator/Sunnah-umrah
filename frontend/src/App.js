@@ -27,7 +27,7 @@ function App() {
         <BrowserRouter>
           <Layout>
             <Routes>
-              <Route path="/" element={<Tour />} />
+              <Route path="/" element={<Home />} />
               <Route path="/tour" element={<Tour />} />
               <Route path="/lost" element={<Lost />} />
               <Route path="/chat" element={<Chat />} />

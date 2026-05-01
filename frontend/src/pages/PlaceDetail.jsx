@@ -90,6 +90,29 @@ export default function PlaceDetail() {
             </button>
           </div>
 
+          {/* "Why visit" — purpose / spiritual significance, shown if defined.
+              Particularly useful for Mīqāts (where pilgrims need to know they
+              must enter iḥrām here, not in Makkah). */}
+          {(place.why_en || place.why_ar) && (
+            <div
+              className="mt-4 rounded-2xl border p-4"
+              style={{ background: `${accent}0F`, borderColor: `${accent}40` }}
+              data-testid="place-why"
+            >
+              <div
+                className={`text-[10px] uppercase tracking-[0.22em] mb-1.5 ${isAr ? "font-arabic" : ""}`}
+                style={{ color: accent }}
+              >
+                {place.city === "miqat"
+                  ? (isAr ? "لماذا الإحرام هنا" : "Why enter iḥrām here")
+                  : (isAr ? "لماذا تزور هذا المكان" : "Why visit")}
+              </div>
+              <p className={`text-[13px] text-[#1C1D1B] leading-[1.85] ${isAr ? "font-arabic text-right text-[14px] leading-[2]" : ""}`}>
+                {isAr ? (place.why_ar || place.why_en) : (place.why_en || place.why_ar)}
+              </p>
+            </div>
+          )}
+
           {/* Description */}
           <p className={`mt-4 text-[14px] text-[#3A3B36] leading-[1.85] ${isAr ? "font-arabic text-right text-[15px] leading-[2]" : ""}`} data-testid="place-description">
             {isAr ? place.description_ar : place.description_en}
