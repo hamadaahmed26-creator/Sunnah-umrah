@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, Compass, MessageCircle, Users, Languages, MapPin } from "lucide-react";
 import { useT } from "../lib/i18n";
 import QuickDuas from "./QuickDuas";
+import { useAdhanScheduler } from "../lib/adhanScheduler";
 
 export const LangContext = React.createContext({ lang: "en", setLang: () => {} });
 
@@ -20,6 +21,9 @@ export default function Layout({ children }) {
   const { lang, setLang } = React.useContext(LangContext);
   const t = useT(lang);
   const loc = useLocation();
+  // Mount the adhan scheduler at the app root — it self-disables when the
+  // user hasn't enabled adhan in Settings.
+  useAdhanScheduler();
   const navItems = [
     { to: "/", icon: Home, label: lang === "ar" ? "الرئيسية" : "Home", id: "tour" },
     { to: "/places", icon: MapPin, label: lang === "ar" ? "زيارات" : "Places", id: "places" },

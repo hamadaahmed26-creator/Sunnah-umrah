@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import {
   ArrowRight, Compass, Users, MapPin, Sparkles,
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
-  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check,
+  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check, Settings as SettingsIcon,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -175,28 +175,46 @@ export default function Home() {
 
       {/* About / Sources footer — reassures the user (and Apple reviewers)
           that every ruling in the app is sourced. */}
-      <Link
-        to="/about"
-        className="mt-7 block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition tap-pulse"
-        data-testid="home-about"
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
-            <BookOpen className="w-4 h-4 text-[#7B5C24]" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className={`text-[13px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr ? "المصادر والمنهج" : "Sources & methodology"}
+      <div className="mt-7 grid grid-cols-2 gap-2">
+        <Link
+          to="/about"
+          className="block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
+          data-testid="home-about"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
+              <BookOpen className="w-3.5 h-3.5 text-[#7B5C24]" />
             </div>
-            <div className={`text-[11px] text-[#5C5D58] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr
-                ? "البخاري، مسلم، حصن المسلم، الألباني..."
-                : "Bukhārī · Muslim · Ḥiṣn al-Muslim · al-Albānī"}
+            <div className="flex-1 min-w-0">
+              <div className={`text-[12px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "المصادر" : "Sources"}
+              </div>
+              <div className={`text-[10px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "البخاري، مسلم..." : "Bukhārī · al-Albānī"}
+              </div>
             </div>
           </div>
-          <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
-        </div>
-      </Link>
+        </Link>
+        <Link
+          to="/settings"
+          className="block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
+          data-testid="home-settings"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
+              <SettingsIcon className="w-3.5 h-3.5 text-[#7B5C24]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[12px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "الإعدادات" : "Settings"}
+              </div>
+              <div className={`text-[10px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "تنبيهات الأذان" : "Adhan reminders"}
+              </div>
+            </div>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }
