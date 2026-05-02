@@ -7,12 +7,12 @@ export const TOUR_STEPS = [
   {
     chapter: "Intro",
     scene: "intro",
-    title_en: "Umrah in 4 simple steps",
-    title_ar: "العمرة في ٤ خطوات بسيطة",
+    title_en: "Before you begin Umrah",
+    title_ar: "قبل أن تبدأ العمرة",
     what_en:
-      "Umrah is just four parts: Ihram, Tawaf, Sa'i, and Halq. We'll do each one together — tap NEXT when you're ready.",
+      "Umrah is four simple parts — Iḥrām, Ṭawāf, Saʿī, and Ḥalq. We'll walk you through each one, step by step, based on the Qur'ān and Sunnah. Don't worry if it's your first time — take your time, and tap any Arabic word for its meaning.",
     what_ar:
-      "العمرة أربعة أجزاء فقط: الإحرام، الطواف، السعي، والحلق. سنقوم بكل خطوة معًا — اضغط «التالي» عند الاستعداد.",
+      "العمرة أربعة أجزاء فقط: الإحرام، الطّواف، السّعي، والحلق. سنرافقك في كلّ خطوة على هدي الكتاب والسنّة. لا تقلق إن كانت أوّل مرّة — خُذ وقتك، واضغط على أيّ كلمة عربيّة لتعرف معناها.",
   },
 
   // ─── 1. IHRAM ──────────────────────────────────────────────

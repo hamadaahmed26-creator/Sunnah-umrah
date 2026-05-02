@@ -10,7 +10,7 @@ import {
   Lightbulb,
   Plus,
   Compass,
-  HelpCircle,
+  BookOpen,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { TOUR_STEPS } from "../lib/tourSteps";
@@ -18,8 +18,7 @@ import TourScene from "../components/TourScene";
 import AskHelper from "../components/AskHelper";
 import TawafFlow from "../components/TawafFlow";
 import SaiFlow from "../components/SaiFlow";
-// WelcomeSheet removed — duplicated friction with the personalised
-// OnboardingSheet shown on Home, and was blocking the Tour content.
+import GlossarySheet from "../components/GlossarySheet";
 
 /*
  ONE PAGE = THE WHOLE UMRAH.
@@ -58,6 +57,29 @@ const CHAPTER_AR = {
   Done: "تمّت",
 };
 
+// Human chapter framing — "You're preparing for Iḥrām" instead of a cold
+// "Step 2 of 15". Gives the pilgrim emotional context for what they're
+// about to do. Matches the chapter key exactly (Intro / Ihram / Tawaf /
+// "Sa'i" / Halq / Done).
+const CHAPTER_SUBLINE = {
+  en: {
+    Intro: "Getting ready",
+    Ihram: "You're preparing for Iḥrām",
+    Tawaf: "You're circling the Kaʿbah",
+    "Sa'i": "You're walking between Ṣafā & Marwah",
+    Halq: "You're ending your ʿUmrah",
+    Done: "Your ʿUmrah is complete",
+  },
+  ar: {
+    Intro: "التّهيئة",
+    Ihram: "أنت تستعدّ للإحرام",
+    Tawaf: "تطوف حول الكعبة",
+    "Sa'i": "تسعى بين الصّفا والمروة",
+    Halq: "تُنهي عمرتك",
+    Done: "اكتملت عمرتك",
+  },
+};
+
 export default function Tour() {
   const { lang } = React.useContext(LangContext);
   const isAr = lang === "ar";
@@ -74,6 +96,7 @@ export default function Tour() {
   const [trip, setTrip] = React.useState(() =>
     parseInt(localStorage.getItem("umrah_sai_count") || "0", 10)
   );
+  const [glossaryOpen, setGlossaryOpen] = React.useState(false);
 
   // Welcome sheet REMOVED — was duplicate friction with the personalised
   // OnboardingSheet shown on Home, and was blocking the Tour content.
@@ -154,9 +177,11 @@ export default function Tour() {
 
   return (
     <div className="max-w-md mx-auto pb-60 sm:pb-44 px-1" data-testid="tour-page">
-      {/* Header */}
-      <div className="mt-2 flex items-center justify-between">
-        <div>
+      {/* Header — chapter-aware so it reads "You're preparing for Iḥrām · 2 / 15"
+          rather than the cold "Step 2 of 15". Warmer, gives the pilgrim
+          emotional context for what they're about to do next. */}
+      <div className="mt-2 flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
           <div
             className={`text-[10px] uppercase tracking-[0.22em] ${isAr ? "font-arabic" : ""}`}
             style={{ color: accent }}
@@ -164,41 +189,67 @@ export default function Tour() {
           >
             {chapterLabel}
           </div>
-          <div className="mt-1 text-[14px] text-[#5C5D58]" data-testid="tour-step-label">
-            {isAr ? `الخطوة ${idx + 1} من ${total}` : `Step ${idx + 1} of ${total}`}
+          <div
+            className={`mt-1 text-[14px] text-[#1C1D1B] font-medium leading-snug ${isAr ? "font-arabic text-right" : ""}`}
+            data-testid="tour-step-label"
+          >
+            {(CHAPTER_SUBLINE[isAr ? "ar" : "en"][step.chapter] || "")}
+            <span className="text-[#8E8F8A] font-normal tabular-nums ms-1.5">
+              · {idx + 1} / {total}
+            </span>
           </div>
         </div>
-        {idx === 0 ? (
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {/* Glossary opener — tap to learn any Arabic term */}
           <button
-            onClick={() => setWelcomeOpen(true)}
-            className="tap-pulse w-10 h-10 rounded-full bg-white border border-[#E8E5DD] grid place-items-center"
-            aria-label={isAr ? "ما الذي يقدّمه التطبيق؟" : "What's in this app?"}
-            data-testid="tour-help"
+            onClick={() => setGlossaryOpen(true)}
+            className="tap-pulse h-10 px-3 rounded-full bg-white border border-[#E8E5DD] inline-flex items-center gap-1.5 text-[11px] font-medium text-[#1C1D1B]"
+            aria-label={isAr ? "قاموس المصطلحات" : "Arabic terms"}
+            data-testid="tour-glossary"
           >
-            <HelpCircle className="w-4 h-4 text-[#1C1D1B]" />
+            <BookOpen className="w-3.5 h-3.5 text-[#7B5C24]" />
+            <span className={isAr ? "font-arabic" : ""}>
+              {isAr ? "مصطلحات" : "Terms"}
+            </span>
           </button>
-        ) : (
-          <button
-            onClick={restart}
-            className="tap-pulse w-10 h-10 rounded-full bg-white border border-[#E8E5DD] grid place-items-center"
-            aria-label="restart-tour"
-            data-testid="tour-reset"
-          >
-            <RotateCcw className="w-4 h-4 text-[#1C1D1B]" />
-          </button>
-        )}
+          {idx > 0 && (
+            <button
+              onClick={restart}
+              className="tap-pulse w-10 h-10 rounded-full bg-white border border-[#E8E5DD] grid place-items-center"
+              aria-label="restart-tour"
+              data-testid="tour-reset"
+            >
+              <RotateCcw className="w-4 h-4 text-[#1C1D1B]" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Calm one-liner — only on the home/intro screen. */}
       {idx === 0 && (
-        <p
-          className={`mt-3 text-[13.5px] text-[#5C5D58] leading-[1.7] ${isAr ? "font-arabic text-right" : ""}`}
-          data-testid="tour-tagline"
-        >
-          {isAr
-            ? "رفيقك الهادئ في رحلة العمرة — على السنّة، خطوة بخطوة، مع أماكن للزيارة، الأدعية الصحيحة، فنادق، رفيق ذكي للأسئلة، وطريقة لا تضيع بها عن مجموعتك."
-            : "Your gentle companion for ʿUmrah — guided step by step following the Sunnah, with places to visit, the right du'as, hotels, an AI companion for your questions, and a way to never lose your group."}
-        </p>
+        <>
+          <p
+            className={`mt-3 text-[13.5px] text-[#5C5D58] leading-[1.7] ${isAr ? "font-arabic text-right" : ""}`}
+            data-testid="tour-tagline"
+          >
+            {isAr
+              ? "رفيقك الهادئ في رحلة العمرة — على السنّة، خطوة بخطوة، مع أماكن للزيارة، الأدعية الصحيحة، فنادق، رفيق ذكي للأسئلة، وطريقة لا تضيع بها عن مجموعتك."
+              : "Your gentle companion for ʿUmrah — guided step by step following the Sunnah, with places to visit, the right du'as, hotels, an AI companion for your questions, and a way to never lose your group."}
+          </p>
+          {/* Reassurance — ChatGPT feedback: feel like a companion, not a
+              textbook. Shown only on the intro so it doesn't repeat. */}
+          <div
+            className="mt-3 rounded-2xl bg-[#FBF8F1] border border-[#E8E5DD] p-3 flex items-start gap-2.5"
+            data-testid="tour-reassurance"
+          >
+            <Lightbulb className="w-4 h-4 text-[#B3884D] flex-shrink-0 mt-0.5" />
+            <p className={`text-[12.5px] text-[#5C5D58] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr
+                ? "لا تقلق إن كانت أوّل مرّة لك — الكثيرون يشعرون بالتّشتّت في البداية. سنرافقك خطوة بخطوة، خذ وقتك."
+                : "Don't worry if this is your first time — many people find it confusing at first. We'll walk you through it. Take your time."}
+            </p>
+          </div>
+        </>
       )}
 
       {/* "I'm lost" — quick GPS gate finder. Saves tour state via localStorage. */}
@@ -209,7 +260,7 @@ export default function Tour() {
       >
         <Compass className="w-3.5 h-3.5" />
         <span className={isAr ? "font-arabic" : ""}>
-          {isAr ? "أنا تائه — أوجدْ بابي" : "I'm lost — find my gate"}
+          {isAr ? "أنا تائه — دلّني على مكاني" : "I'm lost — show me where I am"}
         </span>
         <ArrowRight className={`w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 transition ${isAr ? "rotate-180" : ""}`} />
       </Link>
@@ -500,7 +551,7 @@ export default function Tour() {
                   </>
                 ) : (
                   <>
-                    {isAr ? "أنا جاهز — التالي" : "I'm done — next step"}
+                    {isAr ? "أنا جاهز — التالي" : "I'm ready — next step"}
                     <ArrowRight className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                   </>
                 )}
@@ -525,6 +576,13 @@ export default function Tour() {
 
       {/* Floating "Ask the Companion" button — context-aware */}
       <AskHelper stepLabel={isAr ? step.title_ar : step.title_en} lowerPosition={isFlowStep} />
+
+      {/* Glossary bottom-sheet — plain-English definitions of Arabic terms */}
+      <GlossarySheet
+        open={glossaryOpen}
+        onClose={() => setGlossaryOpen(false)}
+        isAr={isAr}
+      />
     </div>
   );
 }
