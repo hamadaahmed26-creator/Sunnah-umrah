@@ -261,7 +261,7 @@ export default function Home() {
                   : (isAr ? "متى ستعتمر؟" : "When will you go?")}
               </div>
               <div className={`text-[10.5px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "لم تحجز بعد؟ اختر طريقتك" : "Not booked yet? Pick how you'll travel"}
+                {isAr ? "اختر طريقة الحجز" : "Choose how to book"}
               </div>
             </div>
           </div>
