@@ -131,6 +131,25 @@ export default function Home() {
                   ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
                   : "Everything you need to perform Umrah according to the Sunnah — in one place.")}
           </p>
+          {/* Inline "change my answers" — only visible to users who've already
+              completed onboarding. Plain readable text, not an icon, so even
+              non-tech-savvy users instantly understand it. Sits directly under
+              the personalised pronoun ("they'll" / "you") so anyone who reads
+              the wrong word will see how to fix it. */}
+          {profile.done && (
+            <button
+              onClick={() => {
+                setEditMode(true);
+                setOnboardOpen(true);
+              }}
+              className={`mt-2.5 text-[12px] text-[#5C4218]/75 hover:text-[#1C1D1B] underline underline-offset-2 decoration-[#5C4218]/40 hover:decoration-[#1C1D1B] transition tap-pulse ${isAr ? "font-arabic" : ""}`}
+              data-testid="home-change-answers"
+            >
+              {profile.experience === "helping"
+                ? (isAr ? "ليست لهم؟ غيّر إجاباتي" : "Not for them? Change my answers")
+                : (isAr ? "ليست لك؟ غيّر إجاباتي" : "Not you? Change my answers")}
+            </button>
+          )}
         </div>
       </motion.div>
 
