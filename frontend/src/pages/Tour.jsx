@@ -18,7 +18,8 @@ import TourScene from "../components/TourScene";
 import AskHelper from "../components/AskHelper";
 import TawafFlow from "../components/TawafFlow";
 import SaiFlow from "../components/SaiFlow";
-import WelcomeSheet from "../components/WelcomeSheet";
+// WelcomeSheet removed — duplicated friction with the personalised
+// OnboardingSheet shown on Home, and was blocking the Tour content.
 
 /*
  ONE PAGE = THE WHOLE UMRAH.
@@ -74,19 +75,8 @@ export default function Tour() {
     parseInt(localStorage.getItem("umrah_sai_count") || "0", 10)
   );
 
-  // Welcome sheet — auto-opens on first launch, dismissible & re-openable.
-  const [welcomeOpen, setWelcomeOpen] = React.useState(false);
-  React.useEffect(() => {
-    if (!localStorage.getItem("umrah_welcome_seen")) {
-      // Small delay so the home screen renders first, then sheet slides up.
-      const t = setTimeout(() => setWelcomeOpen(true), 600);
-      return () => clearTimeout(t);
-    }
-  }, []);
-  const closeWelcome = () => {
-    localStorage.setItem("umrah_welcome_seen", "1");
-    setWelcomeOpen(false);
-  };
+  // Welcome sheet REMOVED — was duplicate friction with the personalised
+  // OnboardingSheet shown on Home, and was blocking the Tour content.
 
   const step = TOUR_STEPS[idx];
   const total = TOUR_STEPS.length;
@@ -523,9 +513,6 @@ export default function Tour() {
 
       {/* Floating "Ask the Companion" button — context-aware */}
       <AskHelper stepLabel={isAr ? step.title_ar : step.title_en} lowerPosition={isFlowStep} />
-
-      {/* First-launch welcome sheet — re-openable via the "?" button on intro */}
-      <WelcomeSheet open={welcomeOpen} onClose={closeWelcome} isAr={isAr} />
     </div>
   );
 }
