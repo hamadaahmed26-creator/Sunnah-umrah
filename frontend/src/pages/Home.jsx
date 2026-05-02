@@ -192,8 +192,37 @@ export default function Home() {
               <CalendarDays className="w-5 h-5 text-[#7B5C24]" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-[#8B6A1F]">
-                {isAr ? "العدّ التّنازلي" : "Countdown"}
+              <div className="flex items-center justify-between gap-2">
+                <div className="text-[10px] uppercase tracking-[0.22em] text-[#8B6A1F]">
+                  {isAr ? "العدّ التّنازلي" : "Countdown"}
+                </div>
+                <button
+                  onClick={() => {
+                    const next = window.prompt(
+                      isAr
+                        ? "أدخل تاريخ السّفر (YYYY-MM-DD) — أو اتركه فارغًا للحذف"
+                        : "Enter trip date (YYYY-MM-DD) — or leave empty to clear",
+                      profile.tripDate || ""
+                    );
+                    if (next === null) return;
+                    const trimmed = next.trim();
+                    if (trimmed === "") {
+                      const updated = { ...profile, tripDate: null };
+                      setProfile(updated);
+                      saveProfile(updated);
+                      return;
+                    }
+                    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed) && !isNaN(Date.parse(trimmed))) {
+                      const updated = { ...profile, tripDate: trimmed };
+                      setProfile(updated);
+                      saveProfile(updated);
+                    }
+                  }}
+                  className="text-[10px] uppercase tracking-[0.14em] text-[#8B6A1F] hover:text-[#5C4218] underline-offset-2 hover:underline"
+                  data-testid="home-trip-edit"
+                >
+                  {isAr ? "تعديل" : "Edit"}
+                </button>
               </div>
               <div className="text-[18px] font-medium leading-tight tabular-nums text-[#1C1D1B]">
                 {daysToTrip === 0
@@ -212,7 +241,7 @@ export default function Home() {
         </div>
       ) : profile.done && !profile.tripDate ? (
         <Link
-          to="/packages"
+          to="/plan"
           className="mt-3 block rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
           data-testid="home-add-trip-date"
         >
