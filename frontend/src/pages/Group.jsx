@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
 import { ArrowLeft, Users, Copy, Check, Loader2, RefreshCw, Share2, QrCode, MapPin, ShieldCheck, Map as MapIcon, X, Navigation } from "lucide-react";
+import WalkRouteMap from "../components/WalkRouteMap";
 import { LangContext } from "../components/Layout";
 import GroupRadar from "../components/GroupRadar";
 import { haversine, bearing, compass8Localised, formatDistance } from "../lib/geo";
@@ -30,6 +31,8 @@ export default function Group() {
   const [myCoords, setMyCoords] = React.useState(null); // {lat,lng,accuracy}
   const [showRadar, setShowRadar] = React.useState(false);
   const [geoErr, setGeoErr] = React.useState("");
+  // user_id of the member whose in-app route map is currently expanded
+  const [routeToId, setRouteToId] = React.useState(null);
 
   const inviteUrl = code ? `${window.location.origin}/group/join/${code}` : "";
 
@@ -499,16 +502,42 @@ export default function Group() {
                       <div className="text-[10px] text-[#8E8F8A] flex-shrink-0">{m.last_ago || ""}</div>
                     </div>
                     {!isMe && hasLoc && (
-                      <a
-                        href={walkUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 w-full tap-pulse rounded-full bg-[#1C1D1B] text-white text-[12px] font-medium px-4 py-2 inline-flex items-center justify-center gap-1.5 active:scale-[0.98]"
-                        data-testid={`member-walk-${m.user_id}`}
-                      >
-                        <Navigation className="w-3.5 h-3.5" />
-                        {isAr ? `امشِ إلى ${m.name || "العضو"}` : `Walk to ${m.name || "them"}`}
-                      </a>
+                      <>
+                        <button
+                          onClick={() => setRouteToId(routeToId === m.user_id ? null : m.user_id)}
+                          className="mt-2 w-full tap-pulse rounded-full bg-[#1C1D1B] text-white text-[12px] font-medium px-4 py-2 inline-flex items-center justify-center gap-1.5 active:scale-[0.98]"
+                          data-testid={`member-walk-${m.user_id}`}
+                        >
+                          <Navigation className="w-3.5 h-3.5" />
+                          {routeToId === m.user_id
+                            ? (isAr ? "إخفاء المسار" : "Hide route")
+                            : (isAr ? `امشِ إلى ${m.name || "العضو"}` : `Walk to ${m.name || "them"}`)}
+                        </button>
+                        {routeToId === m.user_id && myCoords && (
+                          <div className="mt-3" data-testid={`member-route-${m.user_id}`}>
+                            <WalkRouteMap
+                              from={myCoords}
+                              to={{
+                                lat: m.lat,
+                                lng: m.lng,
+                                label_en: m.name || "Member",
+                                label_ar: m.name || "العضو",
+                              }}
+                              isAr={isAr}
+                              onClose={() => setRouteToId(null)}
+                            />
+                            <a
+                              href={walkUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-2 block text-center text-[11px] text-[#8E8F8A] underline underline-offset-2"
+                              data-testid={`member-walk-external-${m.user_id}`}
+                            >
+                              {isAr ? "افتح في تطبيق الخرائط" : "Open in external maps"}
+                            </a>
+                          </div>
+                        )}
+                      </>
                     )}
                   </li>
                 );

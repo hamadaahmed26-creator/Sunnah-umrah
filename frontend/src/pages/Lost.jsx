@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Compass, MapPin, Navigation, Loader2, AlertTriangle, Footprints } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
+import WalkRouteMap from "../components/WalkRouteMap";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -192,6 +193,22 @@ export default function Lost() {
           <p className="mt-3 text-center text-xs text-[#8E8F8A]">
             {isAr ? "وجّه هاتفك في اتجاه السهم الأخضر" : "Point your phone toward the green arrow"}
           </p>
+
+          {/* In-app walking-route map with turn-by-turn (OSRM, no Google) */}
+          {coords && (
+            <div className="mt-6" data-testid="lost-route-map">
+              <WalkRouteMap
+                from={coords}
+                to={{
+                  lat: data.gate.lat,
+                  lng: data.gate.lng,
+                  label_en: data.gate.name_en,
+                  label_ar: data.gate.name_ar,
+                }}
+                isAr={isAr}
+              />
+            </div>
+          )}
 
           <div className="mt-6">
             <a

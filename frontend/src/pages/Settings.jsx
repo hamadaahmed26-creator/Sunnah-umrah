@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen, UserCog } from "lucide-react";
+import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen, UserCog, MapPin } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import {
   loadSettings,
@@ -8,6 +8,7 @@ import {
   PRAYERS,
 } from "../lib/adhanScheduler";
 import { loadProfile } from "../lib/userProfile";
+import { loadPrayerMode, savePrayerMode } from "../lib/prayerPreferences";
 
 const PRAYER_AR = {
   Fajr: "الفجر",
@@ -25,6 +26,12 @@ export default function Settings() {
   const [playing, setPlaying] = React.useState(false);
   const audioRef = React.useRef(null);
   const profile = React.useMemo(() => loadProfile(), []);
+  const [prayerMode, setPrayerMode] = React.useState(() => loadPrayerMode());
+  const togglePrayerMode = () => {
+    const next = prayerMode === "auto" ? "makkah" : "auto";
+    setPrayerMode(next);
+    savePrayerMode(next);
+  };
   const profileSummary = React.useMemo(() => {
     if (!profile.done) return isAr ? "لم يكتمل بعد" : "Not set yet";
     const exp = profile.experience === "first"
@@ -200,6 +207,38 @@ export default function Settings() {
 
       {/* Other helpful links */}
       <div className="mt-8 space-y-2">
+        {/* Prayer-times mode — auto (your location) vs Makkah */}
+        <div
+          className="rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 flex items-center gap-3"
+          data-testid="settings-prayer-mode"
+        >
+          <MapPin className="w-4 h-4 text-[#7B5C24] flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <div className="text-[13px] font-semibold text-[#1C1D1B]">
+              {isAr ? "أوقات الصّلاة" : "Prayer times"}
+            </div>
+            <div className="text-[11px] text-[#8E8F8A]">
+              {prayerMode === "makkah"
+                ? (isAr ? "تعرض دائمًا أوقات مكّة" : "Always show Makkah times")
+                : (isAr ? "حسب موقعك الحالي" : "Based on your current location")}
+            </div>
+          </div>
+          <button
+            role="switch"
+            aria-checked={prayerMode === "makkah"}
+            onClick={togglePrayerMode}
+            className={`relative w-10 h-6 rounded-full transition-colors flex-shrink-0 ${
+              prayerMode === "makkah" ? "bg-[#2A5A4A]" : "bg-[#E8E5DD]"
+            }`}
+            data-testid="settings-prayer-mode-toggle"
+          >
+            <span
+              className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
+                prayerMode === "makkah" ? "translate-x-4" : "translate-x-0.5"
+              }`}
+            />
+          </button>
+        </div>
         <Link
           to="/about"
           className="block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"

@@ -819,19 +819,94 @@ function QuickTile({ to, icon: Icon, accent, en, ar, sub_en, sub_ar, isAr, testi
   );
 }
 
-// ─── Prayer times card — fetches Makkah times once + highlights "next prayer" ──
+// ─── Prayer times card ─ auto-uses the user's location (or falls back to
+//     Makkah). Honours the "always show Makkah" preference from Settings.
 function PrayerTimesCard({ isAr }) {
   const [data, setData] = React.useState(null);
+  const [city, setCity] = React.useState(null);
   const [now, setNow] = React.useState(() => new Date());
 
   React.useEffect(() => {
-    axios
-      .get("https://api.aladhan.com/v1/timingsByCity", {
-        params: { city: "Makkah", country: "SA", method: 4 },
-      })
-      .then((r) => setData(r.data?.data?.timings))
-      .catch(() => {});
-  }, []);
+    let cancelled = false;
+    const mode = (() => {
+      try { return localStorage.getItem("umrah_prayer_mode") || "auto"; } catch { return "auto"; }
+    })();
+    const profile = (() => {
+      try { return JSON.parse(localStorage.getItem("umrah_user_profile") || "{}"); } catch { return {}; }
+    })();
+    // In-Makkah persona always wants Makkah times.
+    const forceMakkah = profile.purpose === "in-makkah" || mode === "makkah";
+
+    const fetchTimingsByCoord = (lat, lng, label) => {
+      axios
+        .get("https://api.aladhan.com/v1/timings", {
+          params: { latitude: lat, longitude: lng, method: 4 },
+        })
+        .then((r) => {
+          if (cancelled) return;
+          setData(r.data?.data?.timings);
+          setCity(label);
+        })
+        .catch(() => {});
+    };
+
+    if (forceMakkah) {
+      fetchTimingsByCoord(21.4225, 39.8262, isAr ? "مكّة" : "Makkah");
+      return () => { cancelled = true; };
+    }
+
+    // Try cached last-known location first for instant render
+    const cached = (() => {
+      try {
+        const raw = localStorage.getItem("umrah_last_known_geo");
+        if (!raw) return null;
+        const v = JSON.parse(raw);
+        if (!v.lat || !v.lng) return null;
+        if (Date.now() - (v.ts || 0) > 24 * 60 * 60 * 1000) return null;
+        return v;
+      } catch { return null; }
+    })();
+    if (cached) {
+      fetchTimingsByCoord(cached.lat, cached.lng, cached.city || (isAr ? "موقعك" : "Your location"));
+    }
+
+    // Then ask the browser for fresh coords (silent, non-blocking)
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          if (cancelled) return;
+          const { latitude: lat, longitude: lng } = pos.coords;
+          // Reverse-geocode (free, no key — using a public Nominatim proxy
+          // via Aladhan's calendarByCity endpoint isn't ideal for city names,
+          // so we use OpenStreetMap Nominatim with a polite UA header).
+          let label = isAr ? "موقعك" : "Your location";
+          try {
+            const rev = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10`,
+              { headers: { "Accept-Language": isAr ? "ar" : "en" } }
+            );
+            const j = await rev.json();
+            const cityName = j.address?.city || j.address?.town || j.address?.village || j.address?.state;
+            if (cityName) label = cityName;
+          } catch { /* ignore — we keep the fallback label */ }
+          fetchTimingsByCoord(lat, lng, label);
+          try {
+            localStorage.setItem("umrah_last_known_geo", JSON.stringify({ lat, lng, city: label, ts: Date.now() }));
+          } catch {}
+        },
+        () => {
+          // Geolocation denied → fallback to Makkah so the widget still works
+          if (cancelled) return;
+          if (!data) fetchTimingsByCoord(21.4225, 39.8262, isAr ? "مكّة" : "Makkah");
+        },
+        { enableHighAccuracy: false, timeout: 8000, maximumAge: 60 * 60 * 1000 }
+      );
+    } else if (!data) {
+      fetchTimingsByCoord(21.4225, 39.8262, isAr ? "مكّة" : "Makkah");
+    }
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAr]);
 
   React.useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 30000);
@@ -842,12 +917,11 @@ function PrayerTimesCard({ isAr }) {
     return (
       <div className="mt-3 rounded-2xl bg-white border border-[#E8E5DD] p-4 flex items-center gap-2 text-[12px] text-[#8E8F8A]" data-testid="home-prayer-loading">
         <Loader2 className="w-3.5 h-3.5 animate-spin" />
-        {isAr ? "تحميل أوقات الصّلاة..." : "Loading Makkah prayer times…"}
+        {isAr ? "تحميل أوقات الصّلاة..." : "Loading prayer times…"}
       </div>
     );
   }
 
-  // Pick the next upcoming prayer time
   const items = [
     { id: "Fajr",    icon: Sunrise, en: "Fajr",    ar: "الفجر",    t: data.Fajr },
     { id: "Dhuhr",   icon: Sun,     en: "Dhuhr",   ar: "الظّهر",    t: data.Dhuhr },
@@ -868,9 +942,9 @@ function PrayerTimesCard({ isAr }) {
       data-testid="home-prayer-times"
     >
       <div className="flex items-center justify-between mb-2.5">
-        <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] inline-flex items-center gap-1">
+        <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D] inline-flex items-center gap-1" data-testid="prayer-city">
           <MapPin className="w-2.5 h-2.5" />
-          {isAr ? "أوقات مكّة" : "Makkah times"}
+          {city || (isAr ? "أوقات الصّلاة" : "Prayer times")}
         </div>
         <div className="text-[10px] text-[#8E8F8A]">
           {isAr ? "التّالية" : "Next"}: <span className="font-semibold text-[#1C1D1B]">{isAr ? next.ar : next.en} · {next.t}</span>

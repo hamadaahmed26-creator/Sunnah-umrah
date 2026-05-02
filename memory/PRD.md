@@ -22,6 +22,28 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (May 2, 2026 — sixth session, part 8) — In-app maps + turn-by-turn + smart prayer times
+- **In-app walking-route map** (`WalkRouteMap.jsx`) using Leaflet +
+  OpenStreetMap tiles + free OSRM public router. No API keys. Shows:
+  user blue dot, destination marker, green polyline route, distance,
+  estimated walking time, and **bilingual turn-by-turn steps** (e.g.
+  "Turn slightly left · طريق أم القرى · 692 m"). Falls back to
+  straight-line + clear notice if OSRM is unreachable.
+- **Lost page**: after Locate, the in-app map displays the route to the
+  nearest gate of Masjid al-Ḥaram. External "Open in Google Maps" stays
+  as the secondary backup option as requested.
+- **Group page**: each member row's "Walk to <name>" button now expands
+  the in-app map directly under their row (tap again to hide). External
+  maps available via a small text link below.
+- **Prayer times now auto-detect user location** (any country: London,
+  Paris, Lahore, anywhere). Reverse-geocodes via OpenStreetMap Nominatim
+  to show the city name on the card. 24h cache. Fallback to Makkah on
+  geo denial.
+- **Settings** has a new toggle: "Prayer times — Based on your current
+  location" ↔ "Always show Makkah times". In-Makkah persona always sees
+  Makkah regardless of toggle (they're there).
+- Yarn-added `leaflet@1.9.4` + `react-leaflet@5.0.0`. SW v1.47.0.
+
 ## Implemented (May 2, 2026 — sixth session, part 7) — Religious accuracy + Arabic audio + satnav + live Haram + deep-dive v3
 - **CRITICAL Iḥrām accuracy fix** in `lib/tourSteps.js`. Cross-checked
   against user-provided "Simple Umrah Guide" PDFs. Old wording was
