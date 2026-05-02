@@ -12,7 +12,7 @@ import { saveProfile } from "../lib/userProfile";
 
 const STEPS = 4;
 
-export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
+export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initialAnswers, editMode }) {
   const navigate = useNavigate();
   const [step, setStep] = React.useState(0);
   const [answers, setAnswers] = React.useState({
@@ -21,6 +21,22 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
     knowledge: null,
     tripDate: null,
   });
+
+  // When reopened in edit mode, pre-fill with the user's previous answers
+  // so they only change what they want, instead of starting from scratch.
+  React.useEffect(() => {
+    if (open && initialAnswers) {
+      setAnswers({
+        travelers: initialAnswers.travelers ?? null,
+        experience: initialAnswers.experience ?? null,
+        knowledge: initialAnswers.knowledge ?? null,
+        tripDate: initialAnswers.tripDate ?? null,
+      });
+      setStep(0);
+    } else if (open && !initialAnswers) {
+      setStep(0);
+    }
+  }, [open, initialAnswers]);
 
   const next = () => setStep((s) => Math.min(STEPS - 1, s + 1));
   const back = () => setStep((s) => Math.max(0, s - 1));
@@ -65,7 +81,9 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
             <div className="sticky top-0 bg-[#F8F6F0]/95 backdrop-blur flex items-center justify-between px-5 pt-4 pb-3 border-b border-[#E8E5DD]">
               <div className="w-12 h-1 rounded-full bg-[#E8E5DD] mx-auto absolute left-1/2 -translate-x-1/2 top-2" />
               <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
-                {isAr ? `${step + 1} من ${STEPS}` : `Step ${step + 1} of ${STEPS}`}
+                {editMode
+                  ? (isAr ? "تعديل تفضيلاتي" : "Edit my answers")
+                  : (isAr ? `${step + 1} من ${STEPS}` : `Step ${step + 1} of ${STEPS}`)}
               </div>
               <button
                 onClick={skip}

@@ -6,7 +6,7 @@ import {
   ArrowRight, Compass, Users, MapPin, Sparkles,
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
   Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check,
-  Settings as SettingsIcon, Calendar, Accessibility, CalendarDays,
+  Settings as SettingsIcon, Calendar, Accessibility, CalendarDays, Pencil,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -37,6 +37,9 @@ export default function Home() {
   // User profile (from onboarding)
   const [profile, setProfile] = React.useState(() => loadProfile());
   const [onboardOpen, setOnboardOpen] = React.useState(false);
+  // When the user taps "Edit" on the hero, we reopen onboarding pre-filled
+  // with their existing answers. `editMode` controls the header label only.
+  const [editMode, setEditMode] = React.useState(false);
 
   // Auto-open onboarding on first launch
   React.useEffect(() => {
@@ -49,6 +52,12 @@ export default function Home() {
   const handleOnboardComplete = (answers) => {
     setProfile({ ...profile, ...answers, done: true });
     setOnboardOpen(false);
+    setEditMode(false);
+  };
+
+  const openEditOnboarding = () => {
+    setEditMode(true);
+    setOnboardOpen(true);
   };
 
   // Trip countdown
@@ -101,6 +110,21 @@ export default function Home() {
         </div>
 
         <div className="relative px-6 pt-8 pb-7">
+          {/* Subtle "Edit my answers" pen — same pattern as the trip-countdown
+              Edit. Tapping it reopens onboarding pre-filled. Top-right corner
+              so it never competes with the hero copy. */}
+          {profile.done && (
+            <button
+              onClick={openEditOnboarding}
+              className="absolute top-3 right-3 w-8 h-8 grid place-items-center rounded-full bg-white/45 hover:bg-white/75 backdrop-blur-sm transition tap-pulse"
+              aria-label={isAr ? "تعديل تفضيلاتي" : "Edit my answers"}
+              title={isAr ? "تعديل تفضيلاتي" : "Edit my answers"}
+              data-testid="home-edit-profile"
+            >
+              <Pencil className="w-3.5 h-3.5 text-[#5C4218]" />
+            </button>
+          )}
+
           <p className="text-xs uppercase tracking-[0.22em] text-[#7B5C24]">
             {greeting}
           </p>
@@ -501,8 +525,11 @@ export default function Home() {
           saveProfile({ ...profile, done: true });
           setProfile({ ...profile, done: true });
           setOnboardOpen(false);
+          setEditMode(false);
         }}
         isAr={isAr}
+        editMode={editMode}
+        initialAnswers={editMode ? profile : null}
       />
     </div>
   );
