@@ -260,7 +260,7 @@ export default function Tour() {
       >
         <Compass className="w-3.5 h-3.5" />
         <span className={isAr ? "font-arabic" : ""}>
-          {isAr ? "أنا تائه — دلّني على مكاني" : "I'm lost — show me where I am"}
+          {isAr ? "أنا تائه — أوجدْ بابي" : "I'm lost — find my gate"}
         </span>
         <ArrowRight className={`w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 transition ${isAr ? "rotate-180" : ""}`} />
       </Link>
