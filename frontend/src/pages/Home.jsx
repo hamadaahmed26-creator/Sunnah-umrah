@@ -164,8 +164,10 @@ export default function Home() {
         </div>
       </Link>
 
-      {/* Live banner — Ramadan / Iftar (conditional, only when relevant) */}
-      {ramadan.state !== "unknown" && (
+      {/* Live banner — only shown when Ramadan is within 30 days OR active.
+          Below 30 days the user genuinely cares; above that it's just noise. */}
+      {(ramadan.state === "during" ||
+        (ramadan.state === "upcoming" && ramadan.daysUntil <= 30)) && (
         <Link
           to="/ramadan"
           className="mt-2 block rounded-2xl bg-gradient-to-r from-[#1C1D1B] to-[#2A2D29] text-white p-3.5 flex items-center gap-3 hover:brightness-110 transition"
