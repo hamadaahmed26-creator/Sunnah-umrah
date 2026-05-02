@@ -22,6 +22,24 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (May 2, 2026 — sixth session, part 3) — Pre-launch audit + back buttons + Arabic mode fix
+- **Final back-button sweep before Sunday Capacitor build.** Added consistent
+  `← Back` link to the 5 remaining secondary pages: Chat, Group, Qibla,
+  Ramadan, Shop. All 17 secondary pages now have a uniform back button
+  pattern (`Link to="/"` with `ArrowLeft` icon + RTL rotation in Arabic).
+  New data-testids: `chat-back`, `group-back`, `qibla-back`, `ramadan-back`,
+  `shop-back`. Verified by testing agent — 17/17 pages return to Home.
+- **Critical Arabic-mode bug FIXED in `Home.jsx` QuickTile + `Plan.jsx` Tag.**
+  Both components used `<span class="lang-en">EN</span><span class="lang-ar
+  hidden">AR</span>` markup that relied on a CSS toggle that was never wired
+  up. Result: Arabic users saw English-only labels on the 6 Home tiles
+  ("Stay together", "Ask", "Qibla", "I'm lost", "Ziyārah", "Quiz") and the 3
+  Plan tags ("Hotels", "Flights", "eSIM"). Switched to `isAr ? ar : en`
+  conditional rendering — same pattern used everywhere else in the app.
+  Verified visually in Arabic mode: tiles now correctly show ابقَ معًا /
+  اسأل / القبلة / أنا تائه / الزّيارة / الاختبار with no English leak.
+- SW cache → `umrah-v1.35.0`. Backend 9/9 pytest pass. No launch blockers.
+
 ## Implemented (May 2, 2026 — sixth session, part 2) — Daily reminder + Quick Duʿāʾ + adaptive home + shop reframe
 - **NEW: Today's Reminder card** on Home — rotating Sunnah hadith/duʿāʾ that
   changes once per UTC day, cycling through 30 ṣaḥīḥ entries from Bukhārī /
