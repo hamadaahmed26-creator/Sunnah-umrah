@@ -6,7 +6,7 @@ import {
   ArrowRight, Compass, Users, MapPin, Sparkles,
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
   Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check,
-  Settings as SettingsIcon, Calendar, Accessibility, CalendarDays, Pencil,
+  Settings as SettingsIcon, Calendar, Accessibility, CalendarDays, UserCog, Pencil,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -40,6 +40,64 @@ export default function Home() {
   // editMode is controlled via URL param (?edit=1) so the Settings page can
   // route here and reopen onboarding pre-filled. Keeps Home itself clutter-free.
   const [editMode, setEditMode] = React.useState(false);
+
+  // The EDIT button on the countdown card opens a small action sheet with
+  // TWO sections: change travel date OR change my onboarding answers.
+  // Avoids cluttering the home page while exposing both edits in one place.
+  const [editSheetOpen, setEditSheetOpen] = React.useState(false);
+
+  const promptForDate = () => {
+    setEditSheetOpen(false);
+    const next = window.prompt(
+      isAr
+        ? "أدخل تاريخ السّفر (YYYY-MM-DD) — أو اتركه فارغًا للحذف"
+        : "Enter trip date (YYYY-MM-DD) — or leave empty to clear",
+      profile.tripDate || ""
+    );
+    if (next === null) return;
+    const trimmed = next.trim();
+    if (trimmed === "") {
+      const updated = { ...profile, tripDate: null };
+      setProfile(updated);
+      saveProfile(updated);
+      return;
+    }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed) && !isNaN(Date.parse(trimmed))) {
+      const updated = { ...profile, tripDate: trimmed };
+      setProfile(updated);
+      saveProfile(updated);
+    }
+  };
+
+  const openEditAnswers = () => {
+    setEditSheetOpen(false);
+    // Tiny delay so the action sheet animates out before the bigger sheet animates in.
+    setTimeout(() => {
+      setEditMode(true);
+      setOnboardOpen(true);
+    }, 120);
+  };
+
+  // Human-readable summary of who the user is, shown in the action sheet
+  const experienceLabel = profile.experience === "first"
+    ? (isAr ? "أوّل مرّة" : "First time")
+    : profile.experience === "returning"
+      ? (isAr ? "عدت من قبل" : "Returning")
+      : profile.experience === "helping"
+        ? (isAr ? "أعتمر لأحد" : "Helping someone else")
+        : (isAr ? "غير محدّد" : "Not set");
+  const travelersLabel = profile.travelers === "solo"
+    ? (isAr ? "بمفرده" : "Solo")
+    : profile.travelers === "spouse"
+      ? (isAr ? "مع الزّوج/ة" : "With spouse")
+      : profile.travelers === "family"
+        ? (isAr ? "مع العائلة" : "With family")
+        : profile.travelers === "wheelchair"
+          ? (isAr ? "بحاجة إلى كرسيّ متحرّك" : "Wheelchair help")
+          : null;
+  const answersSummary = travelersLabel
+    ? `${experienceLabel} · ${travelersLabel}`
+    : experienceLabel;
 
   // Auto-open onboarding on first launch, OR when arriving with ?edit=1
   React.useEffect(() => {
@@ -131,25 +189,6 @@ export default function Home() {
                   ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
                   : "Everything you need to perform Umrah according to the Sunnah — in one place.")}
           </p>
-          {/* Inline "change my answers" — only visible to users who've already
-              completed onboarding. Plain readable text, not an icon, so even
-              non-tech-savvy users instantly understand it. Sits directly under
-              the personalised pronoun ("they'll" / "you") so anyone who reads
-              the wrong word will see how to fix it. */}
-          {profile.done && (
-            <button
-              onClick={() => {
-                setEditMode(true);
-                setOnboardOpen(true);
-              }}
-              className={`mt-2.5 text-[12px] text-[#5C4218]/75 hover:text-[#1C1D1B] underline underline-offset-2 decoration-[#5C4218]/40 hover:decoration-[#1C1D1B] transition tap-pulse ${isAr ? "font-arabic" : ""}`}
-              data-testid="home-change-answers"
-            >
-              {profile.experience === "helping"
-                ? (isAr ? "ليست لهم؟ غيّر إجاباتي" : "Not for them? Change my answers")
-                : (isAr ? "ليست لك؟ غيّر إجاباتي" : "Not you? Change my answers")}
-            </button>
-          )}
         </div>
       </motion.div>
 
@@ -237,27 +276,7 @@ export default function Home() {
                   {isAr ? "العدّ التّنازلي" : "Countdown"}
                 </div>
                 <button
-                  onClick={() => {
-                    const next = window.prompt(
-                      isAr
-                        ? "أدخل تاريخ السّفر (YYYY-MM-DD) — أو اتركه فارغًا للحذف"
-                        : "Enter trip date (YYYY-MM-DD) — or leave empty to clear",
-                      profile.tripDate || ""
-                    );
-                    if (next === null) return;
-                    const trimmed = next.trim();
-                    if (trimmed === "") {
-                      const updated = { ...profile, tripDate: null };
-                      setProfile(updated);
-                      saveProfile(updated);
-                      return;
-                    }
-                    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed) && !isNaN(Date.parse(trimmed))) {
-                      const updated = { ...profile, tripDate: trimmed };
-                      setProfile(updated);
-                      saveProfile(updated);
-                    }
-                  }}
+                  onClick={() => setEditSheetOpen(true)}
                   className="text-[10px] uppercase tracking-[0.14em] text-[#8B6A1F] hover:text-[#5C4218] underline-offset-2 hover:underline"
                   data-testid="home-trip-edit"
                 >
@@ -296,6 +315,13 @@ export default function Home() {
                 {isAr ? "اختر طريقة الحجز" : "Choose how to book"}
               </div>
             </div>
+            <button
+              onClick={() => setEditSheetOpen(true)}
+              className="text-[10px] uppercase tracking-[0.14em] text-[#8B6A1F] hover:text-[#5C4218] underline-offset-2 hover:underline flex-shrink-0"
+              data-testid="home-trip-empty-edit"
+            >
+              {isAr ? "تعديل" : "Edit"}
+            </button>
           </div>
           {/* Two direct booking CTAs — Packages (all-inclusive) + Hotels/Flights (DIY) */}
           <div className="grid grid-cols-2 gap-2">
@@ -539,6 +565,89 @@ export default function Home() {
         editMode={editMode}
         initialAnswers={editMode ? profile : null}
       />
+
+      {/* Edit action sheet — opens from the EDIT link on the trip card.
+          Two clean sections so user can choose what to change. Mobile-native
+          bottom sheet pattern; tap outside or Cancel to dismiss. */}
+      {editSheetOpen && (
+        <div className="fixed inset-0 z-[70]" data-testid="home-edit-sheet">
+          <button
+            type="button"
+            aria-label={isAr ? "إغلاق" : "Close"}
+            onClick={() => setEditSheetOpen(false)}
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          />
+          <motion.div
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            transition={{ type: "spring", damping: 30, stiffness: 320 }}
+            className="absolute left-0 right-0 bottom-0 bg-[#F8F6F0] rounded-t-[28px] shadow-[0_-20px_60px_rgba(0,0,0,0.3)] max-w-md mx-auto"
+          >
+            <div className="w-12 h-1 rounded-full bg-[#E8E5DD] mx-auto mt-2.5" />
+            <div className="px-5 pt-4 pb-3 border-b border-[#E8E5DD]">
+              <p className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
+                {isAr ? "تعديل" : "Edit"}
+              </p>
+              <h3 className={`mt-1 text-[18px] font-medium text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
+                {isAr ? "ما الذي تريد تعديله؟" : "What would you like to change?"}
+              </h3>
+            </div>
+            <div className="p-3 space-y-2">
+              <button
+                onClick={promptForDate}
+                className="w-full text-left rounded-2xl bg-white border border-[#E8E5DD] hover:border-[#B3884D] p-3.5 tap-pulse transition active:scale-[0.99]"
+                data-testid="home-edit-date"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#FBF1DD] grid place-items-center flex-shrink-0">
+                    <CalendarDays className="w-4 h-4 text-[#7B5C24]" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
+                      {isAr ? "تاريخ السّفر" : "Travel date"}
+                    </div>
+                    <div className={`text-[11px] text-[#8E8F8A] ${isAr ? "font-arabic" : ""}`}>
+                      {profile.tripDate
+                        ? (isAr ? `الحالي: ${profile.tripDate}` : `Currently: ${profile.tripDate}`)
+                        : (isAr ? "لم يُحدَّد بعد" : "Not set yet")}
+                    </div>
+                  </div>
+                  <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+                </div>
+              </button>
+              <button
+                onClick={openEditAnswers}
+                className="w-full text-left rounded-2xl bg-white border border-[#E8E5DD] hover:border-[#B3884D] p-3.5 tap-pulse transition active:scale-[0.99]"
+                data-testid="home-edit-answers"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#FBF1DD] grid place-items-center flex-shrink-0">
+                    <UserCog className="w-4 h-4 text-[#7B5C24]" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
+                      {isAr ? "إجاباتي" : "My answers"}
+                    </div>
+                    <div className={`text-[11px] text-[#8E8F8A] truncate ${isAr ? "font-arabic" : ""}`}>
+                      {isAr ? `الحالي: ${answersSummary}` : `Currently: ${answersSummary}`}
+                    </div>
+                  </div>
+                  <ArrowRight className={`w-4 h-4 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+                </div>
+              </button>
+            </div>
+            <div className="p-3 pb-[calc(env(safe-area-inset-bottom)+12px)]">
+              <button
+                onClick={() => setEditSheetOpen(false)}
+                className={`w-full rounded-full bg-[#1C1D1B] text-white py-3 text-[14px] font-medium tap-pulse ${isAr ? "font-arabic" : ""}`}
+                data-testid="home-edit-cancel"
+              >
+                {isAr ? "إلغاء" : "Cancel"}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
