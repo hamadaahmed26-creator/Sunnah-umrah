@@ -2,16 +2,18 @@
 // home experience. Saved locally; never sent to a server.
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X, ArrowRight, ArrowLeft, User, Users, Heart, Accessibility,
-  BookOpen, Sparkles, Calendar, Check,
+  BookOpen, Sparkles, Calendar, Check, Briefcase, Plane,
 } from "lucide-react";
 import { saveProfile } from "../lib/userProfile";
 
 const STEPS = 4;
 
 export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
+  const navigate = useNavigate();
   const [step, setStep] = React.useState(0);
   const [answers, setAnswers] = React.useState({
     travelers: null,
@@ -215,13 +217,53 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
                       className="w-full rounded-xl border border-[#E8E5DD] px-3 py-2.5 text-[14px] text-[#1C1D1B] bg-[#F8F6F0] focus:outline-none focus:border-[#B3884D]"
                       data-testid="onboard-date"
                     />
-                    <button
-                      onClick={() => set("tripDate", null)}
-                      className="mt-2 text-[11px] text-[#8E8F8A] hover:text-[#1C1D1B]"
-                      data-testid="onboard-date-clear"
-                    >
-                      {isAr ? "لم أحجز بعد" : "I haven't booked yet"}
-                    </button>
+                  </div>
+
+                  {/* Not booked yet? Show two direct booking CTAs (Packages /
+                      DIY) so the user can act immediately instead of being
+                      stuck on a dead-end "I haven't booked yet" label. */}
+                  <div className="mt-4">
+                    <div className={`text-[11px] uppercase tracking-[0.18em] text-[#8E8F8A] mb-2 ${isAr ? "font-arabic text-right" : ""}`}>
+                      {answers.experience === "helping"
+                        ? (isAr ? "لم يحجزوا بعد؟" : "They haven't booked yet?")
+                        : (isAr ? "لم تحجز بعد؟" : "Haven't booked yet?")}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => {
+                          saveProfile({ ...answers, done: true });
+                          onComplete?.(answers);
+                          navigate("/packages");
+                        }}
+                        className="rounded-2xl bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1] border border-[#EBD9B0] hover:border-[#B3884D] p-3 text-left tap-pulse transition active:scale-[0.98]"
+                        data-testid="onboard-cta-packages"
+                      >
+                        <Briefcase className="w-4 h-4 text-[#7B5C24] mb-1.5" />
+                        <div className={`text-[12px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic" : ""}`}>
+                          {isAr ? "باقات شاملة" : "Umrah packages"}
+                        </div>
+                        <div className={`mt-0.5 text-[10px] text-[#8B6A1F] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                          {isAr ? "رحلة + فندق + توجيه" : "All-inclusive trips"}
+                        </div>
+                      </button>
+                      <button
+                        onClick={() => {
+                          saveProfile({ ...answers, done: true });
+                          onComplete?.(answers);
+                          navigate("/hotels");
+                        }}
+                        className="rounded-2xl bg-gradient-to-br from-white to-[#F1F4F1] border border-[#DDE4DC] hover:border-[#2A5A4A] p-3 text-left tap-pulse transition active:scale-[0.98]"
+                        data-testid="onboard-cta-diy"
+                      >
+                        <Plane className="w-4 h-4 text-[#2A5A4A] mb-1.5" />
+                        <div className={`text-[12px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic" : ""}`}>
+                          {isAr ? "حجز بنفسي" : "Hotels & flights"}
+                        </div>
+                        <div className={`mt-0.5 text-[10px] text-[#3F584F] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                          {isAr ? "اختر بنفسك" : "Book each piece"}
+                        </div>
+                      </button>
+                    </div>
                   </div>
 
                   <div className="mt-5 rounded-2xl bg-[#FBF1DD] border border-[#EBD9B0] p-4 flex items-start gap-2">
