@@ -1,0 +1,48 @@
+{
+  "summary": "Pre-launch production audit for Sunnah Umrah PWA (Capacitor iOS/Android build Sunday). Backend: 9/9 pytest regression tests pass (chat, gates, group, progress); Sadaqah routes are disabled by design (Navigate to / in App.js per Apple Guideline 3.2.1(vii)/4.5.4) so those tests were deselected. Frontend: All 17 secondary pages have working ← Back buttons that return to Home; the 5 new data-testids (chat-back, group-back, qibla-back, ramadan-back, shop-back) are present and functional. Arabic-mode QuickTile bug FIX VERIFIED — on Home the 6 tiles (Stay together/Ask/Qibla/I'm lost/Ziyārah/Quiz) correctly render ARABIC labels (ابقَ معًا/اسأل/القبلة/أنا تائه/الزّيارة/الاختبار) with zero English leak, and /plan Tags correctly show فنادق/رحلات/شريحة with zero English leak. Home renders all core sections (hero greeting, tour CTA, prayer times live from Aladhan, 2x3 quick-tile grid, travel-and-more, footer). /chat sends a real question and receives a Claude Sonnet 4.5 answer grounded in Sunnah (verified via UI and via direct curl). /group create-group flow works (6-char code returned). /quiz renders all categories/difficulties with quiz-start, quiz-option-0..3, and quiz-next testids. /shop renders 6 external affiliate Buy/Browse links. /qibla shows location-permission prompt when geolocation is denied (expected in test env). /ramadan shows the 'upcoming' countdown state correctly (today is Feb 2026). /places lists ziyarah places with working PlaceDetail routing. Zero console errors on initial load. Service worker umrah-v1.35.0 is NOT registered in the preview env because index.js gates registration on NODE_ENV=='production' — preview runs CRA dev build, so this is expected; the SW WILL register in the production Capacitor/PWA build.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Arabic RTL on narrow viewport (414px)",
+        "issues": [
+          "Minor: When navigating between pages in Arabic mode, some content briefly appears horizontally shifted on the right edge (cosmetic only; text remains readable and scrollable). Not a blocker."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "No launch blockers found. App is ready for Capacitor iOS/Android build on Sunday.",
+    "(Optional, post-launch) If PWA install is desired from the preview domain itself, remove the NODE_ENV==='production' gate in /app/frontend/src/index.js line 15 OR ensure the preview env serves a production build so SW registers and the app is installable. For Capacitor native, this is irrelevant.",
+    "(Optional) Set STRIPE_WEBHOOK_SECRET in backend/.env before re-enabling /sadaqah routes in the future."
+  ],
+  "critical_code_review_comments": [
+    "App.js correctly redirects /sadaqah and /sadaqah/success to / via <Navigate replace> — this is the right way to preserve old bookmarks while disabling the flow for Apple review.",
+    "Home.jsx QuickTile now uses `isAr ? ar : en` props — the previous lang-en/lang-ar CSS-class approach has been fully removed, so toggling language is instantaneous and deterministic. Plan.jsx Tag component follows the same pattern. Good.",
+    "All back-button implementations are consistent: <Link to='/'> with the same class string and ← icon + 'Back'/'الرّجوع'. Consider extracting a <BackLink isAr label testid/> component to avoid the ~18 duplicated JSX blocks across pages (minor DRY improvement, not a bug).",
+    "Ramadan.jsx has the back button duplicated in all 3 return branches (upcoming/during/past) — same data-testid='ramadan-back' is reused, which is fine since only one branch renders at a time, but the duplication increases file size; could be hoisted above the switch.",
+    "server.py is ~470 lines and growing — once Sadaqah is re-enabled, consider splitting into routes/chat.py, routes/group.py, routes/gates.py, routes/sadaqah.py.",
+    "index.js gates SW registration on NODE_ENV='production' — correct for CRA, but worth documenting in README so future devs know the preview env will not cache offline.",
+    "No console errors observed on any of the 17 pages audited."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100% (9/9 regression tests pass; Sadaqah tests deselected by design)",
+    "frontend": "100% (all 17 secondary pages have working back buttons; Arabic fix verified on both Home and Plan; Chat, Group, Quiz, Shop, Places, Ramadan, Qibla flows all verified)"
+  },
+  "test_credentials": "none required",
+  "seed_data_creation": "Created 1 chat session (TEST_sess_audit) and 1 group record during testing. Safe to leave.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Run: pytest /app/backend/tests/backend_test.py -v -k 'not sadaqah' — 9 tests should pass. The /sadaqah routes are currently redirected to / in App.js (lines 57-58) per Apple App Store policy; do NOT re-enable without re-reading iteration_3.json. Preview env does NOT register service worker (NODE_ENV=dev); production build will. Onboarding sheet (data-testid='onboard-overlay') appears on first visit and intercepts clicks — remove it from DOM or set localStorage keys ['umrah_onboard_seen','umrah_onboarded'] before UI tests. data-testids for back buttons: chat-back, group-back, qibla-back, ramadan-back, shop-back (new), plus pre-existing on all other secondary pages. Language toggle: [data-testid='lang-toggle']; html[dir] flips between ltr/rtl.",
+  "rca_of_the_issue": "N/A — this is a pre-launch audit run, not a bug investigation. All reported bugs from the user request (missing back buttons on Shop/Ask/Qibla, Arabic-mode QuickTile English leak) were verified as fixed."
+}

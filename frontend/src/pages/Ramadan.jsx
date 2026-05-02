@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Moon, Sun, Sunset, BookOpen, Loader2, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Moon, Sun, Sunset, BookOpen, Loader2, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus, reminderForDay, RAMADAN_REMINDERS } from "../lib/ramadan";
 
@@ -44,7 +45,11 @@ export default function Ramadan() {
   if (status.state === "upcoming") {
     return (
       <div className="max-w-md mx-auto pb-12" data-testid="ramadan-page">
-        <div className="mt-2">
+        <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2" data-testid="ramadan-back">
+          <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+          <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+        </Link>
+        <div className="mt-1">
           <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{isAr ? "رمضان" : "Ramadan"}</p>
           <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
             {isAr ? "يقترب رمضان" : "Ramadan is coming"}
@@ -109,7 +114,11 @@ export default function Ramadan() {
 
     return (
       <div className="max-w-md mx-auto pb-12" data-testid="ramadan-page">
-        <div className="mt-2">
+        <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2" data-testid="ramadan-back">
+          <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+          <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+        </Link>
+        <div className="mt-1">
           <p className="text-xs uppercase tracking-[0.22em] text-[#B3884D]">{isAr ? `يوم ${status.day}` : `Day ${status.day}`}</p>
           <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
             {isAr ? "رمضان مبارك" : "Ramadān Mubārak"}
@@ -196,7 +205,11 @@ export default function Ramadan() {
   // ─── Default fallback (post-Ramadan or year not in our table) ─────
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="ramadan-page">
-      <div className="mt-2">
+      <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2" data-testid="ramadan-back">
+        <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+        <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+      </Link>
+      <div className="mt-1">
         <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{isAr ? "رمضان" : "Ramadan"}</p>
         <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
           {isAr ? "ذكريات رمضانيّة" : "Ramadan reflections"}

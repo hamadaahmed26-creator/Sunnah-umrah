@@ -87,9 +87,9 @@ export default function Plan() {
             </p>
             {/* Mini icon row showing what's inside */}
             <div className="mt-3 flex items-center gap-3">
-              <Tag icon={Hotel}  label_en="Hotels"  label_ar="فنادق" />
-              <Tag icon={Plane}  label_en="Flights" label_ar="رحلات" />
-              <Tag icon={Wifi}   label_en="eSIM"    label_ar="شريحة" />
+              <Tag icon={Hotel}  label_en="Hotels"  label_ar="فنادق" isAr={isAr} />
+              <Tag icon={Plane}  label_en="Flights" label_ar="رحلات" isAr={isAr} />
+              <Tag icon={Wifi}   label_en="eSIM"    label_ar="شريحة" isAr={isAr} />
             </div>
           </div>
         </div>
@@ -108,12 +108,11 @@ export default function Plan() {
   );
 }
 
-function Tag({ icon: Icon, label_en, label_ar }) {
+function Tag({ icon: Icon, label_en, label_ar, isAr }) {
   return (
     <div className="inline-flex items-center gap-1 rounded-full bg-[#F1F4F1] border border-[#DDE4DC] px-2 py-0.5 text-[10px] text-[#3F584F]">
       <Icon className="w-3 h-3" />
-      <span className="lang-en">{label_en}</span>
-      <span className="lang-ar font-arabic hidden">{label_ar}</span>
+      <span className={isAr ? "font-arabic" : ""}>{isAr ? label_ar : label_en}</span>
     </div>
   );
 }

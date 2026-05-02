@@ -325,12 +325,12 @@ export default function Home() {
           {isAr ? "أدواتك" : "Your tools"}
         </h2>
         <div className="grid grid-cols-2 gap-2">
-          <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        testid="home-group" />
-          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh & Umrah questions"      sub_ar="أسئلة الفقه والعمرة"      testid="home-chat" />
-          <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             testid="home-qibla" />
-          <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  testid="home-lost" />
-          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah"       ar="الزّيارة"        sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          testid="home-places" />
-          <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                testid="home-quiz" />
+          <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        isAr={isAr} testid="home-group" />
+          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh & Umrah questions"      sub_ar="أسئلة الفقه والعمرة"      isAr={isAr} testid="home-chat" />
+          <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             isAr={isAr} testid="home-qibla" />
+          <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  isAr={isAr} testid="home-lost" />
+          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah"       ar="الزّيارة"        sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
+          <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                isAr={isAr} testid="home-quiz" />
         </div>
       </div>
 
@@ -549,7 +549,7 @@ function DailyReminderCard({ reminder, isAr }) {
 
 // ─── Quick Access tile — used in the 2×3 grid that replaced both the
 // horizontal Discover scroll and the priority-card row.
-function QuickTile({ to, icon: Icon, accent, en, ar, sub_en, sub_ar, testid }) {
+function QuickTile({ to, icon: Icon, accent, en, ar, sub_en, sub_ar, isAr, testid }) {
   return (
     <Link
       to={to}
@@ -562,13 +562,11 @@ function QuickTile({ to, icon: Icon, accent, en, ar, sub_en, sub_ar, testid }) {
       >
         <Icon className="w-[16px] h-[16px]" style={{ color: accent }} />
       </div>
-      <div className="text-[13px] font-semibold text-[#1C1D1B] leading-tight">
-        <span className="lang-en">{en}</span>
-        <span className="lang-ar font-arabic hidden">{ar}</span>
+      <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+        {isAr ? ar : en}
       </div>
-      <div className="mt-0.5 text-[10px] text-[#8E8F8A] leading-snug">
-        <span className="lang-en">{sub_en}</span>
-        <span className="lang-ar font-arabic hidden">{sub_ar}</span>
+      <div className={`mt-0.5 text-[10px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+        {isAr ? sub_ar : sub_en}
       </div>
     </Link>
   );

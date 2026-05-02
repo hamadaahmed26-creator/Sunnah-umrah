@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { Send, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, Send, Loader2, Sparkles } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
 
@@ -64,7 +65,11 @@ export default function Chat() {
 
   return (
     <div className="max-w-md mx-auto h-[calc(100vh-180px)] flex flex-col" data-testid="chat-page">
-      <div className="mt-2">
+      <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2" data-testid="chat-back">
+        <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+        <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+      </Link>
+      <div className="mt-1">
         <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{t("chatTitle")}</p>
         <h1 className="mt-2 text-[26px] font-medium tracking-tight text-[#1C1D1B] flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-[#B3884D]" />

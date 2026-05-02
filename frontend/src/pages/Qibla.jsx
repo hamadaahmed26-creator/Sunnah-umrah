@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Compass, Loader2, Smartphone, RotateCcw, MapPin } from "lucide-react";
+import { ArrowLeft, Compass, Loader2, Smartphone, RotateCcw, MapPin } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { bearing, formatDistance, haversine } from "../lib/geo";
 
@@ -118,7 +119,11 @@ export default function Qibla() {
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="qibla-page">
-      <div className="mt-2">
+      <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2" data-testid="qibla-back">
+        <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+        <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+      </Link>
+      <div className="mt-1">
         <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{isAr ? "البوصلة" : "Compass"}</p>
         <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
           {isAr ? "اتجاه القبلة" : "Qibla direction"}

@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
-import { Users, Copy, Check, Loader2, RefreshCw, Share2, QrCode, MapPin, ShieldCheck, Map as MapIcon, X, Navigation } from "lucide-react";
+import { ArrowLeft, Users, Copy, Check, Loader2, RefreshCw, Share2, QrCode, MapPin, ShieldCheck, Map as MapIcon, X, Navigation } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import GroupRadar from "../components/GroupRadar";
 import { haversine, bearing, compass8Localised, formatDistance } from "../lib/geo";
@@ -251,7 +251,11 @@ export default function Group() {
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="group-page">
-      <div className="mt-2">
+      <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2" data-testid="group-back">
+        <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+        <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+      </Link>
+      <div className="mt-1">
         <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{isAr ? "المجموعة" : "Family / Group"}</p>
         <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
           {isAr ? "ابقَ مع رفقائك" : "Stay together"}
