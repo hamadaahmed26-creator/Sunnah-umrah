@@ -28,7 +28,8 @@ export default function Home() {
   // Returning vs first-time
   const tawafCount = parseInt(localStorage.getItem("umrah_tawaf_count") || "0", 10);
   const saiCount = parseInt(localStorage.getItem("umrah_sai_count") || "0", 10);
-  const inProgress = tawafCount > 0 || saiCount > 0;
+  const tourStep = parseInt(localStorage.getItem("umrah_tour_step") || "0", 10);
+  const inProgress = tawafCount > 0 || saiCount > 0 || tourStep > 0;
 
   const ramadan = React.useMemo(() => ramadanStatus(), []);
   const reminder = React.useMemo(() => todaysReminder(), []);
@@ -62,11 +63,6 @@ export default function Home() {
       : profile.experience === "helping"
         ? (isAr ? "خدمة محتسبة" : "May Allah accept your service")
         : (isAr ? "السلام عليكم" : "Salām ʿalaykum");
-
-  // First-time vs returning user — controls section ordering. A user who has
-  // already started their Tawaf/Saʿi sees Tools first; a fresh visitor sees
-  // travel options first because they're still planning.
-  const toolsFirst = inProgress;
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="home-page">
@@ -119,38 +115,14 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* "What's inside" — horizontal feature strip directly under the hero,
-          gives new users an instant preview of what the app offers without
-          pushing important sections off-screen. */}
-      <div className="mt-3" data-testid="home-features-strip">
-        <div className="flex items-center justify-between mb-2 px-1">
-          <h2 className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
-            {isAr ? "ما الّذي بداخل التطبيق" : "Discover what's inside"}
-          </h2>
-          <span className="text-[10px] text-[#B5B5B0]">
-            {isAr ? "اسحب →" : "swipe →"}
-          </span>
-        </div>
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x snap-mandatory scrollbar-hide">
-          <FeatureCard to="/places"      icon={Sparkles}      accent="#2A5A4A" en="Ziyārah guide" ar="دليل الزّيارة" sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          testid="feat-places" />
-          <FeatureCard to="/qibla"       icon={Compass}       accent="#7B5C24" en="Qibla compass" ar="بوصلة القبلة" sub_en="Direction to the Ka'bah"      sub_ar="اتّجاه الكعبة"             testid="feat-qibla" />
-          <FeatureCard to="/lost"        icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"      sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  testid="feat-lost" />
-          <FeatureCard to="/quiz"        icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"     sub_en="Test what you know"           sub_ar="اختبر معرفتك"               testid="feat-quiz" />
-          <FeatureCard to="/ramadan"     icon={Moon}          accent="#1C1D1B" en="Ramadan"       ar="رمضان"        sub_en="Reminders & countdown"        sub_ar="تذكيرات وعدّ تنازلي"        testid="feat-ramadan" />
-          <FeatureCard to="/best-months" icon={CalendarDays}  accent="#2A5A4A" en="When to go"    ar="متى تذهب"     sub_en="Best months for ʿUmrah"       sub_ar="أفضل شهور العمرة"           testid="feat-bestmonths" />
-          <FeatureCard to="/shop"        icon={ShoppingBag}   accent="#7B5C24" en="Pre-trip shop" ar="المتجر"       sub_en="Iḥrām, books, eSIM"           sub_ar="إحرام، كتب، شريحة"          testid="feat-shop" />
-        </div>
-      </div>
-
-      {/* Continue / Start tour — biggest CTA. Subtle Kaaba photo backdrop
-          gives it emotional weight without disrupting the calm aesthetic. */}
+      {/* PRIMARY ACTION — Step-by-step CTA. Subtle Kaaba photo backdrop gives
+          it emotional weight without disrupting the calm aesthetic. Status
+          updates per user state. */}
       <Link
         to="/tour"
         className="mt-3 block tap-pulse relative overflow-hidden rounded-3xl bg-[#1C1D1B] text-white p-5 active:scale-[0.99] transition shadow-[0_12px_30px_-12px_rgba(28,29,27,0.45)]"
         data-testid="home-tour"
       >
-        {/* Backdrop image — desaturated Kaaba shot, low opacity, scaled to
-            avoid edge cropping artifacts. Hidden from screen readers. */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
@@ -162,7 +134,6 @@ export default function Home() {
             filter: "saturate(0.6) contrast(1.05)",
           }}
         />
-        {/* Charcoal gradient overlay for legibility */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
@@ -179,15 +150,13 @@ export default function Home() {
             <div className="mt-1.5 text-[22px] font-medium leading-tight">
               {isAr ? "خطوة بخطوة" : "Step-by-step Umrah"}
             </div>
-            {inProgress ? (
-              <div className="mt-1 text-[12px] text-white/60 tabular-nums">
-                Tawaf {tawafCount}/7 · Saʿi {saiCount}/7
-              </div>
-            ) : (
-              <div className="mt-1 text-[12px] text-white/60">
-                {isAr ? "من النيّة إلى التحلّل" : "From niyyah to taḥallul"}
-              </div>
-            )}
+            <div className="mt-1 text-[12px] text-white/65 tabular-nums">
+              {inProgress
+                ? (isAr
+                    ? `الخطوة ${Math.max(tourStep + 1, 1)} من ١٥ · الطّواف ${tawafCount}/٧ · السّعي ${saiCount}/٧`
+                    : `Step ${Math.max(tourStep + 1, 1)} of 15 · Tawaf ${tawafCount}/7 · Saʿi ${saiCount}/7`)
+                : (isAr ? "من النيّة إلى التحلّل" : "From niyyah to taḥallul")}
+            </div>
           </div>
           <div className="w-12 h-12 rounded-full bg-[#B3884D] grid place-items-center flex-shrink-0 shadow-[0_4px_12px_-2px_rgba(179,136,77,0.6)]">
             <Footprints className="w-5 h-5 text-white" />
@@ -195,7 +164,7 @@ export default function Home() {
         </div>
       </Link>
 
-      {/* Live banner — Ramadan or Iftar */}
+      {/* Live banner — Ramadan / Iftar (conditional, only when relevant) */}
       {ramadan.state !== "unknown" && (
         <Link
           to="/ramadan"
@@ -212,46 +181,21 @@ export default function Home() {
         </Link>
       )}
 
-      {/* Prayer times — Makkah, refreshes every minute */}
-      <PrayerTimesCard isAr={isAr} />
-
-      {/* 2 priority cards — Stay together + Ask. The first one is the big
-          differentiator for families travelling in the Haram crowd. */}
-      <div className="mt-3 grid grid-cols-2 gap-2" data-testid="home-priority">
-        <PriorityCard
-          to="/group"
-          icon={Users}
-          label={isAr ? "ابقَ معًا" : "Stay together"}
-          sublabel={isAr ? "لا تَضِع في الزحام" : "Don't lose anyone in the crowd"}
-          accent="#B3884D"
-          testid="home-group"
-        />
-        <PriorityCard
-          to="/chat"
-          icon={MessageSquare}
-          label={isAr ? "اسأل" : "Ask"}
-          sublabel={isAr ? "أسئلة الفقه والعمرة" : "Fiqh & Umrah questions"}
-          accent="#8B4540"
-          testid="home-chat"
-        />
-      </div>
-
-      {/* Trip countdown — informational status card. NOT a link — purely
-          showing the user where they are in their journey. */}
-      {daysToTrip !== null && daysToTrip >= 0 && (
+      {/* TRIP STATUS — countdown OR plan-your-trip CTA (mutually exclusive) */}
+      {daysToTrip !== null && daysToTrip >= 0 ? (
         <div
-          className="mt-3 rounded-2xl bg-gradient-to-br from-[#1F4F3A] to-[#2A5A4A] text-white p-4 shadow-[0_10px_24px_-12px_rgba(31,79,58,0.55)]"
+          className="mt-3 rounded-2xl bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1] border border-[#EBD9B0] p-4"
           data-testid="home-trip-countdown"
         >
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-white/15 grid place-items-center flex-shrink-0">
-              <CalendarDays className="w-5 h-5 text-[#B3884D]" />
+            <div className="w-11 h-11 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#EBD9B0]">
+              <CalendarDays className="w-5 h-5 text-[#7B5C24]" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
+              <div className="text-[10px] uppercase tracking-[0.22em] text-[#8B6A1F]">
                 {isAr ? "العدّ التّنازلي" : "Countdown"}
               </div>
-              <div className="text-[18px] font-medium leading-tight tabular-nums">
+              <div className="text-[18px] font-medium leading-tight tabular-nums text-[#1C1D1B]">
                 {daysToTrip === 0
                   ? (isAr ? "اليوم!" : "Today!")
                   : (isAr
@@ -259,37 +203,33 @@ export default function Home() {
                       : `${daysToTrip} ${daysToTrip === 1 ? "day" : "days"} to go`)}
               </div>
               {promptText && (
-                <div className="mt-1 text-[11px] text-white/75 leading-snug">
+                <div className="mt-1 text-[11px] text-[#6E5424] leading-snug">
                   {promptText}
                 </div>
               )}
             </div>
           </div>
         </div>
-      )}
-
-      {/* "I haven't booked yet" — only shows if onboarding done but no date set.
-          Routes the user straight into Packages so they can take action. */}
-      {profile.done && !profile.tripDate && (
+      ) : profile.done && !profile.tripDate ? (
         <Link
           to="/packages"
-          className="mt-3 block rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3 hover:border-[#B3884D] transition tap-pulse"
+          className="mt-3 block rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
           data-testid="home-add-trip-date"
         >
           <div className="flex items-center gap-2.5">
             <Calendar className="w-4 h-4 text-[#B3884D]" />
             <div className="flex-1">
-              <div className="text-[12px] font-semibold text-[#1C1D1B]">
+              <div className="text-[13px] font-semibold text-[#1C1D1B]">
                 {isAr ? "خطّط لرحلتك" : "Plan your trip"}
               </div>
-              <div className="text-[10px] text-[#8E8F8A]">
+              <div className="text-[11px] text-[#8E8F8A]">
                 {isAr ? "تصفّح الباقات والفنادق والرّحلات" : "Browse packages, hotels & flights"}
               </div>
             </div>
             <ArrowRight className={`w-3.5 h-3.5 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
           </div>
         </Link>
-      )}
+      ) : null}
 
       {/* Wheelchair / accessibility CTA — only for users who selected this */}
       {profile.travelers === "wheelchair" && (
@@ -315,14 +255,107 @@ export default function Home() {
         </Link>
       )}
 
-      {/* Today's Sunnah reminder — rotates daily. Designed to make this app
-          a quiet daily habit, not just a one-off Umrah tool. */}
-      <DailyReminderCard reminder={reminder} isAr={isAr} />
+      {/* QUICK ACCESS — 2×3 grid of the 6 most-used features. Replaces both
+          the horizontal "Discover" scroll and the orphaned priority cards.
+          All items always visible; no horizontal swipe needed (better for
+          older users). */}
+      <div className="mt-7" data-testid="home-quickaccess">
+        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "أدواتك" : "Your tools"}
+        </h2>
+        <div className="grid grid-cols-2 gap-2">
+          <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        testid="home-group" />
+          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh & Umrah questions"      sub_ar="أسئلة الفقه والعمرة"      testid="home-chat" />
+          <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             testid="home-qibla" />
+          <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  testid="home-lost" />
+          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah"       ar="الزّيارة"        sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          testid="home-places" />
+          <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                testid="home-quiz" />
+        </div>
+      </div>
 
-      {/* Travel section — Packages vs DIY booking. Tools section was removed
-          since all those features now live in the Discover strip above (no
-          duplication). */}
-      <TravelSection isAr={isAr} />
+      {/* DAILY ANCHORS — reminder + prayer times. Both are habit drivers. */}
+      <DailyReminderCard reminder={reminder} isAr={isAr} />
+      <PrayerTimesCard isAr={isAr} />
+
+      {/* TRAVEL & MORE — packages/DIY + secondary links (when-to-go, shop). */}
+      <div className="mt-7">
+        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "السّفر والمزيد" : "Travel & more"}
+        </h2>
+        <div className="grid grid-cols-2 gap-2" data-testid="home-travel">
+          {/* Packages */}
+          <Link
+            to="/packages"
+            className="block tap-pulse rounded-2xl bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1] border border-[#EBD9B0] p-4 hover:border-[#B3884D] hover:shadow-[0_10px_24px_-14px_rgba(179,136,77,0.5)] transition active:scale-[0.98]"
+            data-testid="home-travel-package"
+          >
+            <div className="w-10 h-10 rounded-full bg-white/70 grid place-items-center mb-2 border border-[#EBD9B0]">
+              <Briefcase className="w-[18px] h-[18px] text-[#7B5C24]" />
+            </div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-[#8B6A1F]">
+              {isAr ? "شامل" : "All-inclusive"}
+            </div>
+            <div className="mt-0.5 text-[14px] font-semibold text-[#1C1D1B] leading-tight">
+              {isAr ? "باقات العمرة" : "Umrah packages"}
+            </div>
+            <div className="mt-1 text-[11px] text-[#6E5424] leading-snug">
+              {isAr ? "رحلة + فندق + توجيه" : "Flight + hotel + guide"}
+            </div>
+          </Link>
+          {/* DIY */}
+          <Link
+            to="/hotels"
+            className="block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#F1F4F1] border border-[#DDE4DC] p-4 hover:border-[#2A5A4A] hover:shadow-[0_10px_24px_-14px_rgba(42,90,74,0.4)] transition active:scale-[0.98]"
+            data-testid="home-travel-diy"
+          >
+            <div className="w-10 h-10 rounded-full bg-white grid place-items-center mb-2 border border-[#DDE4DC]">
+              <Plane className="w-[18px] h-[18px] text-[#2A5A4A]" />
+            </div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-[#2A5A4A]">
+              {isAr ? "بنفسك" : "DIY"}
+            </div>
+            <div className="mt-0.5 text-[14px] font-semibold text-[#1C1D1B] leading-tight">
+              {isAr ? "احجز بنفسك" : "Hotels & flights"}
+            </div>
+            <div className="mt-1 text-[11px] text-[#3F584F] leading-snug">
+              {isAr ? "فنادق · رحلات · شريحة eSIM" : "Hotels · flights · eSIM"}
+            </div>
+          </Link>
+        </div>
+        {/* Secondary inline links — small, calm */}
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          <Link
+            to="/best-months"
+            className="rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3 hover:border-[#B3884D] transition tap-pulse flex items-center gap-2.5"
+            data-testid="home-best-months"
+          >
+            <CalendarDays className="w-4 h-4 text-[#7B5C24] flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className={`text-[12px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "متى تذهب" : "When to go"}
+              </div>
+              <div className={`text-[10px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "أفضل شهور العمرة" : "Best months"}
+              </div>
+            </div>
+          </Link>
+          <Link
+            to="/shop"
+            className="rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3 hover:border-[#B3884D] transition tap-pulse flex items-center gap-2.5"
+            data-testid="home-shop"
+          >
+            <ShoppingBag className="w-4 h-4 text-[#7B5C24] flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className={`text-[12px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "متجر السّفر" : "Pre-trip shop"}
+              </div>
+              <div className={`text-[10px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "إحرام، كتب، شريحة" : "Iḥrām, books, eSIM"}
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
 
       {/* About / Sources footer — reassures the user (and Apple reviewers)
           that every ruling in the app is sourced. */}
@@ -453,153 +486,26 @@ function DailyReminderCard({ reminder, isAr }) {
   );
 }
 
-// ─── Tools grid (Qibla / Lost / Ziyārah / Quiz / Ramadan / Shop) ────
-function ToolsSection({ isAr }) {
-  return (
-    <>
-      <div className="mt-7 mb-2.5 flex items-end justify-between">
-        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
-          {isAr ? "الأدوات" : "Tools"}
-        </h2>
-        <span className="text-[10px] uppercase tracking-[0.18em] text-[#B5B5B0]">
-          {isAr ? "ما تحتاجه في الحرم" : "What you need in the Ḥaram"}
-        </span>
-      </div>
-      <div className="mt-2 grid grid-cols-2 gap-2">
-        <Tile to="/qibla"   icon={Compass}    en="Qibla compass"  ar="بوصلة القبلة"   sub_en="Direction to Ka'bah" sub_ar="اتجاه الكعبة" testid="home-qibla" />
-        <Tile to="/lost"    icon={MapPin}     en="I'm lost"        ar="أنا تائه"        sub_en="Find nearest gate"   sub_ar="أقرب باب" testid="home-lost" />
-        <Tile to="/places"  icon={Sparkles}   en="Ziyārah"         ar="الزّيارة"        sub_en="26 places to visit"  sub_ar="٢٦ مكانًا" testid="home-places" />
-        <Tile to="/quiz"    icon={Trophy}     en="Knowledge quiz" ar="اختبر نفسك"     sub_en="Test what you know"  sub_ar="اختبار العمرة" testid="home-quiz" />
-        <Tile to="/ramadan" icon={Moon}       en="Ramadan"         ar="رمضان"           sub_en="Reminders & countdown" sub_ar="تذكيرات وعدّ تنازلي" testid="home-ramadan" />
-        <Tile to="/best-months" icon={CalendarDays} en="When to go"  ar="متى تذهب"       sub_en="Best months for Umrah" sub_ar="أفضل شهور العمرة" testid="home-best-months" />
-        <Tile to="/shop"    icon={ShoppingBag} en="Shop"           ar="المتجر"          sub_en="Ihram, books, eSIM"  sub_ar="إحرام، كتب، شريحة" testid="home-shop" badge={isAr ? "جديد" : "New"} />
-      </div>
-    </>
-  );
-}
-
-// ─── Travel section (Packages vs DIY) ───────────────────────────────
-function TravelSection({ isAr }) {
-  return (
-    <>
-      <div className="mt-7 flex items-center justify-between">
-        <h2 className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
-          {isAr ? "كيف ستسافر؟" : "How will you travel?"}
-        </h2>
-      </div>
-      <div className="mt-2 grid grid-cols-2 gap-2" data-testid="home-travel">
-        {/* All-inclusive package */}
-        <Link
-          to="/packages"
-          className="block tap-pulse rounded-2xl bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1] border border-[#EBD9B0] p-4 hover:border-[#B3884D] hover:shadow-[0_10px_24px_-14px_rgba(179,136,77,0.5)] transition active:scale-[0.98]"
-          data-testid="home-travel-package"
-        >
-          <div className="w-10 h-10 rounded-full bg-white/70 grid place-items-center mb-2 border border-[#EBD9B0]">
-            <Briefcase className="w-[18px] h-[18px] text-[#7B5C24]" />
-          </div>
-          <div className="text-[10px] uppercase tracking-[0.18em] text-[#8B6A1F]">
-            {isAr ? "شامل" : "All-inclusive"}
-          </div>
-          <div className="mt-0.5 text-[14px] font-semibold text-[#1C1D1B] leading-tight">
-            {isAr ? "باقات العمرة" : "Umrah packages"}
-          </div>
-          <div className="mt-1 text-[11px] text-[#6E5424] leading-snug">
-            {isAr ? "رحلة + فندق + توجيه" : "Flight + hotel + guide"}
-          </div>
-        </Link>
-
-        {/* DIY */}
-        <Link
-          to="/hotels"
-          className="block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#F1F4F1] border border-[#DDE4DC] p-4 hover:border-[#2A5A4A] hover:shadow-[0_10px_24px_-14px_rgba(42,90,74,0.4)] transition active:scale-[0.98]"
-          data-testid="home-travel-diy"
-        >
-          <div className="w-10 h-10 rounded-full bg-white grid place-items-center mb-2 border border-[#DDE4DC]">
-            <Plane className="w-[18px] h-[18px] text-[#2A5A4A]" />
-          </div>
-          <div className="text-[10px] uppercase tracking-[0.18em] text-[#2A5A4A]">
-            {isAr ? "بنفسك" : "DIY"}
-          </div>
-          <div className="mt-0.5 text-[14px] font-semibold text-[#1C1D1B] leading-tight">
-            {isAr ? "احجز بنفسك" : "Hotels & flights"}
-          </div>
-          <div className="mt-1 text-[11px] text-[#3F584F] leading-snug">
-            {isAr ? "فنادق · رحلات · شريحة eSIM" : "Hotels · flights · eSIM"}
-          </div>
-        </Link>
-      </div>
-    </>
-  );
-}
-
-function PriorityCard({ to, icon: Icon, label, sublabel, accent, testid }) {
+// ─── Quick Access tile — used in the 2×3 grid that replaced both the
+// horizontal Discover scroll and the priority-card row.
+function QuickTile({ to, icon: Icon, accent, en, ar, sub_en, sub_ar, testid }) {
   return (
     <Link
       to={to}
-      className="block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.45)] transition active:scale-[0.97]"
+      className="block tap-pulse rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.98]"
       data-testid={testid}
     >
-      <div className="flex flex-col items-center text-center gap-1.5">
-        <div
-          className="w-11 h-11 rounded-full grid place-items-center"
-          style={{ background: `${accent}1A`, boxShadow: `inset 0 0 0 1px ${accent}33` }}
-        >
-          <Icon className="w-[18px] h-[18px]" style={{ color: accent }} />
-        </div>
-        <div className="text-[12px] font-semibold text-[#1C1D1B] leading-tight">{label}</div>
-        {sublabel && (
-          <div className="text-[10px] text-[#8E8F8A] leading-snug px-1">{sublabel}</div>
-        )}
-      </div>
-    </Link>
-  );
-}
-
-// Horizontal feature card — used in the "What's inside" strip under the hero.
-function FeatureCard({ to, icon: Icon, en, ar, sub_en, sub_ar, accent, testid }) {
-  // We don't have isAr in scope here so we use lang classes that the parent sets.
-  return (
-    <Link
-      to={to}
-      className="snap-start flex-shrink-0 w-[150px] rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.98] tap-pulse"
-      data-testid={testid}
-    >
-      <div className="w-9 h-9 rounded-full grid place-items-center mb-2"
-           style={{ background: `${accent}18`, boxShadow: `inset 0 0 0 1px ${accent}33` }}>
+      <div
+        className="w-9 h-9 rounded-full grid place-items-center mb-2"
+        style={{ background: `${accent}18`, boxShadow: `inset 0 0 0 1px ${accent}33` }}
+      >
         <Icon className="w-[16px] h-[16px]" style={{ color: accent }} />
       </div>
-      <div className="text-[12px] font-semibold text-[#1C1D1B] leading-tight">
+      <div className="text-[13px] font-semibold text-[#1C1D1B] leading-tight">
         <span className="lang-en">{en}</span>
         <span className="lang-ar font-arabic hidden">{ar}</span>
       </div>
       <div className="mt-0.5 text-[10px] text-[#8E8F8A] leading-snug">
-        <span className="lang-en">{sub_en}</span>
-        <span className="lang-ar font-arabic hidden">{sub_ar}</span>
-      </div>
-    </Link>
-  );
-}
-
-function Tile({ to, icon: Icon, en, ar, sub_en, sub_ar, testid, badge }) {
-  return (
-    <Link
-      to={to}
-      className="block relative tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#FBF8F1] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.98]"
-      data-testid={testid}
-    >
-      {badge && (
-        <span className="absolute top-2 right-2 text-[9px] uppercase tracking-wider text-white bg-[#B3884D] rounded-full px-1.5 py-0.5 shadow-[0_2px_6px_-1px_rgba(179,136,77,0.6)]">
-          {badge}
-        </span>
-      )}
-      <div className="w-9 h-9 rounded-full bg-[#F8F0DD] grid place-items-center">
-        <Icon className="w-[17px] h-[17px] text-[#7B5C24]" />
-      </div>
-      <div className="mt-2.5 text-[13px] font-semibold text-[#1C1D1B] leading-tight">
-        <span className="lang-en">{en}</span>
-        <span className="lang-ar font-arabic hidden">{ar}</span>
-      </div>
-      <div className="mt-0.5 text-[11px] text-[#8E8F8A]">
         <span className="lang-en">{sub_en}</span>
         <span className="lang-ar font-arabic hidden">{sub_ar}</span>
       </div>
