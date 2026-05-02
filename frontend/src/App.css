@@ -1,3 +1,12 @@
 .App {
     min-height: 100vh;
 }
+
+/* Hide scrollbar on horizontal feature strips while keeping scroll behavior */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}

@@ -33,7 +33,7 @@ export default function Packages() {
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="packages-page">
-      <Link to="/plan" className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-[#5C5D58] hover:text-[#1C1D1B]">
+      <Link to="/" className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-[#5C5D58] hover:text-[#1C1D1B]">
         <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
         <span className={isAr ? "font-arabic" : ""}>{isAr ? "رجوع" : "Back"}</span>
       </Link>

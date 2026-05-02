@@ -119,6 +119,28 @@ export default function Home() {
         </div>
       </motion.div>
 
+      {/* "What's inside" — horizontal feature strip directly under the hero,
+          gives new users an instant preview of what the app offers without
+          pushing important sections off-screen. */}
+      <div className="mt-3" data-testid="home-features-strip">
+        <div className="flex items-center justify-between mb-2 px-1">
+          <h2 className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
+            {isAr ? "ما الّذي بداخل التطبيق" : "Discover what's inside"}
+          </h2>
+          <span className="text-[10px] text-[#B5B5B0]">
+            {isAr ? "اسحب →" : "swipe →"}
+          </span>
+        </div>
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x snap-mandatory scrollbar-hide">
+          <FeatureCard to="/tour"   icon={Footprints}    accent="#B3884D" en="Step-by-step" ar="خطوة بخطوة"   sub_en="From niyyah to taḥallul"     sub_ar="من النيّة إلى التحلّل"        testid="feat-tour" />
+          <FeatureCard to="/group"  icon={Users}         accent="#7B5C24" en="Stay together" ar="ابقَ معًا"     sub_en="Never lose your family"       sub_ar="لا تَضِع عن عائلتك"          testid="feat-group" />
+          <FeatureCard to="/chat"   icon={MessageSquare} accent="#8B4540" en="AI Companion"  ar="مساعد ذكي"   sub_en="Ask any fiqh question"        sub_ar="اسأل أيّ سؤال فقهي"        testid="feat-chat" />
+          <FeatureCard to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah guide" ar="دليل الزّيارة" sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          testid="feat-places" />
+          <FeatureCard to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla compass" ar="بوصلة القبلة" sub_en="Direction to the Ka'bah"      sub_ar="اتّجاه الكعبة"             testid="feat-qibla" />
+          <FeatureCard to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"     sub_en="Test what you know"           sub_ar="اختبر معرفتك"               testid="feat-quiz" />
+        </div>
+      </div>
+
       {/* Continue / Start tour — biggest CTA (charcoal anchor under warm hero) */}
       <Link
         to="/tour"
@@ -190,11 +212,11 @@ export default function Home() {
         />
       </div>
 
-      {/* Trip countdown — shows only if a trip date is set and in the future */}
+      {/* Trip countdown — informational status card. NOT a link — purely
+          showing the user where they are in their journey. */}
       {daysToTrip !== null && daysToTrip >= 0 && (
-        <Link
-          to="/places"
-          className="mt-3 block rounded-2xl bg-gradient-to-br from-[#1F4F3A] to-[#2A5A4A] text-white p-4 active:scale-[0.99] transition shadow-[0_10px_24px_-12px_rgba(31,79,58,0.55)] tap-pulse"
+        <div
+          className="mt-3 rounded-2xl bg-gradient-to-br from-[#1F4F3A] to-[#2A5A4A] text-white p-4 shadow-[0_10px_24px_-12px_rgba(31,79,58,0.55)]"
           data-testid="home-trip-countdown"
         >
           <div className="flex items-center gap-3">
@@ -219,7 +241,7 @@ export default function Home() {
               )}
             </div>
           </div>
-        </Link>
+        </div>
       )}
 
       {/* "I haven't booked yet" — only shows if onboarding done but no date set */}
@@ -423,10 +445,13 @@ function DailyReminderCard({ reminder, isAr }) {
 function ToolsSection({ isAr }) {
   return (
     <>
-      <div className="mt-7 flex items-center justify-between">
-        <h2 className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">
+      <div className="mt-7 mb-2.5 flex items-end justify-between">
+        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
           {isAr ? "الأدوات" : "Tools"}
         </h2>
+        <span className="text-[10px] uppercase tracking-[0.18em] text-[#B5B5B0]">
+          {isAr ? "ما تحتاجه في الحرم" : "What you need in the Ḥaram"}
+        </span>
       </div>
       <div className="mt-2 grid grid-cols-2 gap-2">
         <Tile to="/qibla"   icon={Compass}    en="Qibla compass"  ar="بوصلة القبلة"   sub_en="Direction to Ka'bah" sub_ar="اتجاه الكعبة" testid="home-qibla" />
@@ -513,6 +538,31 @@ function PriorityCard({ to, icon: Icon, label, sublabel, accent, testid }) {
         {sublabel && (
           <div className="text-[10px] text-[#8E8F8A] leading-snug px-1">{sublabel}</div>
         )}
+      </div>
+    </Link>
+  );
+}
+
+// Horizontal feature card — used in the "What's inside" strip under the hero.
+function FeatureCard({ to, icon: Icon, en, ar, sub_en, sub_ar, accent, testid }) {
+  // We don't have isAr in scope here so we use lang classes that the parent sets.
+  return (
+    <Link
+      to={to}
+      className="snap-start flex-shrink-0 w-[150px] rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.98] tap-pulse"
+      data-testid={testid}
+    >
+      <div className="w-9 h-9 rounded-full grid place-items-center mb-2"
+           style={{ background: `${accent}18`, boxShadow: `inset 0 0 0 1px ${accent}33` }}>
+        <Icon className="w-[16px] h-[16px]" style={{ color: accent }} />
+      </div>
+      <div className="text-[12px] font-semibold text-[#1C1D1B] leading-tight">
+        <span className="lang-en">{en}</span>
+        <span className="lang-ar font-arabic hidden">{ar}</span>
+      </div>
+      <div className="mt-0.5 text-[10px] text-[#8E8F8A] leading-snug">
+        <span className="lang-en">{sub_en}</span>
+        <span className="lang-ar font-arabic hidden">{sub_ar}</span>
       </div>
     </Link>
   );
