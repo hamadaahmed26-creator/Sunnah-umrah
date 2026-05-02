@@ -10,7 +10,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, X, BookOpen } from "lucide-react";
+import { BookOpen, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const DUAS = [
@@ -101,16 +101,19 @@ export default function QuickDuas({ isAr }) {
 
   return (
     <>
-      {/* Floating button — sits above bottom nav (which is at bottom-16 on
-          mobile / bottom-6 on desktop). Hide on home / about because the page
-          already feels balanced. */}
+      {/* Floating button — pill with icon + "Du'ās" label so it's clear what
+          this is. Sits above the bottom nav (which is bottom-16 on mobile / 6
+          on desktop). */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-32 sm:bottom-24 right-5 z-[55] w-12 h-12 rounded-full bg-[#1C1D1B] text-white grid place-items-center shadow-[0_10px_24px_-6px_rgba(28,29,27,0.5)] hover:bg-[#2A2D29] active:scale-95 transition tap-pulse"
+        className="fixed bottom-32 sm:bottom-24 right-4 z-[55] inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B] text-white pl-3 pr-3.5 py-2.5 shadow-[0_10px_24px_-6px_rgba(28,29,27,0.5)] hover:bg-[#2A2D29] active:scale-95 transition tap-pulse"
         aria-label={isAr ? "أدعية سريعة" : "Quick du'ās"}
         data-testid="quick-duas-fab"
       >
-        <Heart className="w-5 h-5 text-[#B3884D]" />
+        <BookOpen className="w-4 h-4 text-[#B3884D]" />
+        <span className={`text-[12px] font-medium tracking-wide ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "أدعية" : "Du'ās"}
+        </span>
       </button>
 
       <AnimatePresence>
@@ -139,7 +142,7 @@ export default function QuickDuas({ isAr }) {
               <div className="sticky top-0 bg-[#F8F6F0]/95 backdrop-blur-sm flex items-center justify-between px-5 pt-4 pb-3 border-b border-[#E8E5DD]">
                 <div className="w-12 h-1 rounded-full bg-[#E8E5DD] mx-auto absolute left-1/2 -translate-x-1/2 top-2" />
                 <div className="flex items-center gap-2">
-                  <Heart className="w-4 h-4 text-[#B3884D]" />
+                  <BookOpen className="w-4 h-4 text-[#B3884D]" />
                   <h3 className={`text-[15px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
                     {isAr ? "أدعية يوميّة" : "Daily du'ās"}
                   </h3>

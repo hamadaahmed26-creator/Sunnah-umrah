@@ -141,13 +141,36 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Continue / Start tour — biggest CTA (charcoal anchor under warm hero) */}
+      {/* Continue / Start tour — biggest CTA. Subtle Kaaba photo backdrop
+          gives it emotional weight without disrupting the calm aesthetic. */}
       <Link
         to="/tour"
-        className="mt-3 block tap-pulse rounded-3xl bg-[#1C1D1B] text-white p-5 active:scale-[0.99] transition shadow-[0_12px_30px_-12px_rgba(28,29,27,0.45)]"
+        className="mt-3 block tap-pulse relative overflow-hidden rounded-3xl bg-[#1C1D1B] text-white p-5 active:scale-[0.99] transition shadow-[0_12px_30px_-12px_rgba(28,29,27,0.45)]"
         data-testid="home-tour"
       >
-        <div className="flex items-center justify-between gap-4">
+        {/* Backdrop image — desaturated Kaaba shot, low opacity, scaled to
+            avoid edge cropping artifacts. Hidden from screen readers. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/kaaba/02-walking.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center 40%",
+            opacity: 0.28,
+            filter: "saturate(0.6) contrast(1.05)",
+          }}
+        />
+        {/* Charcoal gradient overlay for legibility */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(110deg, rgba(28,29,27,0.92) 0%, rgba(28,29,27,0.78) 45%, rgba(28,29,27,0.50) 100%)",
+          }}
+        />
+        <div className="relative flex items-center justify-between gap-4">
           <div>
             <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
               {inProgress ? (isAr ? "تابع" : "Continue") : (isAr ? "ابدأ" : "Start")}
@@ -403,26 +426,20 @@ function DailyReminderCard({ reminder, isAr }) {
           <Quote className="w-3.5 h-3.5 text-[#B3884D]" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-start justify-between gap-2">
             <div className={`text-[10px] uppercase tracking-[0.22em] text-[#B3884D] ${isAr ? "font-arabic" : ""}`}>
               {isAr ? "تذكير اليوم" : "Today's reminder"}
             </div>
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-1 rounded-full bg-white border border-[#E8E5DD] hover:border-[#B3884D] px-2 py-0.5 text-[10px] uppercase tracking-[0.14em] text-[#5C5D58] hover:text-[#1C1D1B] transition tap-pulse"
+              className="w-7 h-7 rounded-full grid place-items-center text-[#8E8F8A] hover:text-[#1C1D1B] hover:bg-[#FBF1DD] transition active:scale-90"
               aria-label={isAr ? "مشاركة التّذكير" : "Share reminder"}
               data-testid="home-reminder-share"
             >
               {shared ? (
-                <>
-                  <Check className="w-2.5 h-2.5 text-[#2A5A4A]" />
-                  <span className="text-[#2A5A4A]">{isAr ? "تمّ النّسخ" : "Copied"}</span>
-                </>
+                <Check className="w-3.5 h-3.5 text-[#2A5A4A]" />
               ) : (
-                <>
-                  <Share2 className="w-2.5 h-2.5" />
-                  <span>{isAr ? "شارك" : "Share"}</span>
-                </>
+                <Share2 className="w-3.5 h-3.5" />
               )}
             </button>
           </div>
