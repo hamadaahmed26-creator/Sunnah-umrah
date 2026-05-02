@@ -240,24 +240,54 @@ export default function Home() {
           </div>
         </div>
       ) : profile.done && !profile.tripDate ? (
-        <Link
-          to="/plan"
-          className="mt-3 block rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
-          data-testid="home-add-trip-date"
+        <div
+          className="mt-3 rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3.5"
+          data-testid="home-trip-empty"
         >
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 mb-2.5">
             <Calendar className="w-4 h-4 text-[#B3884D]" />
             <div className="flex-1">
-              <div className="text-[13px] font-semibold text-[#1C1D1B]">
-                {isAr ? "خطّط لرحلتك" : "Plan your trip"}
+              <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "متى ستعتمر؟" : "When will you go?"}
               </div>
-              <div className="text-[11px] text-[#8E8F8A]">
-                {isAr ? "تصفّح الباقات والفنادق والرّحلات" : "Browse packages, hotels & flights"}
+              <div className={`text-[10.5px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "أضف تاريخك لرؤية العدّ التّنازلي" : "Add your date to see a live countdown"}
               </div>
             </div>
-            <ArrowRight className={`w-3.5 h-3.5 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
           </div>
-        </Link>
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              to="/plan"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#1C1D1B] hover:bg-black text-white px-3 py-2 text-[12px] font-medium tap-pulse"
+              data-testid="home-trip-browse"
+            >
+              <Plane className="w-3.5 h-3.5" />
+              {isAr ? "تصفّح الرّحلات" : "Browse trips"}
+            </Link>
+            <button
+              onClick={() => {
+                const next = window.prompt(
+                  isAr
+                    ? "أدخل تاريخ سفرك (YYYY-MM-DD)"
+                    : "Enter your trip date (YYYY-MM-DD)",
+                  ""
+                );
+                if (next === null) return;
+                const trimmed = next.trim();
+                if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed) && !isNaN(Date.parse(trimmed))) {
+                  const updated = { ...profile, tripDate: trimmed };
+                  setProfile(updated);
+                  saveProfile(updated);
+                }
+              }}
+              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-white border border-[#E8E5DD] hover:border-[#B3884D] text-[#1C1D1B] px-3 py-2 text-[12px] font-medium tap-pulse"
+              data-testid="home-trip-add-date"
+            >
+              <CalendarDays className="w-3.5 h-3.5 text-[#B3884D]" />
+              {isAr ? "تاريخي محدّد" : "I've booked"}
+            </button>
+          </div>
+        </div>
       ) : null}
 
       {/* Wheelchair / accessibility CTA — only for users who selected this */}
