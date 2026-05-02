@@ -5,11 +5,14 @@ import { motion } from "framer-motion";
 import {
   ArrowRight, Compass, Users, MapPin, Sparkles,
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
-  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check, Settings as SettingsIcon,
+  Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check,
+  Settings as SettingsIcon, Calendar, Accessibility, CalendarDays,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
 import { todaysReminder } from "../lib/dailyReminders";
+import { loadProfile, daysUntilTrip, tripPrompt, saveProfile } from "../lib/userProfile";
+import OnboardingSheet from "../components/OnboardingSheet";
 
 // Home dashboard — every feature visible at a glance.
 // Hero: continue / start tour. Below: 3 priority cards (Plan / Stay together / Ask).
@@ -29,6 +32,36 @@ export default function Home() {
 
   const ramadan = React.useMemo(() => ramadanStatus(), []);
   const reminder = React.useMemo(() => todaysReminder(), []);
+
+  // User profile (from onboarding)
+  const [profile, setProfile] = React.useState(() => loadProfile());
+  const [onboardOpen, setOnboardOpen] = React.useState(false);
+
+  // Auto-open onboarding on first launch
+  React.useEffect(() => {
+    if (!profile.done) {
+      const t = setTimeout(() => setOnboardOpen(true), 600);
+      return () => clearTimeout(t);
+    }
+  }, [profile.done]);
+
+  const handleOnboardComplete = (answers) => {
+    setProfile({ ...profile, ...answers, done: true });
+    setOnboardOpen(false);
+  };
+
+  // Trip countdown
+  const daysToTrip = daysUntilTrip(profile.tripDate);
+  const promptText = tripPrompt(daysToTrip, isAr);
+
+  // Personalized greeting
+  const greeting = profile.experience === "first"
+    ? (isAr ? "أوّل عمرة لك" : "Your first ʿUmrah")
+    : profile.experience === "returning"
+      ? (isAr ? "أهلًا بعودتك" : "Welcome back")
+      : profile.experience === "helping"
+        ? (isAr ? "خدمة محتسبة" : "May Allah accept your service")
+        : (isAr ? "السلام عليكم" : "Salām ʿalaykum");
 
   // First-time vs returning user — controls section ordering. A user who has
   // already started their Tawaf/Saʿi sees Tools first; a fresh visitor sees
@@ -73,7 +106,7 @@ export default function Home() {
 
         <div className="relative px-6 pt-8 pb-7">
           <p className="text-xs uppercase tracking-[0.22em] text-[#7B5C24]">
-            {isAr ? "السلام عليكم" : "Salām ʿalaykum"}
+            {greeting}
           </p>
           <h1 className="mt-2 text-[34px] font-medium leading-tight tracking-tight text-[#1C1D1B] max-w-[12ch]">
             {isAr ? "مرحبًا بك في رحلتك" : "Welcome to your journey"}
@@ -157,6 +190,84 @@ export default function Home() {
         />
       </div>
 
+      {/* Trip countdown — shows only if a trip date is set and in the future */}
+      {daysToTrip !== null && daysToTrip >= 0 && (
+        <Link
+          to="/places"
+          className="mt-3 block rounded-2xl bg-gradient-to-br from-[#1F4F3A] to-[#2A5A4A] text-white p-4 active:scale-[0.99] transition shadow-[0_10px_24px_-12px_rgba(31,79,58,0.55)] tap-pulse"
+          data-testid="home-trip-countdown"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-white/15 grid place-items-center flex-shrink-0">
+              <CalendarDays className="w-5 h-5 text-[#B3884D]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
+                {isAr ? "العدّ التّنازلي" : "Countdown"}
+              </div>
+              <div className="text-[18px] font-medium leading-tight tabular-nums">
+                {daysToTrip === 0
+                  ? (isAr ? "اليوم!" : "Today!")
+                  : (isAr
+                      ? `بقي ${daysToTrip} ${daysToTrip === 1 ? "يوم" : "يومًا"}`
+                      : `${daysToTrip} ${daysToTrip === 1 ? "day" : "days"} to go`)}
+              </div>
+              {promptText && (
+                <div className="mt-1 text-[11px] text-white/75 leading-snug">
+                  {promptText}
+                </div>
+              )}
+            </div>
+          </div>
+        </Link>
+      )}
+
+      {/* "I haven't booked yet" — only shows if onboarding done but no date set */}
+      {profile.done && !profile.tripDate && (
+        <button
+          onClick={() => setOnboardOpen(true)}
+          className="mt-3 w-full rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3 text-left hover:border-[#B3884D] transition tap-pulse"
+          data-testid="home-add-trip-date"
+        >
+          <div className="flex items-center gap-2.5">
+            <Calendar className="w-4 h-4 text-[#B3884D]" />
+            <div className="flex-1">
+              <div className="text-[12px] font-semibold text-[#1C1D1B]">
+                {isAr ? "أضف تاريخ سفرك" : "Add your travel date"}
+              </div>
+              <div className="text-[10px] text-[#8E8F8A]">
+                {isAr ? "ستظهر العدّ التّنازلي والتّذكيرات الذّكيّة" : "Get a countdown and timely reminders"}
+              </div>
+            </div>
+            <ArrowRight className={`w-3.5 h-3.5 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </button>
+      )}
+
+      {/* Wheelchair / accessibility CTA — only for users who selected this */}
+      {profile.travelers === "wheelchair" && (
+        <Link
+          to="/accessibility"
+          className="mt-3 block rounded-2xl bg-[#F1F4F1] border border-[#BCD9C5] p-3.5 hover:border-[#2A5A4A] transition tap-pulse"
+          data-testid="home-accessibility-cta"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#BCD9C5]">
+              <Accessibility className="w-4 h-4 text-[#2A5A4A]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[13px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "العمرة بكرسيّ متحرّك" : "Wheelchair guidance"}
+              </div>
+              <div className={`text-[11px] text-[#3F584F] ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "كيفيّة الطّواف والسّعي بسهولة" : "How to perform Tawaf & Saʿi with ease"}
+              </div>
+            </div>
+            <ArrowRight className={`w-3.5 h-3.5 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
+      )}
+
       {/* Today's Sunnah reminder — rotates daily. Designed to make this app
           a quiet daily habit, not just a one-off Umrah tool. */}
       <DailyReminderCard reminder={reminder} isAr={isAr} />
@@ -215,6 +326,16 @@ export default function Home() {
           </div>
         </Link>
       </div>
+      <OnboardingSheet
+        open={onboardOpen}
+        onComplete={handleOnboardComplete}
+        onSkip={() => {
+          saveProfile({ ...profile, done: true });
+          setProfile({ ...profile, done: true });
+          setOnboardOpen(false);
+        }}
+        isAr={isAr}
+      />
     </div>
   );
 }
@@ -313,6 +434,7 @@ function ToolsSection({ isAr }) {
         <Tile to="/places"  icon={Sparkles}   en="Ziyārah"         ar="الزّيارة"        sub_en="26 places to visit"  sub_ar="٢٦ مكانًا" testid="home-places" />
         <Tile to="/quiz"    icon={Trophy}     en="Knowledge quiz" ar="اختبر نفسك"     sub_en="Test what you know"  sub_ar="اختبار العمرة" testid="home-quiz" />
         <Tile to="/ramadan" icon={Moon}       en="Ramadan"         ar="رمضان"           sub_en="Reminders & countdown" sub_ar="تذكيرات وعدّ تنازلي" testid="home-ramadan" />
+        <Tile to="/best-months" icon={CalendarDays} en="When to go"  ar="متى تذهب"       sub_en="Best months for Umrah" sub_ar="أفضل شهور العمرة" testid="home-best-months" />
         <Tile to="/shop"    icon={ShoppingBag} en="Shop"           ar="المتجر"          sub_en="Ihram, books, eSIM"  sub_ar="إحرام، كتب، شريحة" testid="home-shop" badge={isAr ? "جديد" : "New"} />
       </div>
     </>

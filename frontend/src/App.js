@@ -19,6 +19,8 @@ import Ramadan from "./pages/Ramadan";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import Settings from "./pages/Settings";
+import AccessibilityPage from "./pages/Accessibility";
+import BestMonths from "./pages/BestMonths";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
               <Route path="/ramadan" element={<Ramadan />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/accessibility" element={<AccessibilityPage />} />
+              <Route path="/best-months" element={<BestMonths />} />
               {/* Sadaqah temporarily removed — donations create Apple App
                   Store risk under Guideline 3.2.1(vii) / 4.5.4. Old URLs
                   redirect home so existing bookmarks don't 404. */}
