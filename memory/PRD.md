@@ -22,7 +22,41 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
-## Implemented (May 2, 2026 — sixth session, part 8) — In-app maps + turn-by-turn + smart prayer times
+## Implemented (May 2, 2026 — sixth session, part 9) — UX polish: merged Lost buttons, segmented prayer toggle, hardened geo, 7th Home tile
+- **Lost page (`/lost`) buttons MERGED** — removed the duplicate green
+  "Take me to the Ḥaram" external-maps button (`satnav-haram-btn`).
+  Single in-app walking flow now (red `locate-btn` → in-app Leaflet map
+  via `WalkRouteMap`). External Apple/Google Maps demoted to a small
+  text link below the map ("Open in phone maps") — no more dual-button
+  confusion.
+- **Settings prayer-times toggle REDESIGNED** as a segmented control:
+  `[Use my location] [Always Makkah]` (radio group, white pill = active).
+  Old ambiguous green-when-locked-to-Makkah toggle removed. Helper copy
+  below the control flips depending on selection so the user always
+  knows exactly what they'll see on the home screen.
+- **Geolocation error handling HARDENED** — new
+  `frontend/src/lib/locationErrors.js#describeGeoError(err, isAr)`:
+  returns `{title, message, steps}` with platform-specific instructions
+  for iOS Safari, macOS Safari, Android Chrome, AND a special "blocked
+  inside this preview" message when running in an iframe (Emergent
+  preview). Wired into Lost.jsx + WalkHaram.jsx with a uniform error
+  card containing "Try again" + "Use phone maps" buttons. Standard
+  HTML5 `navigator.geolocation` calls — works flawlessly in real
+  Safari / Capacitor.
+- **NEW Home tile — Walk to the Ḥaram** (`data-testid=home-walk-haram`).
+  7th tile, full-width gold gradient under the existing 2×3 grid.
+  Footprints icon + Navigation arrow. Targets `/walk-haram`.
+  Original 6 tiles (Stay together / Ask / Qibla / I'm lost / Ziyārah /
+  Quiz) UNCHANGED per user instruction "leave I'm lost where it is".
+- **NEW page `/walk-haram`** (`pages/WalkHaram.jsx`) — auto-locates on
+  mount, calls `/api/gates/nearest`, shows the in-app `WalkRouteMap`
+  to the closest Bab. Smaller-scope, friendlier framing than `/lost`
+  (which keeps the compass + nearest-gate card + multi-gate list).
+- Verified: testing_agent_v3_fork iteration_5 — 33/33 assertions pass,
+  100% success across Home / Lost / Settings / WalkHaram + backend
+  /api/gates/nearest sanity check. SW cache → `umrah-v1.48.0`.
+
+
 - **In-app walking-route map** (`WalkRouteMap.jsx`) using Leaflet +
   OpenStreetMap tiles + free OSRM public router. No API keys. Shows:
   user blue dot, destination marker, green polyline route, distance,
