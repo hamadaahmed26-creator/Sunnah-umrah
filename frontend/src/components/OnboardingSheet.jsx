@@ -6,16 +6,29 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X, ArrowRight, ArrowLeft, User, Users, Heart, Accessibility,
-  BookOpen, Sparkles, Calendar, Check, Briefcase, Plane,
+  BookOpen, Sparkles, Calendar, Check, Briefcase, Plane, MapPin, Footprints,
 } from "lucide-react";
 import { saveProfile } from "../lib/userProfile";
 
 const STEPS = 4;
 
+// Maps each "purpose" choice to the experience field + which personas need
+// the full 4-step flow (going / helping) vs. a quick "go straight in" path
+// (in-makkah / learning / completed).
+const PURPOSE_TO_EXPERIENCE = {
+  going: "first",
+  helping: "helping",
+  "in-makkah": "first",
+  learning: "first",
+  completed: "returning",
+};
+const NEEDS_FULL_FLOW = (purpose) => purpose === "going" || purpose === "helping";
+
 export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initialAnswers, editMode }) {
   const navigate = useNavigate();
   const [step, setStep] = React.useState(0);
   const [answers, setAnswers] = React.useState({
+    purpose: null,
     travelers: null,
     experience: null,
     knowledge: null,
@@ -27,6 +40,7 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initia
   React.useEffect(() => {
     if (open && initialAnswers) {
       setAnswers({
+        purpose: initialAnswers.purpose ?? null,
         travelers: initialAnswers.travelers ?? null,
         experience: initialAnswers.experience ?? null,
         knowledge: initialAnswers.knowledge ?? null,
@@ -35,10 +49,22 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initia
       setStep(0);
     } else if (open && !initialAnswers) {
       setStep(0);
+      setAnswers({
+        purpose: null,
+        travelers: null,
+        experience: null,
+        knowledge: null,
+        tripDate: null,
+      });
     }
   }, [open, initialAnswers]);
 
-  const next = () => setStep((s) => Math.min(STEPS - 1, s + 1));
+  // Total steps depends on the user's purpose. Going / Helping = 4 steps
+  // (purpose + travelers + knowledge + date). All other personas are done
+  // after step 0 — they don't need travel logistics.
+  const totalSteps = NEEDS_FULL_FLOW(answers.purpose) ? STEPS : 1;
+
+  const next = () => setStep((s) => Math.min(totalSteps - 1, s + 1));
   const back = () => setStep((s) => Math.max(0, s - 1));
 
   const finish = () => {
@@ -51,10 +77,26 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initia
     onSkip?.();
   };
 
+  // When the user picks a purpose, we set BOTH `purpose` and the legacy
+  // `experience` field so existing code that checks experience keeps working.
+  // For "in-makkah" / "learning" / "completed" we auto-finish — no extra
+  // questions; they want to use the app immediately.
+  const pickPurpose = (purpose) => {
+    const exp = PURPOSE_TO_EXPERIENCE[purpose];
+    const updated = { ...answers, purpose, experience: exp };
+    setAnswers(updated);
+    if (!NEEDS_FULL_FLOW(purpose)) {
+      // Save & close on the same tick — feels instant.
+      saveProfile({ ...updated, done: true });
+      // Tiny defer so the choice tick animates before the sheet closes.
+      setTimeout(() => onComplete?.(updated), 220);
+    }
+  };
+
   const set = (k, v) => setAnswers((a) => ({ ...a, [k]: v }));
 
   const canAdvance =
-    (step === 0 && answers.experience) ||
+    (step === 0 && answers.purpose && NEEDS_FULL_FLOW(answers.purpose)) ||
     (step === 1 && answers.travelers) ||
     (step === 2 && answers.knowledge) ||
     step === 3; // date is optional
@@ -83,7 +125,9 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initia
               <div className="text-[10px] uppercase tracking-[0.22em] text-[#B3884D]">
                 {editMode
                   ? (isAr ? "تعديل تفضيلاتي" : "Edit my answers")
-                  : (isAr ? `${step + 1} من ${STEPS}` : `Step ${step + 1} of ${STEPS}`)}
+                  : NEEDS_FULL_FLOW(answers.purpose)
+                    ? (isAr ? `${step + 1} من ${STEPS}` : `Step ${step + 1} of ${STEPS}`)
+                    : (isAr ? "ابدأ" : "Get started")}
               </div>
               <button
                 onClick={skip}
@@ -100,37 +144,50 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initia
                 <motion.div
                   className="h-full bg-[#B3884D] rounded-full"
                   initial={false}
-                  animate={{ width: `${((step + 1) / STEPS) * 100}%` }}
+                  animate={{ width: `${((step + 1) / totalSteps) * 100}%` }}
                 />
               </div>
             </div>
 
             <div className="px-6 pt-5 pb-8 min-h-[420px]">
-              {/* Step 0 — experience */}
+              {/* Step 0 — purpose. Captures WHY the user is here so the
+                  rest of the app (and the home layout) adapt accordingly.
+                  Going / Helping → continue to travelers / knowledge / date.
+                  In Makkah / Learning / Already done → auto-finish, straight in. */}
               {step === 0 && (
-                <div data-testid="onboard-step-experience">
+                <div data-testid="onboard-step-purpose">
                   <h2 className={`text-[24px] font-medium leading-tight text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
-                    {isAr ? "هل أدّيتَ العمرة من قبل؟" : "Have you performed Umrah before?"}
+                    {isAr ? "ما الذي جاء بك إلى هنا؟" : "What brings you here?"}
                   </h2>
                   <p className={`mt-2 text-[13px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
-                    {isAr ? "لنُخصّص لك التجربة المناسبة." : "We'll tailor the experience to match."}
+                    {isAr ? "سنُكيّف الصّفحة الرّئيسيّة لتُناسبك." : "We'll tailor the home page to suit you."}
                   </p>
                   <div className="mt-5 space-y-2">
-                    <Choice icon={Sparkles} active={answers.experience === "first"}
-                      label={isAr ? "هذه أوّل مرّة لي" : "This is my first time"}
-                      sub={isAr ? "وضع المبتدئ — شرح أكثر" : "Beginner mode — more guidance"}
-                      onClick={() => set("experience", "first")}
-                      testid="onboard-exp-first" />
-                    <Choice icon={BookOpen} active={answers.experience === "returning"}
-                      label={isAr ? "أدّيتها سابقًا" : "I've done it before"}
-                      sub={isAr ? "أحتاج تذكيرًا فقط" : "Just need a refresher"}
-                      onClick={() => set("experience", "returning")}
-                      testid="onboard-exp-returning" />
-                    <Choice icon={Heart} active={answers.experience === "helping"}
-                      label={isAr ? "أساعد شخصًا آخر" : "I'm helping someone else"}
+                    <Choice icon={Footprints} active={answers.purpose === "going"}
+                      label={isAr ? "أنوي الذّهاب" : "I'm planning to go"}
+                      sub={isAr ? "قريبًا إن شاء الله" : "Soon, in shāʾ Allāh"}
+                      onClick={() => pickPurpose("going")}
+                      testid="onboard-purpose-going" />
+                    <Choice icon={Heart} active={answers.purpose === "helping"}
+                      label={isAr ? "أساعد شخصًا للذّهاب" : "I'm helping someone go"}
                       sub={isAr ? "زوج، والد، صديق" : "Spouse, parent, friend"}
-                      onClick={() => set("experience", "helping")}
-                      testid="onboard-exp-helping" />
+                      onClick={() => pickPurpose("helping")}
+                      testid="onboard-purpose-helping" />
+                    <Choice icon={MapPin} active={answers.purpose === "in-makkah"}
+                      label={isAr ? "أنا في مكّة/المدينة الآن" : "I'm in Makkah/Madinah right now"}
+                      sub={isAr ? "ابدأ مباشرة" : "Take me straight to the steps"}
+                      onClick={() => pickPurpose("in-makkah")}
+                      testid="onboard-purpose-makkah" />
+                    <Choice icon={BookOpen} active={answers.purpose === "learning"}
+                      label={isAr ? "أريد التّعلّم فقط" : "I just want to learn"}
+                      sub={isAr ? "لا توجد رحلة مخطّطة" : "No trip planned yet"}
+                      onClick={() => pickPurpose("learning")}
+                      testid="onboard-purpose-learning" />
+                    <Choice icon={Sparkles} active={answers.purpose === "completed"}
+                      label={isAr ? "أدّيت العمرة من قبل" : "I've already been"}
+                      sub={isAr ? "تذكيرات، أدعية، معرفة" : "Reminders, du'ās, knowledge"}
+                      onClick={() => pickPurpose("completed")}
+                      testid="onboard-purpose-completed" />
                   </div>
                 </div>
               )}
@@ -310,7 +367,7 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr, initia
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              {step < STEPS - 1 ? (
+              {step < totalSteps - 1 ? (
                 <button
                   onClick={next}
                   disabled={!canAdvance}

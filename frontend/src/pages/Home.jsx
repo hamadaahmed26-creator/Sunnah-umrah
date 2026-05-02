@@ -126,14 +126,56 @@ export default function Home() {
   const daysToTrip = daysUntilTrip(profile.tripDate);
   const promptText = tripPrompt(daysToTrip, isAr, profile.experience === "helping");
 
-  // Personalized greeting
-  const greeting = profile.experience === "first"
-    ? (isAr ? "أوّل عمرة لك" : "Your first ʿUmrah")
-    : profile.experience === "returning"
-      ? (isAr ? "أهلًا بعودتك" : "Welcome back")
-      : profile.experience === "helping"
-        ? (isAr ? "خدمة محتسبة" : "May Allah accept your service")
-        : (isAr ? "السلام عليكم" : "Salām ʿalaykum");
+  // ─── Persona flags ──────────────────────────────────────────────────
+  // Drive the home layout. Default to "going" when nothing is set so the
+  // first paint is sensible (matches what existing users had pre-Feb-2026).
+  const purpose = profile.purpose || "going";
+  const isPlanning = purpose === "going" || purpose === "helping";
+  const isInMakkah = purpose === "in-makkah";
+  const isLearning = purpose === "learning";
+  const isCompleted = purpose === "completed";
+
+  // Personalized hero copy per persona. Booking / countdown / shop are only
+  // shown to planners. In-Makkah users get straight to the steps. Learners
+  // and "completed" users see knowledge-first content.
+  const heroLabel = isInMakkah
+    ? (isAr ? "في الحرم" : "In the Ḥaram")
+    : isLearning
+      ? (isAr ? "النّور والمعرفة" : "Knowledge & light")
+      : isCompleted
+        ? (isAr ? "تقبّل الله منك" : "Taqabbal Allāhu minka")
+        : profile.experience === "first"
+          ? (isAr ? "أوّل عمرة لك" : "Your first ʿUmrah")
+          : profile.experience === "returning"
+            ? (isAr ? "أهلًا بعودتك" : "Welcome back")
+            : profile.experience === "helping"
+              ? (isAr ? "خدمة محتسبة" : "May Allah accept your service")
+              : (isAr ? "السلام عليكم" : "Salām ʿalaykum");
+  const greeting = heroLabel;
+
+  const heroTitle = isInMakkah
+    ? (isAr ? "أنت هناك — لنبدأ" : "You're there — let's begin")
+    : isLearning
+      ? (isAr ? "تعلّم العمرة" : "Learn the way of ʿUmrah")
+      : isCompleted
+        ? (isAr ? "ابقَ على الذّكر" : "Stay close to the dhikr")
+        : profile.experience === "helping"
+          ? (isAr ? "تخدم رحلتهم" : "Helping their journey")
+          : (isAr ? "مرحبًا بك في رحلتك" : "Welcome to your journey");
+
+  const heroSub = isInMakkah
+    ? (isAr ? "خطوة بخطوة، مع كلّ دعاء وكلّ شعيرة." : "Step-by-step, with every dua and every rite.")
+    : isLearning
+      ? (isAr ? "أدعية، خطوات، أحاديث صحيحة — مجّانًا، لك وحدك." : "Du'ās, steps, ṣaḥīḥ ḥadīth — free, on your time.")
+      : isCompleted
+        ? (isAr ? "تذكيرات يوميّة وأدعية لتحفظ الأثر." : "Daily reminders and du'ās to keep the light.")
+        : profile.experience === "helping"
+          ? (isAr
+              ? "كلّ ما يحتاجونه لأداء العمرة على السنّة، في مكان واحد."
+              : "Everything they'll need to perform Umrah according to the Sunnah — in one place.")
+          : (isAr
+              ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
+              : "Everything you need to perform Umrah according to the Sunnah — in one place.");
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="home-page">
@@ -176,18 +218,10 @@ export default function Home() {
             {greeting}
           </p>
           <h1 className="mt-2 text-[34px] font-medium leading-tight tracking-tight text-[#1C1D1B] max-w-[12ch]">
-            {profile.experience === "helping"
-              ? (isAr ? "تخدم رحلتهم" : "Helping their journey")
-              : (isAr ? "مرحبًا بك في رحلتك" : "Welcome to your journey")}
+            {heroTitle}
           </h1>
           <p className="mt-2 text-[14px] text-[#3F3722] max-w-[36ch]">
-            {profile.experience === "helping"
-              ? (isAr
-                  ? "كلّ ما يحتاجونه لأداء العمرة على السنّة، في مكان واحد."
-                  : "Everything they'll need to perform Umrah according to the Sunnah — in one place.")
-              : (isAr
-                  ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
-                  : "Everything you need to perform Umrah according to the Sunnah — in one place.")}
+            {heroSub}
           </p>
         </div>
       </motion.div>
@@ -260,8 +294,10 @@ export default function Home() {
         </Link>
       )}
 
-      {/* TRIP STATUS — countdown OR plan-your-trip CTA (mutually exclusive) */}
-      {daysToTrip !== null && daysToTrip >= 0 ? (
+      {/* TRIP STATUS — countdown OR plan-your-trip CTA (mutually exclusive).
+          Only shown to planners (going / helping). In-Makkah / Learning /
+          Completed personas skip this entirely. */}
+      {isPlanning && daysToTrip !== null && daysToTrip >= 0 ? (
         <div
           className="mt-3 rounded-2xl bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1] border border-[#EBD9B0] p-4"
           data-testid="home-trip-countdown"
@@ -298,7 +334,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      ) : profile.done && !profile.tripDate ? (
+      ) : isPlanning && profile.done && !profile.tripDate ? (
         <div
           className="mt-3 rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3.5"
           data-testid="home-trip-empty"
@@ -430,7 +466,12 @@ export default function Home() {
       <DailyReminderCard reminder={reminder} isAr={isAr} />
       <PrayerTimesCard isAr={isAr} />
 
-      {/* TRAVEL & MORE — packages/DIY + secondary links (when-to-go, shop). */}
+      {/* TRAVEL & MORE — packages/DIY + secondary links (when-to-go, shop).
+          Only shown to planners (going / helping). Other personas don't need
+          flight/hotel/package promos cluttering their home. The pre-trip
+          shop is independently exposed below for in-Makkah users (eSIM,
+          Zamzam carrier, etc.). */}
+      {isPlanning && (
       <div className="mt-7">
         <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
           {isAr ? "السّفر والمزيد" : "Travel & more"}
@@ -509,6 +550,30 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      )}
+
+      {/* In-Makkah shortcut — slim Shop link for eSIM / Zamzam carrier.
+          Only shown to users who said "I'm in Makkah/Madinah right now". */}
+      {isInMakkah && (
+        <Link
+          to="/shop"
+          className="mt-6 block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse flex items-center gap-3"
+          data-testid="home-shop-makkah"
+        >
+          <div className="w-9 h-9 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
+            <ShoppingBag className="w-4 h-4 text-[#7B5C24]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr ? "ما تحتاجه الآن" : "What you might need"}
+            </div>
+            <div className={`text-[11px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+              {isAr ? "شريحة eSIM، حافظة زمزم، أحرمة احتياطيّة" : "eSIM, Zamzam carriers, spare iḥrām"}
+            </div>
+          </div>
+          <ArrowRight className={`w-3.5 h-3.5 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
+        </Link>
+      )}
 
       {/* About / Sources footer — reassures the user (and Apple reviewers)
           that every ruling in the app is sourced. */}

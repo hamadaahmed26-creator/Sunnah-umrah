@@ -6,6 +6,17 @@ const KEY = "umrah_user_profile";
 
 export const DEFAULT_PROFILE = {
   done: false,             // onboarding completed
+  // PURPOSE — added Feb 2026. Drives the home page layout so the app meets
+  // each user where they are. Not everyone is a future pilgrim.
+  //   "going"     — planning a trip soon (default; gets countdown + booking + shop)
+  //   "helping"   — booking for someone else (same flow, "they" pronouns)
+  //   "in-makkah" — already in Makkah/Madinah right now (no countdown, no booking;
+  //                 step-by-step + Lost + Qibla + Group + Du'ās front-and-centre)
+  //   "learning"  — wants to learn, no trip planned (daily reminder + du'ās +
+  //                 places + quiz; booking & shop hidden)
+  //   "completed" — already performed Umrah (reflective; reminders + du'ās +
+  //                 places; soft "visit again?" prompt)
+  purpose: null,
   travelers: null,         // "solo" | "spouse" | "family" | "wheelchair"
   experience: null,        // "first" | "returning" | "helping"
   knowledge: null,         // "confident" | "refresher" | "beginner"
@@ -17,7 +28,16 @@ export function loadProfile() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...DEFAULT_PROFILE };
-    return { ...DEFAULT_PROFILE, ...JSON.parse(raw) };
+    const p = JSON.parse(raw);
+    // Backwards-compat: existing users (pre-Feb-2026) have no `purpose` field.
+    // Map their `experience` to a reasonable default so the app keeps working
+    // exactly as before for them — no surprise relayouts.
+    if (p.done && !p.purpose) {
+      if (p.experience === "helping") p.purpose = "helping";
+      else if (p.experience === "returning") p.purpose = "completed";
+      else p.purpose = "going";
+    }
+    return { ...DEFAULT_PROFILE, ...p };
   } catch {
     return { ...DEFAULT_PROFILE };
   }
