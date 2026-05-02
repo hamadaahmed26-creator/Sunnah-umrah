@@ -132,12 +132,13 @@ export default function Home() {
           </span>
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x snap-mandatory scrollbar-hide">
-          <FeatureCard to="/tour"   icon={Footprints}    accent="#B3884D" en="Step-by-step" ar="خطوة بخطوة"   sub_en="From niyyah to taḥallul"     sub_ar="من النيّة إلى التحلّل"        testid="feat-tour" />
-          <FeatureCard to="/group"  icon={Users}         accent="#7B5C24" en="Stay together" ar="ابقَ معًا"     sub_en="Never lose your family"       sub_ar="لا تَضِع عن عائلتك"          testid="feat-group" />
-          <FeatureCard to="/chat"   icon={MessageSquare} accent="#8B4540" en="AI Companion"  ar="مساعد ذكي"   sub_en="Ask any fiqh question"        sub_ar="اسأل أيّ سؤال فقهي"        testid="feat-chat" />
-          <FeatureCard to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah guide" ar="دليل الزّيارة" sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          testid="feat-places" />
-          <FeatureCard to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla compass" ar="بوصلة القبلة" sub_en="Direction to the Ka'bah"      sub_ar="اتّجاه الكعبة"             testid="feat-qibla" />
-          <FeatureCard to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"     sub_en="Test what you know"           sub_ar="اختبر معرفتك"               testid="feat-quiz" />
+          <FeatureCard to="/places"      icon={Sparkles}      accent="#2A5A4A" en="Ziyārah guide" ar="دليل الزّيارة" sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          testid="feat-places" />
+          <FeatureCard to="/qibla"       icon={Compass}       accent="#7B5C24" en="Qibla compass" ar="بوصلة القبلة" sub_en="Direction to the Ka'bah"      sub_ar="اتّجاه الكعبة"             testid="feat-qibla" />
+          <FeatureCard to="/lost"        icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"      sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  testid="feat-lost" />
+          <FeatureCard to="/quiz"        icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"     sub_en="Test what you know"           sub_ar="اختبر معرفتك"               testid="feat-quiz" />
+          <FeatureCard to="/ramadan"     icon={Moon}          accent="#1C1D1B" en="Ramadan"       ar="رمضان"        sub_en="Reminders & countdown"        sub_ar="تذكيرات وعدّ تنازلي"        testid="feat-ramadan" />
+          <FeatureCard to="/best-months" icon={CalendarDays}  accent="#2A5A4A" en="When to go"    ar="متى تذهب"     sub_en="Best months for ʿUmrah"       sub_ar="أفضل شهور العمرة"           testid="feat-bestmonths" />
+          <FeatureCard to="/shop"        icon={ShoppingBag}   accent="#7B5C24" en="Pre-trip shop" ar="المتجر"       sub_en="Iḥrām, books, eSIM"           sub_ar="إحرام، كتب، شريحة"          testid="feat-shop" />
         </div>
       </div>
 
@@ -267,26 +268,27 @@ export default function Home() {
         </div>
       )}
 
-      {/* "I haven't booked yet" — only shows if onboarding done but no date set */}
+      {/* "I haven't booked yet" — only shows if onboarding done but no date set.
+          Routes the user straight into Packages so they can take action. */}
       {profile.done && !profile.tripDate && (
-        <button
-          onClick={() => setOnboardOpen(true)}
-          className="mt-3 w-full rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3 text-left hover:border-[#B3884D] transition tap-pulse"
+        <Link
+          to="/packages"
+          className="mt-3 block rounded-2xl bg-white border border-dashed border-[#E8E5DD] p-3 hover:border-[#B3884D] transition tap-pulse"
           data-testid="home-add-trip-date"
         >
           <div className="flex items-center gap-2.5">
             <Calendar className="w-4 h-4 text-[#B3884D]" />
             <div className="flex-1">
               <div className="text-[12px] font-semibold text-[#1C1D1B]">
-                {isAr ? "أضف تاريخ سفرك" : "Add your travel date"}
+                {isAr ? "خطّط لرحلتك" : "Plan your trip"}
               </div>
               <div className="text-[10px] text-[#8E8F8A]">
-                {isAr ? "ستظهر العدّ التّنازلي والتّذكيرات الذّكيّة" : "Get a countdown and timely reminders"}
+                {isAr ? "تصفّح الباقات والفنادق والرّحلات" : "Browse packages, hotels & flights"}
               </div>
             </div>
             <ArrowRight className={`w-3.5 h-3.5 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
           </div>
-        </button>
+        </Link>
       )}
 
       {/* Wheelchair / accessibility CTA — only for users who selected this */}
@@ -317,17 +319,10 @@ export default function Home() {
           a quiet daily habit, not just a one-off Umrah tool. */}
       <DailyReminderCard reminder={reminder} isAr={isAr} />
 
-      {toolsFirst ? (
-        <>
-          <ToolsSection isAr={isAr} />
-          <TravelSection isAr={isAr} />
-        </>
-      ) : (
-        <>
-          <TravelSection isAr={isAr} />
-          <ToolsSection isAr={isAr} />
-        </>
-      )}
+      {/* Travel section — Packages vs DIY booking. Tools section was removed
+          since all those features now live in the Discover strip above (no
+          duplication). */}
+      <TravelSection isAr={isAr} />
 
       {/* About / Sources footer — reassures the user (and Apple reviewers)
           that every ruling in the app is sourced. */}
@@ -515,7 +510,7 @@ function TravelSection({ isAr }) {
 
         {/* DIY */}
         <Link
-          to="/shop"
+          to="/hotels"
           className="block tap-pulse rounded-2xl bg-gradient-to-br from-white to-[#F1F4F1] border border-[#DDE4DC] p-4 hover:border-[#2A5A4A] hover:shadow-[0_10px_24px_-14px_rgba(42,90,74,0.4)] transition active:scale-[0.98]"
           data-testid="home-travel-diy"
         >

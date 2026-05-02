@@ -1,13 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Hotel, ArrowLeft, ExternalLink, Calendar, Users, Building2, Wifi } from "lucide-react";
+import { Hotel, ArrowLeft, ExternalLink, Calendar, Users, Building2, Wifi, Plane } from "lucide-react";
 import { LangContext } from "../components/Layout";
 
 // Booking.com Affiliate ID — sign up free at https://www.booking.com/affiliate-program
 // then paste your AID below (or set REACT_APP_BOOKING_AID in .env). Until set,
 // the search still works but the user pays full price (no commission to you).
 const BOOKING_AID = process.env.REACT_APP_BOOKING_AID || "";
+
+// Skyscanner / Travelpayouts associate ID — sign up free at
+// https://www.travelpayouts.com → connect Skyscanner. Until set, the link
+// still routes the user to Skyscanner, just without commission to you.
+const SKYSCANNER_TAG = process.env.REACT_APP_SKYSCANNER_TAG || "";
 
 // Airalo eSIM affiliate referral code — sign up free at
 // https://www.airalo.com/affiliate-program. Paste your code below or set
@@ -167,6 +172,57 @@ export default function Hotels() {
         ))}
       </div>
 
+      {/* Flights — Skyscanner affiliate */}
+      <div className="mt-5">
+        <div className={`text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-2 ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "الرّحلات" : "Flights"}
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <a
+            href={`https://www.skyscanner.net/transport/flights-to/jed/${SKYSCANNER_TAG ? `?associateid=${SKYSCANNER_TAG}` : ""}`}
+            target="_blank"
+            rel="noreferrer"
+            className="block rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition active:scale-[0.98]"
+            data-testid="hotels-flights-jed"
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-full bg-[#FBF1DD] grid place-items-center flex-shrink-0">
+                <Plane className="w-4 h-4 text-[#7B5C24]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr ? "إلى جدّة" : "To Jeddah"}
+                </div>
+                <div className={`text-[10px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr ? "بوّابة مكّة" : "Gateway to Makkah"}
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            href={`https://www.skyscanner.net/transport/flights-to/med/${SKYSCANNER_TAG ? `?associateid=${SKYSCANNER_TAG}` : ""}`}
+            target="_blank"
+            rel="noreferrer"
+            className="block rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition active:scale-[0.98]"
+            data-testid="hotels-flights-med"
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-full bg-[#F1F4F1] grid place-items-center flex-shrink-0">
+                <Plane className="w-4 h-4 text-[#2A5A4A]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr ? "إلى المدينة" : "To Madīnah"}
+                </div>
+                <div className={`text-[10px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr ? "مطار الأمير محمّد" : "Prince Mohammad Airport"}
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
       {/* eSIM data — Airalo affiliate */}
       <div className="mt-5">
         <div className={`text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-2 ${isAr ? "font-arabic" : ""}`}>
@@ -202,8 +258,8 @@ export default function Hotels() {
           <Building2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#8E8F8A]" />
           <p className={isAr ? "font-arabic text-right" : ""}>
             {isAr
-              ? "نتعاون مع Booking.com وAiralo — قد نحصل على عمولة صغيرة عند الحجز عبر هذه الروابط، بدون أيّ تكلفة إضافية عليك."
-              : "We partner with Booking.com and Airalo — we may earn a small commission on bookings made through these links, at no extra cost to you."}
+              ? "نتعاون مع Booking.com وAiralo وSkyscanner — قد نحصل على عمولة صغيرة عند الحجز عبر هذه الروابط، بدون أيّ تكلفة إضافية عليك."
+              : "We partner with Booking.com, Airalo and Skyscanner — we may earn a small commission on bookings made through these links, at no extra cost to you."}
           </p>
         </div>
       </div>
