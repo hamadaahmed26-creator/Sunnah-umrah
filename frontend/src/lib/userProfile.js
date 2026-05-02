@@ -44,33 +44,65 @@ export function daysUntilTrip(tripDate) {
 }
 
 // Smart prompt based on days until trip.
-export function tripPrompt(days, isAr) {
+// When `forHelping` is true, the user is preparing someone else (spouse/parent/
+// friend) — pronouns flip from "you/your" to "they/their".
+export function tripPrompt(days, isAr, forHelping = false) {
   if (days === null) return null;
   if (days < 0) return null; // trip is in the past — caller hides the card
   if (days === 0) {
+    if (forHelping) {
+      return isAr
+        ? "اليوم هو يومهم! تقبّل الله منهم."
+        : "Today's their day! May Allah accept it from them.";
+    }
     return isAr
       ? "اليوم هو اليوم! تقبّل الله منك."
       : "Today's the day! May Allah accept it from you.";
   }
   if (days <= 6) {
+    if (forHelping) {
+      return isAr
+        ? "أيّامهم الأخيرة — ساعدهم بالإحرام والاستعداد."
+        : "Their final days — help them prepare iḥrām and pack.";
+    }
     return isAr
       ? "أيّامك الأخيرة — قلّم أظفارك، تعطّر، واستعدّ للإحرام."
       : "Final days — clip your nails, perfume yourself, prepare your iḥrām.";
   }
   if (days <= 13) {
+    if (forHelping) {
+      return isAr
+        ? "اشترِ لهم الإحرام وشريحة eSIM، وراجعوا الخطوات معًا."
+        : "Get them an iḥrām, an eSIM, and walk through the steps together.";
+    }
     return isAr
       ? "اشترِ الإحرام، احصل على شريحة eSIM، وراجع الخطوات."
       : "Get your iḥrām, buy an eSIM, review the steps.";
   }
   if (days <= 29) {
+    if (forHelping) {
+      return isAr
+        ? "تأكّد من تأشيرتهم وفندقهم، وراجعوا المواقيت."
+        : "Confirm their visa & hotel, review the Mīqāts together.";
+    }
     return isAr
       ? "قدّم على التّأشيرة، أكّد الفندق، وراجع المواقيت."
       : "Apply for visa, confirm hotel, review the Mīqāts.";
   }
   if (days <= 59) {
+    if (forHelping) {
+      return isAr
+        ? "احجز لهم الفندق والطّيران الآن قبل ارتفاع الأسعار."
+        : "Book their hotel & flights now before prices climb.";
+    }
     return isAr
       ? "احجز الفندق والطّيران الآن قبل ارتفاع الأسعار."
       : "Book hotels & flights now before prices climb.";
+  }
+  if (forHelping) {
+    return isAr
+      ? "وقتٌ كافٍ — راجعوا الخطوات معًا وادعُ لهم بالقبول."
+      : "Plenty of time — review the steps with them and pray for their acceptance.";
   }
   return isAr
     ? "وقتٌ كافٍ — اقرأ عن الخطوات وادعُ الله أن يتقبّل منك."

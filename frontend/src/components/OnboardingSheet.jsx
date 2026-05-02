@@ -119,24 +119,34 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
               {step === 1 && (
                 <div data-testid="onboard-step-travelers">
                   <h2 className={`text-[24px] font-medium leading-tight text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
-                    {isAr ? "كيف ستسافر؟" : "How will you travel?"}
+                    {answers.experience === "helping"
+                      ? (isAr ? "كيف سيُسافرون؟" : "How will they travel?")
+                      : (isAr ? "كيف ستسافر؟" : "How will you travel?")}
                   </h2>
                   <p className={`mt-2 text-[13px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
                     {isAr ? "سنُكيّف الإرشاد بناءً على ذلك." : "We'll adapt the guidance to suit."}
                   </p>
                   <div className="mt-5 space-y-2">
                     <Choice icon={User} active={answers.travelers === "solo"}
-                      label={isAr ? "بمفردي" : "Solo"}
+                      label={answers.experience === "helping"
+                        ? (isAr ? "بمفردهم" : "Solo")
+                        : (isAr ? "بمفردي" : "Solo")}
                       onClick={() => set("travelers", "solo")} testid="onboard-tr-solo" />
                     <Choice icon={Heart} active={answers.travelers === "spouse"}
-                      label={isAr ? "مع زوجتي / زوجي" : "With my spouse"}
+                      label={answers.experience === "helping"
+                        ? (isAr ? "مع زوجته / زوجها" : "With their spouse")
+                        : (isAr ? "مع زوجتي / زوجي" : "With my spouse")}
                       onClick={() => set("travelers", "spouse")} testid="onboard-tr-spouse" />
                     <Choice icon={Users} active={answers.travelers === "family"}
-                      label={isAr ? "مع العائلة" : "With family"}
+                      label={answers.experience === "helping"
+                        ? (isAr ? "مع العائلة" : "With family")
+                        : (isAr ? "مع العائلة" : "With family")}
                       sub={isAr ? "سنفعّل ميزة (ابقَ معًا)" : "We'll suggest 'Stay Together'"}
                       onClick={() => set("travelers", "family")} testid="onboard-tr-family" />
                     <Choice icon={Accessibility} active={answers.travelers === "wheelchair"}
-                      label={isAr ? "أحتاج مساعدة (كرسي متحرّك)" : "I need accessibility help"}
+                      label={answers.experience === "helping"
+                        ? (isAr ? "يحتاجون مساعدة (كرسيّ متحرّك)" : "They need accessibility help")
+                        : (isAr ? "أحتاج مساعدة (كرسي متحرّك)" : "I need accessibility help")}
                       sub={isAr ? "سنرشدك لزيارة سهلة" : "Wheelchair-friendly guidance"}
                       onClick={() => set("travelers", "wheelchair")} testid="onboard-tr-wheelchair" />
                   </div>
@@ -147,22 +157,32 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
               {step === 2 && (
                 <div data-testid="onboard-step-knowledge">
                   <h2 className={`text-[24px] font-medium leading-tight text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
-                    {isAr ? "كم تعرف عن خطوات العمرة؟" : "How well do you know the steps?"}
+                    {answers.experience === "helping"
+                      ? (isAr ? "كم يعرفون عن خطوات العمرة؟" : "How well do they know the steps?")
+                      : (isAr ? "كم تعرف عن خطوات العمرة؟" : "How well do you know the steps?")}
                   </h2>
                   <p className={`mt-2 text-[13px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
                     {isAr ? "لا أحكام هنا — فقط لتُناسبك التجربة." : "No judgement — just so we pace it right."}
                   </p>
                   <div className="mt-5 space-y-2">
                     <Choice active={answers.knowledge === "confident"}
-                      label={isAr ? "أعرف ما أفعله" : "I know what I'm doing"}
+                      label={answers.experience === "helping"
+                        ? (isAr ? "يعرفون ما يفعلون" : "They know what they're doing")
+                        : (isAr ? "أعرف ما أفعله" : "I know what I'm doing")}
                       sub={isAr ? "وضع سريع" : "Quick-access mode"}
                       onClick={() => set("knowledge", "confident")} testid="onboard-kn-confident" />
                     <Choice active={answers.knowledge === "refresher"}
-                      label={isAr ? "أعرف القليل" : "I know a little"}
-                      sub={isAr ? "أحتاج تذكيرًا أحيانًا" : "Reminders along the way"}
+                      label={answers.experience === "helping"
+                        ? (isAr ? "يعرفون القليل" : "They know a little")
+                        : (isAr ? "أعرف القليل" : "I know a little")}
+                      sub={answers.experience === "helping"
+                        ? (isAr ? "يحتاجون تذكيرًا أحيانًا" : "Reminders along the way")
+                        : (isAr ? "أحتاج تذكيرًا أحيانًا" : "Reminders along the way")}
                       onClick={() => set("knowledge", "refresher")} testid="onboard-kn-refresher" />
                     <Choice active={answers.knowledge === "beginner"}
-                      label={isAr ? "لا أعرف شيئًا" : "I don't know anything yet"}
+                      label={answers.experience === "helping"
+                        ? (isAr ? "لا يعرفون شيئًا بعد" : "They don't know anything yet")
+                        : (isAr ? "لا أعرف شيئًا" : "I don't know anything yet")}
                       sub={isAr ? "خطوة بخطوة بكل وضوح" : "Step-by-step in detail"}
                       onClick={() => set("knowledge", "beginner")} testid="onboard-kn-beginner" />
                   </div>
@@ -173,7 +193,9 @@ export default function OnboardingSheet({ open, onComplete, onSkip, isAr }) {
               {step === 3 && (
                 <div data-testid="onboard-step-date">
                   <h2 className={`text-[24px] font-medium leading-tight text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
-                    {isAr ? "هل حدّدتَ موعد رحلتك؟" : "Have you booked your trip?"}
+                    {answers.experience === "helping"
+                      ? (isAr ? "هل حُدِّد موعد رحلتهم؟" : "Have they booked their trip?")
+                      : (isAr ? "هل حدّدتَ موعد رحلتك؟" : "Have you booked your trip?")}
                   </h2>
                   <p className={`mt-2 text-[13px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
                     {isAr ? "اختياري — سنُريك العدّ التّنازلي وذكّرك بما تحتاج." : "Optional — we'll show you a countdown and timely reminders."}

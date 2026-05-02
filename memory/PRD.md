@@ -22,6 +22,27 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (May 2, 2026 — sixth session, part 4) — Helping-someone-else pronouns + direct booking CTAs
+- **Pronoun fix when user picks "I'm helping someone else"** in onboarding.
+  All subsequent questions and labels now correctly switch from "you/your/I"
+  to "they/their" everywhere they refer to the pilgrim:
+  - Step 1: "How will **they** travel?" / "With **their** spouse" / "**They** need accessibility help"
+  - Step 2: "How well do **they** know the steps?" / "**They** know what they're doing" / "**They** know a little" / "**They** don't know anything yet"
+  - Step 3: "Have **they** booked **their** trip?"
+  - Home empty state: "When will **they** go?" + "Already booked — add **their** date"
+  - Trip-prompt advice (`lib/userProfile.tripPrompt`): "Their final days — help them prepare iḥrām and pack" / "Get them an iḥrām" / "Confirm their visa & hotel" / "Book their hotel & flights" etc.
+  Critical for the "spouse / parent / child planning for a loved one" use case
+  the user repeatedly emphasised.
+- **Home empty-state booking CTAs are now direct** (per user feedback "should
+  take you straight to umrah packages and also option for flights and hotels").
+  The "Browse trips → /plan intermediary" has been removed. The empty-state
+  card now exposes two prominent, side-by-side buttons:
+    • **Packages** (gold gradient) → `/packages` (all-inclusive)
+    • **Hotels & flights** (green gradient) → `/hotels` (DIY)
+  with a subtle text link below for "Already booked — add my/their date".
+  One fewer tap to convert; no decision fatigue from the chooser screen.
+- SW cache → `umrah-v1.36.0`.
+
 ## Implemented (May 2, 2026 — sixth session, part 3) — Pre-launch audit + back buttons + Arabic mode fix
 - **Final back-button sweep before Sunday Capacitor build.** Added consistent
   `← Back` link to the 5 remaining secondary pages: Chat, Group, Qibla,
