@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { PLACES, CITY_LABELS } from "../lib/places";
 
@@ -30,6 +30,10 @@ export default function Places() {
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="places-page">
+      <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2">
+        <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+        <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+      </Link>
       <div className="mt-2">
         <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">
           {isAr ? "زيارات" : "Ziyārah"}

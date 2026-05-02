@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check, X, RotateCcw, Trophy, BookOpen, Share2, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, X, RotateCcw, Trophy, BookOpen, Share2, Sparkles } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import {
   QUIZ_CATEGORIES,
@@ -68,6 +69,10 @@ export default function Quiz() {
   if (stage === "start") {
     return (
       <div className="max-w-md mx-auto pb-12" data-testid="quiz-page">
+        <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2">
+          <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+          <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+        </Link>
         <div className="mt-2">
           <p className="text-xs uppercase tracking-[0.22em] text-[#8E8F8A]">{isAr ? "اختبر نفسك" : "Test yourself"}</p>
           <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
