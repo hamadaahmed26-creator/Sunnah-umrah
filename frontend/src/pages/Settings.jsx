@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen } from "lucide-react";
+import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen, UserCog } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import {
   loadSettings,
   saveSettings,
   PRAYERS,
 } from "../lib/adhanScheduler";
+import { loadProfile } from "../lib/userProfile";
 
 const PRAYER_AR = {
   Fajr: "الفجر",
@@ -23,6 +24,18 @@ export default function Settings() {
   const [settings, setSettings] = React.useState(() => loadSettings());
   const [playing, setPlaying] = React.useState(false);
   const audioRef = React.useRef(null);
+  const profile = React.useMemo(() => loadProfile(), []);
+  const profileSummary = React.useMemo(() => {
+    if (!profile.done) return isAr ? "لم يكتمل بعد" : "Not set yet";
+    const exp = profile.experience === "first"
+      ? (isAr ? "أوّل مرّة" : "First time")
+      : profile.experience === "returning"
+        ? (isAr ? "زرت من قبل" : "Returning")
+        : profile.experience === "helping"
+          ? (isAr ? "أعتمر لأحد" : "Helping someone else")
+          : "—";
+    return exp;
+  }, [profile, isAr]);
 
   const update = (next) => {
     setSettings(next);
@@ -217,6 +230,25 @@ export default function Settings() {
               </div>
               <div className="text-[11px] text-[#8E8F8A]">
                 {isAr ? "ما الذي نجمعه — وما لا نجمعه" : "What we collect — and don't"}
+              </div>
+            </div>
+          </div>
+        </Link>
+        <Link
+          to="/?edit=1"
+          className="block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
+          data-testid="settings-edit-profile"
+        >
+          <div className="flex items-center gap-2.5">
+            <UserCog className="w-4 h-4 text-[#7B5C24]" />
+            <div className="flex-1">
+              <div className="text-[13px] font-semibold text-[#1C1D1B]">
+                {isAr ? "تعديل تفضيلاتي" : "Edit my preferences"}
+              </div>
+              <div className="text-[11px] text-[#8E8F8A]">
+                {isAr
+                  ? `الحالة: ${profileSummary} — أعد ضبط الإجابات`
+                  : `Currently: ${profileSummary} — change your onboarding answers`}
               </div>
             </div>
           </div>
