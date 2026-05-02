@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { ArrowLeft, Compass, MapPin, Navigation, Loader2, AlertTriangle, Footprints } from "lucide-react";
+import { ArrowLeft, Compass, MapPin, Navigation, Loader2, AlertTriangle, RefreshCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
 import WalkRouteMap from "../components/WalkRouteMap";
+import { describeGeoError } from "../lib/locationErrors";
+import { saveLastKnownGeo } from "../lib/prayerPreferences";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -20,36 +22,43 @@ export default function Lost() {
   const { lang } = React.useContext(LangContext);
   const t = useT(lang);
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [errInfo, setErrInfo] = React.useState(null);
   const [coords, setCoords] = React.useState(null);
   const [data, setData] = React.useState(null);
   const [heading, setHeading] = React.useState(0);
 
   const locate = () => {
     if (!navigator.geolocation) {
-      setError(t("locationError"));
+      setErrInfo(describeGeoError({ code: 2 }, lang === "ar"));
       return;
     }
     setLoading(true);
-    setError("");
+    setErrInfo(null);
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         setCoords({ lat, lng });
+        saveLastKnownGeo({ lat, lng });
         try {
           const res = await axios.post(`${API}/gates/nearest`, { lat, lng });
           setData(res.data);
         } catch (e) {
-          setError("Server error fetching gates.");
+          setErrInfo({
+            title: lang === "ar" ? "خطأ في الخادم" : "Server error",
+            message: lang === "ar"
+              ? "تعذّر تحميل أبواب الحرم. تحقّق من الاتّصال وحاول مرّة أخرى."
+              : "Couldn't load Haram gates. Check your connection and try again.",
+            steps: null,
+          });
         }
         setLoading(false);
       },
-      () => {
+      (err) => {
         setLoading(false);
-        setError(t("locationError"));
+        setErrInfo(describeGeoError(err, lang === "ar"));
       },
-      { enableHighAccuracy: true, timeout: 10000 }
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 }
     );
   };
 
@@ -66,6 +75,16 @@ export default function Lost() {
   const targetBearing = data?.bearing_deg ?? 0;
   const arrowAngle = (targetBearing - heading + 360) % 360;
 
+  // Native-maps fallback (small secondary link only — never the primary CTA)
+  const openExternalMaps = () => {
+    const dest = data?.gate ? `${data.gate.lat},${data.gate.lng}` : "21.4225,39.8262";
+    const ua = navigator.userAgent || "";
+    const url = /iPad|iPhone|iPod|Macintosh/i.test(ua)
+      ? `https://maps.apple.com/?daddr=${dest}&q=Masjid+al-Haram&dirflg=w`
+      : `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=walking`;
+    window.open(url, "_blank", "noopener");
+  };
+
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="lost-page">
       <Link to="/" className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-3 mt-2">
@@ -80,8 +99,8 @@ export default function Lost() {
           </h1>
           <p className="mt-2 text-[14px] text-[#5C5D58] max-w-[34ch]">
             {isAr
-              ? "اضغط الزرّ ليحدّد الـ GPS أقرب باب من المسجد الحرام إليك."
-              : "Tap to use GPS and detect the nearest Bab (gate) of Masjid al-Haram."}
+              ? "اضغط الزرّ ليحدّد الـ GPS أقرب باب من المسجد الحرام إليك ويُريك المسار سيرًا."
+              : "Tap the button to use GPS, find the nearest Bab (gate) of Masjid al-Haram, and get walking directions in-app."}
           </p>
         </div>
       </div>
@@ -103,33 +122,6 @@ export default function Lost() {
               : "This feature needs location (GPS) permission to work."}
           </p>
 
-          {/* Take me to the Ḥaram — opens the user's native maps app with
-              Masjid al-Ḥarām pre-set as the destination. Works perfectly on
-              iOS (Apple Maps), Android (Google Maps), and falls back to
-              Google Maps web on desktop. Uses the Ka'bah's exact GPS:
-              21.4225, 39.8262. */}
-          <button
-            onClick={() => {
-              const dest = "21.4225,39.8262";
-              const ua = navigator.userAgent || "";
-              // Apple Maps deep-link works for iOS/macOS
-              const url = /iPad|iPhone|iPod|Macintosh/i.test(ua)
-                ? `https://maps.apple.com/?daddr=${dest}&q=Masjid+al-Haram&dirflg=w`
-                : `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=walking`;
-              window.open(url, "_blank", "noopener");
-            }}
-            className="mt-4 w-full tap-pulse inline-flex items-center justify-center gap-2 rounded-full bg-[#0F2A24] hover:bg-[#0A1F1A] text-white px-6 py-4 text-sm font-medium"
-            data-testid="satnav-haram-btn"
-          >
-            <Footprints className="w-4 h-4" />
-            {isAr ? "خذني إلى الحرم" : "Take me to the Ḥaram"}
-          </button>
-          <p className="mt-2 text-center text-[11px] text-[#8E8F8A]">
-            {isAr
-              ? "يفتح خرائط هاتفك مع المسار إلى المسجد الحرام."
-              : "Opens your phone's maps app with walking directions."}
-          </p>
-
           <div className="mt-4 rounded-2xl border border-[#E8E5DD] bg-white p-3 text-[12px] text-[#5C5D58] leading-relaxed">
             <p className={isAr ? "font-arabic text-right" : ""}>
               {isAr
@@ -140,10 +132,42 @@ export default function Lost() {
         </>
       )}
 
-      {error && (
-        <div className="mt-4 rounded-2xl border border-[#E8E5DD] bg-white p-4 flex items-center gap-3 text-sm text-[#8B4540]" data-testid="lost-error">
-          <AlertTriangle className="w-4 h-4" /> {error}
-        </div>
+      {errInfo && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-4 rounded-2xl bg-[#FFF8F8] border border-[#EBD5D2] p-4"
+          data-testid="lost-error"
+        >
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-4 h-4 text-[#8B4540] flex-shrink-0 mt-0.5" />
+            <div className="flex-1 min-w-0">
+              <div className={`text-[14px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
+                {errInfo.title}
+              </div>
+              <p className={`mt-1 text-[12.5px] text-[#5C5D58] leading-relaxed ${isAr ? "font-arabic text-right" : ""}`}>
+                {errInfo.message}
+              </p>
+              {errInfo.steps && (
+                <ol className={`mt-2 list-decimal text-[12px] text-[#5C5D58] leading-relaxed ${isAr ? "font-arabic text-right pr-5" : "pl-5"}`}>
+                  {errInfo.steps.map((s, i) => (
+                    <li key={i} className="mb-0.5">{s}</li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          </div>
+          <div className="mt-3 flex gap-2">
+            <button
+              onClick={locate}
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#1C1D1B] text-white text-[13px] font-medium px-4 py-2.5 tap-pulse"
+              data-testid="lost-retry"
+            >
+              <RefreshCcw className="w-3.5 h-3.5" />
+              {isAr ? "حاول مرّة أخرى" : "Try again"}
+            </button>
+          </div>
+        </motion.div>
       )}
 
       {data && (
@@ -194,7 +218,7 @@ export default function Lost() {
             {isAr ? "وجّه هاتفك في اتجاه السهم الأخضر" : "Point your phone toward the green arrow"}
           </p>
 
-          {/* In-app walking-route map with turn-by-turn (OSRM, no Google) */}
+          {/* In-app walking-route map with turn-by-turn (OSRM, no Google) — primary action */}
           {coords && (
             <div className="mt-6" data-testid="lost-route-map">
               <WalkRouteMap
@@ -209,18 +233,6 @@ export default function Lost() {
               />
             </div>
           )}
-
-          <div className="mt-6">
-            <a
-              href={`https://maps.google.com/?q=${data.gate.lat},${data.gate.lng}`}
-              target="_blank"
-              rel="noreferrer"
-              className="block tap-pulse rounded-full bg-[#1C1D1B] text-white text-sm font-medium px-5 py-3 text-center"
-              data-testid="open-maps"
-            >
-              {isAr ? "افتح في خرائط جوجل" : "Open in Google Maps"}
-            </a>
-          </div>
 
           {data.others?.length > 0 && (
             <div className="mt-6">
@@ -239,16 +251,28 @@ export default function Lost() {
             </div>
           )}
 
-          <button
-            onClick={() => {
-              setData(null);
-              setCoords(null);
-            }}
-            className="mt-5 w-full tap-pulse rounded-full border border-[#E8E5DD] bg-white px-5 py-2.5 text-sm text-[#1C1D1B]"
-            data-testid="lost-recheck"
-          >
-            {isAr ? "إعادة الفحص" : "Re-check location"}
-          </button>
+          {/* Footer — re-check + small secondary fallback */}
+          <div className="mt-6 flex items-center justify-between gap-3">
+            <button
+              onClick={() => {
+                setData(null);
+                setCoords(null);
+                setErrInfo(null);
+              }}
+              className="text-[11px] text-[#8E8F8A] hover:text-[#1C1D1B] inline-flex items-center gap-1 tap-pulse"
+              data-testid="lost-recheck"
+            >
+              <RefreshCcw className="w-3 h-3" />
+              {isAr ? "إعادة الفحص" : "Re-check location"}
+            </button>
+            <button
+              onClick={openExternalMaps}
+              className="text-[11px] text-[#5C5D58] hover:text-[#1C1D1B] underline-offset-2 hover:underline tap-pulse"
+              data-testid="open-maps"
+            >
+              {isAr ? "افتح في خرائط الهاتف" : "Open in phone maps"}
+            </button>
+          </div>
         </motion.div>
       )}
     </div>

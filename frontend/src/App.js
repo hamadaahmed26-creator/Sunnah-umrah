@@ -22,6 +22,7 @@ import Settings from "./pages/Settings";
 import AccessibilityPage from "./pages/Accessibility";
 import BestMonths from "./pages/BestMonths";
 import Plan from "./pages/Plan";
+import WalkHaram from "./pages/WalkHaram";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
               <Route path="/accessibility" element={<AccessibilityPage />} />
               <Route path="/best-months" element={<BestMonths />} />
               <Route path="/plan" element={<Plan />} />
+              <Route path="/walk-haram" element={<WalkHaram />} />
               {/* Sadaqah temporarily removed — donations create Apple App
                   Store risk under Guideline 3.2.1(vii) / 4.5.4. Old URLs
                   redirect home so existing bookmarks don't 404. */}

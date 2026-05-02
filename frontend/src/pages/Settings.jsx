@@ -27,11 +27,6 @@ export default function Settings() {
   const audioRef = React.useRef(null);
   const profile = React.useMemo(() => loadProfile(), []);
   const [prayerMode, setPrayerMode] = React.useState(() => loadPrayerMode());
-  const togglePrayerMode = () => {
-    const next = prayerMode === "auto" ? "makkah" : "auto";
-    setPrayerMode(next);
-    savePrayerMode(next);
-  };
   const profileSummary = React.useMemo(() => {
     if (!profile.done) return isAr ? "لم يكتمل بعد" : "Not set yet";
     const exp = profile.experience === "first"
@@ -207,37 +202,68 @@ export default function Settings() {
 
       {/* Other helpful links */}
       <div className="mt-8 space-y-2">
-        {/* Prayer-times mode — auto (your location) vs Makkah */}
+        {/* Prayer-times mode — segmented control: Use my location vs Always Makkah.
+            Replaces the old ambiguous toggle (where green = "active" was unclear). */}
         <div
-          className="rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 flex items-center gap-3"
+          className="rounded-2xl bg-white border border-[#E8E5DD] p-3.5"
           data-testid="settings-prayer-mode"
         >
-          <MapPin className="w-4 h-4 text-[#7B5C24] flex-shrink-0" />
-          <div className="flex-1 min-w-0">
-            <div className="text-[13px] font-semibold text-[#1C1D1B]">
-              {isAr ? "أوقات الصّلاة" : "Prayer times"}
-            </div>
-            <div className="text-[11px] text-[#8E8F8A]">
-              {prayerMode === "makkah"
-                ? (isAr ? "تعرض دائمًا أوقات مكّة" : "Always show Makkah times")
-                : (isAr ? "حسب موقعك الحالي" : "Based on your current location")}
+          <div className="flex items-center gap-2.5 mb-2.5">
+            <MapPin className="w-4 h-4 text-[#7B5C24] flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className={`text-[13px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
+                {isAr ? "أوقات الصّلاة" : "Prayer times"}
+              </div>
+              <div className={`text-[11px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic" : ""}`}>
+                {isAr
+                  ? "اختر مصدر التّوقيت الذي تراه على الشّاشة الرّئيسيّة"
+                  : "Choose which times appear on your home screen"}
+              </div>
             </div>
           </div>
-          <button
-            role="switch"
-            aria-checked={prayerMode === "makkah"}
-            onClick={togglePrayerMode}
-            className={`relative w-10 h-6 rounded-full transition-colors flex-shrink-0 ${
-              prayerMode === "makkah" ? "bg-[#2A5A4A]" : "bg-[#E8E5DD]"
-            }`}
-            data-testid="settings-prayer-mode-toggle"
+          <div
+            role="radiogroup"
+            aria-label={isAr ? "مصدر أوقات الصّلاة" : "Prayer times source"}
+            className="grid grid-cols-2 gap-1 p-1 rounded-full bg-[#F1EFE8] border border-[#E8E5DD]"
           >
-            <span
-              className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
-                prayerMode === "makkah" ? "translate-x-4" : "translate-x-0.5"
-              }`}
-            />
-          </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={prayerMode === "auto"}
+              onClick={() => { setPrayerMode("auto"); savePrayerMode("auto"); }}
+              className={`rounded-full text-[12px] py-2 px-3 transition tap-pulse ${
+                prayerMode === "auto"
+                  ? "bg-white text-[#1C1D1B] font-semibold shadow-sm border border-[#E8E5DD]"
+                  : "text-[#5C5D58]"
+              } ${isAr ? "font-arabic" : ""}`}
+              data-testid="settings-prayer-mode-auto"
+            >
+              {isAr ? "موقعي الحالي" : "Use my location"}
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={prayerMode === "makkah"}
+              onClick={() => { setPrayerMode("makkah"); savePrayerMode("makkah"); }}
+              className={`rounded-full text-[12px] py-2 px-3 transition tap-pulse ${
+                prayerMode === "makkah"
+                  ? "bg-white text-[#1C1D1B] font-semibold shadow-sm border border-[#E8E5DD]"
+                  : "text-[#5C5D58]"
+              } ${isAr ? "font-arabic" : ""}`}
+              data-testid="settings-prayer-mode-makkah"
+            >
+              {isAr ? "أوقات مكّة دائمًا" : "Always Makkah"}
+            </button>
+          </div>
+          <p className={`mt-2 text-[11px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+            {prayerMode === "makkah"
+              ? (isAr
+                  ? "ستُعرض أوقات الصّلاة كما هي في مكّة، أينما كنتَ."
+                  : "Prayer times will follow Makkah, wherever you are.")
+              : (isAr
+                  ? "ستُعرض أوقات الصّلاة بحسب موقعك الحاليّ تلقائيًا."
+                  : "Prayer times will auto-detect your city using GPS.")}
+          </p>
         </div>
         <Link
           to="/about"

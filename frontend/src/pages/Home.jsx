@@ -7,6 +7,7 @@ import {
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
   Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check,
   Settings as SettingsIcon, Calendar, Accessibility, CalendarDays, UserCog, Pencil,
+  Navigation as NavigationIcon,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -461,6 +462,29 @@ export default function Home() {
           <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah"       ar="الزّيارة"        sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
           <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                isAr={isAr} testid="home-quiz" />
         </div>
+        {/* 7th tile — Walk to Ḥaram. Full-width so it reads as a clear primary
+            action for users in Makkah, separate from the panic "I'm lost" flow.
+            Same calm card aesthetic with a gold→sand gradient + Footprints icon. */}
+        <Link
+          to="/walk-haram"
+          className="mt-2 block tap-pulse rounded-2xl border border-[#EBD9B0] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.99] bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1]"
+          data-testid="home-walk-haram"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#EBD9B0]">
+              <Footprints className="w-[18px] h-[18px] text-[#7B5C24]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "خذني إلى الحرم" : "Walk to the Ḥaram"}
+              </div>
+              <div className={`mt-0.5 text-[11px] text-[#6E5424] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "توجيه سيرًا، خطوة بخطوة، داخل التّطبيق" : "In-app walking directions, step by step"}
+              </div>
+            </div>
+            <NavigationIcon className={`w-4 h-4 text-[#7B5C24] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
       </div>
 
       {/* DAILY ANCHORS — reminder + prayer times. Both are habit drivers. */}
