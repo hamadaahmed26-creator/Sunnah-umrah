@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Briefcase, Plane, Hotel, Wifi, Sparkles } from "lucide-react";
 import { LangContext } from "../components/Layout";
+import { loadProfile } from "../lib/userProfile";
 
 // Plan your trip — single page that lets the user pick between an
 // all-inclusive Umrah package OR a DIY (hotel + flight + eSIM) booking.
@@ -10,6 +11,8 @@ import { LangContext } from "../components/Layout";
 export default function Plan() {
   const { lang } = React.useContext(LangContext);
   const isAr = lang === "ar";
+  const profile = React.useMemo(() => loadProfile(), []);
+  const helping = profile.experience === "helping";
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="plan-page">
@@ -22,15 +25,23 @@ export default function Plan() {
       </Link>
 
       <p className="text-[10px] uppercase tracking-[0.28em] text-[#B3884D]">
-        {isAr ? "خطّط لرحلتك" : "Plan your trip"}
+        {helping
+          ? (isAr ? "خطّط رحلتهم" : "Plan their trip")
+          : (isAr ? "خطّط لرحلتك" : "Plan your trip")}
       </p>
       <h1 className={`mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
-        {isAr ? "كيف ستسافر؟" : "How will you travel?"}
+        {helping
+          ? (isAr ? "كيف سيُسافرون؟" : "How will they travel?")
+          : (isAr ? "كيف ستسافر؟" : "How will you travel?")}
       </h1>
       <p className={`mt-3 text-[13px] text-[#5C5D58] leading-[1.7] ${isAr ? "font-arabic text-right" : ""}`}>
-        {isAr
-          ? "إمّا باقة شاملة — حيث يُنظِّم لك كلّ شيء — أو احجز بنفسك واختر فندقك ورحلتك على راحتك."
-          : "Either let an agency handle everything for you, or book each piece yourself and stay in full control."}
+        {helping
+          ? (isAr
+              ? "إمّا باقة شاملة — حيث تُنظِّم لهم الوكالة كلّ شيء — أو احجز لهم بنفسك واختر فندقهم ورحلتهم بمرونة."
+              : "Either let an agency arrange everything for them, or book it yourself piece by piece for full control.")
+          : (isAr
+              ? "إمّا باقة شاملة — حيث يُنظِّم لك كلّ شيء — أو احجز بنفسك واختر فندقك ورحلتك على راحتك."
+              : "Either let an agency handle everything for you, or book each piece yourself and stay in full control.")}
       </p>
 
       {/* Packages — full-width */}
@@ -51,9 +62,13 @@ export default function Plan() {
               {isAr ? "باقات العمرة" : "Umrah packages"}
             </h2>
             <p className={`mt-1.5 text-[12px] text-[#6E5424] leading-relaxed ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr
-                ? "رحلة، فندق، تأشيرة، نقل — كلّ شيء يُرتَّب لك من قِبل وكالة موثوقة. مثاليّ لأوّل مرّة."
-                : "Flight, hotel, visa, transfers — all arranged for you by a trusted agency. Best for first-timers."}
+              {helping
+                ? (isAr
+                    ? "رحلة، فندق، تأشيرة، نقل — تُرتَّب لهم من قِبل وكالة موثوقة. مثاليّ لمن لم يعتمر من قبل."
+                    : "Flight, hotel, visa, transfers — all arranged for them by a trusted agency. Best if it's their first time.")
+                : (isAr
+                    ? "رحلة، فندق، تأشيرة، نقل — كلّ شيء يُرتَّب لك من قِبل وكالة موثوقة. مثاليّ لأوّل مرّة."
+                    : "Flight, hotel, visa, transfers — all arranged for you by a trusted agency. Best for first-timers.")}
             </p>
             <div className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold text-[#7B5C24]">
               {isAr ? "تصفّح الباقات" : "Browse packages"}
@@ -81,9 +96,13 @@ export default function Plan() {
               {isAr ? "احجز بنفسك" : "Hotels & flights"}
             </h2>
             <p className={`mt-1.5 text-[12px] text-[#3F584F] leading-relaxed ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr
-                ? "اختر فندقك ورحلتك وشريحة eSIM بنفسك — مرونة أكبر، وغالبًا أرخص للمسافرين ذوي الخبرة."
-                : "Pick your own hotel, flight, and eSIM — more flexibility and often cheaper for experienced travellers."}
+              {helping
+                ? (isAr
+                    ? "احجز لهم الفندق والرّحلة وشريحة eSIM بنفسك — مرونة أكبر، وغالبًا أوفر."
+                    : "Book their hotel, flight, and eSIM yourself — more flexibility, often cheaper.")
+                : (isAr
+                    ? "اختر فندقك ورحلتك وشريحة eSIM بنفسك — مرونة أكبر، وغالبًا أرخص للمسافرين ذوي الخبرة."
+                    : "Pick your own hotel, flight, and eSIM — more flexibility and often cheaper for experienced travellers.")}
             </p>
             {/* Mini icon row showing what's inside */}
             <div className="mt-3 flex items-center gap-3">

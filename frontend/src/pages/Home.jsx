@@ -105,12 +105,18 @@ export default function Home() {
             {greeting}
           </p>
           <h1 className="mt-2 text-[34px] font-medium leading-tight tracking-tight text-[#1C1D1B] max-w-[12ch]">
-            {isAr ? "مرحبًا بك في رحلتك" : "Welcome to your journey"}
+            {profile.experience === "helping"
+              ? (isAr ? "تخدم رحلتهم" : "Helping their journey")
+              : (isAr ? "مرحبًا بك في رحلتك" : "Welcome to your journey")}
           </h1>
           <p className="mt-2 text-[14px] text-[#3F3722] max-w-[36ch]">
-            {isAr
-              ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
-              : "Everything you need to perform Umrah according to the Sunnah — in one place."}
+            {profile.experience === "helping"
+              ? (isAr
+                  ? "كلّ ما يحتاجونه لأداء العمرة على السنّة، في مكان واحد."
+                  : "Everything they'll need to perform Umrah according to the Sunnah — in one place.")
+              : (isAr
+                  ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
+                  : "Everything you need to perform Umrah according to the Sunnah — in one place.")}
           </p>
         </div>
       </motion.div>
