@@ -13,6 +13,7 @@ import { ramadanStatus } from "../lib/ramadan";
 import { todaysReminder } from "../lib/dailyReminders";
 import { loadProfile, daysUntilTrip, tripPrompt, saveProfile } from "../lib/userProfile";
 import OnboardingSheet from "../components/OnboardingSheet";
+import HaramLive from "../components/HaramLive";
 
 // Home dashboard — every feature visible at a glance.
 // Hero: continue / start tour. Below: 3 priority cards (Plan / Stay together / Ask).
@@ -464,6 +465,9 @@ export default function Home() {
 
       {/* DAILY ANCHORS — reminder + prayer times. Both are habit drivers. */}
       <DailyReminderCard reminder={reminder} isAr={isAr} />
+      <div className="mt-4">
+        <HaramLive isAr={isAr} />
+      </div>
       <PrayerTimesCard isAr={isAr} />
 
       {/* TRAVEL & MORE — packages/DIY + secondary links (when-to-go, shop).

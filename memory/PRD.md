@@ -22,6 +22,35 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (May 2, 2026 — sixth session, part 7) — Religious accuracy + Arabic audio + satnav + live Haram + deep-dive v3
+- **CRITICAL Iḥrām accuracy fix** in `lib/tourSteps.js`. Cross-checked
+  against user-provided "Simple Umrah Guide" PDFs. Old wording was
+  technically correct but ambiguous — readers could think putting on the
+  iḥrām *cloth* = entering iḥrām. New text states EXPLICITLY: "You ENTER
+  iḥrām when you make the niyyah and recite the Talbiyah at the Mīqāt.
+  Until then you are NOT in iḥrām, even after putting on the cloth — so
+  apply perfume now while you still can." Lists 9 things forbidden ONLY
+  AFTER the Talbiyah, with the parenthetical "Right now — BEFORE the
+  Talbiyah — all of these are still allowed."
+- **Ḥijr Ismāʿīl warning** added to Ṭawāf intro — must walk OUTSIDE the
+  low semi-circular wall, not through it (passing through invalidates).
+- **Per-step Arabic audio** — 9 Onyx TTS Arabic recitations (Talbiyah,
+  masjid entry/exit, Black Stone, Yemeni Corner, Maqām Ibrāhīm, Ṣafā
+  āyah, Ṣafā/Marwah takbīr) cached in `/public/audio/duas/`. Tour play
+  button plays real Arabic recitation (offline-cached via SW). Browser
+  speech synthesis remains as fallback. SW v1.46.0 includes all 9 audio
+  files in the app shell.
+- **Live Ḥaram audio card** on home for all personas — `HaramLive.jsx`
+  embeds the qurango.net live Qur'ān stream from Makkah. User-initiated
+  playback (no autoplay), backup stream rotation on error.
+- **"Take me to the Ḥaram" satnav** on `/lost` — opens user's native
+  maps with Ka'bah pre-set as walking destination. iOS=Apple Maps,
+  others=Google Maps. Zero SDK cost.
+- **Deep-dive video v3** — 1080×1920, 79.76s, frame-accurate Whisper
+  sync, includes the new features (per-step Arabic audio, satnav, live
+  broadcast). Live at `/promo/sunnah-umrah-deep-dive.mp4`. The 40s viral
+  reel at `/promo/sunnah-umrah-promo.mp4` is unchanged.
+
 ## Implemented (May 2, 2026 — sixth session, part 5) — WelcomeSheet removed + sync'd HD walkthrough video
 - **Removed legacy `WelcomeSheet`** from `pages/Tour.jsx`. It was duplicate
   friction with the personalised `OnboardingSheet` that already runs on Home

@@ -2,7 +2,7 @@
    Cache-first for the app shell, network-first for /api calls.
    Bump CACHE_VERSION to force clients to update.
 */
-const CACHE_VERSION = "umrah-v1.45.0";
+const CACHE_VERSION = "umrah-v1.46.0";
 const APP_SHELL = [
   "/",
   "/manifest.json",
@@ -10,6 +10,17 @@ const APP_SHELL = [
   "/apple-touch-icon.png",
   // Adhan audio — needed offline so notifications still work in poor signal
   "/audio/adhan-makkah.mp3",
+  // Tour du'a audio (Arabic, Onyx TTS) — cached so they play instantly
+  // and offline once the app has been opened
+  "/audio/duas/talbiyah_start.mp3",
+  "/audio/duas/talbiyah_full.mp3",
+  "/audio/duas/enter_masjid.mp3",
+  "/audio/duas/black_stone.mp3",
+  "/audio/duas/yemeni_corner.mp3",
+  "/audio/duas/maqam_ibrahim.mp3",
+  "/audio/duas/safa_first.mp3",
+  "/audio/duas/safa_marwah_takbir.mp3",
+  "/audio/duas/exit_masjid.mp3",
   // Tawaf step photos — needed offline inside the Haram
   "/images/kaaba/01-black-stone.jpg",
   "/images/kaaba/02-walking.jpg",

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { ArrowLeft, Compass, MapPin, Navigation, Loader2, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Compass, MapPin, Navigation, Loader2, AlertTriangle, Footprints } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
 
@@ -101,6 +101,34 @@ export default function Lost() {
               ? "يحتاج التطبيق إلى إذن الموقع (GPS) للعمل."
               : "This feature needs location (GPS) permission to work."}
           </p>
+
+          {/* Take me to the Ḥaram — opens the user's native maps app with
+              Masjid al-Ḥarām pre-set as the destination. Works perfectly on
+              iOS (Apple Maps), Android (Google Maps), and falls back to
+              Google Maps web on desktop. Uses the Ka'bah's exact GPS:
+              21.4225, 39.8262. */}
+          <button
+            onClick={() => {
+              const dest = "21.4225,39.8262";
+              const ua = navigator.userAgent || "";
+              // Apple Maps deep-link works for iOS/macOS
+              const url = /iPad|iPhone|iPod|Macintosh/i.test(ua)
+                ? `https://maps.apple.com/?daddr=${dest}&q=Masjid+al-Haram&dirflg=w`
+                : `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=walking`;
+              window.open(url, "_blank", "noopener");
+            }}
+            className="mt-4 w-full tap-pulse inline-flex items-center justify-center gap-2 rounded-full bg-[#0F2A24] hover:bg-[#0A1F1A] text-white px-6 py-4 text-sm font-medium"
+            data-testid="satnav-haram-btn"
+          >
+            <Footprints className="w-4 h-4" />
+            {isAr ? "خذني إلى الحرم" : "Take me to the Ḥaram"}
+          </button>
+          <p className="mt-2 text-center text-[11px] text-[#8E8F8A]">
+            {isAr
+              ? "يفتح خرائط هاتفك مع المسار إلى المسجد الحرام."
+              : "Opens your phone's maps app with walking directions."}
+          </p>
+
           <div className="mt-4 rounded-2xl border border-[#E8E5DD] bg-white p-3 text-[12px] text-[#5C5D58] leading-relaxed">
             <p className={isAr ? "font-arabic text-right" : ""}>
               {isAr

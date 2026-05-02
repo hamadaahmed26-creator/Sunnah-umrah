@@ -406,7 +406,19 @@ export default function Tour() {
                   </p>
                 </div>
                 <button
-                  onClick={() => speak(step.dua.ar)}
+                  onClick={() => {
+                    if (step.dua.audio_id) {
+                      // Real Arabic recitation (Onyx TTS, recorded once,
+                      // cached by SW for offline playback).
+                      const url = `${process.env.PUBLIC_URL || ""}/audio/duas/${step.dua.audio_id}.mp3`;
+                      const a = new Audio(url);
+                      a.play().catch(() => speak(step.dua.ar));
+                    } else {
+                      // Fallback to browser speech synthesis if no
+                      // pre-recorded audio is available for this du'a.
+                      speak(step.dua.ar);
+                    }
+                  }}
                   className="tap-pulse w-11 h-11 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
                   aria-label="listen"
                   data-testid="tour-dua-play"

@@ -22,20 +22,20 @@ export const TOUR_STEPS = [
     title_en: "Before Iḥrām — prepare yourself",
     title_ar: "قبل الإحرام — استعدّ",
     what_en:
-      "Before putting on Iḥrām, do the following — all from the Sunnah: (1) Ghusl, a full-body wash, (2) trim your nails, (3) remove armpit and pubic hair, (4) men: trim the moustache, (5) apply perfume to the body and hair, but NOT to the iḥrām cloth itself. Once you put on Iḥrām, the nine things listed below become forbidden until Taḥallul.",
+      "Important — you ENTER iḥrām when you make the niyyah and recite the Talbiyah at the Mīqāt (next steps). Until then, you are NOT yet in iḥrām, even after putting on the cloth — so do these Sunnah preparations now while you still can: (1) Ghusl — a full-body wash, (2) trim your nails, (3) remove armpit and pubic hair, (4) men: trim the moustache, (5) apply perfume to your body and hair (yes, perfume is permitted now — it only becomes forbidden once you have entered the state of iḥrām via the Talbiyah), but NOT to the iḥrām cloth itself, (6) men: put on the two unstitched white sheets — izār + ridāʾ. Women: any modest clothing, no niqāb, no gloves.",
     what_ar:
-      "قبل ارتداء الإحرام، افعل ما يلي من السنّة: ١) الاغتسال، ٢) تقليم الأظفار، ٣) إزالة شعر الإبط والعانة، ٤) للرجال: قصّ الشّارب، ٥) التّطيّب في البدن والرّأس — لا في ثوب الإحرام نفسه. وإذا دخلتَ في الإحرام حرمت عليك الأمور التّسعة المذكورة في التّنبيه أدناه حتّى التّحلّل.",
-    tip: "Forbidden once in Iḥrām: 1) using perfume, 2) trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqāb and gloves (women), 7) signing a marriage contract, 8) intimacy with one's spouse, 9) hunting. Most first-time pilgrims forget to clip their nails and apply perfume BEFORE putting on Iḥrām — do it now, while you still can.",
+      "مهمّ — أنت تدخل في الإحرام عند النيّة والتلبية في الميقات (في الخطوات التالية)، وقبل ذلك لستَ مُحرِمًا حتّى وإن لبستَ ثياب الإحرام. فاغتنم الآن السنن قبل أن تُحرم: ١) الاغتسال، ٢) تقليم الأظفار، ٣) إزالة شعر الإبط والعانة، ٤) للرّجال: قصّ الشّارب، ٥) التّطيّب في البدن والرّأس (نعم، الطّيب جائز الآن — وإنّما يحرم بعد الدّخول في الإحرام بالتّلبية) — لا في ثوب الإحرام نفسه، ٦) الرّجال: لبس الإزار والرّداء غير المخيطين. النّساء: ملابس محتشمة، بلا نقاب ولا قفّازين.",
+    tip: "Forbidden ONLY AFTER entering iḥrām (i.e. after the Talbiyah at the Mīqāt) and until Taḥallul: 1) using perfume, 2) cutting/trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqāb and gloves (women), 7) signing a marriage contract, 8) intimacy with one's spouse, 9) hunting. Right now — BEFORE the Talbiyah — all of these are still allowed. So clip your nails, perfume your body, and prepare properly while you still can.",
   },
   {
     chapter: "Ihram",
     scene: "miqat",
-    title_en: "Step 1 · Iḥrām — at the Mīqāt",
-    title_ar: "الخطوة ١ · الإحرام — عند الميقات",
+    title_en: "Step 1 · At the Mīqāt — change & make niyyah",
+    title_ar: "الخطوة ١ · عند الميقات — البِس وانوِ",
     what_en:
-      "At the Mīqāt boundary, change into Iḥrām. MEN: two unstitched white sheets — izār (bottom) + ridāʾ (top) — head uncovered. WOMEN: any modest clothing — no niqab, no gloves.",
+      "At the Mīqāt boundary: men change into their two unstitched white sheets (izār + ridāʾ), head uncovered. Women keep their normal modest clothing — but no niqāb, no gloves. You are still not yet in iḥrām — that begins on the next screen with the niyyah and the Talbiyah.",
     what_ar:
-      "عند الميقات، ارتدِ الإحرام. الرّجال: قطعتان بيضاوان غير مخيطتين (إزار ورداء) والرّأس مكشوف. النّساء: ملابس محتشمة، بلا نقاب ولا قفّازين.",
+      "عند الميقات: يرتدي الرّجال إزارهم ورداءهم غير المخيطين والرّأس مكشوف. وتلبس النّساء الملابس المحتشمة المعتادة بلا نقاب ولا قفّازين. لم تدخل في الإحرام بعد — يبدأ الإحرام في الشّاشة التّالية بالنيّة والتلبية.",
     tip: "There are 5 official Mīqāt boundaries — plus Masjid ʿĀʾishah (Tanʿīm) for those already in Makkah. See all of them in the Ziyārah tab (📍 in the bottom nav).",
   },
   {
@@ -53,6 +53,7 @@ export const TOUR_STEPS = [
       en: "Here I am at Your service, O Allah, for ʿUmrah.",
       label_en: "Start of Talbiyah for ʿUmrah",
       label_ar: "بداية التلبية بالعمرة",
+      audio_id: "talbiyah_start",
     },
     tip: "Niyyah is silent — the heart only. Saying the niyyah aloud is not from the Sunnah.",
   },
@@ -74,6 +75,7 @@ export const TOUR_STEPS = [
         "Here I am at Your service, O Allah, here I am at Your service. Here I am at Your service — You have no partner — here I am at Your service. Truly all praise, blessing, and sovereignty belong to You. You have no partner.",
       label_en: "Talbiyah — keep repeating",
       label_ar: "التلبية — كرّرها",
+      audio_id: "talbiyah_full",
     },
   },
 
@@ -96,6 +98,7 @@ export const TOUR_STEPS = [
         "In the name of Allah, peace and blessings upon the Messenger of Allah. O Allah, forgive my sins and open the gates of Your mercy for me.",
       label_en: "Du'a on entering the masjid",
       label_ar: "دعاء دخول المسجد",
+      audio_id: "enter_masjid",
     },
   },
 
@@ -115,6 +118,7 @@ export const TOUR_STEPS = [
       en: "In the name of Allah; Allah is the Greatest.",
       label_en: "At the Black Stone — every lap",
       label_ar: "عند الحجر الأسود — كلّ شوط",
+      audio_id: "black_stone",
     },
     tip: "Istilām (greeting the Black Stone) has a Sunnah order of preference: 1) Touch AND kiss it — if easily possible. 2) Touch it with your hand, then kiss your hand. 3) Touch it with a stick, then kiss the stick. 4) From a distance, point towards it with your right hand and say Allāhu Akbar ONLY — DO NOT kiss your hand afterwards. This last point is a common mistake, with no basis in the Sunnah. Never push or harm others trying to reach it.",
   },
@@ -124,9 +128,9 @@ export const TOUR_STEPS = [
     title_en: "Walk around the Ka'bah — 7 laps",
     title_ar: "طُف حول الكعبة سبعة أشواط",
     what_en:
-      "Now you'll go around 7 times. We'll walk you through each lap step by step — Black Stone, the Yemeni Corner, and the du'a between them.",
+      "Now you'll go around 7 times. Walk so the Ka'bah is on your LEFT. Important: stay OUTSIDE the low semi-circular wall (Ḥijr Ismāʿīl) — it counts as part of the Ka'bah, so passing through it INVALIDATES that lap. We'll guide you through each lap step by step.",
     what_ar:
-      "ستطوف الآن سبعة أشواط. سنرافقك في كل شوط خطوة بخطوة — الحجر الأسود، الركن اليماني، والدعاء بينهما.",
+      "ستطوف الآن سبعة أشواط، وتجعل الكعبة عن يسارك. مهمّ: ابقَ خارج جدار حِجر إسماعيل النّصف دائري — فهو من الكعبة، ومن طاف من داخله بطل شوطه. سنرافقك في كلّ شوط خطوة بخطوة.",
   },
   {
     chapter: "Tawaf",
@@ -169,6 +173,7 @@ export const TOUR_STEPS = [
         "Indeed, Safa and Marwah are among the symbols of Allah. So whoever makes Ḥajj or ʿUmrah of the House — there is no blame upon him for walking between them. And whoever does good voluntarily, then indeed Allah is Appreciative and Knowing. (We begin with what Allah began with.)",
       label_en: "On approach to Safa — once",
       label_ar: "آية الصفا — مرّة واحدة",
+      audio_id: "safa_first",
     },
   },
   {
@@ -189,6 +194,7 @@ export const TOUR_STEPS = [
         "Allah is the Greatest (×3). There is no god but Allah alone, He has no partner. To Him belongs all sovereignty and praise. He gives life and death and has power over all things. There is no god but Allah alone, He has no partner — He fulfilled His promise, aided His servant, and alone defeated the confederates.",
       label_en: "On each hill — 3 times",
       label_ar: "على كل جبل — ٣ مرّات",
+      audio_id: "safa_marwah_takbir",
     },
     tip: "The green pillars: between the two green-lit pillars along the Masʿā, MEN should jog briskly (a brisk sunnah run, not a sprint) on each of the 7 trips. Outside the green pillars, walk normally. WOMEN walk normally throughout — no jogging.",
   },
