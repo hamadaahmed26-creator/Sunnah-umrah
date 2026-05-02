@@ -22,7 +22,7 @@ export const TOUR_STEPS = [
     title_en: "Before Iḥrām — prepare yourself",
     title_ar: "قبل الإحرام — استعدّ",
     what_en:
-      "Important — you ENTER iḥrām when you make the niyyah and recite the Talbiyah at the Mīqāt (next steps). Until then, you are NOT yet in iḥrām, even after putting on the cloth — so do these Sunnah preparations now while you still can: (1) Ghusl — a full-body wash, (2) trim your nails, (3) remove armpit and pubic hair, (4) men: trim the moustache, (5) apply perfume to your body and hair (yes, perfume is permitted now — it only becomes forbidden once you have entered the state of iḥrām via the Talbiyah), but NOT to the iḥrām cloth itself, (6) men: put on the two unstitched white sheets — izār + ridāʾ. Women: any modest clothing, no niqāb, no gloves.",
+      "Important — you ENTER iḥrām (the sacred state of pilgrimage) when you make the niyyah (intention, in your heart) and recite the Talbiyah (the pilgrim's call) at the Mīqāt (the official boundary). Until then, you are NOT yet in iḥrām, even after putting on the cloth — so do these Sunnah preparations now while you still can: (1) Ghusl — a full-body wash, (2) trim your nails, (3) remove armpit and pubic hair, (4) men: trim the moustache, (5) apply perfume to your body and hair (yes, perfume is permitted now — it only becomes forbidden once you have entered the state of iḥrām via the Talbiyah), but NOT to the iḥrām cloth itself, (6) men: put on the two unstitched white sheets — izār + ridāʾ (lower + upper wrap). Women: any modest clothing, no niqāb, no gloves.",
     what_ar:
       "مهمّ — أنت تدخل في الإحرام عند النيّة والتلبية في الميقات (في الخطوات التالية)، وقبل ذلك لستَ مُحرِمًا حتّى وإن لبستَ ثياب الإحرام. فاغتنم الآن السنن قبل أن تُحرم: ١) الاغتسال، ٢) تقليم الأظفار، ٣) إزالة شعر الإبط والعانة، ٤) للرّجال: قصّ الشّارب، ٥) التّطيّب في البدن والرّأس (نعم، الطّيب جائز الآن — وإنّما يحرم بعد الدّخول في الإحرام بالتّلبية) — لا في ثوب الإحرام نفسه، ٦) الرّجال: لبس الإزار والرّداء غير المخيطين. النّساء: ملابس محتشمة، بلا نقاب ولا قفّازين.",
     tip: "Forbidden ONLY AFTER entering iḥrām (i.e. after the Talbiyah at the Mīqāt) and until Taḥallul: 1) using perfume, 2) cutting/trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqāb and gloves (women), 7) signing a marriage contract, 8) intimacy with one's spouse, 9) hunting. Right now — BEFORE the Talbiyah — all of these are still allowed. So clip your nails, perfume your body, and prepare properly while you still can.",
@@ -33,7 +33,7 @@ export const TOUR_STEPS = [
     title_en: "Step 1 · At the Mīqāt — change & make niyyah",
     title_ar: "الخطوة ١ · عند الميقات — البِس وانوِ",
     what_en:
-      "At the Mīqāt boundary: men change into their two unstitched white sheets (izār + ridāʾ), head uncovered. Women keep their normal modest clothing — but no niqāb, no gloves. You are still not yet in iḥrām — that begins on the next screen with the niyyah and the Talbiyah.",
+      "At the Mīqāt (official boundary) men change into their two unstitched white sheets (izār + ridāʾ — lower + upper wrap), head uncovered. Women keep their normal modest clothing — but no niqāb, no gloves. You are still not yet in iḥrām — that begins on the next screen with the niyyah (intention) and the Talbiyah (pilgrim's call).",
     what_ar:
       "عند الميقات: يرتدي الرّجال إزارهم ورداءهم غير المخيطين والرّأس مكشوف. وتلبس النّساء الملابس المحتشمة المعتادة بلا نقاب ولا قفّازين. لم تدخل في الإحرام بعد — يبدأ الإحرام في الشّاشة التّالية بالنيّة والتلبية.",
     tip: "There are 5 official Mīqāt boundaries — plus Masjid ʿĀʾishah (Tanʿīm) for those already in Makkah. See all of them in the Ziyārah tab (📍 in the bottom nav).",
@@ -44,7 +44,7 @@ export const TOUR_STEPS = [
     title_en: "Make your intention (Niyyah) — in the heart",
     title_ar: "النية — في القلب",
     what_en:
-      "Niyyah is in the HEART — never said out loud (Ibn Taymiyyah, Ibn Bāz, al-Albānī). Simply intend ʿUmrah in your heart, then say the phrase below ONCE out loud — this is the start of your Talbiyah, not a verbal niyyah.",
+      "Niyyah (intention) is in the HEART — never said out loud (Ibn Taymiyyah, Ibn Bāz, al-Albānī). Simply intend ʿUmrah in your heart, then say the phrase below ONCE out loud — this is the start of your Talbiyah (pilgrim's call), not a verbal niyyah.",
     what_ar:
       "النيّة محلّها القلب — لا تُنطق باللسان (ابن تيمية، ابن باز، الألباني). انوِ العمرة بقلبك، ثم قل العبارة التالية مرّة واحدة جهرًا — وهي بداية التلبية، وليست تلفّظًا بالنية.",
     dua: {
@@ -63,7 +63,7 @@ export const TOUR_STEPS = [
     title_en: "Recite the Talbiyah",
     title_ar: "التلبية",
     what_en:
-      "Begin reciting the Talbiyah out loud (men) or quietly (women). Keep repeating it the whole way to Masjid al-Haram.",
+      "Begin reciting the Talbiyah (pilgrim's call) out loud (men) or quietly (women). Keep repeating it the whole way to Masjid al-Haram.",
     what_ar:
       "ابدأ بترديد التلبية جهرًا (للرجال) أو سرًّا (للنساء). استمر في ترديدها حتى تصل المسجد الحرام.",
     dua: {
@@ -109,7 +109,7 @@ export const TOUR_STEPS = [
     title_en: "Step 2 · Tawaf — start at the Black Stone",
     title_ar: "الخطوة ٢ · الطواف — ابدأ من الحجر الأسود",
     what_en:
-      "Stand facing the Black Stone (the eastern corner of the Ka'bah). Raise your right hand toward it and say 'Bismillāh, Allāhu Akbar' — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhṭibāʿ) by passing the iḥrām under your right armpit — keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml) like a brisk jog; for laps 4–7, walk normally.",
+      "Stand facing the Black Stone (the eastern corner of the Ka'bah). Raise your right hand toward it and say 'Bismillāh, Allāhu Akbar' — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhṭibāʿ — passing the iḥrām cloth under your right armpit) and keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml — a brisk sunnah jog); for laps 4–7, walk normally.",
     what_ar:
       "قف مستقبلًا الحجر الأسود (الرّكن الشّرقي للكعبة)، ارفع يدك اليمنى نحوه وقل: «بِسْمِ اللَّهِ، اللَّهُ أَكْبَر» — مرّة واحدة. وهذه بداية كلّ شوط.\n\nالرّجال: اكشف الكتف الأيمن (الاضطباع) بجعل الإحرام تحت الإبط الأيمن، وأبقِه كذلك حتّى نهاية الأشواط السّبعة. وفي الأشواط الثّلاثة الأولى: امشِ بسرعة (الرَّمَل) كالهرولة الخفيفة؛ وفي الأشواط ٤–٧: امشِ عاديًّا.",
     dua: {
@@ -128,7 +128,7 @@ export const TOUR_STEPS = [
     title_en: "Walk around the Ka'bah — 7 laps",
     title_ar: "طُف حول الكعبة سبعة أشواط",
     what_en:
-      "Now you'll go around 7 times. Walk so the Ka'bah is on your LEFT. Important: stay OUTSIDE the low semi-circular wall (Ḥijr Ismāʿīl) — it counts as part of the Ka'bah, so passing through it INVALIDATES that lap. We'll guide you through each lap step by step.",
+      "Now you'll go around 7 times. Walk so the Ka'bah is on your LEFT. Important: stay OUTSIDE the low semi-circular wall (Ḥijr Ismāʿīl — counted as part of the Ka'bah) — passing through it INVALIDATES that lap. We'll guide you through each lap step by step.",
     what_ar:
       "ستطوف الآن سبعة أشواط، وتجعل الكعبة عن يسارك. مهمّ: ابقَ خارج جدار حِجر إسماعيل النّصف دائري — فهو من الكعبة، ومن طاف من داخله بطل شوطه. سنرافقك في كلّ شوط خطوة بخطوة.",
   },
@@ -216,7 +216,7 @@ export const TOUR_STEPS = [
     title_en: "Step 4 · Halq or Taqsir",
     title_ar: "الخطوة ٤ · الحلق أو التقصير",
     what_en:
-      "MEN: shave your head completely (Halq, more virtuous) or trim all hair short (Taqsir). WOMEN: trim a fingertip's length from the end of your hair.",
+      "MEN: shave your head completely (Halq — shaving, more virtuous) or trim all hair short (Taqsir — trimming). WOMEN: trim a fingertip's length from the end of your hair.",
     what_ar:
       "الرجال: احلِق رأسك (الحلق أفضل) أو قصِّر جميع شعرك. النساء: قُصصن قدر أنملة من أطراف الشعر.",
   },
@@ -226,7 +226,7 @@ export const TOUR_STEPS = [
     title_en: "Umrah complete · Alhamdulillah",
     title_ar: "اكتملت العمرة — الحمد لله",
     what_en:
-      "You've now exited Ihram. All prohibitions are lifted. May Allah accept your Umrah — taqabbalAllāhu minnā wa minkum.",
+      "You've now exited Ihram (Taḥallul — exiting the sacred state). All prohibitions are lifted. May Allah accept your Umrah — taqabbalAllāhu minnā wa minkum.",
     what_ar:
       "خرجت من الإحرام، وعاد كل ما كان محظورًا جائزًا. تقبّل الله منا ومنكم.",
   },
