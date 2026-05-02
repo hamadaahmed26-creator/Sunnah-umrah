@@ -176,7 +176,7 @@ export default function Tour() {
   };
 
   return (
-    <div className="max-w-md mx-auto pb-60 sm:pb-44 px-1" data-testid="tour-page">
+    <div className="max-w-md mx-auto pb-[280px] sm:pb-52 px-1" data-testid="tour-page">
       {/* Header — chapter-aware so it reads "You're preparing for Iḥrām · 2 / 15"
           rather than the cold "Step 2 of 15". Warmer, gives the pilgrim
           emotional context for what they're about to do next. */}
