@@ -22,6 +22,26 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (May 2, 2026 — sixth session, part 5) — WelcomeSheet removed + sync'd HD walkthrough video
+- **Removed legacy `WelcomeSheet`** from `pages/Tour.jsx`. It was duplicate
+  friction with the personalised `OnboardingSheet` that already runs on Home
+  on first launch, AND it was blocking the actual Tour content. Now Tour
+  opens directly into "Umrah in 4 simple steps" (Ihram / Tawaf / Sa'i / Halq).
+  Removed the `WelcomeSheet` import, the `welcomeOpen` state + effect, and
+  the JSX mount. Lint clean. SW → `umrah-v1.39.0`.
+- **Generated a vertical 1080×1920 HD walkthrough video** at
+  `/promo/sunnah-umrah-promo.mp4` for TikTok/Reels/Shorts/Snap. 40.76s,
+  Onyx voiceover via OpenAI TTS-1-HD (Emergent universal key), Whisper
+  word-level timestamps to perfectly sync 14 scene-by-scene clips with the
+  narration. Each scene was recorded as its own webm at 540×1170 with 2x
+  device-scale-factor, then trimmed to its exact target slot, concatenated
+  losslessly, and final pass scaled+padded to 1080×1920 with #1C1D1B
+  letterbox at CRF 18. Script wording sanitised — no "AI scholar" (changed
+  to "instant answers, grounded in authentic Sunnah sources"), no "Bab"
+  jargon ("nearest gate"), Qibla phrasing now "points straight to the
+  Ka'bah". Coverage now includes Tawaf lap counter, Sa'i trip counter, dua
+  block, daily reminder share, shop, packages, hotels & flights separately.
+
 ## Implemented (May 2, 2026 — sixth session, part 4) — Helping-someone-else pronouns + direct booking CTAs
 - **Pronoun fix when user picks "I'm helping someone else"** in onboarding.
   All subsequent questions and labels now correctly switch from "you/your/I"
