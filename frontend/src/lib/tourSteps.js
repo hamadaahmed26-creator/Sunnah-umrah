@@ -86,7 +86,7 @@ export const TOUR_STEPS = [
     title_en: "Enter Masjid al-Haram",
     title_ar: "دخول المسجد الحرام",
     what_en:
-      "Step in with your RIGHT foot first and recite the entry du'a. KEEP reciting the Talbiyah — it doesn't stop until you reach the Black Stone to begin Tawaf.",
+      "Step in with your RIGHT foot first and recite the entry du'a. KEEP reciting the Talbiyah (pilgrim's call) — it doesn't stop until you reach the Black Stone (al-Ḥajar al-Aswad — the dark stone in the eastern corner of the Ka'bah) to begin Tawaf (walking around the Ka'bah, 7 times).",
     what_ar:
       "ادخل بقدمك اليمنى وقل دعاء الدخول. استمر في التلبية — لا تتوقف حتى تصل الحجر الأسود لبدء الطواف.",
     dua: {
@@ -109,7 +109,7 @@ export const TOUR_STEPS = [
     title_en: "Step 2 · Tawaf — start at the Black Stone",
     title_ar: "الخطوة ٢ · الطواف — ابدأ من الحجر الأسود",
     what_en:
-      "Stand facing the Black Stone (the eastern corner of the Ka'bah). Raise your right hand toward it and say 'Bismillāh, Allāhu Akbar' — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhṭibāʿ — passing the iḥrām cloth under your right armpit) and keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml — a brisk sunnah jog); for laps 4–7, walk normally.",
+      "Stand facing the Black Stone (al-Ḥajar al-Aswad — embedded in the eastern corner of the Ka'bah). Raise your right hand toward it and say 'Bismillāh, Allāhu Akbar' (in the name of Allah, Allah is the Greatest) — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhṭibāʿ — passing the iḥrām cloth under your right armpit) and keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml — a brisk sunnah jog); for laps 4–7, walk normally.",
     what_ar:
       "قف مستقبلًا الحجر الأسود (الرّكن الشّرقي للكعبة)، ارفع يدك اليمنى نحوه وقل: «بِسْمِ اللَّهِ، اللَّهُ أَكْبَر» — مرّة واحدة. وهذه بداية كلّ شوط.\n\nالرّجال: اكشف الكتف الأيمن (الاضطباع) بجعل الإحرام تحت الإبط الأيمن، وأبقِه كذلك حتّى نهاية الأشواط السّبعة. وفي الأشواط الثّلاثة الأولى: امشِ بسرعة (الرَّمَل) كالهرولة الخفيفة؛ وفي الأشواط ٤–٧: امشِ عاديًّا.",
     dua: {
@@ -138,10 +138,10 @@ export const TOUR_STEPS = [
     title_en: "After Tawaf — pray 2 rakʿah behind Maqām Ibrāhīm",
     title_ar: "بعد الطواف — صلِّ ركعتين خلف المقام",
     what_en:
-      "After 7 laps, pray 2 rakʿah behind Maqām Ibrāhīm — or, if it is crowded, ANYWHERE in the masjid facing the Ka'bah. Both Ibn Bāz and al-Albānī permitted this; do not push or harm others to stand behind the Maqām. 1st rakʿah: al-Fātiḥah, then Sūrat al-Kāfirūn. 2nd rakʿah: al-Fātiḥah, then Sūrat al-Ikhlāṣ.",
+      "After 7 laps, pray 2 rakʿah (units of prayer) behind Maqām Ibrāhīm (the standing place of Ibrāhīm — a small glass-encased stone near the Ka'bah) — or, if it is crowded, ANYWHERE in the masjid facing the Ka'bah. Both Ibn Bāz and al-Albānī permitted this; do not push or harm others to stand behind the Maqām. 1st rakʿah: al-Fātiḥah, then Sūrat al-Kāfirūn. 2nd rakʿah: al-Fātiḥah, then Sūrat al-Ikhlāṣ.",
     what_ar:
       "بعد سبعة أشواط، صلِّ ركعتين خلف مقام إبراهيم — أو في أيّ مكان من المسجد إذا كان الزّحام شديدًا مستقبلًا الكعبة. أفتى بذلك ابن باز والألباني رحمهما الله؛ لا تدفع النّاس ولا تؤذهم لتقف خلف المقام. الأولى: الفاتحة ثمّ الكافرون. الثّانية: الفاتحة ثمّ الإخلاص.",
-    tip: "After the two rakʿahs (and before going to Zamzam), if you can return to the Black Stone and greet it again with takbīr, that is sunnah — but it is optional and was not done by the Prophet ﷺ in every narration. If the crowd is heavy, skip it without guilt and proceed to Zamzam.",
+    tip: "After the two rakʿahs (and before going to Zamzam), if you can return to the Black Stone and greet it again with takbīr (saying Allāhu Akbar — 'Allah is the Greatest'), that is sunnah — but it is optional and was not done by the Prophet ﷺ in every narration. If the crowd is heavy, skip it without guilt and proceed to Zamzam.",
   },
   {
     chapter: "Tawaf",
@@ -149,7 +149,7 @@ export const TOUR_STEPS = [
     title_en: "Drink Zamzam water",
     title_ar: "اشرب من ماء زمزم",
     what_en:
-      "Drink Zamzam to your fill, in three breaths. Pour some over your head too — both are Sunnah. Make any du'a you wish before the first sip — in any language.",
+      "Drink Zamzam (the blessed well-water inside Masjid al-Ḥaram) to your fill, in three breaths. Pour some over your head too — both are Sunnah. Make any du'a (supplication) you wish before the first sip — in any language.",
     what_ar:
       "اشرب من زمزم حتى تكتفي، على ثلاث جُرعات، واصبب على رأسك منها — كلاهما من السنّة. ادعُ بما شئت قبل أول رشفة بأي لغة.",
   },
@@ -161,7 +161,7 @@ export const TOUR_STEPS = [
     title_en: "Step 3 · Sa'i — start at Safa",
     title_ar: "الخطوة ٣ · السعي — ابدأ من الصفا",
     what_en:
-      "Walk to the hill of Safa. As you approach, recite the verse below — the FIRST time only.",
+      "Sa'i is walking 7 trips between two small hills inside the masjid: Ṣafā and Marwah. Walk to the hill of Ṣafā (the starting hill, near the Black Stone). As you approach, recite the verse below — the FIRST time only.",
     what_ar:
       "اتّجه إلى الصفا. عند الاقتراب، اقرأ الآية التالية في المرّة الأولى فقط.",
     dua: {
@@ -182,7 +182,7 @@ export const TOUR_STEPS = [
     title_en: "On Safa & Marwah — takbir × 3",
     title_ar: "على الصفا والمروة — التكبير ٣ مرات",
     what_en:
-      "Climb the hill, face the Ka'bah, raise both hands and recite this du'a 3 times. After the 1st & 2nd: make personal du'a. After the 3rd: just go.",
+      "Climb the hill (Ṣafā first, then Marwah on every trip), face the Ka'bah, raise both hands and recite this du'a 3 times. After the 1st & 2nd: make personal du'a (supplication, in any language). After the 3rd: just go.",
     what_ar:
       "اصعد الجبل، استقبل الكعبة، ارفع يديك، واقرأ هذا الدعاء ثلاث مرات. بعد الأولى والثانية: ادعُ بما شئت. بعد الثالثة: ابدأ المشي.",
     dua: {
@@ -196,7 +196,7 @@ export const TOUR_STEPS = [
       label_ar: "على كل جبل — ٣ مرّات",
       audio_id: "safa_marwah_takbir",
     },
-    tip: "The green pillars: between the two green-lit pillars along the Masʿā, MEN should jog briskly (a brisk sunnah run, not a sprint) on each of the 7 trips. Outside the green pillars, walk normally. WOMEN walk normally throughout — no jogging.",
+    tip: "The green pillars: between the two green-lit pillars along the Masʿā (the corridor connecting the two hills), MEN should jog briskly (a brisk sunnah run, not a sprint) on each of the 7 trips. Outside the green pillars, walk normally. WOMEN walk normally throughout — no jogging.",
   },
   {
     chapter: "Sa'i",
@@ -204,7 +204,7 @@ export const TOUR_STEPS = [
     title_en: "Walk between Safa & Marwah — 7 trips",
     title_ar: "اسعَ بين الصفا والمروة سبعة أشواط",
     what_en:
-      "We'll walk you through each of the 7 trips one by one — the takbir on each hill, the green markers, and the final Marwah du'a.",
+      "We'll walk you through each of the 7 trips one by one — the takbir (saying Allāhu Akbar) on each hill, the green markers, and the final Marwah du'a.",
     what_ar:
       "سنرافقك في كل شوط من الأشواط السبعة — التكبير على كل جبل، العَلَمان الأخضران، ودعاء المروة الأخير.",
   },
