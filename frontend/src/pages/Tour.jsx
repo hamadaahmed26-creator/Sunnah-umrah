@@ -250,6 +250,30 @@ export default function Tour() {
                 : "Don't worry if this is your first time — many people find it confusing at first. We'll walk you through it. Take your time."}
             </p>
           </div>
+          {/* FAQ shortcut — visible only on the intro to answer the most
+              common "what if I mess up?" worries before pilgrims start. */}
+          <Link
+            to="/faq"
+            className="mt-3 block rounded-2xl bg-white border border-[#E8E5DD] p-3 hover:border-[#B3884D] transition tap-pulse"
+            data-testid="tour-faq-link"
+          >
+            <div className={`flex items-center gap-2.5 ${isAr ? "flex-row-reverse" : ""}`}>
+              <div className="w-9 h-9 rounded-full bg-[#FBF4E4] grid place-items-center flex-shrink-0">
+                <span className="text-[16px] leading-none">❓</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr ? "عندك سؤال؟ اطّلع على الأسئلة الشّائعة" : "Got a question? Read the FAQs"}
+                </p>
+                <p className={`mt-0.5 text-[11px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr
+                    ? "ماذا لو انتقض وضوئي؟ وإذا أخطأت؟ والحيض؟ والكرسي المتحرّك؟"
+                    : "What if my wuḍū breaks? I made a mistake? Period? Wheelchair?"}
+                </p>
+              </div>
+              <ArrowRight className={`w-4 h-4 text-[#8E8F8A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
+            </div>
+          </Link>
         </>
       )}
 

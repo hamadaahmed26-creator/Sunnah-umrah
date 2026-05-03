@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen, UserCog, MapPin } from "lucide-react";
+import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen, UserCog, MapPin, HelpCircle } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import {
   loadSettings,
@@ -265,6 +265,23 @@ export default function Settings() {
                   : "Prayer times will auto-detect your city using GPS.")}
           </p>
         </div>
+        <Link
+          to="/faq"
+          className="block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
+          data-testid="settings-faq"
+        >
+          <div className="flex items-center gap-2.5">
+            <HelpCircle className="w-4 h-4 text-[#7B5C24]" />
+            <div className="flex-1">
+              <div className={`text-[13px] font-semibold text-[#1C1D1B] ${isAr ? "font-arabic" : ""}`}>
+                {isAr ? "الأسئلة الشّائعة" : "FAQs"}
+              </div>
+              <div className={`text-[11px] text-[#8E8F8A] ${isAr ? "font-arabic" : ""}`}>
+                {isAr ? "ماذا لو أخطأت؟ الحيض؟ الوضوء؟" : "Mistakes · wuḍū · period · more"}
+              </div>
+            </div>
+          </div>
+        </Link>
         <Link
           to="/about"
           className="block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"

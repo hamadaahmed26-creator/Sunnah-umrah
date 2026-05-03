@@ -159,6 +159,28 @@ export const TOUR_STEPS = [
           "الآن — قبل التّلبية — كلّ ذلك مباح. فقلّم أظفارك، وتطيّب، واستعدّ جيّدًا وأنت لا زلت تستطيع.",
         accent: "tip",
       },
+      {
+        icon: "🙏",
+        title_en: "What if I do one of these by accident?",
+        title_ar: "ماذا لو فعلت إحداها نسيانًا؟",
+        body_en:
+          "**Out of forgetfulness, ignorance, or coercion — NO penalty.** Stop the moment you remember (e.g. wash off perfume). Allah ﷻ says: *'Our Lord, do not take us to task if we forget or err'* — and He has answered: 'I have done so.'",
+        body_ar:
+          "**نسيانًا أو جهلًا أو إكراهًا — لا شيء عليك.** توقّف بمجرّد أن تتذكّر (كغسل الطّيب). قال الله ﷻ: ﴿رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا﴾ — وقد أجاب: «قد فعلت».",
+        bullets_en: [
+          "**Intentionally** doing one = **fidyah** (choose one): fast 3 days · feed 6 poor people (~1.5 kg each) · slaughter a sheep in Makkah",
+          "Intimacy with spouse **BEFORE Tawaf** = the **only thing** that invalidates your ʿUmrah (Bukhārī, Ibn ʿAbbās)",
+          "**Nothing else breaks Iḥrām** — not wuḍū, not bleeding, not period, not scratching",
+        ],
+        bullets_ar: [
+          "الفعل **عمدًا** ← **فدية** مخيّرًا: صوم ٣ أيّام · إطعام ٦ مساكين (≈١٫٥ كغ لكلّ) · ذبح شاة في مكّة",
+          "الجماع **قبل الطّواف** = **الوحيد** الذي يُبطل العمرة (البخاري، ابن عبّاس)",
+          "**لا شيء غير ذلك يُبطل الإحرام** — لا الوضوء، ولا الدّم، ولا الحيض، ولا الحكّ",
+        ],
+        note_en: "Full ruling + more worries covered in the FAQ tab.",
+        note_ar: "الحكم الكامل ومزيد من المسائل في صفحة الأسئلة الشّائعة.",
+        accent: "warning",
+      },
     ],
   },
   {
