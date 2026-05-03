@@ -25,6 +25,105 @@ export const TOUR_STEPS = [
       "Important — you ENTER iḥrām (the sacred state of pilgrimage) when you make the niyyah (intention, in your heart) and recite the Talbiyah (the pilgrim's call) at the Mīqāt (the official boundary). Until then, you are NOT yet in iḥrām, even after putting on the cloth — so do these Sunnah preparations now while you still can: (1) Ghusl — a full-body wash, (2) trim your nails, (3) remove armpit and pubic hair, (4) men: trim the moustache, (5) apply perfume to your body and hair (yes, perfume is permitted now — it only becomes forbidden once you have entered the state of iḥrām via the Talbiyah), but NOT to the iḥrām cloth itself, (6) men: put on the two unstitched white sheets — izār + ridāʾ (lower + upper wrap). Women: any modest clothing, no niqāb, no gloves.",
     what_ar:
       "مهمّ — أنت تدخل في الإحرام عند النيّة والتلبية في الميقات (في الخطوات التالية)، وقبل ذلك لستَ مُحرِمًا حتّى وإن لبستَ ثياب الإحرام. فاغتنم الآن السنن قبل أن تُحرم: ١) الاغتسال، ٢) تقليم الأظفار، ٣) إزالة شعر الإبط والعانة، ٤) للرّجال: قصّ الشّارب، ٥) التّطيّب في البدن والرّأس (نعم، الطّيب جائز الآن — وإنّما يحرم بعد الدّخول في الإحرام بالتّلبية) — لا في ثوب الإحرام نفسه، ٦) الرّجال: لبس الإزار والرّداء غير المخيطين. النّساء: ملابس محتشمة، بلا نقاب ولا قفّازين.",
+    sections: [
+      {
+        icon: "🧠",
+        title_en: "Start here",
+        title_ar: "ابدأ من هنا",
+        body_en:
+          "Before you begin ʿUmrah, the first step is to prepare yourself properly. You are not yet in **Iḥrām** (the sacred state of pilgrimage) — so this is your time to get ready.",
+        body_ar:
+          "قبل أن تبدأ العمرة، أوّل خطوة هي أن تستعدّ جيّدًا. أنت لم تدخل في **الإحرام** بعدُ (الحالة المقدّسة للحجّ أو العمرة) — فهذا وقتك للتّهيئة.",
+      },
+      {
+        icon: "📍",
+        title_en: "When do you enter Iḥrām?",
+        title_ar: "متى تدخل في الإحرام؟",
+        body_en: "You only enter Iḥrām when you:",
+        body_ar: "لا تدخل في الإحرام إلّا عندما:",
+        bullets_en: [
+          "Make your **niyyah** (intention in your heart)",
+          "Recite the **Talbiyah** (the pilgrimage call)",
+          "Do this at the **Mīqāt** (the designated boundary before Makkah)",
+        ],
+        bullets_ar: [
+          "تعقد **النيّة** في قلبك",
+          "تقول **التلبية** (نداء الحجّ والعمرة)",
+          "وتفعل ذلك عند **الميقات** (الحدّ المكاني قبل مكّة)",
+        ],
+        note_en: "Until then, you can still prepare freely.",
+        note_ar: "قبل ذلك، ما زال بإمكانك التّحضير بحرّيّة.",
+      },
+      {
+        icon: "🧼",
+        title_en: "Clean & prepare",
+        title_ar: "نظافة وتهيئة",
+        bullets_en: [
+          "Perform **ghusl** (full-body wash)",
+          "Trim your nails",
+          "Remove underarm and pubic hair",
+        ],
+        bullets_ar: [
+          "اغتسل (**غُسل** كامل للبدن)",
+          "قلّم أظفارك",
+          "أزِل شعر الإبط والعانة",
+        ],
+      },
+      {
+        icon: "✂️",
+        title_en: "Grooming",
+        title_ar: "العناية الشّخصيّة",
+        bullets_en: ["♂️ Men: trim the moustache"],
+        bullets_ar: ["♂️ الرّجال: قصّ الشّارب"],
+      },
+      {
+        icon: "🌿",
+        title_en: "Apply perfume (important)",
+        title_ar: "التّطيّب (مهمّ)",
+        bullets_en: [
+          "Apply perfume to your **body and hair**",
+          "❌ Not on the iḥrām cloth itself",
+          "✅ Allowed NOW — before entering iḥrām",
+          "⛔ Forbidden AFTER reciting the Talbiyah",
+        ],
+        bullets_ar: [
+          "تطيّب في **البدن والشّعر**",
+          "❌ لا تضع الطّيب على ثوب الإحرام",
+          "✅ جائز الآن — قبل الدّخول في الإحرام",
+          "⛔ محرّم بعد قول التّلبية",
+        ],
+      },
+      {
+        icon: "👕",
+        title_en: "Clothing",
+        title_ar: "اللّباس",
+        bullets_en: [
+          "♂️ **Men**: two unstitched white sheets — **izār** (lower wrap) + **ridāʾ** (upper wrap), head uncovered",
+          "♀️ **Women**: any modest clothing, no niqāb, no gloves",
+        ],
+        bullets_ar: [
+          "♂️ **الرّجال**: إزار ورداء أبيضان غير مخيطين، والرّأس مكشوف",
+          "♀️ **النّساء**: ملابس محتشمة، بلا نقاب ولا قفّازين",
+        ],
+      },
+      {
+        icon: "⚠️",
+        title_en: "Important reminder",
+        title_ar: "تنبيه مهمّ",
+        body_en:
+          "Even if you are wearing Iḥrām clothing, you are **NOT in Iḥrām yet** — not until you make the niyyah in your heart and recite the Talbiyah.",
+        body_ar:
+          "حتّى إن لبستَ ثياب الإحرام، فأنت **لم تدخل في الإحرام بعد** — لن تدخله إلّا بعد النيّة بالقلب وقول التّلبية.",
+        accent: "warning",
+      },
+      {
+        icon: "🧭",
+        title_en: "Next",
+        title_ar: "الخطوة التّالية",
+        body_en: "Once you're ready, tap NEXT — we'll head to the Mīqāt to begin Iḥrām.",
+        body_ar: "عندما تجهز، اضغط «التّالي» — سنتّجه إلى الميقات لبدء الإحرام.",
+      },
+    ],
     tip: "Forbidden ONLY AFTER entering iḥrām (i.e. after the Talbiyah at the Mīqāt) and until Taḥallul: 1) using perfume, 2) cutting/trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqāb and gloves (women), 7) signing a marriage contract, 8) intimacy with one's spouse, 9) hunting. Right now — BEFORE the Talbiyah — all of these are still allowed. So clip your nails, perfume your body, and prepare properly while you still can.",
   },
   {

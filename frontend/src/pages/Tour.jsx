@@ -19,6 +19,7 @@ import AskHelper from "../components/AskHelper";
 import TawafFlow from "../components/TawafFlow";
 import SaiFlow from "../components/SaiFlow";
 import GlossarySheet from "../components/GlossarySheet";
+import TourSections from "../components/TourSections";
 
 /*
  ONE PAGE = THE WHOLE UMRAH.
@@ -374,14 +375,22 @@ export default function Tour() {
           >
             {title}
           </h1>
-          <p
-            className={`mt-2 text-[15px] text-[#5C5D58] leading-relaxed ${
-              isAr ? "text-right font-arabic" : ""
-            }`}
-            data-testid="tour-what"
-          >
-            {what}
-          </p>
+          {/* Prefer the bullet-and-icon layout when the step defines
+              `sections` — much easier to scan than a long paragraph.
+              Falls back to the legacy prose when `sections` is missing
+              (other 14 steps, for now). */}
+          {step.sections && step.sections.length > 0 ? (
+            <TourSections sections={step.sections} isAr={isAr} />
+          ) : (
+            <p
+              className={`mt-2 text-[15px] text-[#5C5D58] leading-relaxed ${
+                isAr ? "text-right font-arabic" : ""
+              }`}
+              data-testid="tour-what"
+            >
+              {what}
+            </p>
+          )}
 
           {/* Inline counter for the walking steps */}
           {isWalkStep && (
