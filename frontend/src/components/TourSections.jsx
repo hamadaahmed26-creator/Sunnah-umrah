@@ -35,6 +35,7 @@ export default function TourSections({ sections, isAr }) {
         const bullets = isAr ? s.bullets_ar : s.bullets_en;
         const note = isAr ? s.note_ar : s.note_en;
         const isWarning = s.accent === "warning";
+        const isTip = s.accent === "tip";
 
         return (
           <div
@@ -42,7 +43,9 @@ export default function TourSections({ sections, isAr }) {
             className={`rounded-2xl p-4 border ${
               isWarning
                 ? "bg-[#FFF8F3] border-[#EBD5B0]"
-                : "bg-white border-[#E8E5DD]"
+                : isTip
+                  ? "bg-[#FBF4E4] border-[#E6D9B4]"
+                  : "bg-white border-[#E8E5DD]"
             }`}
             data-testid={`tour-section-${i}`}
           >
@@ -53,7 +56,11 @@ export default function TourSections({ sections, isAr }) {
               </span>
               <h3
                 className={`text-[14px] font-semibold ${
-                  isWarning ? "text-[#7A4A1A]" : "text-[#1C1D1B]"
+                  isWarning
+                    ? "text-[#7A4A1A]"
+                    : isTip
+                      ? "text-[#6E5120]"
+                      : "text-[#1C1D1B]"
                 } ${isAr ? "font-arabic text-right" : ""}`}
               >
                 {title}
@@ -64,7 +71,11 @@ export default function TourSections({ sections, isAr }) {
             {body && (
               <p
                 className={`mt-2 text-[13.5px] leading-[1.7] ${
-                  isWarning ? "text-[#5C4218]" : "text-[#5C5D58]"
+                  isWarning
+                    ? "text-[#5C4218]"
+                    : isTip
+                      ? "text-[#5C4A1C]"
+                      : "text-[#5C5D58]"
                 } ${isAr ? "font-arabic text-right" : ""}`}
               >
                 {renderBold(body)}

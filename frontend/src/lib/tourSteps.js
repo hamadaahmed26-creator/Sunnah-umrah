@@ -123,8 +123,43 @@ export const TOUR_STEPS = [
         body_en: "Once you're ready, tap NEXT — we'll head to the Mīqāt to begin Iḥrām.",
         body_ar: "عندما تجهز، اضغط «التّالي» — سنتّجه إلى الميقات لبدء الإحرام.",
       },
+      {
+        icon: "💡",
+        title_en: "Forbidden AFTER entering Iḥrām",
+        title_ar: "محرّمات بعد الدّخول في الإحرام",
+        body_en:
+          "Once you recite the Talbiyah at the Mīqāt, and until **Taḥallul** (exiting iḥrām after Saʿī and shaving/trimming), these 9 things become forbidden:",
+        body_ar:
+          "بعد قول التّلبية عند الميقات وحتّى **التّحلّل** (الخروج من الإحرام بعد السّعي والحلق أو التّقصير)، تحرم هذه التّسع:",
+        bullets_en: [
+          "Using **perfume**",
+          "Cutting or trimming **hair**",
+          "Cutting **nails**",
+          "♂️ Men: covering the **head**",
+          "♂️ Men: wearing **stitched clothing**",
+          "♀️ Women: wearing **niqāb** and **gloves**",
+          "Signing a **marriage contract**",
+          "**Intimacy** with one's spouse",
+          "**Hunting**",
+        ],
+        bullets_ar: [
+          "التّطيّب بالـ**طِّيب**",
+          "قصّ أو تقصير الـ**شّعر**",
+          "تقليم الـ**أظفار**",
+          "♂️ الرّجال: تغطية الـ**رّأس**",
+          "♀️ الرّجال: لبس الـ**مخيط**",
+          "♀️ النّساء: لبس الـ**نّقاب** والـ**قفّازين**",
+          "عقد الـ**نّكاح**",
+          "الـ**مباشرة** الزّوجيّة",
+          "الـ**صّيد**",
+        ],
+        note_en:
+          "Right now — BEFORE the Talbiyah — all of these are still allowed. So clip your nails, perfume your body, and prepare properly while you still can.",
+        note_ar:
+          "الآن — قبل التّلبية — كلّ ذلك مباح. فقلّم أظفارك، وتطيّب، واستعدّ جيّدًا وأنت لا زلت تستطيع.",
+        accent: "tip",
+      },
     ],
-    tip: "Forbidden ONLY AFTER entering iḥrām (i.e. after the Talbiyah at the Mīqāt) and until Taḥallul: 1) using perfume, 2) cutting/trimming hair, 3) cutting nails, 4) covering the head (men), 5) wearing stitched clothing (men), 6) niqāb and gloves (women), 7) signing a marriage contract, 8) intimacy with one's spouse, 9) hunting. Right now — BEFORE the Talbiyah — all of these are still allowed. So clip your nails, perfume your body, and prepare properly while you still can.",
   },
   {
     chapter: "Ihram",
@@ -135,6 +170,52 @@ export const TOUR_STEPS = [
       "At the Mīqāt (official boundary) men change into their two unstitched white sheets (izār + ridāʾ — lower + upper wrap), head uncovered. Women keep their normal modest clothing — but no niqāb, no gloves. You are still not yet in iḥrām — that begins on the next screen with the niyyah (intention) and the Talbiyah (pilgrim's call).",
     what_ar:
       "عند الميقات: يرتدي الرّجال إزارهم ورداءهم غير المخيطين والرّأس مكشوف. وتلبس النّساء الملابس المحتشمة المعتادة بلا نقاب ولا قفّازين. لم تدخل في الإحرام بعد — يبدأ الإحرام في الشّاشة التّالية بالنيّة والتلبية.",
+    sections: [
+      {
+        icon: "📍",
+        title_en: "You're at the Mīqāt",
+        title_ar: "أنت عند الميقات",
+        body_en:
+          "The **Mīqāt** is the official boundary before Makkah. You cannot cross it to perform ʿUmrah without entering Iḥrām.",
+        body_ar:
+          "**الميقات** هو الحدّ المكاني قبل مكّة، ولا يجوز تجاوزه لأداء العمرة دون الدّخول في الإحرام.",
+      },
+      {
+        icon: "👕",
+        title_en: "Change into Iḥrām clothing",
+        title_ar: "البس ثياب الإحرام",
+        bullets_en: [
+          "♂️ **Men**: two unstitched white sheets — **izār** (lower wrap) + **ridāʾ** (upper wrap), head uncovered",
+          "♀️ **Women**: keep your normal modest clothing — no niqāb, no gloves",
+        ],
+        bullets_ar: [
+          "♂️ **الرّجال**: إزار ورداء أبيضان غير مخيطين، والرّأس مكشوف",
+          "♀️ **النّساء**: ملابس محتشمة معتادة، بلا نقاب ولا قفّازين",
+        ],
+      },
+      {
+        icon: "⚠️",
+        title_en: "You're still not in Iḥrām yet",
+        title_ar: "لم تدخل في الإحرام بعد",
+        body_en:
+          "Putting on the cloth alone does NOT make you a muḥrim. Iḥrām begins on the next screen — with the **niyyah** (intention) and the **Talbiyah** (pilgrim's call).",
+        body_ar:
+          "مجرّد لبس الثّوب لا يُدخلك في الإحرام. يبدأ الإحرام في الشّاشة التّالية بـ**النيّة** في القلب و**التلبية** (نداء الحجّ والعمرة).",
+        accent: "warning",
+      },
+      {
+        icon: "💡",
+        title_en: "About the Mīqāt boundaries",
+        title_ar: "عن المواقيت",
+        body_en:
+          "There are **5 official Mīqāt** boundaries around Makkah — plus **Masjid ʿĀʾishah (Tanʿīm)** for those already in Makkah who want to perform ʿUmrah again.",
+        body_ar:
+          "توجد **خمسة مواقيت** رسميّة حول مكّة، إضافةً إلى **مسجد عائشة (التّنعيم)** لمن كان داخل مكّة ويريد عمرةً ثانية.",
+        note_en: "Tap 📍 in the bottom nav → Ziyārah to see all 5 Mīqāt locations on the map.",
+        note_ar: "اضغط 📍 في الشّريط السّفلي ← الزّيارة لترى المواقيت الخمسة على الخريطة.",
+        accent: "tip",
+      },
+    ],
     tip: "There are 5 official Mīqāt boundaries — plus Masjid ʿĀʾishah (Tanʿīm) for those already in Makkah. See all of them in the Ziyārah tab (📍 in the bottom nav).",
   },
   {
@@ -146,6 +227,36 @@ export const TOUR_STEPS = [
       "Niyyah (intention) is in the HEART — never said out loud (Ibn Taymiyyah, Ibn Bāz, al-Albānī). Simply intend ʿUmrah in your heart, then say the phrase below ONCE out loud — this is the start of your Talbiyah (pilgrim's call), not a verbal niyyah.",
     what_ar:
       "النيّة محلّها القلب — لا تُنطق باللسان (ابن تيمية، ابن باز، الألباني). انوِ العمرة بقلبك، ثم قل العبارة التالية مرّة واحدة جهرًا — وهي بداية التلبية، وليست تلفّظًا بالنية.",
+    sections: [
+      {
+        icon: "❤️",
+        title_en: "Niyyah is in the heart",
+        title_ar: "النيّة في القلب",
+        body_en:
+          "**Niyyah** (intention) is silent — it lives in your heart alone. Simply intend ʿUmrah. That's it.",
+        body_ar:
+          "**النيّة** صامتة — محلّها القلب وحده. انوِ العمرة بقلبك، وكفى.",
+      },
+      {
+        icon: "🗣️",
+        title_en: "Then say this ONCE, out loud",
+        title_ar: "ثمّ قل هذا مرّة واحدة جهرًا",
+        body_en:
+          "Read the phrase below **once**. This is the start of your **Talbiyah** (pilgrim's call) — NOT a verbal niyyah.",
+        body_ar:
+          "اقرأ العبارة أدناه **مرّةً واحدة**. وهي بداية **التلبية** — وليست تلفّظًا بالنيّة.",
+      },
+      {
+        icon: "📚",
+        title_en: "Scholars on silent niyyah",
+        title_ar: "أقوال العلماء في إسرار النيّة",
+        body_en:
+          "Saying the niyyah aloud is **not from the Sunnah** — stated by Ibn Taymiyyah, Ibn Bāz, and al-Albānī.",
+        body_ar:
+          "التّلفّظ بالنيّة **ليس من السنّة** — نصّ على ذلك ابن تيمية وابن باز والألباني.",
+        accent: "tip",
+      },
+    ],
     dua: {
       ar: "لَبَّيْكَ اللَّهُمَّ بِعُمْرَة",
       tr: "Labbayk Allāhumma bi-ʿumrah.",
@@ -165,6 +276,33 @@ export const TOUR_STEPS = [
       "Begin reciting the Talbiyah (pilgrim's call) out loud (men) or quietly (women). Keep repeating it the whole way to Masjid al-Haram.",
     what_ar:
       "ابدأ بترديد التلبية جهرًا (للرجال) أو سرًّا (للنساء). استمر في ترديدها حتى تصل المسجد الحرام.",
+    sections: [
+      {
+        icon: "🎙️",
+        title_en: "Start reciting now",
+        title_ar: "ابدأ بالتّلبية الآن",
+        bullets_en: [
+          "♂️ **Men**: recite **out loud**",
+          "♀️ **Women**: recite **quietly**",
+          "**Keep repeating** it — the whole way to Masjid al-Ḥaram",
+        ],
+        bullets_ar: [
+          "♂️ **الرّجال**: جهرًا",
+          "♀️ **النّساء**: سرًّا",
+          "**كرّرها باستمرار** طوال الطّريق إلى المسجد الحرام",
+        ],
+      },
+      {
+        icon: "✅",
+        title_en: "You are now in Iḥrām",
+        title_ar: "لقد دخلت في الإحرام",
+        body_en:
+          "From this moment, the **9 Iḥrām prohibitions** apply to you (see the tip from the previous step). Stay patient and focused.",
+        body_ar:
+          "من هذه اللّحظة، تطبّق عليك **محظورات الإحرام التّسع** (راجع التّنبيه في الخطوة السّابقة). اصبر واثبت.",
+        accent: "warning",
+      },
+    ],
     dua: {
       ar:
         "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكُ، لَا شَرِيكَ لَكَ",
@@ -188,6 +326,42 @@ export const TOUR_STEPS = [
       "Step in with your RIGHT foot first and recite the entry du'a. KEEP reciting the Talbiyah (pilgrim's call) — it doesn't stop until you reach the Black Stone (al-Ḥajar al-Aswad — the dark stone in the eastern corner of the Ka'bah) to begin Tawaf (walking around the Ka'bah, 7 times).",
     what_ar:
       "ادخل بقدمك اليمنى وقل دعاء الدخول. استمر في التلبية — لا تتوقف حتى تصل الحجر الأسود لبدء الطواف.",
+    sections: [
+      {
+        icon: "🚪",
+        title_en: "Enter with your right foot",
+        title_ar: "ادخل بقدمك اليمنى",
+        bullets_en: [
+          "Step in with your **right foot first**",
+          "Recite the entry du'ā shown below",
+          "**Keep reciting the Talbiyah** — don't stop",
+        ],
+        bullets_ar: [
+          "ادخل **بقدمك اليمنى أوّلًا**",
+          "اقرأ دعاء الدّخول أدناه",
+          "**استمرّ في التّلبية** — لا تتوقّف",
+        ],
+      },
+      {
+        icon: "🕋",
+        title_en: "Head to the Black Stone",
+        title_ar: "توجّه إلى الحجر الأسود",
+        body_en:
+          "Walk through the masjid to the **Black Stone** (al-Ḥajar al-Aswad — the dark stone in the eastern corner of the Kaʿbah). This is where **Tawaf** (walking around the Kaʿbah 7 times) begins.",
+        body_ar:
+          "امشِ داخل المسجد إلى **الحجر الأسود** (في الرّكن الشّرقيّ للكعبة). هنا يبدأ **الطّواف** (سبعة أشواط حول الكعبة).",
+      },
+      {
+        icon: "⏹️",
+        title_en: "When to stop the Talbiyah",
+        title_ar: "متى تقف عن التّلبية؟",
+        body_en:
+          "The Talbiyah stops the **moment you reach the Black Stone** and are about to begin the first lap of Tawaf.",
+        body_ar:
+          "تنقطع التّلبية **لحظة وصولك إلى الحجر الأسود** وأنت على وشك بدء أوّل شوط من الطّواف.",
+        accent: "tip",
+      },
+    ],
     dua: {
       ar:
         "بِسْمِ اللَّهِ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ اغْفِرْ لِي ذُنُوبِي وَافْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
@@ -211,6 +385,69 @@ export const TOUR_STEPS = [
       "Stand facing the Black Stone (al-Ḥajar al-Aswad — embedded in the eastern corner of the Ka'bah). Raise your right hand toward it and say 'Bismillāh, Allāhu Akbar' (in the name of Allah, Allah is the Greatest) — once. This marks the start of every lap.\n\nMEN: uncover your right shoulder (Idhṭibāʿ — passing the iḥrām cloth under your right armpit) and keep it like this until the end of all 7 laps. For the FIRST 3 laps, walk swiftly (Raml — a brisk sunnah jog); for laps 4–7, walk normally.",
     what_ar:
       "قف مستقبلًا الحجر الأسود (الرّكن الشّرقي للكعبة)، ارفع يدك اليمنى نحوه وقل: «بِسْمِ اللَّهِ، اللَّهُ أَكْبَر» — مرّة واحدة. وهذه بداية كلّ شوط.\n\nالرّجال: اكشف الكتف الأيمن (الاضطباع) بجعل الإحرام تحت الإبط الأيمن، وأبقِه كذلك حتّى نهاية الأشواط السّبعة. وفي الأشواط الثّلاثة الأولى: امشِ بسرعة (الرَّمَل) كالهرولة الخفيفة؛ وفي الأشواط ٤–٧: امشِ عاديًّا.",
+    sections: [
+      {
+        icon: "📍",
+        title_en: "Where to stand",
+        title_ar: "أين تقف",
+        body_en:
+          "Stand facing the **Black Stone** (the eastern corner of the Kaʿbah). Every one of your 7 laps begins and ends here.",
+        body_ar:
+          "قف مستقبلًا **الحجر الأسود** (الرّكن الشّرقيّ للكعبة). كلّ شوط من الأشواط السّبعة يبدأ وينتهي من هنا.",
+      },
+      {
+        icon: "🙌",
+        title_en: "Greet the Black Stone",
+        title_ar: "استلم الحجر الأسود",
+        bullets_en: [
+          "Raise your **right hand** toward the Black Stone",
+          "Say: **Bismillāh, Allāhu Akbar** (in the name of Allah, Allah is the Greatest) — ONCE",
+          "Start walking — Kaʿbah on your **left**",
+        ],
+        bullets_ar: [
+          "ارفع **يدك اليمنى** نحو الحجر الأسود",
+          "قل: **«بِسْمِ اللَّهِ، اللَّهُ أَكْبَر»** — مرّةً واحدة",
+          "ثمّ ابدأ المشي — والكعبة عن **يسارك**",
+        ],
+      },
+      {
+        icon: "♂️",
+        title_en: "Men only — Idhṭibāʿ & Raml",
+        title_ar: "للرّجال فقط — الاضطباع والرّمَل",
+        bullets_en: [
+          "**Idhṭibāʿ**: pass your iḥrām cloth under your **right armpit** — right shoulder uncovered for all 7 laps",
+          "**Raml** (brisk sunnah jog): laps **1, 2, 3** only",
+          "**Walk normally**: laps 4, 5, 6, 7",
+        ],
+        bullets_ar: [
+          "**الاضطباع**: اجعل الإحرام تحت **الإبط الأيمن** — الكتف الأيمن مكشوف في الأشواط السّبعة",
+          "**الرَّمَل** (هرولة خفيفة سنّة): الأشواط **١، ٢، ٣** فقط",
+          "**امشِ عاديًّا**: الأشواط ٤، ٥، ٦، ٧",
+        ],
+      },
+      {
+        icon: "💡",
+        title_en: "Istilām — greeting order",
+        title_ar: "الاستلام — الترتيب المشروع",
+        body_en: "The **Sunnah order** for greeting the Black Stone:",
+        body_ar: "**الترتيب المسنون** لاستلام الحجر الأسود:",
+        bullets_en: [
+          "1️⃣ Touch AND kiss it — if easily possible",
+          "2️⃣ Touch with hand, then kiss the hand",
+          "3️⃣ Touch with a stick, then kiss the stick",
+          "4️⃣ From a distance: point with right hand and say **Allāhu Akbar ONLY** — ❌ do NOT kiss your hand afterwards (common mistake)",
+        ],
+        bullets_ar: [
+          "1️⃣ تقبيلُه مع اللّمس — إن أمكن بلا مشقّة",
+          "2️⃣ اللّمس باليد ثمّ تقبيل اليد",
+          "3️⃣ اللّمس بالعصا ثمّ تقبيل العصا",
+          "4️⃣ عن بُعد: الإشارة باليد اليمنى مع قول **«اللَّهُ أَكْبَر» فقط** — ❌ ولا تقبّل يدك بعد ذلك (خطأ شائع)",
+        ],
+        note_en: "Never push or harm others to reach it — crowding is forbidden.",
+        note_ar: "لا تُزاحم أو تؤذِ أحدًا للوصول إليه — فالمزاحمة ممنوعة.",
+        accent: "tip",
+      },
+    ],
     dua: {
       ar: "بِسْمِ اللَّهِ، اللَّهُ أَكْبَر",
       tr: "Bismillāh, Allāhu Akbar.",
@@ -230,6 +467,33 @@ export const TOUR_STEPS = [
       "Now you'll go around 7 times. Walk so the Ka'bah is on your LEFT. Important: stay OUTSIDE the low semi-circular wall (Ḥijr Ismāʿīl — counted as part of the Ka'bah) — passing through it INVALIDATES that lap. We'll guide you through each lap step by step.",
     what_ar:
       "ستطوف الآن سبعة أشواط، وتجعل الكعبة عن يسارك. مهمّ: ابقَ خارج جدار حِجر إسماعيل النّصف دائري — فهو من الكعبة، ومن طاف من داخله بطل شوطه. سنرافقك في كلّ شوط خطوة بخطوة.",
+    sections: [
+      {
+        icon: "🔄",
+        title_en: "7 laps anticlockwise",
+        title_ar: "٧ أشواط عكس عقارب السّاعة",
+        bullets_en: [
+          "Keep the **Kaʿbah on your LEFT** throughout",
+          "Each lap starts **at the Black Stone** and ends there",
+          "We'll count every lap for you — just focus on your du'ā",
+        ],
+        bullets_ar: [
+          "اجعل **الكعبة عن يسارك** طوال الطّواف",
+          "يبدأ كلّ شوط **من الحجر الأسود** وينتهي عنده",
+          "سنعدّ لك الأشواط — أنت ركّز في دعائك",
+        ],
+      },
+      {
+        icon: "⚠️",
+        title_en: "Stay OUTSIDE Ḥijr Ismāʿīl",
+        title_ar: "لا تدخل في حِجر إسماعيل",
+        body_en:
+          "The low **semi-circular wall** beside the Kaʿbah (Ḥijr Ismāʿīl) is **counted as part of the Kaʿbah**. Walking through it **invalidates that lap** — you'd have to repeat it.",
+        body_ar:
+          "الجدار **نصف الدّائري** بجوار الكعبة (حِجر إسماعيل) **يُعدّ من الكعبة**. من طاف من داخله **بطل شوطه** ولزمه إعادته.",
+        accent: "warning",
+      },
+    ],
   },
   {
     chapter: "Tawaf",
@@ -240,6 +504,50 @@ export const TOUR_STEPS = [
       "After 7 laps, pray 2 rakʿah (units of prayer) behind Maqām Ibrāhīm (the standing place of Ibrāhīm — a small glass-encased stone near the Ka'bah) — or, if it is crowded, ANYWHERE in the masjid facing the Ka'bah. Both Ibn Bāz and al-Albānī permitted this; do not push or harm others to stand behind the Maqām. 1st rakʿah: al-Fātiḥah, then Sūrat al-Kāfirūn. 2nd rakʿah: al-Fātiḥah, then Sūrat al-Ikhlāṣ.",
     what_ar:
       "بعد سبعة أشواط، صلِّ ركعتين خلف مقام إبراهيم — أو في أيّ مكان من المسجد إذا كان الزّحام شديدًا مستقبلًا الكعبة. أفتى بذلك ابن باز والألباني رحمهما الله؛ لا تدفع النّاس ولا تؤذهم لتقف خلف المقام. الأولى: الفاتحة ثمّ الكافرون. الثّانية: الفاتحة ثمّ الإخلاص.",
+    sections: [
+      {
+        icon: "🕌",
+        title_en: "Pray 2 rakʿah",
+        title_ar: "صلِّ ركعتين",
+        body_en:
+          "After completing 7 laps, pray **2 rakʿah** (two units of prayer) behind **Maqām Ibrāhīm** (the small glass-encased stone of Ibrāhīm's footprint, near the Kaʿbah).",
+        body_ar:
+          "بعد إتمام الأشواط السّبعة، صلِّ **ركعتين** خلف **مقام إبراهيم** (الحجر الزّجاجي الصّغير فيه أثر قدم إبراهيم عليه السّلام، قرب الكعبة).",
+      },
+      {
+        icon: "📖",
+        title_en: "What to recite",
+        title_ar: "ماذا تقرأ فيهما؟",
+        bullets_en: [
+          "**Rakʿah 1**: al-Fātiḥah, then **Sūrat al-Kāfirūn**",
+          "**Rakʿah 2**: al-Fātiḥah, then **Sūrat al-Ikhlāṣ**",
+        ],
+        bullets_ar: [
+          "**الرّكعة الأولى**: الفاتحة ثمّ **سورة الكافرون**",
+          "**الرّكعة الثّانية**: الفاتحة ثمّ **سورة الإخلاص**",
+        ],
+      },
+      {
+        icon: "⚠️",
+        title_en: "If it's crowded — pray anywhere",
+        title_ar: "إذا كان الزّحام شديدًا",
+        body_en:
+          "If standing behind the Maqām is crowded, pray **anywhere in the masjid facing the Kaʿbah**. This was the fatwā of **Ibn Bāz** and **al-Albānī** — never push or harm others.",
+        body_ar:
+          "إذا كان الزّحام خلف المقام شديدًا، فصلِّ **في أيّ مكان من المسجد مستقبلًا الكعبة**. أفتى بذلك **ابن باز** و**الألباني** رحمهما الله — ولا تُزاحم أو تؤذ أحدًا.",
+        accent: "warning",
+      },
+      {
+        icon: "💡",
+        title_en: "Optional — greet the Black Stone again",
+        title_ar: "مستحبّ — استلام الحجر مرّة أخرى",
+        body_en:
+          "Before heading to Zamzam, if you can return to the Black Stone and greet it with **takbīr** (saying Allāhu Akbar), that's sunnah. If the crowd is heavy — skip it without guilt.",
+        body_ar:
+          "قبل التّوجّه إلى زمزم، إن استطعت العودة إلى الحجر الأسود واستلامه بالتّكبير فذلك سنّة. وإن كان الزّحام شديدًا — فدعه بلا حرج.",
+        accent: "tip",
+      },
+    ],
     tip: "After the two rakʿahs (and before going to Zamzam), if you can return to the Black Stone and greet it again with takbīr (saying Allāhu Akbar — 'Allah is the Greatest'), that is sunnah — but it is optional and was not done by the Prophet ﷺ in every narration. If the crowd is heavy, skip it without guilt and proceed to Zamzam.",
   },
   {
@@ -251,6 +559,34 @@ export const TOUR_STEPS = [
       "Drink Zamzam (the blessed well-water inside Masjid al-Ḥaram) to your fill, in three breaths. Pour some over your head too — both are Sunnah. Make any du'a (supplication) you wish before the first sip — in any language.",
     what_ar:
       "اشرب من زمزم حتى تكتفي، على ثلاث جُرعات، واصبب على رأسك منها — كلاهما من السنّة. ادعُ بما شئت قبل أول رشفة بأي لغة.",
+    sections: [
+      {
+        icon: "💧",
+        title_en: "Drink Zamzam",
+        title_ar: "اشرب من زمزم",
+        body_en:
+          "**Zamzam** is the blessed well-water inside Masjid al-Ḥaram. The Prophet ﷺ said: *'Zamzam water is for whatever purpose it is drunk.'*",
+        body_ar:
+          "**زمزم** هو الماء المبارك داخل المسجد الحرام. قال النّبي ﷺ: «ماء زمزم لما شُرب له».",
+      },
+      {
+        icon: "🫧",
+        title_en: "How to drink (sunnah)",
+        title_ar: "كيف تشرب؟ (سنّة)",
+        bullets_en: [
+          "Drink **to your fill** — don't hold back",
+          "In **three breaths** (pause between each sip)",
+          "**Pour some over your head** too",
+          "Make **any du'ā** in any language before the first sip",
+        ],
+        bullets_ar: [
+          "اشرب **حتّى الرّيّ** — ولا تقصّر",
+          "على **ثلاث جُرعات** (مع التّنفّس بينها)",
+          "**اصبب منها على رأسك** أيضًا",
+          "ادعُ **بما شئت** بأيّ لغة قبل أوّل رشفة",
+        ],
+      },
+    ],
   },
 
   // ─── 4. SA'I ───────────────────────────────────────────────
@@ -263,6 +599,26 @@ export const TOUR_STEPS = [
       "Sa'i is walking 7 trips between two small hills inside the masjid: Ṣafā and Marwah. Walk to the hill of Ṣafā (the starting hill, near the Black Stone). As you approach, recite the verse below — the FIRST time only.",
     what_ar:
       "اتّجه إلى الصفا. عند الاقتراب، اقرأ الآية التالية في المرّة الأولى فقط.",
+    sections: [
+      {
+        icon: "🚶",
+        title_en: "What is Saʿī?",
+        title_ar: "ما هو السّعي؟",
+        body_en:
+          "**Saʿī** is walking **7 trips** between two small hills inside the masjid: **Ṣafā** (the starting hill, near the Black Stone) and **Marwah**.",
+        body_ar:
+          "**السّعي** هو المشي **سبعة أشواط** بين جبلين صغيرين داخل المسجد: **الصّفا** (جبل البداية، قرب الحجر الأسود) و**المروة**.",
+      },
+      {
+        icon: "📖",
+        title_en: "Verse of Ṣafā — first time only",
+        title_ar: "آية الصّفا — أوّل مرّة فقط",
+        body_en:
+          "As you approach Ṣafā for the **first trip**, recite the āyah below. On trips 2–7, don't repeat it.",
+        body_ar:
+          "عند الاقتراب من الصّفا في **الشّوط الأوّل**، اقرأ الآية أدناه. ولا تُعدها في الأشواط ٢–٧.",
+      },
+    ],
     dua: {
       ar:
         "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ ۖ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا ۚ وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ — نَبْدَأُ بِمَا بَدَأَ اللَّهُ بِه",
@@ -284,6 +640,58 @@ export const TOUR_STEPS = [
       "Climb the hill (Ṣafā first, then Marwah on every trip), face the Ka'bah, raise both hands and recite this du'a 3 times. After the 1st & 2nd: make personal du'a (supplication, in any language). After the 3rd: just go.",
     what_ar:
       "اصعد الجبل، استقبل الكعبة، ارفع يديك، واقرأ هذا الدعاء ثلاث مرات. بعد الأولى والثانية: ادعُ بما شئت. بعد الثالثة: ابدأ المشي.",
+    sections: [
+      {
+        icon: "⛰️",
+        title_en: "On each hill — do this",
+        title_ar: "على كلّ جبل — افعل هذا",
+        bullets_en: [
+          "**Climb** a little up the hill",
+          "Face the **Kaʿbah**",
+          "Raise **both hands** in du'ā",
+          "Recite the du'ā below **3 times**",
+        ],
+        bullets_ar: [
+          "**اصعد** قليلًا على الجبل",
+          "استقبل **الكعبة**",
+          "ارفع **يديك** داعيًا",
+          "اقرأ الدّعاء أدناه **٣ مرّات**",
+        ],
+      },
+      {
+        icon: "🙏",
+        title_en: "Personal du'ā in between",
+        title_ar: "دعاء شخصي بين المرّات",
+        bullets_en: [
+          "After the **1st** recitation: make personal du'ā (any language)",
+          "After the **2nd** recitation: make personal du'ā again",
+          "After the **3rd** recitation: just head off — no further du'ā needed",
+        ],
+        bullets_ar: [
+          "بعد المرّة **الأولى**: ادعُ بما شئت (بأيّ لغة)",
+          "بعد المرّة **الثّانية**: ادعُ بما شئت أيضًا",
+          "بعد المرّة **الثّالثة**: امشِ — لا دعاء زائد",
+        ],
+      },
+      {
+        icon: "💡",
+        title_en: "The green pillars",
+        title_ar: "العَلَمان الأخضران",
+        body_en:
+          "Between the **two green-lit pillars** along the Masʿā (the corridor between the two hills):",
+        body_ar:
+          "بين **العَلَمين الأخضرين** في المَسعى (الممرّ بين الجبلين):",
+        bullets_en: [
+          "♂️ **Men**: jog briskly (a sunnah run, not a sprint) on all 7 trips",
+          "♀️ **Women**: walk normally throughout — no jogging",
+        ],
+        bullets_ar: [
+          "♂️ **الرّجال**: الهرولة (سنّة، وليس جريًا) في كلّ الأشواط السّبعة",
+          "♀️ **النّساء**: المشي العاديّ في الأشواط كلّها — لا هرولة",
+        ],
+        accent: "tip",
+      },
+    ],
     dua: {
       ar:
         "اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، اللَّهُ أَكْبَر، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ يُحْيِي وَيُمِيتُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
@@ -306,6 +714,32 @@ export const TOUR_STEPS = [
       "We'll walk you through each of the 7 trips one by one — the takbir (saying Allāhu Akbar) on each hill, the green markers, and the final Marwah du'a.",
     what_ar:
       "سنرافقك في كل شوط من الأشواط السبعة — التكبير على كل جبل، العَلَمان الأخضران، ودعاء المروة الأخير.",
+    sections: [
+      {
+        icon: "🔁",
+        title_en: "7 trips total",
+        title_ar: "٧ أشواط",
+        bullets_en: [
+          "**Ṣafā → Marwah** = 1 trip",
+          "**Marwah → Ṣafā** = 2 trips",
+          "Keep going until you finish on **Marwah** at trip **7**",
+        ],
+        bullets_ar: [
+          "**من الصّفا إلى المروة** = شوط",
+          "**من المروة إلى الصّفا** = شوطان",
+          "تابع حتّى ينتهي الشّوط **السّابع** على **المروة**",
+        ],
+      },
+      {
+        icon: "✨",
+        title_en: "We'll guide every trip",
+        title_ar: "سنرافقك في كلّ شوط",
+        body_en:
+          "The app will count each trip for you, remind you of the takbir du'ā on the hills, mark the green-pillar section for men, and prompt the final du'ā on Marwah.",
+        body_ar:
+          "سيعدّ لك التّطبيق كلّ شوط، ويذكّرك بالتّكبير على الجبلين، ويبيّن حدود العَلَمين للرّجال، ويُرشدك إلى الدّعاء الختاميّ على المروة.",
+      },
+    ],
   },
 
   // ─── 5. HALQ / TAQSIR ──────────────────────────────────────
@@ -318,6 +752,43 @@ export const TOUR_STEPS = [
       "MEN: shave your head completely (Halq — shaving, more virtuous) or trim all hair short (Taqsir — trimming). WOMEN: trim a fingertip's length from the end of your hair.",
     what_ar:
       "الرجال: احلِق رأسك (الحلق أفضل) أو قصِّر جميع شعرك. النساء: قُصصن قدر أنملة من أطراف الشعر.",
+    sections: [
+      {
+        icon: "✂️",
+        title_en: "The final step",
+        title_ar: "الخطوة الأخيرة",
+        body_en:
+          "After Saʿī, cutting or shaving the hair is what **ends your Iḥrām** (the state of Taḥallul).",
+        body_ar:
+          "بعد السّعي، حلق الشّعر أو تقصيره هو ما **يُنهي إحرامك** (التّحلّل).",
+      },
+      {
+        icon: "♂️",
+        title_en: "For men",
+        title_ar: "للرّجال",
+        bullets_en: [
+          "**Halq** — **shave the whole head** (most virtuous)",
+          "**Taqsir** — trim all the hair short (permitted)",
+        ],
+        bullets_ar: [
+          "**الحلق** — **حلق جميع الرّأس** (وهو الأفضل)",
+          "**التّقصير** — قصّ جميع الشّعر (جائز)",
+        ],
+        note_en:
+          "The Prophet ﷺ said 'O Allah, forgive those who shave' — three times — and said it for those who trim **once**. So shaving is far more virtuous.",
+        note_ar:
+          "دعا النّبي ﷺ للمحلّقين ثلاثًا، وللمقصّرين مرّةً واحدة. فالحلق أعظم أجرًا بكثير.",
+      },
+      {
+        icon: "♀️",
+        title_en: "For women",
+        title_ar: "للنّساء",
+        body_en:
+          "Trim about a **fingertip's length** from the end of the hair. No shaving.",
+        body_ar:
+          "قصّ **قدر أنملة** (ما يُقارب عرض أصبع) من أطراف الشّعر. ولا حلق للنّساء.",
+      },
+    ],
   },
   {
     chapter: "Done",
@@ -328,5 +799,24 @@ export const TOUR_STEPS = [
       "You've now exited Ihram (Taḥallul — exiting the sacred state). All prohibitions are lifted. May Allah accept your Umrah — taqabbalAllāhu minnā wa minkum.",
     what_ar:
       "خرجت من الإحرام، وعاد كل ما كان محظورًا جائزًا. تقبّل الله منا ومنكم.",
+    sections: [
+      {
+        icon: "🎉",
+        title_en: "Taḥallul — you've exited Iḥrām",
+        title_ar: "التّحلّل — خرجت من الإحرام",
+        body_en:
+          "You've completed your ʿUmrah. All **9 Iḥrām prohibitions** are now lifted — perfume, stitched clothing, covering the head, everything is back to normal.",
+        body_ar:
+          "أتممتَ عمرتك. رُفعت عنك **محظورات الإحرام التّسع** — الطّيب، والمخيط، وتغطية الرّأس، وكلّ شيء عاد كما كان.",
+      },
+      {
+        icon: "🤲",
+        title_en: "May Allah accept it",
+        title_ar: "تقبّل الله منّا ومنكم",
+        body_en: "**Taqabbal-Allāhu minnā wa minkum** — may Allah accept it from us and from you.",
+        body_ar: "**تقبّل الله منّا ومنكم** — وجعلها مبرورةً وسعيًا مشكورًا.",
+        accent: "tip",
+      },
+    ],
   },
 ];

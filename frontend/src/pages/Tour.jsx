@@ -320,13 +320,17 @@ export default function Tour() {
           >
             {title}
           </h1>
-          <p
-            className={`mt-1.5 text-[13px] text-[#5C5D58] leading-relaxed ${
-              isAr ? "text-right font-arabic" : ""
-            }`}
-          >
-            {what}
-          </p>
+          {step.sections && step.sections.length > 0 ? (
+            <TourSections sections={step.sections} isAr={isAr} />
+          ) : (
+            <p
+              className={`mt-1.5 text-[13px] text-[#5C5D58] leading-relaxed ${
+                isAr ? "text-right font-arabic" : ""
+              }`}
+            >
+              {what}
+            </p>
+          )}
           <div className="mt-4">
             <TawafFlow lap={lap} setLap={setLap} isAr={isAr} onComplete={advanceToNextStep} />
           </div>
@@ -343,13 +347,17 @@ export default function Tour() {
           >
             {title}
           </h1>
-          <p
-            className={`mt-1.5 text-[13px] text-[#5C5D58] leading-relaxed ${
-              isAr ? "text-right font-arabic" : ""
-            }`}
-          >
-            {what}
-          </p>
+          {step.sections && step.sections.length > 0 ? (
+            <TourSections sections={step.sections} isAr={isAr} />
+          ) : (
+            <p
+              className={`mt-1.5 text-[13px] text-[#5C5D58] leading-relaxed ${
+                isAr ? "text-right font-arabic" : ""
+              }`}
+            >
+              {what}
+            </p>
+          )}
           <div className="mt-4">
             <SaiFlow trip={trip} setTrip={setTrip} isAr={isAr} onComplete={advanceToNextStep} />
           </div>
@@ -491,8 +499,11 @@ export default function Tour() {
             </div>
           )}
 
-          {/* Sunnah tip */}
-          {step.tip && (
+          {/* Sunnah tip (legacy string-only) — only rendered for steps
+              that don't use the new `sections` array (the 14 others, until
+              they're migrated to the section format). Steps with sections
+              embed the tip as a card with accent="tip" instead. */}
+          {step.tip && !(step.sections && step.sections.length > 0) && (
             <div className="mt-3 rounded-2xl border border-[#E8E5DD] bg-white p-4 flex gap-3" data-testid="tour-tip">
               <Lightbulb className="w-4 h-4 text-[#B3884D] flex-shrink-0 mt-0.5" />
               <p
