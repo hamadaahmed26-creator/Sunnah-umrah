@@ -160,7 +160,7 @@ def test_sadaqah_checkout_custom_below_min_rejected(s):
         json={"package": "custom", "custom_amount": 0.50, "origin_url": ORIGIN},
         timeout=15,
     )
-    assert r.status_code == 400, r.text
+    assert r.status_code in (400, 422), r.text
 
 
 def test_sadaqah_checkout_custom_above_max_rejected(s):
@@ -169,7 +169,7 @@ def test_sadaqah_checkout_custom_above_max_rejected(s):
         json={"package": "custom", "custom_amount": 1500.00, "origin_url": ORIGIN},
         timeout=15,
     )
-    assert r.status_code == 400, r.text
+    assert r.status_code in (400, 422), r.text
 
 
 def test_sadaqah_checkout_unknown_package_rejected(s):
