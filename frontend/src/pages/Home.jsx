@@ -494,12 +494,10 @@ export default function Home() {
       </div>
       <PrayerTimesCard isAr={isAr} />
 
-      {/* TRAVEL & MORE — packages/DIY + secondary links (when-to-go, shop).
-          Only shown to planners (going / helping). Other personas don't need
-          flight/hotel/package promos cluttering their home. The pre-trip
-          shop is independently exposed below for in-Makkah users (eSIM,
-          Zamzam carrier, etc.). */}
-      {isPlanning && (
+      {/* TRAVEL & MORE — packages / DIY hotels-flights / best-months / pre-trip
+          shop. Visible to EVERY persona (not just planners): even pilgrims
+          who've "already been" may want to book their next trip, gift an
+          Umrah package, or shop eSIM / Zamzam carriers. */}
       <div className="mt-7">
         <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
           {isAr ? "السّفر والمزيد" : "Travel & more"}
@@ -578,30 +576,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      )}
-
-      {/* In-Makkah shortcut — slim Shop link for eSIM / Zamzam carrier.
-          Only shown to users who said "I'm in Makkah/Madinah right now". */}
-      {isInMakkah && (
-        <Link
-          to="/shop"
-          className="mt-6 block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse flex items-center gap-3"
-          data-testid="home-shop-makkah"
-        >
-          <div className="w-9 h-9 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#E8E5DD]">
-            <ShoppingBag className="w-4 h-4 text-[#7B5C24]" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr ? "ما تحتاجه الآن" : "What you might need"}
-            </div>
-            <div className={`text-[11px] text-[#8E8F8A] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-              {isAr ? "شريحة eSIM، حافظة زمزم، أحرمة احتياطيّة" : "eSIM, Zamzam carriers, spare iḥrām"}
-            </div>
-          </div>
-          <ArrowRight className={`w-3.5 h-3.5 text-[#8E8F8A] ${isAr ? "rotate-180" : ""}`} />
-        </Link>
-      )}
 
       {/* About / Sources footer — reassures the user (and Apple reviewers)
           that every ruling in the app is sourced. */}
