@@ -274,6 +274,31 @@ export default function Tour() {
               <ArrowRight className={`w-4 h-4 text-[#8E8F8A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
             </div>
           </Link>
+          {/* Checklist bar — intro-only. Shown right after the FAQ shortcut,
+              below the reassurance. Prominent sage-green nudge so pilgrims
+              tick their prep before diving into the steps. */}
+          <Link
+            to="/checklist"
+            className="mt-2 block rounded-2xl border border-[#C5DBC9] p-3 hover:border-[#2A5A4A] transition tap-pulse bg-gradient-to-br from-[#F4F9F4] to-[#E6F1E6]"
+            data-testid="tour-checklist-link"
+          >
+            <div className={`flex items-center gap-2.5 ${isAr ? "flex-row-reverse" : ""}`}>
+              <div className="w-9 h-9 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#C5DBC9]">
+                <span className="text-[16px] leading-none">📋</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr ? "قائمة قبل العمرة" : "Checklist before Umrah"}
+                </p>
+                <p className={`mt-0.5 text-[11px] text-[#3E5E4B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                  {isAr
+                    ? "تأكّد من كلّ ما تحتاجه — إحرام، تأشيرة، فندق، وأكثر"
+                    : "Make sure you have everything — iḥrām, visa, hotel & more"}
+                </p>
+              </div>
+              <ArrowRight className={`w-4 h-4 text-[#2A5A4A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
+            </div>
+          </Link>
         </>
       )}
 

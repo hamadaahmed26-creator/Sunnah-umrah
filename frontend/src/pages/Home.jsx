@@ -7,7 +7,7 @@ import {
   Briefcase, MessageSquare, Moon, Footprints, Trophy, ShoppingBag,
   Sunrise, Sunset, Sun, Loader2, Plane, BookOpen, Quote, Share2, Check,
   Settings as SettingsIcon, Calendar, Accessibility, CalendarDays, UserCog, Pencil,
-  Navigation as NavigationIcon,
+  Navigation as NavigationIcon, ClipboardList,
 } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { ramadanStatus } from "../lib/ramadan";
@@ -483,6 +483,29 @@ export default function Home() {
               </div>
             </div>
             <NavigationIcon className={`w-4 h-4 text-[#7B5C24] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
+        {/* 8th tile — Readiness Checklist. Full-width so pilgrims see
+            their "% ready" progress at a glance. Same calm-card
+            aesthetic, calm sage-green gradient to suggest "all good". */}
+        <Link
+          to="/checklist"
+          className="mt-2 block tap-pulse rounded-2xl border border-[#C5DBC9] p-3.5 hover:border-[#2A5A4A] hover:shadow-[0_8px_18px_-12px_rgba(42,90,74,0.4)] transition active:scale-[0.99] bg-gradient-to-br from-[#F4F9F4] to-[#DCEBDC]"
+          data-testid="home-checklist"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#C5DBC9]">
+              <ClipboardList className="w-[18px] h-[18px] text-[#2A5A4A]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "قائمة الاستعداد للعمرة" : "Get ready for ʿUmrah"}
+              </div>
+              <div className={`mt-0.5 text-[11px] text-[#3E5E4B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "جواز، تأشيرة، إحرام، فندق — وأكثر" : "Passport, visa, iḥrām, hotel & more"}
+              </div>
+            </div>
+            <ArrowRight className={`w-4 h-4 text-[#2A5A4A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
           </div>
         </Link>
       </div>
