@@ -32,9 +32,24 @@ export function hotellookSearch({ destination, checkin, checkout, adults }) {
   return withMarker(`https://search.hotellook.com/hotels?${params.toString()}`);
 }
 
-// ─── FLIGHTS — Aviasales (Travelpayouts native; comparable to Skyscanner)
-export function aviasalesTo(destIata) {
-  return withMarker(`https://www.aviasales.com/search?destination=${destIata}`);
+// ─── FLIGHTS — Aviasales (Travelpayouts native; user is approved)
+//
+// We build the Aviasales path-based search URL so the page lands on a
+// pre-filled, ready-to-go result instead of an empty search box. Format:
+//   https://www.aviasales.com/search/{ORIG}{DDMM}{DEST}{DDMM}1?currency=gbp
+// Defaults: London origin, depart in ~30 days, 7-night return, 1 adult, GBP.
+function ddmm(date) {
+  const dd = String(date.getDate()).padStart(2, "0");
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  return `${dd}${mm}`;
+}
+export function aviasalesTo(destIata, origIata = "LON") {
+  const depart = new Date();
+  depart.setDate(depart.getDate() + 30);
+  const ret = new Date(depart);
+  ret.setDate(ret.getDate() + 7);
+  const path = `${origIata}${ddmm(depart)}${destIata}${ddmm(ret)}1`;
+  return withMarker(`https://www.aviasales.com/search/${path}?currency=gbp&locale=en`);
 }
 
 // ─── eSIM — Yesim (Travelpayouts partner; user already connected this offer)
