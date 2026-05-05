@@ -34,7 +34,11 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen pattern-bg grain relative" data-testid="app-shell">
-      <header className="relative z-10 px-5 pt-6 pb-4 flex items-center justify-between" data-testid="app-header">
+      <header
+        className="relative z-30 px-5 pb-4 flex items-center justify-between"
+        style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 16px)" }}
+        data-testid="app-header"
+      >
         <Link to="/" className="flex items-center gap-2.5">
           <img
             src="/apple-touch-icon.png"
@@ -52,11 +56,13 @@ export default function Layout({ children }) {
           </div>
         </Link>
         <button
+          type="button"
           onClick={() => setLang(lang === "en" ? "ar" : "en")}
-          className="tap-pulse inline-flex items-center gap-1.5 rounded-full border border-[#E8E5DD] bg-white/70 backdrop-blur px-3 py-1.5 text-xs font-medium text-[#1C1D1B]"
+          className="tap-pulse relative z-40 inline-flex items-center gap-1.5 rounded-full border border-[#E8E5DD] bg-white shadow-sm px-4 py-2.5 text-[13px] font-medium text-[#1C1D1B] active:scale-95 transition-transform"
           data-testid="lang-toggle"
+          aria-label={lang === "en" ? "Switch to Arabic" : "Switch to English"}
         >
-          <Languages className="w-3.5 h-3.5" />
+          <Languages className="w-4 h-4" />
           {lang === "en" ? "العربية" : "English"}
         </button>
       </header>
