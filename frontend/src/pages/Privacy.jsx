@@ -52,8 +52,8 @@ export default function Privacy() {
       <ul>
         <li><strong>Anthropic Claude (via Emergent)</strong> — powers the AI Companion. <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noreferrer">Policy</a></li>
         <li><strong>Aladhan API</strong> — daily prayer times. <a href="https://aladhan.com/privacy-policy" target="_blank" rel="noreferrer">Policy</a></li>
-        <li><strong>Booking.com (CJ affiliate)</strong> — hotel-search redirects. <a href="https://www.booking.com/content/privacy.html" target="_blank" rel="noreferrer">Policy</a></li>
-        <li><strong>Airalo</strong> — eSIM redirects. <a href="https://www.airalo.com/privacy-policy" target="_blank" rel="noreferrer">Policy</a></li>
+        <li><strong>Travelpayouts</strong> — affiliate redirects to Hotellook (hotels), Aviasales (flights), and Yesim (eSIM). <a href="https://www.travelpayouts.com/legal/privacy_policy" target="_blank" rel="noreferrer">Policy</a></li>
+        <li><strong>Amazon UK Associates</strong> — affiliate links on shop product pages. <a href="https://www.amazon.co.uk/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ" target="_blank" rel="noreferrer">Policy</a></li>
       </ul>
       <p>We do <strong>not</strong> sell your data to any third party.</p>
 

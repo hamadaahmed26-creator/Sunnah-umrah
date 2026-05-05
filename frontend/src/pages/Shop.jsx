@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ShoppingBag, ExternalLink, ShieldCheck, Sparkles } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { SHOP_CATEGORIES, SHOP_PRODUCTS, productsByCategory } from "../lib/shop";
+import { affiliateDisclosure } from "../lib/affiliate";
 
 export default function Shop() {
   const { lang } = React.useContext(LangContext);
@@ -71,9 +72,7 @@ export default function Shop() {
         <div className="flex items-start gap-2">
           <ShieldCheck className="w-4 h-4 text-[#2A5A4A] mt-0.5 flex-shrink-0" />
           <p className={`text-[11px] text-[#5C5D58] leading-relaxed ${isAr ? "font-arabic text-right" : ""}`}>
-            {isAr
-              ? "بعض الرّوابط تحت برامج الإحالة مع Amazon UK وBooking.com وAiralo وSkyscanner. عندما تشتري عبرها قد نحصل على عمولةٍ صغيرةٍ تساعد على تطوير التّطبيق — دون أيّة تكلفة عليك. نختار فقط ما يفيد الحاجّ فعلًا."
-              : "Some links use affiliate programs with Amazon UK, Booking.com, Airalo, and Skyscanner. When you buy through them, we may earn a small commission that helps keep this app running — at no extra cost to you. We only feature items genuinely useful to pilgrims."}
+            {affiliateDisclosure(isAr)}
           </p>
         </div>
       </div>
@@ -151,10 +150,10 @@ function ProductCard({ product, isAr }) {
 
 function sourceLabel(source, isAr) {
   switch (source) {
-    case "amazon":     return "Amazon UK";
-    case "booking":    return "Booking.com";
-    case "airalo":     return "Airalo";
-    case "skyscanner": return "Skyscanner";
-    default:           return isAr ? "شريك" : "Partner";
+    case "amazon":    return "Amazon UK";
+    case "hotellook": return "Hotellook";
+    case "aviasales": return "Aviasales";
+    case "yesim":     return "Yesim";
+    default:          return isAr ? "شريك" : "Partner";
   }
 }

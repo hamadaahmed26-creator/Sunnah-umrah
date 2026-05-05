@@ -3,22 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Hotel, ArrowLeft, ExternalLink, Calendar, Users, Building2, Wifi, Plane } from "lucide-react";
 import { LangContext } from "../components/Layout";
-
-// Booking.com Affiliate ID — sign up free at https://www.booking.com/affiliate-program
-// then paste your AID below (or set REACT_APP_BOOKING_AID in .env). Until set,
-// the search still works but the user pays full price (no commission to you).
-const BOOKING_AID = process.env.REACT_APP_BOOKING_AID || "";
-
-// Skyscanner / Travelpayouts associate ID — sign up free at
-// https://www.travelpayouts.com → connect Skyscanner. Until set, the link
-// still routes the user to Skyscanner, just without commission to you.
-const SKYSCANNER_TAG = process.env.REACT_APP_SKYSCANNER_TAG || "";
-
-// Airalo eSIM affiliate referral code — sign up free at
-// https://www.airalo.com/affiliate-program. Paste your code below or set
-// REACT_APP_AIRALO_REF in .env. Default is the Airalo deep link to the
-// Saudi Arabia eSIM page so users can buy data before their trip.
-const AIRALO_REF = process.env.REACT_APP_AIRALO_REF || "";
+import { hotellookSearch, aviasalesTo, yesimSaudi, affiliateDisclosure } from "../lib/affiliate";
 
 const CITIES = [
   {
@@ -27,7 +12,7 @@ const CITIES = [
     name_ar: "مكة المكرمة",
     subtitle_en: "Walking distance to the Ḥaram",
     subtitle_ar: "بالقرب من المسجد الحرام",
-    ss: "Makkah,Saudi Arabia",
+    destination: "Makkah,Saudi Arabia",
     image: "/images/places/jabal-al-nur.jpg",
   },
   {
@@ -36,7 +21,7 @@ const CITIES = [
     name_ar: "المدينة المنورة",
     subtitle_en: "Near Masjid an-Nabawī",
     subtitle_ar: "قرب المسجد النبوي",
-    ss: "Medina,Saudi Arabia",
+    destination: "Medina,Saudi Arabia",
     image: "/images/places/masjid-nabawi.jpg",
   },
 ];
@@ -55,18 +40,13 @@ export default function Hotels() {
   const [checkout, setCheckout] = React.useState(plusDays(new Date(), 7));
   const [adults, setAdults] = React.useState(2);
 
-  const buildBookingUrl = (city) => {
-    const params = new URLSearchParams({
-      ss: city.ss,
+  const buildHotelsUrl = (city) =>
+    hotellookSearch({
+      destination: city.destination,
       checkin,
       checkout,
-      group_adults: String(adults),
-      no_rooms: "1",
-      group_children: "0",
+      adults,
     });
-    if (BOOKING_AID) params.set("aid", BOOKING_AID);
-    return `https://www.booking.com/searchresults.html?${params.toString()}`;
-  };
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="hotels-page">
@@ -81,7 +61,7 @@ export default function Hotels() {
           {isAr ? "احجز فندقًا" : "Book a hotel"}
         </h1>
         <p className={`mt-2 text-[13px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
-          {isAr ? "بحث مباشر على Booking.com — آلاف الفنادق في مكة والمدينة." : "Live search on Booking.com — thousands of hotels in Makkah & Madīnah."}
+          {isAr ? "بحث مباشر على Hotellook — يقارن أسعار آلاف الفنادق في مكّة والمدينة من Booking وAgoda وغيرها." : "Live search on Hotellook — compares thousands of hotels in Makkah & Madīnah across Booking, Agoda, and more."}
         </p>
       </div>
 
@@ -144,9 +124,9 @@ export default function Hotels() {
         {CITIES.map((c, i) => (
           <motion.a
             key={c.key}
-            href={buildBookingUrl(c)}
+            href={buildHotelsUrl(c)}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer sponsored"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06 }}
@@ -172,16 +152,16 @@ export default function Hotels() {
         ))}
       </div>
 
-      {/* Flights — Skyscanner affiliate */}
+      {/* Flights — Aviasales (Travelpayouts native) */}
       <div className="mt-5">
         <div className={`text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-2 ${isAr ? "font-arabic" : ""}`}>
           {isAr ? "الرّحلات" : "Flights"}
         </div>
         <div className="grid grid-cols-2 gap-2">
           <a
-            href={`https://www.skyscanner.net/transport/flights-to/jed/${SKYSCANNER_TAG ? `?associateid=${SKYSCANNER_TAG}` : ""}`}
+            href={aviasalesTo("JED")}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer sponsored"
             className="block rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition active:scale-[0.98]"
             data-testid="hotels-flights-jed"
           >
@@ -200,9 +180,9 @@ export default function Hotels() {
             </div>
           </a>
           <a
-            href={`https://www.skyscanner.net/transport/flights-to/med/${SKYSCANNER_TAG ? `?associateid=${SKYSCANNER_TAG}` : ""}`}
+            href={aviasalesTo("MED")}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer sponsored"
             className="block rounded-2xl bg-white border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition active:scale-[0.98]"
             data-testid="hotels-flights-med"
           >
@@ -223,15 +203,15 @@ export default function Hotels() {
         </div>
       </div>
 
-      {/* eSIM data — Airalo affiliate */}
+      {/* eSIM data — Yesim (Travelpayouts) */}
       <div className="mt-5">
         <div className={`text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A] mb-2 ${isAr ? "font-arabic" : ""}`}>
           {isAr ? "بيانات الهاتف" : "Mobile data"}
         </div>
         <a
-          href={`https://www.airalo.com/saudi-arabia-esim${AIRALO_REF ? `?utm_source=sunnahumrah&utm_medium=affiliate&ref=${encodeURIComponent(AIRALO_REF)}` : ""}`}
+          href={yesimSaudi()}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer sponsored"
           className="block rounded-2xl bg-white border border-[#E8E5DD] p-4 hover:border-[#B3884D] transition active:scale-[0.99]"
           data-testid="hotels-esim"
         >
@@ -244,7 +224,7 @@ export default function Hotels() {
                 {isAr ? "شريحة eSIM للسعودية" : "Saudi Arabia eSIM"}
               </div>
               <div className={`text-[12px] text-[#5C5D58] ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "بيانات فورية على هاتفك — Airalo" : "Instant data on your phone · Airalo"}
+                {isAr ? "بيانات فورية على هاتفك — Yesim" : "Instant data on your phone · Yesim"}
               </div>
             </div>
             <ExternalLink className="w-4 h-4 text-[#8E8F8A]" />
@@ -252,15 +232,11 @@ export default function Hotels() {
         </a>
       </div>
 
-      {/* Disclosure — required by Booking.com affiliate terms */}
+      {/* Affiliate disclosure */}
       <div className="mt-6 rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4">
         <div className="flex items-start gap-2 text-[11px] text-[#5C5D58] leading-relaxed">
           <Building2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#8E8F8A]" />
-          <p className={isAr ? "font-arabic text-right" : ""}>
-            {isAr
-              ? "نتعاون مع Booking.com وAiralo وSkyscanner — قد نحصل على عمولة صغيرة عند الحجز عبر هذه الروابط، بدون أيّ تكلفة إضافية عليك."
-              : "We partner with Booking.com, Airalo and Skyscanner — we may earn a small commission on bookings made through these links, at no extra cost to you."}
-          </p>
+          <p className={isAr ? "font-arabic text-right" : ""}>{affiliateDisclosure(isAr)}</p>
         </div>
       </div>
     </div>

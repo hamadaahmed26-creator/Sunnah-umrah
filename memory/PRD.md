@@ -22,6 +22,33 @@
 - **Frontend**: React + Tailwind + shadcn/ui + framer-motion + lucide-react. SPA with React Router.
 - **i18n**: Custom dictionary (i18n.js) + `dir=rtl` toggle on `<html>`.
 
+## Implemented (Feb 5, 2026 — seventh session) — Travelpayouts marker `525646` wired live across the app
+- **`/app/frontend/src/lib/affiliate.js` (NEW)** — single source of truth for all
+  affiliate URL building. Reads `REACT_APP_TP_MARKER` and `REACT_APP_AMAZON_TAG`
+  from `.env`. Exports `hotellookSearch`, `aviasalesTo`, `yesimSaudi`,
+  `amazonUk`, `affiliateDisclosure`. No more scattered ID handling.
+- **`/app/frontend/.env`** — `REACT_APP_TP_MARKER=525646` (confirmed live via
+  smoke-test screenshot — every Hotels page link now carries `marker=525646`).
+  `REACT_APP_AMAZON_TAG=` placeholder; user will paste their Amazon Associates
+  tag once approved.
+- **`/app/frontend/src/pages/Hotels.jsx`** — switched away from Booking.com/
+  Skyscanner/Airalo direct → **Hotellook** (hotels, aggregates Booking + Agoda
+  natively), **Aviasales** (flights), **Yesim** (eSIM). All three are
+  Travelpayouts native brands — single marker tracks ALL clicks; no per-offer
+  "Connect" needed. Verified URLs:
+  - `https://search.hotellook.com/hotels?...&marker=525646`
+  - `https://www.aviasales.com/search?destination=JED&marker=525646`
+  - `https://yesim.tech/?marker=525646`
+- **`/app/frontend/src/lib/shop.js`** — refactored to import `amazonUk()` from
+  the central `affiliate.js` module. Old inline ENV-reading helpers deleted.
+- **`/app/frontend/src/pages/Shop.jsx`** — disclosure now built by shared
+  `affiliateDisclosure(isAr)` helper. `sourceLabel` map updated to support new
+  brand keys (`hotellook`, `aviasales`, `yesim`).
+- **`/app/frontend/src/pages/Privacy.jsx`** — third-party services list now
+  reflects reality: Travelpayouts (Hotellook/Aviasales/Yesim) + Amazon UK
+  Associates. Stale Booking.com / Airalo / Skyscanner refs removed.
+
+
 ## Implemented (May 2, 2026 — sixth session, part 9) — UX polish: merged Lost buttons, segmented prayer toggle, hardened geo, 7th Home tile
 - **Lost page (`/lost`) buttons MERGED** — removed the duplicate green
   "Take me to the Ḥaram" external-maps button (`satnav-haram-btn`).

@@ -12,22 +12,9 @@
 //   4. Available on Amazon UK or major Saudi-relevant store (so links work
 //      for the largest portion of the audience)
 
-const AMZ_TAG = process.env.REACT_APP_AMAZON_TAG || ""; // e.g. sunnahumrah-21
-const AIRALO_REF = process.env.REACT_APP_AIRALO_REF || "";
-const SKYSCANNER_TAG = process.env.REACT_APP_SKYSCANNER_TAG || ""; // ranid
-
-// Build an Amazon UK URL with the affiliate tag attached.
-function amzUk(asin) {
-  const base = `https://www.amazon.co.uk/dp/${asin}`;
-  return AMZ_TAG ? `${base}?tag=${AMZ_TAG}` : base;
-}
-
-// Skyscanner — for now we deep-link to the search page; once approved by
-// Travelpayouts/Skyscanner partner, swap in the partnered URL pattern.
-function skySearch(from = "LOND", to = "JED") {
-  const base = `https://www.skyscanner.net/transport/flights/${from}/${to}/`;
-  return SKYSCANNER_TAG ? `${base}?associateid=${SKYSCANNER_TAG}` : base;
-}
+// All affiliate URL building lives in /lib/affiliate.js so we have one
+// source of truth for IDs (Amazon tag, Travelpayouts marker).
+import { amazonUk as amzUk } from "./affiliate";
 
 export const SHOP_CATEGORIES = [
   { id: "ihram",   icon_emoji: "🕋", label_en: "Ihram & travel kit", label_ar: "إحرام ومستلزمات السّفر" },
