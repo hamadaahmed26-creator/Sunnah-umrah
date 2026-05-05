@@ -2,10 +2,14 @@
 // "Help first, monetise second" — every shoppable item links into /shop,
 // /hotels, or /packages (which already carry the affiliate tags).
 //
+// Each item supports a "missing" state: when the pilgrim says they DON'T
+// have something, we slide down a help panel with affiliate options. Per
+// the friend's spec — don't wait for them to click "View options"; trigger
+// it when they say "I don't have this".
+//
 // Items are grouped into 'essential' (blocks performing ʿUmrah) and
-// 'recommended' (makes life much easier). Each item can be personalised:
-//   - gender-specific (♂/♀) → hidden for the other gender
-//   - travelers === 'family' → unlock the family-only items
+// 'recommended' (makes life easier). Each item can be personalised:
+//   - travelers === 'family' → unlock family-only items
 //   - travelers === 'wheelchair' → unlock accessibility items
 
 export const CHECKLIST_ITEMS = [
@@ -20,6 +24,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "جواز السّفر",
     info_en: "Must be valid for at least 6 months from your travel date.",
     info_ar: "صالح لستّة أشهر على الأقلّ من تاريخ السّفر.",
+    missing_prompt_en: "You'll need a valid passport before travelling. If yours is expired or close to expiring, renew it as early as possible.",
+    missing_prompt_ar: "تحتاج جوازًا صالحًا قبل السّفر. إن كان منتهيًا أو قريبًا من الانتهاء، فجدّده مبكّرًا.",
+    actions: [
+      { label_en: "Renew on GOV.UK", label_ar: "تجديد عبر GOV.UK", url: "https://www.gov.uk/renew-adult-passport", icon: "📘", external: true },
+    ],
   },
   {
     id: "visa",
@@ -29,8 +38,13 @@ export const CHECKLIST_ITEMS = [
     group_icon: "✈️",
     title_en: "ʿUmrah or tourist visa",
     title_ar: "تأشيرة العمرة أو السّياحة",
-    info_en: "The Saudi e-Visa and tourist visa both allow ʿUmrah. Check your eligibility on visa.visitsaudi.com.",
-    info_ar: "تأشيرة الزّيارة السّعوديّة الإلكترونيّة والسّياحيّة كلتاهما تسمحان بأداء العمرة. تحقّق من أهليّتك على visa.visitsaudi.com.",
+    info_en: "The Saudi e-Visa and tourist visa both allow ʿUmrah.",
+    info_ar: "تأشيرة الزّيارة السّعوديّة الإلكترونيّة والسّياحيّة كلتاهما تسمحان بأداء العمرة.",
+    missing_prompt_en: "You'll need a Saudi visa before travelling. The Tourist e-Visa is the fastest route — it's issued online in minutes and now allows ʿUmrah.",
+    missing_prompt_ar: "تحتاج تأشيرة سعوديّة قبل السّفر. الـ e-Visa السّياحيّة أسرع طريق — تصدر إلكترونيًّا خلال دقائق وتسمح بأداء العمرة.",
+    actions: [
+      { label_en: "Apply for Saudi e-Visa", label_ar: "قدّم طلب التّأشيرة الإلكترونيّة", url: "https://visa.visitsaudi.com", icon: "🌐", external: true },
+    ],
   },
   {
     id: "flights",
@@ -40,11 +54,13 @@ export const CHECKLIST_ITEMS = [
     group_icon: "✈️",
     title_en: "Flights booked",
     title_ar: "حجز الطّيران",
-    info_en: "Book return flights early for the best prices — Ramadan & Hajj season fill up fast.",
-    info_ar: "احجز الرّحلات الذّهاب والعودة مبكّرًا — مواسم رمضان والحجّ تمتلئ بسرعة.",
-    shop_to: "/hotels",
-    shop_en: "See flight options",
-    shop_ar: "استعرض الرّحلات",
+    info_en: "Book return flights early — Ramadan & Hajj seasons fill up fast.",
+    info_ar: "احجز الذّهاب والعودة مبكّرًا — مواسم رمضان والحجّ تمتلئ بسرعة.",
+    missing_prompt_en: "You'll need return flights to Jeddah or Madinah. Book early for the best prices, especially around Ramadan.",
+    missing_prompt_ar: "تحتاج رحلات ذهاب وعودة إلى جدّة أو المدينة. احجز مبكّرًا للحصول على أفضل سعر، خاصّةً حول رمضان.",
+    actions: [
+      { label_en: "Compare flights", label_ar: "قارن الرّحلات", to: "/hotels", icon: "🔍" },
+    ],
   },
   {
     id: "hotel",
@@ -56,9 +72,12 @@ export const CHECKLIST_ITEMS = [
     title_ar: "فندق أو مكان إقامة",
     info_en: "Pick a hotel close to the Ḥaram so you can walk to prayers easily.",
     info_ar: "اختر فندقًا قريبًا من الحرم لتمشي إلى الصّلوات براحة.",
-    shop_to: "/hotels",
-    shop_en: "See hotels",
-    shop_ar: "استعرض الفنادق",
+    missing_prompt_en: "Stay close to the Ḥaram — every minute saved walking is one more rakʿah. Book early; rooms near Gate 1 fill fast.",
+    missing_prompt_ar: "اسكن قرب الحرم — كلّ دقيقة توفّرها مشيًا تكسبك ركعةً. احجز مبكّرًا؛ الغرف قرب البوّابة ١ تمتلئ بسرعة.",
+    actions: [
+      { label_en: "View hotels", label_ar: "استعرض الفنادق", to: "/hotels", icon: "🏨" },
+      { label_en: "Or full Umrah packages", label_ar: "أو باقات عمرة كاملة", to: "/packages", icon: "🎁" },
+    ],
   },
   {
     id: "miqat",
@@ -69,15 +88,16 @@ export const CHECKLIST_ITEMS = [
     title_en: "Know your Mīqāt",
     title_ar: "اعرف ميقاتك",
     info_en: "The Mīqāt is the boundary where you enter Iḥrām. Most pilgrims enter Iḥrām on the plane — announced by the captain.",
-    info_ar: "الميقات هو الحدّ المكانيّ الذي تدخل منه في الإحرام. معظم الحجّاج يدخلون الإحرام على متن الطّائرة — يُعلن الطّيّار عن ذلك.",
-    learn_to: "/places",
-    learn_en: "See the 5 Mīqāt",
-    learn_ar: "استعرض المواقيت الخمسة",
+    info_ar: "الميقات هو الحدّ الذي تدخل منه في الإحرام. معظم الحجّاج يدخلون الإحرام على متن الطّائرة — يُعلن الطّيّار عن ذلك.",
+    missing_prompt_en: "It's important to know which Mīqāt boundary you'll cross — pilgrims from London usually enter Iḥrām on the plane.",
+    missing_prompt_ar: "من المهمّ معرفة أيّ ميقات ستتجاوزه — حجّاج لندن غالبًا يحرمون على متن الطّائرة.",
+    actions: [
+      { label_en: "See the 5 Mīqāt", label_ar: "استعرض المواقيت الخمسة", to: "/places", icon: "📍" },
+    ],
   },
   {
     id: "ihram-men",
     tier: "essential",
-    gender: "male", // hidden for women, shown for men and 'unknown'
     group_en: "Clothing",
     group_ar: "اللّباس",
     group_icon: "👕",
@@ -85,14 +105,15 @@ export const CHECKLIST_ITEMS = [
     title_ar: "♂️ ثوبا الإحرام (إزار ورداء)",
     info_en: "Two unstitched white cloths — izār (lower wrap) + ridāʾ (upper wrap). Bring a spare in case one gets dirty.",
     info_ar: "قطعتان غير مخيطتين بيضاوان — إزار (الأسفل) ورداء (الأعلى). خذ احتياطيّة تحسّبًا لتلطّخ إحداهما.",
-    shop_to: "/shop",
-    shop_en: "See recommended Iḥrām",
-    shop_ar: "استعرض الإحرام المقترح",
+    missing_prompt_en: "You'll need at least one set of Iḥrām garments — two unstitched white cloths. We recommend bringing a spare.",
+    missing_prompt_ar: "تحتاج على الأقلّ زوجًا واحدًا من ثياب الإحرام — قطعتان بيضاوان غير مخيطتين. ننصح بإحضار احتياطيّ.",
+    actions: [
+      { label_en: "See recommended Iḥrām", label_ar: "استعرض الإحرام المقترح", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "modest-women",
     tier: "essential",
-    gender: "female",
     group_en: "Clothing",
     group_ar: "اللّباس",
     group_icon: "👕",
@@ -100,6 +121,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "♀️ ملابس محتشمة",
     info_en: "Loose modest clothing (any colour). No niqāb, no gloves during Iḥrām.",
     info_ar: "ملابس فضفاضة ومحتشمة (بأيّ لون). ولا نقاب ولا قفّازين أثناء الإحرام.",
+    missing_prompt_en: "Bring modest, breathable clothing in any colour. Long abāyahs work well in Makkah's heat.",
+    missing_prompt_ar: "خذي ملابس محتشمة فضفاضة بأيّ لون. العباءات الطّويلة تناسب حرّ مكّة.",
+    actions: [
+      { label_en: "See modest options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "ihram-knowledge",
@@ -111,9 +137,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "اقرأ دليل العمرة خطوة بخطوة",
     info_en: "Walk through the 15 steps at least once before you travel — so nothing feels unfamiliar on arrival.",
     info_ar: "مُرّ على الخطوات الخمس عشرة مرّةً واحدة قبل السّفر — حتّى لا تجد شيئًا غريبًا عند الوصول.",
-    learn_to: "/tour",
-    learn_en: "Start guided steps",
-    learn_ar: "ابدأ الخطوات المرشدة",
+    missing_prompt_en: "Don't go in cold — walk through the 15 steps once before you travel. Tap below to start.",
+    missing_prompt_ar: "لا تذهب بلا تحضير — مُرّ على الخطوات الخمس عشرة مرّةً قبل السّفر. اضغط أدناه للبدء.",
+    actions: [
+      { label_en: "Start guided steps", label_ar: "ابدأ الخطوات المرشدة", to: "/tour", icon: "📘" },
+    ],
   },
 
   // ─── RECOMMENDED ───────────────────────────────────────────
@@ -127,9 +155,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "حقيبة صغيرة / حقيبة بحمّالة",
     info_en: "For your phone, hotel card, cash, and keys — leave valuables in the hotel safe.",
     info_ar: "لهاتفك وبطاقة الفندق والنّقود والمفاتيح — ودع الأغراض الثّمينة في خزنة الفندق.",
-    shop_to: "/shop",
-    shop_en: "View options",
-    shop_ar: "استعرض الخيارات",
+    missing_prompt_en: "A small cross-body keeps your phone, hotel card, and cash safe inside the masjid. Pickpocketing is rare but happens in crowds.",
+    missing_prompt_ar: "حقيبة صغيرة تحمي هاتفك وبطاقة الفندق ونقودك داخل المسجد. السّرقة نادرة لكنّها تحدث في الزّحام.",
+    actions: [
+      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "suitcase",
@@ -141,9 +171,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "حقيبة سفر أو يد",
     info_en: "Choose based on your stay length. Many packages include laundry service.",
     info_ar: "اختر حسب مدّة إقامتك. كثير من الباقات تشمل خدمة الغسيل.",
-    shop_to: "/shop",
-    shop_en: "View options",
-    shop_ar: "استعرض الخيارات",
+    missing_prompt_en: "Pick a size based on your stay length. Cabin-only saves baggage fees if you travel light.",
+    missing_prompt_ar: "اختر الحجم حسب مدّة الإقامة. الكابينة فقط توفّر رسوم الأمتعة إن سافرت بخفّة.",
+    actions: [
+      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "shoes",
@@ -155,6 +187,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "حذاء مشي مريح / صندل",
     info_en: "You'll walk far more than you expect. Men: no shoes covering the ankle bone during Iḥrām — sandals or flip-flops are ideal.",
     info_ar: "ستمشي أكثر بكثير ممّا تتوقّع. ♂️ للرّجال: لا لبس يستر الكعبين في الإحرام — الصّنادل أو الشّبشب مثاليّ.",
+    missing_prompt_en: "You'll walk 10–15 km some days. Men in Iḥrām need sandals or flip-flops — never shoes that cover the ankle bone.",
+    missing_prompt_ar: "ستمشي ١٠–١٥ كم بعض الأيّام. ♂️ الرّجال في الإحرام يحتاجون صنادل أو شبشب — لا حذاء يستر الكعبين.",
+    actions: [
+      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "unscented",
@@ -166,9 +203,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "صابون وشامبو غير معطّرين",
     info_en: "Scented products count as perfume — forbidden after the Talbiyah. Keep unscented ones ready.",
     info_ar: "المنتجات المعطّرة تُعدّ طيبًا — وهي محظورة بعد التّلبية. فاحرص على غير المعطّر.",
-    shop_to: "/shop",
-    shop_en: "View options",
-    shop_ar: "استعرض الخيارات",
+    missing_prompt_en: "Scented soaps & shampoos count as perfume — forbidden once you've entered Iḥrām. Get a small unscented set before you fly.",
+    missing_prompt_ar: "الصّابون والشّامبو المعطّر يُعدّ طيبًا — محظور بعد الدّخول في الإحرام. خذ مجموعة صغيرة غير معطّرة قبل السّفر.",
+    actions: [
+      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "hygiene",
@@ -180,6 +219,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "فرشاة، معجون غير معطّر، مشط",
     info_en: "Travel-size so they fit in your Iḥrām-stage pouch.",
     info_ar: "أحجام السّفر لتناسب حقيبة الإحرام.",
+    missing_prompt_en: "Travel-size sets so they fit in your Iḥrām pouch. Mint toothpaste with strong perfume oils should be avoided.",
+    missing_prompt_ar: "أحجام صغيرة لتناسب حقيبة الإحرام. وتجنّب معاجين النّعناع ذات زيوت العطر القويّة.",
+    actions: [
+      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "sim",
@@ -191,9 +235,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "eSIM أو باقة تجوال",
     info_en: "Data in Saudi can be expensive on roaming. An eSIM activates in 2 minutes and is usually cheaper.",
     info_ar: "بيانات التّجوال في السّعوديّة قد تكون مرتفعة. شريحة eSIM تُفعّل خلال دقيقتين وغالبًا أرخص.",
-    shop_to: "/shop",
-    shop_en: "View options",
-    shop_ar: "استعرض الخيارات",
+    missing_prompt_en: "Avoid roaming bill shock. An eSIM activates in 2 minutes and saves you finding a kiosk on arrival.",
+    missing_prompt_ar: "تجنّب صدمة فاتورة التّجوال. شريحة eSIM تُفعّل في دقيقتين وتغنيك عن البحث عن كشك عند الوصول.",
+    actions: [
+      { label_en: "View eSIM options", label_ar: "استعرض شرائح eSIM", to: "/shop", icon: "📡" },
+    ],
   },
   {
     id: "powerbank",
@@ -205,9 +251,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "باور بانك",
     info_en: "Long days at the Ḥaram drain phones fast — carry a 10,000 mAh minimum.",
     info_ar: "الأيّام الطّويلة في الحرم تستنزف البطّاريّات — احمل ١٠٠٠٠ ملّي أمبير على الأقلّ.",
-    shop_to: "/shop",
-    shop_en: "View options",
-    shop_ar: "استعرض الخيارات",
+    missing_prompt_en: "10–15 hour days at the Ḥaram drain phones fast. A 10,000 mAh power bank covers a full day.",
+    missing_prompt_ar: "أيّام ١٠–١٥ ساعة في الحرم تستنزف البطّاريّة. ١٠٠٠٠ ملّي أمبير تكفي يومًا كاملًا.",
+    actions: [
+      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "bookings",
@@ -219,6 +267,8 @@ export const CHECKLIST_ITEMS = [
     title_ar: "حفظ تأكيدات الحجز (دون إنترنت)",
     info_en: "Screenshots of flight, hotel, and visa — in case Wi-Fi fails at immigration.",
     info_ar: "لقطات شاشة من الطّيران والفندق والتّأشيرة — تحسّبًا لانقطاع الإنترنت عند الجوازات.",
+    missing_prompt_en: "Screenshot all confirmations and save them in your phone's Files app. Useful if Wi-Fi fails at immigration.",
+    missing_prompt_ar: "خذ لقطات شاشة لكلّ التّأكيدات واحفظها في تطبيق الملفّات. مفيدة إن انقطع الإنترنت عند الجوازات.",
   },
   {
     id: "meds",
@@ -230,6 +280,8 @@ export const CHECKLIST_ITEMS = [
     title_ar: "أدويتك الشّخصيّة",
     info_en: "Bring enough for the full trip plus 3 extra days. Keep them in your hand luggage.",
     info_ar: "خذ كمّيّة تكفي الرّحلة كاملة + ٣ أيّام احتياطيّة. واحملها في حقيبة اليد.",
+    missing_prompt_en: "If you take regular medication, bring enough for the trip + 3 extra days. Keep it in hand luggage in case checked bags get delayed.",
+    missing_prompt_ar: "إن كنت تأخذ دواءً منتظمًا، فخذ كمّيّة تكفي الرّحلة + ٣ أيّام. واحملها في حقيبة اليد تحسّبًا لتأخّر الأمتعة.",
   },
   {
     id: "zamzam",
@@ -241,9 +293,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "قنّينة ماء / إبريق زمزم",
     info_en: "Stay hydrated. A small flask also lets you carry Zamzam back to your hotel.",
     info_ar: "ابقَ متروّيًا. إبريق صغير يتيح لك حمل زمزم إلى فندقك.",
-    shop_to: "/shop",
-    shop_en: "View options",
-    shop_ar: "استعرض الخيارات",
+    missing_prompt_en: "A 1L flask keeps you hydrated and lets you carry Zamzam back to your hotel. The Ḥaram has refill stations everywhere.",
+    missing_prompt_ar: "إبريق ١ لتر يبقيك متروّيًا ويتيح لك حمل زمزم للفندق. ومحطّات تعبئة منتشرة في الحرم.",
+    actions: [
+      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "family-kids",
@@ -256,6 +310,11 @@ export const CHECKLIST_ITEMS = [
     title_ar: "ضروريّات الأطفال",
     info_en: "Snacks, small toys for tawāf rest breaks, a child carrier, and spare clothes.",
     info_ar: "وجبات خفيفة، ألعاب صغيرة لاستراحات الطّواف، حمّالة أطفال، وملابس احتياطيّة.",
+    missing_prompt_en: "Children get tired during long days. A carrier, snacks, a small toy, and spare clothes make a huge difference.",
+    missing_prompt_ar: "الأطفال يتعبون في الأيّام الطّويلة. حمّالة الأطفال والوجبات الخفيفة ولعبة صغيرة وملابس احتياطيّة تُحدث فرقًا كبيرًا.",
+    actions: [
+      { label_en: "View family options", label_ar: "استعرض خيارات العائلة", to: "/shop", icon: "🛒" },
+    ],
   },
   {
     id: "wheelchair",
@@ -268,5 +327,10 @@ export const CHECKLIST_ITEMS = [
     title_ar: "ترتيبات الكرسيّ المتحرّك",
     info_en: "Ṭawāf in a wheelchair is fully valid (Ibn Bāz). Dedicated lanes exist on the ground floor and upper mataf. You can hire a pusher near Gate 1.",
     info_ar: "الطّواف بالكرسيّ المتحرّك صحيح تمامًا (ابن باز). توجد ممرّات خاصّة في الدّور الأرضي والعلوي للمطاف. ويمكنك استئجار دافع عند البوّابة ١.",
+    missing_prompt_en: "Pre-arrange a wheelchair if needed. Many ʿUmrah packages include this; otherwise hire on arrival near Gate 1.",
+    missing_prompt_ar: "رتّب الكرسيّ المتحرّك مسبقًا إن احتجته. كثير من الباقات تشمله؛ أو استأجر عند الوصول قرب البوّابة ١.",
+    actions: [
+      { label_en: "Packages with wheelchair help", label_ar: "باقات بمساعدة الكرسيّ", to: "/packages", icon: "🎁" },
+    ],
   },
 ];
