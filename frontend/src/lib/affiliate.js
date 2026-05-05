@@ -57,7 +57,21 @@ export function yesimSaudi() {
   return withMarker("https://yesim.tech/");
 }
 
-// ─── AMAZON UK — product affiliate links
+// ─── AMAZON UK — search-based affiliate links
+//
+// We deliberately use SEARCH URLs (not /dp/ASIN) because:
+//  1. ASINs occasionally get delisted → user lands on a 404 ("Uh-oh") page
+//  2. Search results stay fresh — Amazon ranks the best/in-stock items first
+//  3. Commission still attributes to your tag for ANYTHING they buy in the
+//     same session (24-hour cookie window)
+export function amazonUkSearch(query) {
+  const q = encodeURIComponent(query);
+  const base = `https://www.amazon.co.uk/s?k=${q}`;
+  if (!AMAZON_TAG) return base;
+  return `${base}&tag=${AMAZON_TAG}`;
+}
+
+// Kept for any direct-ASIN links elsewhere (currently unused in shop).
 export function amazonUk(asin) {
   const base = `https://www.amazon.co.uk/dp/${asin}`;
   if (!AMAZON_TAG) return base;
