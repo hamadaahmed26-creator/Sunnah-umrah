@@ -464,28 +464,38 @@ export default function Home() {
         </Link>
       )}
 
-      {/* QUICK ACCESS — 2×3 grid of the 6 most-used features. Replaces both
-          the horizontal "Discover" scroll and the orphaned priority cards.
-          All items always visible; no horizontal swipe needed (better for
-          older users). */}
-      <div className="mt-7" data-testid="home-quickaccess">
-        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
-          {isAr ? "أدواتك" : "Your tools"}
-        </h2>
-        <div className="grid grid-cols-2 gap-2">
-          <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        isAr={isAr} testid="home-group" />
-          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh & Umrah questions"      sub_ar="أسئلة الفقه والعمرة"      isAr={isAr} testid="home-chat" />
-          <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             isAr={isAr} testid="home-qibla" />
-          <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  isAr={isAr} testid="home-lost" />
-          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah"       ar="الزّيارة"        sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
-          <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                isAr={isAr} testid="home-quiz" />
-        </div>
-        {/* 7th tile — Walk to Ḥaram. Full-width so it reads as a clear primary
-            action for users in Makkah, separate from the panic "I'm lost" flow.
-            Same calm card aesthetic with a gold→sand gradient + Footprints icon. */}
+      {/* PRIMARY ACTION CARDS — surfaced ABOVE the tools grid because they
+          are the two highest-value paths for almost every user:
+            1) Get-Ready Checklist drives preparation + conversion (visa,
+               flights, ihram, hotel — the affiliate revenue path).
+            2) Walk to the Ḥaram is the on-the-ground gate-finder for
+               anyone already in Makkah. Reordered Feb 2026 after user
+               feedback that these felt visually demoted at the bottom. */}
+      <div className="mt-7 space-y-2" data-testid="home-primary-cta">
+        <Link
+          to="/checklist"
+          className="block tap-pulse rounded-2xl border border-[#C5DBC9] p-4 hover:border-[#2A5A4A] hover:shadow-[0_10px_22px_-12px_rgba(42,90,74,0.45)] transition active:scale-[0.99] bg-gradient-to-br from-[#F4F9F4] to-[#DCEBDC]"
+          data-testid="home-checklist"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#C5DBC9]">
+              <ClipboardList className="w-5 h-5 text-[#2A5A4A]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[15px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "قائمة الاستعداد للعمرة" : "Get ready for ʿUmrah"}
+              </div>
+              <div className={`mt-0.5 text-[12px] text-[#3E5E4B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "جواز، تأشيرة، إحرام، فندق — وأكثر" : "Passport, visa, iḥrām, hotel & more"}
+              </div>
+            </div>
+            <ArrowRight className={`w-4 h-4 text-[#2A5A4A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
+
         <Link
           to="/walk-haram"
-          className="mt-2 block tap-pulse rounded-2xl border border-[#EBD9B0] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.99] bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1]"
+          className="block tap-pulse rounded-2xl border border-[#EBD9B0] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.99] bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1]"
           data-testid="home-walk-haram"
         >
           <div className="flex items-center gap-3">
@@ -503,29 +513,21 @@ export default function Home() {
             <NavigationIcon className={`w-4 h-4 text-[#7B5C24] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
           </div>
         </Link>
-        {/* 8th tile — Readiness Checklist. Full-width so pilgrims see
-            their "% ready" progress at a glance. Same calm-card
-            aesthetic, calm sage-green gradient to suggest "all good". */}
-        <Link
-          to="/checklist"
-          className="mt-2 block tap-pulse rounded-2xl border border-[#C5DBC9] p-3.5 hover:border-[#2A5A4A] hover:shadow-[0_8px_18px_-12px_rgba(42,90,74,0.4)] transition active:scale-[0.99] bg-gradient-to-br from-[#F4F9F4] to-[#DCEBDC]"
-          data-testid="home-checklist"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#C5DBC9]">
-              <ClipboardList className="w-[18px] h-[18px] text-[#2A5A4A]" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "قائمة الاستعداد للعمرة" : "Get ready for ʿUmrah"}
-              </div>
-              <div className={`mt-0.5 text-[11px] text-[#3E5E4B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "جواز، تأشيرة، إحرام، فندق — وأكثر" : "Passport, visa, iḥrām, hotel & more"}
-              </div>
-            </div>
-            <ArrowRight className={`w-4 h-4 text-[#2A5A4A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
-          </div>
-        </Link>
+      </div>
+
+      {/* QUICK ACCESS — 2×3 grid of the 6 most-used utility tools. */}
+      <div className="mt-7" data-testid="home-quickaccess">
+        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "أدواتك" : "Your tools"}
+        </h2>
+        <div className="grid grid-cols-2 gap-2">
+          <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        isAr={isAr} testid="home-group" />
+          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh & Umrah questions"      sub_ar="أسئلة الفقه والعمرة"      isAr={isAr} testid="home-chat" />
+          <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             isAr={isAr} testid="home-qibla" />
+          <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  isAr={isAr} testid="home-lost" />
+          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah"       ar="الزّيارة"        sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
+          <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                isAr={isAr} testid="home-quiz" />
+        </div>
       </div>
 
       {/* DAILY ANCHORS — reminder + prayer times. Both are habit drivers. */}
