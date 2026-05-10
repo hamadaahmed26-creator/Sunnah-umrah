@@ -179,6 +179,26 @@ export default function Home() {
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="home-page">
+      {/* Personalize chip — opens the persona quiz overlay. Replaces the
+          old auto-popup-on-first-launch behaviour: visible but unobtrusive.
+          Anyone can tap it any time to tailor the home page (first-timer,
+          returning, in-Makkah, helping a parent, wheelchair, family, etc.). */}
+      <div className="flex justify-end mt-1 mb-2">
+        <button
+          type="button"
+          onClick={() => { setEditMode(true); setOnboardOpen(true); }}
+          className="inline-flex items-center gap-1.5 rounded-full bg-white border border-[#E8E5DD] px-3 py-1.5 text-[12px] font-medium text-[#5C5D58] hover:text-[#1C1D1B] hover:border-[#B3884D] active:scale-95 transition tap-pulse shadow-sm"
+          data-testid="home-personalize-chip"
+        >
+          <SettingsIcon className="w-3.5 h-3.5" />
+          <span className={isAr ? "font-arabic" : ""}>
+            {isAr
+              ? (profile.done ? "تخصيص" : "خصّص هذا التّطبيق")
+              : (profile.done ? "Personalize" : "Personalize this app")}
+          </span>
+        </button>
+      </div>
+
       {/* Hero — warm cream-to-gold gradient + subtle Islamic geometric pattern overlay */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
