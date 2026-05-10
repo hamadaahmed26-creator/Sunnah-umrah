@@ -20,6 +20,8 @@ import TawafFlow from "../components/TawafFlow";
 import SaiFlow from "../components/SaiFlow";
 import GlossarySheet from "../components/GlossarySheet";
 import TourSections from "../components/TourSections";
+import TourTimeline from "../components/TourTimeline";
+import useSwipeNav from "../hooks/useSwipeNav";
 
 /*
  ONE PAGE = THE WHOLE UMRAH.
@@ -189,8 +191,19 @@ export default function Tour() {
     else setTrip((t) => Math.max(0, t - 1));
   };
 
+  // Swipe navigation — left/right flicks advance / rewind a step.
+  // Disabled on flow steps (Tawaf/Sa'i counters) because those need every
+  // tap & gesture for their own counter UX. Skipped on the intro step
+  // backwards too (no step-1 to swipe to).
+  const swipeRef = useSwipeNav({
+    onNext: next,
+    onPrev: prev,
+    isAr,
+    enabled: !isFlowStep,
+  });
+
   return (
-    <div className="max-w-md mx-auto pb-[280px] sm:pb-52 px-1" data-testid="tour-page">
+    <div ref={swipeRef} className="max-w-md mx-auto pb-[280px] sm:pb-52 px-1" data-testid="tour-page">
       {/* Header — chapter-aware so it reads "You're preparing for Iḥrām · 2 / 15"
           rather than the cold "Step 2 of 15". Warmer, gives the pilgrim
           emotional context for what they're about to do next. */}
@@ -328,16 +341,17 @@ export default function Tour() {
         <ArrowRight className={`w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 transition ${isAr ? "rotate-180" : ""}`} />
       </Link>
 
-      {/* Progress bar */}
-      <div className="mt-3 h-1.5 rounded-full bg-[#E8E5DD] overflow-hidden" data-testid="tour-progress">
-        <motion.div
-          className="h-full rounded-full"
-          style={{ background: accent }}
-          initial={false}
-          animate={{ width: `${((idx + 1) / total) * 100}%` }}
-          transition={{ duration: 0.45 }}
-        />
-      </div>
+      {/* Timeline jumper — replaces the old static progress bar. Lets the
+          pilgrim jump straight to any step instead of pressing Next nine
+          times. Chapter ticks above the dots help orient them within the
+          journey (Ihram → Tawaf → Post-Tawaf → Sa'i → Halq). */}
+      <TourTimeline
+        steps={TOUR_STEPS}
+        current={idx}
+        onJump={(i) => setIdx(Math.max(0, Math.min(total - 1, i)))}
+        chapterColors={CHAPTER_COLOR}
+        isAr={isAr}
+      />
 
       {/* SCENE — hidden for flow steps (they have their own header/map) */}
       {!isFlowStep && (
