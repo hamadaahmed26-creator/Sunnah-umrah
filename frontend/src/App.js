@@ -25,6 +25,7 @@ import Plan from "./pages/Plan";
 import WalkHaram from "./pages/WalkHaram";
 import Faq from "./pages/Faq";
 import Checklist from "./pages/Checklist";
+import Miqat from "./pages/Miqat";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
               <Route path="/walk-haram" element={<WalkHaram />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/checklist" element={<Checklist />} />
+              <Route path="/miqat" element={<Miqat />} />
               {/* Sadaqah temporarily removed — donations create Apple App
                   Store risk under Guideline 3.2.1(vii) / 4.5.4. Old URLs
                   redirect home so existing bookmarks don't 404. */}

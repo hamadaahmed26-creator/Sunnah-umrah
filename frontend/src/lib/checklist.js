@@ -1,6 +1,7 @@
 // Umrah Readiness Checklist — a pre-trip audit that removes pilgrim anxiety.
-// "Help first, monetise second" — every shoppable item links into /shop,
-// /hotels, or /packages (which already carry the affiliate tags).
+// "Help first, monetise second" — every shoppable item links DIRECTLY to
+// the relevant Amazon UK search (tagged `sunnahumrah-21`), Yesim eSIM
+// (Travelpayouts marker `525646`), or our in-app hotel/flight pages.
 //
 // Each item supports a "missing" state: when the pilgrim says they DON'T
 // have something, we slide down a help panel with affiliate options. Per
@@ -11,6 +12,8 @@
 // 'recommended' (makes life easier). Each item can be personalised:
 //   - travelers === 'family' → unlock family-only items
 //   - travelers === 'wheelchair' → unlock accessibility items
+
+import { amazonUkSearch, yesimSaudi } from "./affiliate";
 
 export const CHECKLIST_ITEMS = [
   // ─── ESSENTIAL ─────────────────────────────────────────────
@@ -92,7 +95,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "It's important to know which Mīqāt boundary you'll cross — pilgrims from London usually enter Iḥrām on the plane.",
     missing_prompt_ar: "من المهمّ معرفة أيّ ميقات ستتجاوزه — حجّاج لندن غالبًا يحرمون على متن الطّائرة.",
     actions: [
-      { label_en: "See the 5 Mīqāt", label_ar: "استعرض المواقيت الخمسة", to: "/places", icon: "📍" },
+      { label_en: "See the 6 Mīqāt", label_ar: "استعرض المواقيت السّتّة", to: "/miqat", icon: "📍" },
     ],
   },
   {
@@ -108,7 +111,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "You'll need at least one set of Iḥrām garments — two unstitched white cloths. We recommend bringing a spare.",
     missing_prompt_ar: "تحتاج على الأقلّ زوجًا واحدًا من ثياب الإحرام — قطعتان بيضاوان غير مخيطتين. ننصح بإحضار احتياطيّ.",
     actions: [
-      { label_en: "See recommended Iḥrām", label_ar: "استعرض الإحرام المقترح", to: "/shop", icon: "🛒" },
+      { label_en: "Shop Iḥrām on Amazon UK", label_ar: "تسوّق الإحرام عبر Amazon UK", url: amazonUkSearch("ihram set mens 2 piece cotton"), icon: "🛒", external: true },
     ],
   },
   {
@@ -124,7 +127,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "Bring modest, breathable clothing in any colour. Long abāyahs work well in Makkah's heat.",
     missing_prompt_ar: "خذي ملابس محتشمة فضفاضة بأيّ لون. العباءات الطّويلة تناسب حرّ مكّة.",
     actions: [
-      { label_en: "See modest options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop abāyahs on Amazon UK", label_ar: "تسوّق العباءات عبر Amazon UK", url: amazonUkSearch("abaya women umrah travel"), icon: "🛒", external: true },
     ],
   },
   {
@@ -158,7 +161,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "A small cross-body keeps your phone, hotel card, and cash safe inside the masjid. Pickpocketing is rare but happens in crowds.",
     missing_prompt_ar: "حقيبة صغيرة تحمي هاتفك وبطاقة الفندق ونقودك داخل المسجد. السّرقة نادرة لكنّها تحدث في الزّحام.",
     actions: [
-      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop cross-body bags on Amazon UK", label_ar: "تسوّق الحقائب عبر Amazon UK", url: amazonUkSearch("crossbody bag anti theft travel"), icon: "🛒", external: true },
     ],
   },
   {
@@ -174,7 +177,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "Pick a size based on your stay length. Cabin-only saves baggage fees if you travel light.",
     missing_prompt_ar: "اختر الحجم حسب مدّة الإقامة. الكابينة فقط توفّر رسوم الأمتعة إن سافرت بخفّة.",
     actions: [
-      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop suitcases on Amazon UK", label_ar: "تسوّق حقائب السّفر عبر Amazon UK", url: amazonUkSearch("cabin suitcase lightweight 4 wheel"), icon: "🛒", external: true },
     ],
   },
   {
@@ -190,7 +193,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "You'll walk 10–15 km some days. Men in Iḥrām need sandals or flip-flops — never shoes that cover the ankle bone.",
     missing_prompt_ar: "ستمشي ١٠–١٥ كم بعض الأيّام. ♂️ الرّجال في الإحرام يحتاجون صنادل أو شبشب — لا حذاء يستر الكعبين.",
     actions: [
-      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop iḥrām sandals on Amazon UK", label_ar: "تسوّق صنادل الإحرام عبر Amazon UK", url: amazonUkSearch("ihram sandals mens hajj umrah"), icon: "🛒", external: true },
     ],
   },
   {
@@ -206,7 +209,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "Scented soaps & shampoos count as perfume — forbidden once you've entered Iḥrām. Get a small unscented set before you fly.",
     missing_prompt_ar: "الصّابون والشّامبو المعطّر يُعدّ طيبًا — محظور بعد الدّخول في الإحرام. خذ مجموعة صغيرة غير معطّرة قبل السّفر.",
     actions: [
-      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop unscented on Amazon UK", label_ar: "تسوّق غير المعطّر عبر Amazon UK", url: amazonUkSearch("unscented soap shampoo travel size"), icon: "🛒", external: true },
     ],
   },
   {
@@ -222,7 +225,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "Travel-size sets so they fit in your Iḥrām pouch. Mint toothpaste with strong perfume oils should be avoided.",
     missing_prompt_ar: "أحجام صغيرة لتناسب حقيبة الإحرام. وتجنّب معاجين النّعناع ذات زيوت العطر القويّة.",
     actions: [
-      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop travel hygiene on Amazon UK", label_ar: "تسوّق العناية للسّفر عبر Amazon UK", url: amazonUkSearch("travel toothbrush toothpaste comb set"), icon: "🛒", external: true },
     ],
   },
   {
@@ -238,7 +241,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "Avoid roaming bill shock. An eSIM activates in 2 minutes and saves you finding a kiosk on arrival.",
     missing_prompt_ar: "تجنّب صدمة فاتورة التّجوال. شريحة eSIM تُفعّل في دقيقتين وتغنيك عن البحث عن كشك عند الوصول.",
     actions: [
-      { label_en: "View eSIM options", label_ar: "استعرض شرائح eSIM", to: "/shop", icon: "📡" },
+      { label_en: "Get a Saudi eSIM (Yesim)", label_ar: "احصل على eSIM للسعوديّة (Yesim)", url: yesimSaudi(), icon: "📡", external: true },
     ],
   },
   {
@@ -254,7 +257,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "10–15 hour days at the Ḥaram drain phones fast. A 10,000 mAh power bank covers a full day.",
     missing_prompt_ar: "أيّام ١٠–١٥ ساعة في الحرم تستنزف البطّاريّة. ١٠٠٠٠ ملّي أمبير تكفي يومًا كاملًا.",
     actions: [
-      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop power banks on Amazon UK", label_ar: "تسوّق باور بانك عبر Amazon UK", url: amazonUkSearch("power bank 10000 mah usb c fast charge"), icon: "🛒", external: true },
     ],
   },
   {
@@ -296,7 +299,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "A 1L flask keeps you hydrated and lets you carry Zamzam back to your hotel. The Ḥaram has refill stations everywhere.",
     missing_prompt_ar: "إبريق ١ لتر يبقيك متروّيًا ويتيح لك حمل زمزم للفندق. ومحطّات تعبئة منتشرة في الحرم.",
     actions: [
-      { label_en: "View options", label_ar: "استعرض الخيارات", to: "/shop", icon: "🛒" },
+      { label_en: "Shop Zamzam flasks on Amazon UK", label_ar: "تسوّق قنّينة زمزم عبر Amazon UK", url: amazonUkSearch("zamzam water bottle insulated flask"), icon: "🛒", external: true },
     ],
   },
   {
@@ -313,7 +316,7 @@ export const CHECKLIST_ITEMS = [
     missing_prompt_en: "Children get tired during long days. A carrier, snacks, a small toy, and spare clothes make a huge difference.",
     missing_prompt_ar: "الأطفال يتعبون في الأيّام الطّويلة. حمّالة الأطفال والوجبات الخفيفة ولعبة صغيرة وملابس احتياطيّة تُحدث فرقًا كبيرًا.",
     actions: [
-      { label_en: "View family options", label_ar: "استعرض خيارات العائلة", to: "/shop", icon: "🛒" },
+      { label_en: "Shop child carriers on Amazon UK", label_ar: "تسوّق حمّالات الأطفال عبر Amazon UK", url: amazonUkSearch("baby carrier ergonomic travel hiking"), icon: "🛒", external: true },
     ],
   },
   {
