@@ -106,7 +106,8 @@ export default function QuickDuas({ isAr }) {
           on desktop). */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-32 sm:bottom-24 right-4 z-[55] inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B] text-white pl-3 pr-3.5 py-2.5 shadow-[0_10px_24px_-6px_rgba(28,29,27,0.5)] hover:bg-[#2A2D29] active:scale-95 transition tap-pulse"
+        className="fixed right-4 z-[55] inline-flex items-center gap-1.5 rounded-full bg-[#1C1D1B] text-white pl-3 pr-3.5 py-2.5 shadow-[0_10px_24px_-6px_rgba(28,29,27,0.5)] hover:bg-[#2A2D29] active:scale-95 transition tap-pulse"
+        style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 88px)" }}
         aria-label={isAr ? "أدعية سريعة" : "Quick du'ās"}
         data-testid="quick-duas-fab"
       >

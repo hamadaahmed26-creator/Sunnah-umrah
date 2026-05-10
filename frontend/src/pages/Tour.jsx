@@ -44,6 +44,7 @@ const CHAPTER_COLOR = {
   Intro: "#5C5D58",
   Ihram: "#2A5A4A",
   Tawaf: "#B3884D",
+  "Post-Tawaf": "#9A6F3A",
   "Sa'i": "#8B4540",
   Halq: "#1C1D1B",
   Done: "#2A5A4A",
@@ -53,6 +54,7 @@ const CHAPTER_AR = {
   Intro: "مقدمة",
   Ihram: "الإحرام",
   Tawaf: "الطواف",
+  "Post-Tawaf": "بعد الطواف",
   "Sa'i": "السعي",
   Halq: "الحلق",
   Done: "تمّت",
@@ -67,6 +69,7 @@ const CHAPTER_SUBLINE = {
     Intro: "Getting ready",
     Ihram: "You're preparing for Iḥrām",
     Tawaf: "You're circling the Kaʿbah",
+    "Post-Tawaf": "Just finished circling the Kaʿbah",
     "Sa'i": "You're walking between Ṣafā & Marwah",
     Halq: "You're ending your ʿUmrah",
     Done: "Your ʿUmrah is complete",
@@ -75,6 +78,7 @@ const CHAPTER_SUBLINE = {
     Intro: "التّهيئة",
     Ihram: "أنت تستعدّ للإحرام",
     Tawaf: "تطوف حول الكعبة",
+    "Post-Tawaf": "بعد الطّواف",
     "Sa'i": "تسعى بين الصّفا والمروة",
     Halq: "تُنهي عمرتك",
     Done: "اكتملت عمرتك",
@@ -568,9 +572,15 @@ export default function Tour() {
         </AnimatePresence>
       )}
 
-      {/* STICKY BOTTOM CONTROL — hide on flow steps (they have their own action button) */}
+      {/* STICKY BOTTOM CONTROL — sits just ABOVE the bottom nav. Uses
+          safe-area + a calc so on iPhones the button never gets clipped by
+          the home indicator and never overlaps content above it. The bottom
+          nav is at safe-area + 12px and is ~72px tall, so we float at +96px. */}
       {!isFlowStep && (
-      <div className="fixed inset-x-0 bottom-36 sm:bottom-24 px-4 z-[55] pointer-events-none">
+      <div
+        className="fixed inset-x-0 px-4 z-[55] pointer-events-none"
+        style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 96px)" }}
+      >
         <div className="max-w-md mx-auto pointer-events-auto">
           <div className="flex items-center gap-2">
             <button
@@ -631,11 +641,13 @@ export default function Tour() {
       </div>
       )}
 
-      {/* On flow steps: show a small "back" button at top-right next to reset since the flow has its own forward button */}
+      {/* On flow steps: small floating "back" button — also anchored to safe
+          area so it sits cleanly above the bottom nav on iOS. */}
       {isFlowStep && idx > 0 && (
         <button
           onClick={prev}
-          className="fixed bottom-36 sm:bottom-24 left-4 z-[55] tap-pulse rounded-full w-12 h-12 grid place-items-center border border-[#E8E5DD] bg-white text-[#1C1D1B] shadow-md"
+          className="fixed left-4 z-[55] tap-pulse rounded-full w-12 h-12 grid place-items-center border border-[#E8E5DD] bg-white text-[#1C1D1B] shadow-md"
+          style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 96px)" }}
           aria-label="previous step"
           data-testid="tour-prev"
         >

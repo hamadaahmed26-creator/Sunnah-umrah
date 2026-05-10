@@ -74,9 +74,12 @@ export default function Layout({ children }) {
           impression and more vertical space for content. */}
       {loc.pathname !== "/" && loc.pathname !== "/home" && (
       <nav
-        className="fixed bottom-16 sm:bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-white/85 backdrop-blur-xl rounded-3xl px-2 py-2 border border-[#E8E5DD] shadow-[0_10px_40px_-8px_rgba(28,29,27,0.18)] flex items-end gap-0.5"
+        className="fixed left-1/2 -translate-x-1/2 z-[60] bg-white/95 backdrop-blur-xl rounded-3xl px-2 py-2 border border-[#E8E5DD] shadow-[0_10px_40px_-8px_rgba(28,29,27,0.18)] flex items-end gap-0.5"
+        style={{
+          bottom: "calc(env(safe-area-inset-bottom, 0px) + 12px)",
+          direction: "ltr",
+        }}
         data-testid="bottom-nav"
-        style={{ direction: "ltr" }}
       >
         {navItems.map((it) => {
           const active = loc.pathname === it.to || (it.to !== "/" && loc.pathname.startsWith(it.to));

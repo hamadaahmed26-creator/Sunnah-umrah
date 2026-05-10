@@ -101,22 +101,20 @@ export default function Home() {
     ? `${experienceLabel} · ${travelersLabel}`
     : experienceLabel;
 
-  // Auto-open onboarding on first launch, OR when arriving with ?edit=1
+  // Re-open onboarding ONLY when arriving with ?edit=1 from Settings.
+  // First-launch auto-popup was REMOVED Feb 2026 — pilgrims now land
+  // straight on the home dashboard and see the Kaaba within 2 seconds.
+  // The persona quiz is still available via Settings → "About me".
   React.useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("edit") === "1" && profile.done) {
+    if (params.get("edit") === "1") {
       setEditMode(true);
       setOnboardOpen(true);
       // Clean the URL so a refresh doesn't re-trigger
       const url = window.location.pathname;
       window.history.replaceState({}, "", url);
-      return;
     }
-    if (!profile.done) {
-      const t = setTimeout(() => setOnboardOpen(true), 600);
-      return () => clearTimeout(t);
-    }
-  }, [profile.done]);
+  }, []);
 
   const handleOnboardComplete = (answers) => {
     setProfile({ ...profile, ...answers, done: true });

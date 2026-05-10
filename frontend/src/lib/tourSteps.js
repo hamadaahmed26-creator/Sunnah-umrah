@@ -292,8 +292,8 @@ export const TOUR_STEPS = [
   {
     chapter: "Ihram",
     scene: "talbiyah",
-    title_en: "Recite the Talbiyah",
-    title_ar: "التلبية",
+    title_en: "Recite the Talbiyah (the pilgrim's call to Allah)",
+    title_ar: "التلبية (نداء الحاجّ)",
     what_en:
       "Begin reciting the Talbiyah (pilgrim's call) out loud (men) or quietly (women). Keep repeating it the whole way to Masjid al-Haram.",
     what_ar:
@@ -518,7 +518,7 @@ export const TOUR_STEPS = [
     ],
   },
   {
-    chapter: "Tawaf",
+    chapter: "Post-Tawaf",
     scene: "maqam",
     title_en: "After Tawaf — pray 2 rakʿah behind Maqām Ibrāhīm",
     title_ar: "بعد الطواف — صلِّ ركعتين خلف المقام",
@@ -573,7 +573,7 @@ export const TOUR_STEPS = [
     tip: "After the two rakʿahs (and before going to Zamzam), if you can return to the Black Stone and greet it again with takbīr (saying Allāhu Akbar — 'Allah is the Greatest'), that is sunnah — but it is optional and was not done by the Prophet ﷺ in every narration. If the crowd is heavy, skip it without guilt and proceed to Zamzam.",
   },
   {
-    chapter: "Tawaf",
+    chapter: "Post-Tawaf",
     scene: "zamzam",
     title_en: "Drink Zamzam water",
     title_ar: "اشرب من ماء زمزم",
@@ -768,8 +768,8 @@ export const TOUR_STEPS = [
   {
     chapter: "Halq",
     scene: "halq",
-    title_en: "Step 4 · Halq or Taqsir",
-    title_ar: "الخطوة ٤ · الحلق أو التقصير",
+    title_en: "Step 4 · Halq or Taqsīr (shave or trim your hair)",
+    title_ar: "الخطوة ٤ · الحلق أو التقصير (حلق الرّأس أو تقصير الشّعر)",
     what_en:
       "MEN: shave your head completely (Halq — shaving, more virtuous) or trim all hair short (Taqsir — trimming). WOMEN: trim a fingertip's length from the end of your hair.",
     what_ar:
