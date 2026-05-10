@@ -270,8 +270,8 @@ export default function Checklist() {
           data-testid="checklist-finish-missing"
         >
           {isAr
-            ? "أنت قريب من الجاهزيّة — لنكمل ما بقي"
-            : "You're almost ready — let's complete the remaining items"}
+            ? "أنت قريب من الجاهزيّة، لنكمل ما بقي"
+            : "You're almost ready. Let's complete the remaining items"}
           <ArrowRight className={`w-4 h-4 ${isAr ? "rotate-180" : ""}`} />
         </button>
       ) : (
@@ -280,7 +280,7 @@ export default function Checklist() {
           className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#1C1D1B] text-white px-6 py-4 text-[14px] font-medium tap-pulse"
           data-testid="checklist-start-tour"
         >
-          {isAr ? "أنا جاهز — ابدأ دليل العمرة" : "I'm ready — start ʿUmrah guide"}
+          {isAr ? "أنا جاهز · ابدأ دليل العمرة" : "I'm ready · start ʿUmrah guide"}
           <ArrowRight className={`w-4 h-4 ${isAr ? "rotate-180" : ""}`} />
         </Link>
       )}

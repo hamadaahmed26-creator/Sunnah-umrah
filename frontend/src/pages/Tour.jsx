@@ -136,6 +136,15 @@ export default function Tour() {
     setLap(0);
     setTrip(0);
   };
+
+  // Reset scroll to top whenever the step changes, otherwise mobile users
+  // who scrolled mid-step get dropped half-way down the next step's content
+  // — the most common cause of the "page jumps" feedback (Feb 2026 batch).
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [idx]);
   const finishUmrah = () => {
     if (navigator.vibrate) navigator.vibrate([60, 80, 60, 80, 200]);
     speak("تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُم");
@@ -630,7 +639,7 @@ export default function Tour() {
                   </>
                 ) : (
                   <>
-                    {isAr ? "أنا جاهز — التالي" : "I'm ready — next step"}
+                    {isAr ? "أنا جاهز · التالي" : "I'm ready · next step"}
                     <ArrowRight className={`w-5 h-5 ${isAr ? "rotate-180" : ""}`} />
                   </>
                 )}

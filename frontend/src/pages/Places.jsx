@@ -43,8 +43,8 @@ export default function Places() {
         </h1>
         <p className={`mt-2 text-[14px] text-[#5C5D58] leading-relaxed ${isAr ? "font-arabic text-right" : ""}`}>
           {isAr
-            ? "مواقع تاريخية وزياريّة في رحلتك إلى مكة والمدينة — صور وقصص ومواقع GPS."
-            : "Historical and religious sites for your journey to Makkah and Madīnah — photos, stories, and GPS pins."}
+            ? "مواقع تاريخية وزياريّة في رحلتك إلى مكة والمدينة. صور وقصص ومواقع GPS."
+            : "Historical and religious sites for your journey to Makkah and Madīnah. Photos, stories, and GPS pins."}
         </p>
       </div>
 

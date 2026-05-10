@@ -95,8 +95,8 @@ export default function Settings() {
       </h1>
       <p className="mt-3 text-[13px] text-[#5C5D58] leading-[1.7]">
         {isAr
-          ? "اسمع نداء الأذان الهادئ من مكّة عند كلّ صلاة. التّنبيه يعمل فقط عندما يكون التّطبيق مفتوحًا — لا يستهلك بطّاريّتك في الخلفيّة."
-          : "Hear the gentle adhan from Makkah at every prayer time. Plays only while the app is open — no battery drain in the background."}
+          ? "اسمع نداء الأذان الهادئ من مكّة عند كلّ صلاة. التّنبيه يعمل فقط عندما يكون التّطبيق مفتوحًا، ولا يستهلك بطّاريّتك في الخلفيّة."
+          : "Hear the gentle adhan from Makkah at every prayer time. Plays only while the app is open, with no battery drain in the background."}
       </p>
 
       {/* Master toggle */}

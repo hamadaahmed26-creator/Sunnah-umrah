@@ -172,10 +172,10 @@ export default function Home() {
         : profile.experience === "helping"
           ? (isAr
               ? "كلّ ما يحتاجونه لأداء العمرة على السنّة، في مكان واحد."
-              : "Everything they'll need to perform Umrah according to the Sunnah — in one place.")
-          : (isAr
+              : "Everything they'll need to perform Umrah according to the Sunnah, in one place.")
+        : (isAr
               ? "كلّ ما تحتاجه لأداء العمرة على السنّة، في مكان واحد."
-              : "Everything you need to perform Umrah according to the Sunnah — in one place.");
+              : "Everything you need to perform Umrah according to the Sunnah, in one place.");
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="home-page">
@@ -464,13 +464,14 @@ export default function Home() {
         </Link>
       )}
 
-      {/* PRIMARY ACTION CARDS — surfaced ABOVE the tools grid because they
-          are the two highest-value paths for almost every user:
-            1) Get-Ready Checklist drives preparation + conversion (visa,
-               flights, ihram, hotel — the affiliate revenue path).
-            2) Walk to the Ḥaram is the on-the-ground gate-finder for
-               anyone already in Makkah. Reordered Feb 2026 after user
-               feedback that these felt visually demoted at the bottom. */}
+      {/* PRIMARY ACTION CARD — surfaced ABOVE the tools grid.
+          Updated Feb 2026: tester feedback said "homepage feels busy" when
+          we had BOTH Get Ready + Walk to Haram as big cards. The
+          Get-Ready Checklist is the conversion-critical path (affiliate
+          flights/hotel/eSIM/shop) AND the path nearly every user benefits
+          from before their trip — so it stays as the single hero card.
+          Walk to Haram moves back into the tools grid below — it's only
+          useful for the small slice of users physically in Makkah today. */}
       <div className="mt-7 space-y-2" data-testid="home-primary-cta">
         <Link
           to="/checklist"
@@ -486,31 +487,10 @@ export default function Home() {
                 {isAr ? "قائمة الاستعداد للعمرة" : "Get ready for ʿUmrah"}
               </div>
               <div className={`mt-0.5 text-[12px] text-[#3E5E4B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "جواز، تأشيرة، إحرام، فندق — وأكثر" : "Passport, visa, iḥrām, hotel & more"}
+                {isAr ? "جواز، تأشيرة، إحرام، فندق وأكثر" : "Passport, visa, iḥrām, hotel and more"}
               </div>
             </div>
             <ArrowRight className={`w-4 h-4 text-[#2A5A4A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
-          </div>
-        </Link>
-
-        <Link
-          to="/walk-haram"
-          className="block tap-pulse rounded-2xl border border-[#EBD9B0] p-3.5 hover:border-[#B3884D] hover:shadow-[0_8px_18px_-12px_rgba(179,136,77,0.4)] transition active:scale-[0.99] bg-gradient-to-br from-[#FFF7E6] to-[#F4DCA1]"
-          data-testid="home-walk-haram"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#EBD9B0]">
-              <Footprints className="w-[18px] h-[18px] text-[#7B5C24]" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className={`text-[13px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "خذني إلى الحرم" : "Walk to the Ḥaram"}
-              </div>
-              <div className={`mt-0.5 text-[11px] text-[#6E5424] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "توجيه سيرًا، خطوة بخطوة، داخل التّطبيق" : "In-app walking directions, step by step"}
-              </div>
-            </div>
-            <NavigationIcon className={`w-4 h-4 text-[#7B5C24] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
           </div>
         </Link>
       </div>
@@ -521,11 +501,12 @@ export default function Home() {
           {isAr ? "أدواتك" : "Your tools"}
         </h2>
         <div className="grid grid-cols-2 gap-2">
+          <QuickTile to="/walk-haram" icon={Footprints}  accent="#7B5C24" en="Walk to Ḥaram" ar="إلى الحرم"     sub_en="Step-by-step directions"     sub_ar="توجيه سيرًا، خطوة بخطوة"     isAr={isAr} testid="home-walk-haram" />
           <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        isAr={isAr} testid="home-group" />
-          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh & Umrah questions"      sub_ar="أسئلة الفقه والعمرة"      isAr={isAr} testid="home-chat" />
+          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh and Umrah questions"    sub_ar="أسئلة الفقه والعمرة"      isAr={isAr} testid="home-chat" />
           <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             isAr={isAr} testid="home-qibla" />
           <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  isAr={isAr} testid="home-lost" />
-          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah"       ar="الزّيارة"        sub_en="26 places to visit"           sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
+          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah (visits)" ar="الزّيارة"   sub_en="26 sacred places to visit"   sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
           <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                isAr={isAr} testid="home-quiz" />
         </div>
       </div>
