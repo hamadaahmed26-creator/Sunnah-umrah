@@ -28,6 +28,6 @@
   "seed_data_creation": "Pre-seeded localStorage umrah_user_profile per agent_to_agent_context_note for each persona test; localStorage umrah_tour_step set 1..14 for tour step verification; localStorage umrah_lang='ar' for bilingual check.",
   "retest_needed": false,
   "main_agent_can_self_test": true,
-  "context_for_next_testing_agent": "Ship-ready. Backend at https://umrah-step-by-step.preview.emergentagent.com/api responds correctly for all 19 endpoints tested. Frontend has zero console errors across all 12 listed routes. Note that the chapter label in Tour shows 'Ihram' in DOM (CSS text-transform: uppercase makes it visually 'IHRAM'); my text match was case-sensitive and 'IHRAM' literal failed but visual rendering is correct — not a bug. Geolocation in preview iframe is blocked (PERMISSION_DENIED) but app's error UI handles it gracefully (verified iteration 5).",
+  "context_for_next_testing_agent": "Ship-ready. Backend at https://islamic-journey-19.preview.emergentagent.com/api responds correctly for all 19 endpoints tested. Frontend has zero console errors across all 12 listed routes. Note that the chapter label in Tour shows 'Ihram' in DOM (CSS text-transform: uppercase makes it visually 'IHRAM'); my text match was case-sensitive and 'IHRAM' literal failed but visual rendering is correct — not a bug. Geolocation in preview iframe is blocked (PERMISSION_DENIED) but app's error UI handles it gracefully (verified iteration 5).",
   "rca of the issue": "N/A — no issues found this iteration."
 }

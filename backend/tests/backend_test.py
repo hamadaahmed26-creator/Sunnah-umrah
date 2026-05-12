@@ -5,7 +5,7 @@ import os
 import pytest
 import requests
 
-BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://umrah-step-by-step.preview.emergentagent.com").rstrip("/")
+BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://islamic-journey-19.preview.emergentagent.com").rstrip("/")
 API = f"{BASE_URL}/api"
 
 
@@ -113,7 +113,7 @@ def test_group_join_unknown(s):
 
 
 # --- Sadaqah / Stripe Checkout ---
-ORIGIN = "https://umrah-step-by-step.preview.emergentagent.com"
+ORIGIN = "https://islamic-journey-19.preview.emergentagent.com"
 
 
 def _assert_stripe_checkout_response(data):
