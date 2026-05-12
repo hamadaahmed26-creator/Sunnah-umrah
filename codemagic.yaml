@@ -1,0 +1,116 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Sunnah Umrah — Codemagic CI/CD Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+# What this file does:
+#   - Runs on a CLOUD MAC (no laptop needed)
+#   - Builds the React web bundle (yarn build)
+#   - Syncs Capacitor iOS project
+#   - Installs CocoaPods
+#   - Signs the .ipa with the Apple Developer cert Codemagic auto-creates
+#   - Uploads the build to App Store Connect → TestFlight
+#   - Optionally submits to App Store review (toggle below)
+#
+# What YOU set up ONCE in the Codemagic web UI (not in this file):
+#   1. Connect your GitHub repo
+#   2. Settings → Integrations → App Store Connect → paste your API key
+#      (Issuer ID, Key ID, .p8 file — get from appstoreconnect.apple.com →
+#       Users and Access → Integrations → App Store Connect API)
+#   3. Settings → Code Signing Identities → Add iOS Distribution → click
+#      "Fetch certificates from Apple" (Codemagic does this for you)
+#   4. Workflow Editor → pick this file (codemagic.yaml) and the
+#      "ios-release" workflow below.
+# ─────────────────────────────────────────────────────────────────────────────
+
+workflows:
+  ios-release:
+    name: Sunnah Umrah — iOS App Store
+    instance_type: mac_mini_m2          # Apple silicon, fastest tier
+    max_build_duration: 60               # minutes
+    integrations:
+      app_store_connect: SunnahUmrah_ASC # ← the name you give the API key
+                                         #   integration inside Codemagic UI
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.sunnahumrah.app
+      vars:
+        XCODE_WORKSPACE: "frontend/ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        APP_STORE_APP_ID: 0000000000     # ← replace with your numeric App ID
+                                         #   from App Store Connect once the
+                                         #   app record is created
+      node: 20.18.0
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Install yarn dependencies
+        script: |
+          cd $CM_BUILD_DIR/frontend
+          yarn install --frozen-lockfile
+
+      - name: Build production web bundle
+        script: |
+          cd $CM_BUILD_DIR/frontend
+          # Ensure REACT_APP_BACKEND_URL in frontend/.env points to your
+          # production backend. Codemagic reads frontend/.env automatically.
+          yarn build
+
+      - name: Sync Capacitor → iOS
+        script: |
+          cd $CM_BUILD_DIR/frontend
+          npx cap sync ios
+
+      - name: Install CocoaPods
+        script: |
+          cd $CM_BUILD_DIR/frontend/ios/App
+          pod install --repo-update
+
+      - name: Auto-increment build number
+        script: |
+          cd $CM_BUILD_DIR/frontend/ios/App
+          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APP_ID" || echo 0)
+          NEW_BUILD_NUMBER=$(($LATEST_BUILD_NUMBER + 1))
+          agvtool new-version -all $NEW_BUILD_NUMBER
+
+      - name: Build & sign IPA
+        script: |
+          cd $CM_BUILD_DIR
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+
+    publishing:
+      app_store_connect:
+        auth: integration
+
+        # STEP A — Always upload to TestFlight first.
+        # Apple REQUIRES the build to live in TestFlight before App Store
+        # review. This is a 20-40 min Apple-side processing step.
+        submit_to_testflight: true
+
+        # STEP B — Submit to App Store review.
+        # Leave FALSE for the very first build (you need to fill app
+        # description, screenshots, keywords, age rating, privacy answers
+        # in App Store Connect FIRST — Codemagic can't do those).
+        # Flip to TRUE for subsequent builds once metadata is locked in.
+        submit_to_app_store: false
+
+        # If submit_to_app_store is true above, this becomes the release
+        # strategy. "MANUAL" = you click "Release to App Store" yourself
+        # after approval (safer). "AFTER_APPROVAL" = auto-release the
+        # instant Apple approves (faster but no last-minute checks).
+        release_type: MANUAL
+
+      email:
+        recipients:
+          # ← put your email here so you get build success/failure pings
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
