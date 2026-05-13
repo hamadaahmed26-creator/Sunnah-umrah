@@ -75,7 +75,11 @@ workflows:
             --create
           # 3. Install the certificate into the keychain
           keychain add-certificates
-          # 4. Wire the provisioning profile into the Xcode project
+          # 4. Wire the provisioning profile into the Xcode project.
+          #    IMPORTANT: cd into the ios/App dir so use-profiles patches
+          #    App.xcodeproj specifically (not Pods.xcodeproj which doesn't
+          #    need signing and would confuse the tool).
+          cd $CM_BUILD_DIR/frontend/ios/App
           xcode-project use-profiles
 
       - name: Auto-increment build number
@@ -87,10 +91,10 @@ workflows:
 
       - name: Build & sign IPA
         script: |
-          cd $CM_BUILD_DIR
+          cd $CM_BUILD_DIR/frontend/ios/App
           xcode-project build-ipa \
-            --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME"
+            --workspace "App.xcworkspace" \
+            --scheme "App"
 
     artifacts:
       - build/ios/ipa/*.ipa
