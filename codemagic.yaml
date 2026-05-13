@@ -68,17 +68,23 @@ workflows:
           set -ex
           # 1. Initialize a temporary keychain on the Mac VM
           keychain initialize
-          # 2. Ask Apple (via API key) to create/fetch the distribution
+          # 2. Generate a private key for the new iOS Distribution certificate.
+          #    Apple needs us to provide the private key when creating a cert
+          #    via the API. We create a fresh RSA-2048 key just for this build.
+          openssl genrsa -out /tmp/certificate_key.pem 2048
+          # 3. Ask Apple (via API key) to create/fetch the distribution
           #    certificate AND the App Store provisioning profile for our
-          #    bundle ID. --create flag auto-generates them if not present.
+          #    bundle ID. --create auto-generates them if not present, and
+          #    --certificate-key binds our new private key to the certificate.
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
-            --create
-          # 3. Install the certificate into the keychain
+            --create \
+            --certificate-key=@file:/tmp/certificate_key.pem
+          # 4. Install the certificate (with its private key) into the keychain
           keychain add-certificates
-          # 4. Verify profile was downloaded before patching
+          # 5. Verify profile was downloaded before patching the project
           ls -la "$HOME/Library/MobileDevice/Provisioning Profiles/" || true
-          # 5. Wire the provisioning profile into the Xcode project.
+          # 6. Wire the provisioning profile into the Xcode project.
           #    cd into ios/App so use-profiles only patches App.xcodeproj.
           cd $CM_BUILD_DIR/frontend/ios/App
           xcode-project use-profiles --warn-only
