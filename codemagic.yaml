@@ -30,12 +30,10 @@ workflows:
       app_store_connect: Codemagic       # ← matches the integration name
                                          #   you configured in Codemagic UI
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.sunnahumrah.app
       vars:
         XCODE_WORKSPACE: "frontend/ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
+        BUNDLE_ID: "com.sunnahumrah.app"
         APP_STORE_APP_ID: 6769159262     # Sunnah Umrah's App Store Connect numeric ID
         APPLE_TEAM_ID: D59QBAUF9K         # Hamada Ahmed — Apple Developer Team ID
       node: 20.18.0
@@ -64,6 +62,21 @@ workflows:
         script: |
           cd $CM_BUILD_DIR/frontend/ios/App
           pod install --repo-update
+
+      - name: Set up code signing (auto-create cert + profile if missing)
+        script: |
+          # 1. Initialize a temporary keychain on the Mac VM
+          keychain initialize
+          # 2. Ask Apple (via API key) to create/fetch the distribution
+          #    certificate AND the App Store provisioning profile for our
+          #    bundle ID. --create flag auto-generates them if not present.
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          # 3. Install the certificate into the keychain
+          keychain add-certificates
+          # 4. Wire the provisioning profile into the Xcode project
+          xcode-project use-profiles
 
       - name: Auto-increment build number
         script: |
