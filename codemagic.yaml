@@ -27,8 +27,8 @@ workflows:
     instance_type: mac_mini_m2          # Apple silicon, fastest tier
     max_build_duration: 60               # minutes
     integrations:
-      app_store_connect: SunnahUmrah_ASC # ← the name you give the API key
-                                         #   integration inside Codemagic UI
+      app_store_connect: Codemagic       # ← matches the integration name
+                                         #   you configured in Codemagic UI
     environment:
       ios_signing:
         distribution_type: app_store
