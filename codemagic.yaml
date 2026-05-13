@@ -109,8 +109,7 @@ workflows:
 
       email:
         recipients:
-          # ← put your email here so you get build success/failure pings
-          - your-email@example.com
+          - Hamada.ahmed26@hotmail.com
         notify:
           success: true
           failure: true
