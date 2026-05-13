@@ -36,9 +36,8 @@ workflows:
       vars:
         XCODE_WORKSPACE: "frontend/ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
-        APP_STORE_APP_ID: 0000000000     # ← replace with your numeric App ID
-                                         #   from App Store Connect once the
-                                         #   app record is created
+        APP_STORE_APP_ID: 6769159262     # Sunnah Umrah's App Store Connect numeric ID
+        APPLE_TEAM_ID: D59QBAUF9K         # Hamada Ahmed — Apple Developer Team ID
       node: 20.18.0
       xcode: latest
       cocoapods: default
