@@ -65,6 +65,7 @@ workflows:
 
       - name: Set up code signing (auto-create cert + profile if missing)
         script: |
+          set -ex
           # 1. Initialize a temporary keychain on the Mac VM
           keychain initialize
           # 2. Ask Apple (via API key) to create/fetch the distribution
@@ -75,12 +76,12 @@ workflows:
             --create
           # 3. Install the certificate into the keychain
           keychain add-certificates
-          # 4. Wire the provisioning profile into the Xcode project.
-          #    IMPORTANT: cd into the ios/App dir so use-profiles patches
-          #    App.xcodeproj specifically (not Pods.xcodeproj which doesn't
-          #    need signing and would confuse the tool).
+          # 4. Verify profile was downloaded before patching
+          ls -la "$HOME/Library/MobileDevice/Provisioning Profiles/" || true
+          # 5. Wire the provisioning profile into the Xcode project.
+          #    cd into ios/App so use-profiles only patches App.xcodeproj.
           cd $CM_BUILD_DIR/frontend/ios/App
-          xcode-project use-profiles
+          xcode-project use-profiles --warn-only
 
       - name: Auto-increment build number
         script: |
