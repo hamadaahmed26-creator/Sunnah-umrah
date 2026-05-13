@@ -98,14 +98,15 @@ workflows:
         # Leave FALSE for the very first build (you need to fill app
         # description, screenshots, keywords, age rating, privacy answers
         # in App Store Connect FIRST — Codemagic can't do those).
-        # Flip to TRUE for subsequent builds once metadata is locked in.
+        # Once metadata is complete in App Store Connect, flip this line
+        # to:    submit_to_app_store: true
+        # AND uncomment the release_type line below.
         submit_to_app_store: false
 
-        # If submit_to_app_store is true above, this becomes the release
-        # strategy. "MANUAL" = you click "Release to App Store" yourself
-        # after approval (safer). "AFTER_APPROVAL" = auto-release the
-        # instant Apple approves (faster but no last-minute checks).
-        release_type: MANUAL
+        # release_type: MANUAL
+        # ↑ Uncomment ONLY when submit_to_app_store is true above.
+        #   MANUAL = you click "Release to App Store" yourself after approval.
+        #   AFTER_APPROVAL = auto-release the instant Apple approves.
 
       email:
         recipients:
