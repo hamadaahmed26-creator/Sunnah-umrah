@@ -179,3 +179,121 @@ workflows:
         notify:
           success: true
           failure: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ANDROID — Google Play release workflow
+  # ─────────────────────────────────────────────────────────────────────────────
+  # What you set up ONCE in Codemagic UI before triggering this:
+  #   1. Codemagic → Teams → Personal Account → Integrations → Google Play
+  #      (you'll need a service-account JSON from Google Play Console;
+  #       instructions in /app/ANDROID_LAUNCH.md after first build)
+  #   2. Codemagic → App → Environment variables → add a group called
+  #      "android_keystore" with these encrypted vars:
+  #        - CM_KEYSTORE          (the .jks file, base64-encoded)
+  #        - CM_KEYSTORE_PASSWORD
+  #        - CM_KEY_ALIAS
+  #        - CM_KEY_PASSWORD
+  #      (we generate these in step 3 below)
+  # ─────────────────────────────────────────────────────────────────────────────
+  android-release:
+    name: Sunnah Umrah — Android Play Store
+    instance_type: linux_x2              # cheaper + faster than Mac for Android
+    max_build_duration: 60
+    environment:
+      groups:
+        - android_keystore               # decrypts the 4 vars above into env
+      vars:
+        PACKAGE_NAME: "com.sunnahumrah.app"
+        GOOGLE_PLAY_TRACK: "internal"   # internal | alpha | beta | production
+      node: 20.18.0
+      java: 17
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: "android-*"
+          include: true
+
+    scripts:
+      - name: Override env for production Android build
+        script: |
+          cd $CM_BUILD_DIR/frontend
+          cat > .env.production.local <<'ENVEOF'
+          REACT_APP_BACKEND_URL=https://islamic-journey-19.emergent.host
+          REACT_APP_TP_MARKER=525646
+          REACT_APP_AMAZON_TAG=sunnahumrah-21
+          ENVEOF
+
+      - name: Install yarn dependencies
+        script: |
+          cd $CM_BUILD_DIR/frontend
+          yarn install --frozen-lockfile
+
+      - name: Build production web bundle
+        script: |
+          cd $CM_BUILD_DIR/frontend
+          yarn build
+
+      - name: Sync Capacitor → Android
+        script: |
+          cd $CM_BUILD_DIR/frontend
+          npx cap sync android
+
+      - name: Write keystore from env
+        script: |
+          # Decode the base64 keystore into a real .jks file the Gradle
+          # signing step can read. Codemagic's CM_KEYSTORE env var holds
+          # the base64 bytes; CM_KEYSTORE_PATH is where Gradle expects it.
+          echo $CM_KEYSTORE | base64 --decode > /tmp/sunnah-release.jks
+          echo "keystore written: $(stat -c%s /tmp/sunnah-release.jks) bytes"
+
+      - name: Configure Gradle signing
+        script: |
+          cd $CM_BUILD_DIR/frontend/android
+          cat >> app/build.gradle <<EOF
+
+          android {
+              signingConfigs {
+                  release {
+                      storeFile     file("/tmp/sunnah-release.jks")
+                      storePassword System.getenv("CM_KEYSTORE_PASSWORD")
+                      keyAlias      System.getenv("CM_KEY_ALIAS")
+                      keyPassword   System.getenv("CM_KEY_PASSWORD")
+                  }
+              }
+              buildTypes {
+                  release { signingConfig signingConfigs.release }
+              }
+          }
+          EOF
+
+      - name: Auto-increment versionCode
+        script: |
+          cd $CM_BUILD_DIR/frontend/android
+          # Use Codemagic's BUILD_NUMBER (project-wide incrementing) so every
+          # AAB has a strictly higher versionCode than the previous one.
+          NEW_CODE=$(($BUILD_NUMBER + 10))
+          sed -i "s/versionCode [0-9]*/versionCode $NEW_CODE/" app/build.gradle
+          echo "versionCode set to $NEW_CODE"
+
+      - name: Build signed AAB
+        script: |
+          cd $CM_BUILD_DIR/frontend/android
+          ./gradlew bundleRelease
+
+    artifacts:
+      - frontend/android/app/build/outputs/bundle/release/*.aab
+      - frontend/android/app/build/outputs/apk/release/*.apk
+
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: $GOOGLE_PLAY_TRACK         # uploads to "internal" track first
+        submit_as_draft: true              # creates draft, we review in Play Console
+      email:
+        recipients:
+          - Hamada.ahmed26@hotmail.com
+        notify:
+          success: true
+          failure: true
