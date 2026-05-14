@@ -8,53 +8,85 @@ Deploy the existing full-stack Sunnah Umrah app (React + FastAPI + MongoDB, with
 - **Backend**: FastAPI (in `/app/backend`)
 - **Database**: MongoDB
 - **Mobile**: Capacitor 7 with native iOS project at `/app/frontend/ios`
-- **CI/CD**: Codemagic (Mac M2 cloud VMs, Xcode 16.0)
+- **CI/CD**: Codemagic (Mac M2 cloud VMs, Xcode latest)
 - **Apple Account**: Hamada Ahmed (Team ID: D59QBAUF9K)
 - **App Store Connect App ID**: 6769159262
 - **Bundle ID**: com.sunnahumrah.app
+- **Production URL**: https://sunnahumrah.app
+- **Preview URL**: https://islamic-journey-19.preview.emergentagent.com
 
-## What's Been Implemented
+## Status: ✅ SUBMITTED TO APPLE FOR REVIEW (2026-02-14)
 
-### Feb 2026 — iOS Deployment Pipeline (COMPLETE ✅)
-- Capacitor iOS project added (`npx cap add ios`)
-- iOS app icons + splash screens generated
-- Info.plist configured (permissions + `ITSAppUsesNonExemptEncryption=false`)
-- `codemagic.yaml` created with full ios-release workflow
-- Apple Bundle ID `com.sunnahumrah.app` registered
-- App Store Connect App record created (ID 6769159262)
-- App Store Connect API key generated, uploaded to Codemagic as integration named "Codemagic" (Key ID: 6QS4FVVAG8, Issuer: c57d09c8-bada-4c23-ac1c-c2044d9b6c99)
-- DEVELOPMENT_TEAM (D59QBAUF9K) baked into App.xcodeproj/project.pbxproj for Debug + Release configs
-- Code signing script uses `openssl genrsa` + `--certificate-key` to create cert with private key
-- Xcode pinned to 16.0 (xcode:latest = 26.x caused 2hr framework loop hang)
-- Pods build phases patched with `alwaysOutOfDate = 1` to prevent Xcode 16+ loop
-- **First successful TestFlight build uploaded** (2m 50s total, App.ipa exported, code signing clean)
+### What's Been Implemented
+
+#### Feb 2026 — iOS Deployment Pipeline (COMPLETE ✅)
+- Capacitor iOS project, icons, splash screens, Info.plist
+- `codemagic.yaml`:
+  - Production backend URL injected via `.env.production.local` at build time
+  - `openssl genrsa` + `--certificate-key` for self-managed signing cert
+  - DEVELOPMENT_TEAM=D59QBAUF9K baked into project.pbxproj
+  - `--ipa-directory` override so IPA lands where Codemagic publisher expects
+  - Bundle version auto-bumps via max(apple_latest+1, codemagic_build+10)
+  - Pods build phases patched with `alwaysOutOfDate=1` to prevent Xcode 16+ loop
+  - Xcode `latest` (26.x) required by Apple Feb 2026 onward
+- Build #23 (1.0/23) uploaded to TestFlight + installed on user's iPhone for QA
+- iOS-specific bug fixes (caught via TestFlight QA):
+  - `@capacitor/geolocation` plugin installed; new `lib/geolocation.js` wrapper
+  - Walk-to-Haram: removed auto-trigger, added explicit "Find my way" button
+  - Lost: same wrapper, friendly errors instead of blank when permission denied
+  - Group: production backend URL fix, surface backend error to user
+  - FAQ: removed framer-motion `height:auto` animation that crashed iOS WebView
+
+#### Public pages
+- `/privacy` (existed)
+- `/support` (new): contact, 48hr SLA, 4 troubleshooting cards, self-serve links
+- Settings sidebar links to both
+- All emails standardised to Hamada.ahmed26@hotmail.com
+
+#### App Store metadata
+- Description (cleaned of ﷺ and & which Apple parser dislikes)
+- Keywords, Promo Text, Copyright, Support/Marketing URLs
+- iPhone 6.5" screenshots: 6 (pre-rendered via Playwright at 1242x2688)
+- iPad 13" screenshots: 6 (2064x2752, served via /appstore/ipad.html gallery)
+- App Information: Subtitle, Category=Reference, Content Rights=No, EULA standard, DSA=Not a trader
+- App Privacy: Privacy URL + Coarse Location + Other User Content (App Functionality only, no tracking)
+- Age Rating: 4+
+- Pricing: Free (GBP base)
+- Build #23 attached, Reviewer Notes proactively answer common Apple questions
+- Submitted to App Review on 2026-02-14 08:40 UK time
 
 ## Prioritized Backlog
 
-### P1 — Required before App Store review approval
-- **Create `/privacy` and `/support` public pages** in React frontend (Apple mandates these URLs in App Store Connect → App Privacy section)
-- **Generate App Store listing screenshots** (1290x2796 for 6.7" iPhone) — at least 3, ideally 6-10
-- **Fill App Store Connect metadata**: description, keywords, age rating questionnaire, app category, support URL, privacy URL
+### P0 — Waiting on Apple (24-72h)
+- Apple sends email to Hamada.ahmed26@hotmail.com:
+  - Approved → click "Release this version" → live in 30 min
+  - Rejected → fix small metadata/binary issue, resubmit
 
-### P2 — Nice to have
-- Set up TestFlight Internal Testing group (so user can install builds on iPhone)
-- Add user to TestFlight as internal tester
-- After confirming app works on TestFlight, flip `submit_to_app_store: true` in codemagic.yaml + uncomment `release_type: MANUAL`
-
-### P3 — Future
-- Set up Android build pipeline (Google Play Store) — much simpler, no Mac needed
-- Add crash reporting (Sentry/Crashlytics)
-- Set up production backend environment & domain
+### P1 — Post-launch
+- Android Play Store pipeline (no Mac, $25 one-time)
+- Crash reporting (Sentry)
+- Landing page for sunnahumrah.app marketing site
+- Analytics (Plausible/Umami — privacy-friendly)
 
 ## Key Files
-- `/app/codemagic.yaml` — CI/CD pipeline (Xcode 16.0, integration "Codemagic")
-- `/app/frontend/ios/App/App.xcodeproj/project.pbxproj` — has DEVELOPMENT_TEAM baked in
-- `/app/frontend/ios/App/App/Info.plist` — permissions + encryption export compliance
-- `/app/APP_STORE_LAUNCH_NO_MAC.md` — user-facing launch guide
+- `/app/codemagic.yaml`
+- `/app/frontend/ios/App/App.xcodeproj/project.pbxproj` (DEVELOPMENT_TEAM)
+- `/app/frontend/ios/App/App/Info.plist`
+- `/app/frontend/src/lib/geolocation.js` (Capacitor + web wrapper)
+- `/app/frontend/src/pages/Support.jsx`
+- `/app/frontend/public/appstore/` (6 iPhone PNGs, 6 iPad PNGs, ipad.html gallery)
 
 ## Critical Context for Next Agent
-- User works entirely from iPhone + occasionally a laptop (no Mac)
-- User's email: Hamada.ahmed26@hotmail.com
-- Codemagic integration name MUST stay "Codemagic" (matches what's in codemagic.yaml line 30)
-- If signing fails with "You already have a current Distribution certificate" → revoke all certs at developer.apple.com/account/resources/certificates/list and rebuild
-- Never use `xcode: latest` — it pulls Xcode 26.x which has CocoaPods/Capacitor incompatibilities
+- User: Hamada Ahmed, UK, iPhone-primary, sometimes uses laptop
+- Apple submission is OUT OF OUR HANDS for 24-72h
+- DO NOT touch certificates (cert with proper private key now exists at Apple)
+- Codemagic Build #23 is the submitted one; never use `xcode: latest` reversed to 16 (Apple now requires Xcode 26+)
+- If rejection: fix is usually 1 line of reviewer-notes text or 1 metadata field
+- If approved: user just clicks "Release this version" in App Store Connect, no code action needed
+
+## Lessons from this build cycle
+- iOS Capacitor builds MUST use production backend URL, not preview
+- Always install on TestFlight + click around before submitting (caught 4 bugs)
+- App Store screenshots must hide PWA install banner + audio overlays
+- Universal apps need iPad screenshots too (TARGETED_DEVICE_FAMILY="1,2")
+- Codemagic's `BUILD_NUMBER` should be combined with Apple's `get-latest-app-store-build-number` for bulletproof version bump
