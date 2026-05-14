@@ -119,13 +119,7 @@ export default function Faq() {
               </button>
               <AnimatePresence initial={false}>
                 {isOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.22 }}
-                    className="overflow-hidden"
-                  >
+                  <div className="overflow-hidden" data-testid={`faq-a-${i}`}>
                     <div className="px-4 pb-4">
                       <div className={`pt-1 border-t border-[#F0EBDD] text-[13.5px] leading-[1.75] text-[#3C3D38] ${isAr ? "font-arabic text-right" : ""}`}>
                         <div className="mt-3">{renderBold(isAr ? item.a_ar : item.a_en)}</div>
@@ -134,11 +128,11 @@ export default function Faq() {
                           data-testid={`faq-source-${i}`}
                         >
                           <BookOpen className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                          <span>{isAr ? item.a_ar && item.source_ar : item.source_en}</span>
+                          <span>{isAr ? item.source_ar : item.source_en}</span>
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
               </AnimatePresence>
             </div>

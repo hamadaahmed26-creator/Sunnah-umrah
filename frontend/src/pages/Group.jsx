@@ -7,6 +7,7 @@ import WalkRouteMap from "../components/WalkRouteMap";
 import { LangContext } from "../components/Layout";
 import GroupRadar from "../components/GroupRadar";
 import { haversine, bearing, compass8Localised, formatDistance } from "../lib/geo";
+import { getCurrentPosition, watchPosition } from "../lib/geolocation";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -75,32 +76,22 @@ export default function Group() {
   // throttle DB writes via the 20s checkin interval below, but watchPosition
   // gives us instant, locally-accurate distance readings.
   React.useEffect(() => {
-    if (!shareLoc || !navigator.geolocation) return;
-    let watchId = null;
+    if (!shareLoc) return;
     setGeoErr("");
-    try {
-      watchId = navigator.geolocation.watchPosition(
-        (p) => {
-          setMyCoords({
-            lat: p.coords.latitude,
-            lng: p.coords.longitude,
-            accuracy: p.coords.accuracy,
-          });
-          setGeoErr("");
-        },
-        (e) => {
-          setGeoErr(
-            e.code === 1
-              ? (isAr ? "تم رفض إذن الموقع." : "Location permission denied.")
-              : (isAr ? "تعذّر الحصول على الموقع." : "Could not get your location.")
-          );
-        },
-        { enableHighAccuracy: true, maximumAge: 8000, timeout: 12000 }
-      );
-    } catch (_) {}
-    return () => {
-      if (watchId != null) navigator.geolocation.clearWatch(watchId);
-    };
+    const stop = watchPosition(
+      (pos) => {
+        setMyCoords(pos);
+        setGeoErr("");
+      },
+      (e) => {
+        setGeoErr(
+          e.code === 1
+            ? (isAr ? "تم رفض إذن الموقع." : "Location permission denied.")
+            : (isAr ? "تعذّر الحصول على الموقع." : "Could not get your location.")
+        );
+      }
+    );
+    return stop;
   }, [shareLoc, isAr]);
 
   const refresh = React.useCallback(async (c) => {
@@ -128,20 +119,11 @@ export default function Group() {
         } else {
           // Fetch a one-shot fix on first checkin if watcher hasn't fired yet.
           try {
-            await new Promise((res, rej) => {
-              if (!navigator.geolocation) return rej();
-              navigator.geolocation.getCurrentPosition(
-                (p) => {
-                  lat = p.coords.latitude;
-                  lng = p.coords.longitude;
-                  accuracy = p.coords.accuracy;
-                  setMyCoords({ lat, lng, accuracy });
-                  res();
-                },
-                () => rej(),
-                { timeout: 4000, enableHighAccuracy: true }
-              );
-            });
+            const pos = await getCurrentPosition({ timeoutMs: 4000 });
+            lat = pos.lat;
+            lng = pos.lng;
+            accuracy = pos.accuracy;
+            setMyCoords(pos);
           } catch (_) {}
         }
       }
@@ -195,14 +177,18 @@ export default function Group() {
   }, [codeFromUrl]);
 
   const createGroup = async () => {
-    if (!name.trim()) { setErr("Please enter your name first."); return; }
+    if (!name.trim()) { setErr(isAr ? "أدخل اسمك أولًا." : "Please enter your name first."); return; }
     setLoading(true); setErr("");
     try {
       const res = await axios.post(`${API}/group/create`);
+      if (!res.data?.code) throw new Error("no_code");
       setCode(res.data.code);
       await checkin(res.data.code);
     } catch (e) {
-      setErr("Could not create group.");
+      const msg = e?.response?.data?.detail || e?.message || "unknown";
+      setErr(
+        (isAr ? "تعذّر إنشاء المجموعة: " : "Could not create group: ") + msg
+      );
     }
     setLoading(false);
   };

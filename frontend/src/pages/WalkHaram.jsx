@@ -7,6 +7,7 @@ import { LangContext } from "../components/Layout";
 import WalkRouteMap from "../components/WalkRouteMap";
 import { describeGeoError } from "../lib/locationErrors";
 import { saveLastKnownGeo } from "../lib/prayerPreferences";
+import { getCurrentPosition } from "../lib/geolocation";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -23,46 +24,36 @@ export default function WalkHaram() {
   const [gate, setGate] = React.useState(null);
   const [errInfo, setErrInfo] = React.useState(null);
 
-  const locate = React.useCallback(() => {
-    if (!("geolocation" in navigator)) {
-      setPhase("error");
-      setErrInfo(describeGeoError({ code: 2 }, isAr));
-      return;
-    }
+  const locate = React.useCallback(async () => {
     setPhase("locating");
     setErrInfo(null);
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        setCoords({ lat, lng });
-        saveLastKnownGeo({ lat, lng });
-        setPhase("routing");
-        try {
-          const res = await axios.post(`${API}/gates/nearest`, { lat, lng });
-          setGate(res.data?.gate);
-          setPhase("ready");
-        } catch (e) {
-          setPhase("error");
-          setErrInfo({
-            title: isAr ? "خطأ في الخادم" : "Server error",
-            message: isAr
-              ? "تعذّر تحميل أبواب الحرم. تحقّق من الاتّصال وحاول مرّة أخرى."
-              : "Couldn't load Haram gates. Check your connection and try again.",
-            steps: null,
-          });
-        }
-      },
-      (err) => {
+    try {
+      const { lat, lng } = await getCurrentPosition({ timeoutMs: 12000 });
+      setCoords({ lat, lng });
+      saveLastKnownGeo({ lat, lng });
+      setPhase("routing");
+      try {
+        const res = await axios.post(`${API}/gates/nearest`, { lat, lng });
+        setGate(res.data?.gate);
+        setPhase("ready");
+      } catch (e) {
         setPhase("error");
-        setErrInfo(describeGeoError(err, isAr));
-      },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 }
-    );
+        setErrInfo({
+          title: isAr ? "خطأ في الخادم" : "Server error",
+          message: isAr
+            ? "تعذّر تحميل أبواب الحرم. تحقّق من الاتّصال وحاول مرّة أخرى."
+            : "Couldn't load Haram gates. Check your connection and try again.",
+          steps: null,
+        });
+      }
+    } catch (err) {
+      setPhase("error");
+      setErrInfo(describeGeoError(err, isAr));
+    }
   }, [isAr]);
 
-  // Auto-trigger on mount — this is a one-tap-from-home flow, no extra prompt
-  React.useEffect(() => { locate(); }, [locate]);
+  // No auto-trigger on mount — iOS Capacitor WebView shows the
+  // permission prompt better when triggered from an explicit user tap.
 
   // Native fallback link (small, secondary)
   const openExternalMaps = () => {
@@ -92,6 +83,18 @@ export default function WalkHaram() {
           ? "نوجّهك سيرًا على الأقدام إلى أقرب باب من المسجد الحرام، خطوة بخطوة."
           : "We'll guide you on foot to the nearest gate of Masjid al-Ḥaram, step by step."}
       </p>
+
+      {/* Idle state — explicit user tap to start locating */}
+      {phase === "idle" && (
+        <button
+          onClick={locate}
+          className="mt-6 w-full tap-pulse inline-flex items-center justify-center gap-2 rounded-full bg-[#8B4540] hover:bg-[#713934] text-white px-6 py-4 text-sm font-medium"
+          data-testid="walk-haram-start"
+        >
+          <MapPin className="w-4 h-4" />
+          {isAr ? "ابدأ التّوجيه إلى الحرم" : "Find my way to the Ḥaram"}
+        </button>
+      )}
 
       {/* Locating state */}
       {(phase === "locating" || phase === "routing") && (

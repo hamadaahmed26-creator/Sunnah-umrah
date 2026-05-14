@@ -8,6 +8,7 @@ import { useT } from "../lib/i18n";
 import WalkRouteMap from "../components/WalkRouteMap";
 import { describeGeoError } from "../lib/locationErrors";
 import { saveLastKnownGeo } from "../lib/prayerPreferences";
+import { getCurrentPosition } from "../lib/geolocation";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -27,39 +28,29 @@ export default function Lost() {
   const [data, setData] = React.useState(null);
   const [heading, setHeading] = React.useState(0);
 
-  const locate = () => {
-    if (!navigator.geolocation) {
-      setErrInfo(describeGeoError({ code: 2 }, lang === "ar"));
-      return;
-    }
+  const locate = async () => {
     setLoading(true);
     setErrInfo(null);
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        setCoords({ lat, lng });
-        saveLastKnownGeo({ lat, lng });
-        try {
-          const res = await axios.post(`${API}/gates/nearest`, { lat, lng });
-          setData(res.data);
-        } catch (e) {
-          setErrInfo({
-            title: lang === "ar" ? "خطأ في الخادم" : "Server error",
-            message: lang === "ar"
-              ? "تعذّر تحميل أبواب الحرم. تحقّق من الاتّصال وحاول مرّة أخرى."
-              : "Couldn't load Haram gates. Check your connection and try again.",
-            steps: null,
-          });
-        }
-        setLoading(false);
-      },
-      (err) => {
-        setLoading(false);
-        setErrInfo(describeGeoError(err, lang === "ar"));
-      },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 }
-    );
+    try {
+      const { lat, lng } = await getCurrentPosition({ timeoutMs: 12000 });
+      setCoords({ lat, lng });
+      saveLastKnownGeo({ lat, lng });
+      try {
+        const res = await axios.post(`${API}/gates/nearest`, { lat, lng });
+        setData(res.data);
+      } catch (e) {
+        setErrInfo({
+          title: lang === "ar" ? "خطأ في الخادم" : "Server error",
+          message: lang === "ar"
+            ? "تعذّر تحميل أبواب الحرم. تحقّق من الاتّصال وحاول مرّة أخرى."
+            : "Couldn't load Haram gates. Check your connection and try again.",
+          steps: null,
+        });
+      }
+    } catch (err) {
+      setErrInfo(describeGeoError(err, lang === "ar"));
+    }
+    setLoading(false);
   };
 
   React.useEffect(() => {

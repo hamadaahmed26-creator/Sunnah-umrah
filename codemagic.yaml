@@ -49,6 +49,20 @@ workflows:
           cd $CM_BUILD_DIR/frontend
           yarn install --frozen-lockfile
 
+      - name: Override env for production iOS build
+        script: |
+          # Point the iOS Capacitor build at the PRODUCTION backend, not the
+          # preview dev URL. CRA reads .env.production.local for production
+          # builds, which takes precedence over .env / .env.production.
+          cd $CM_BUILD_DIR/frontend
+          cat > .env.production.local <<'ENVEOF'
+          REACT_APP_BACKEND_URL=https://islamic-journey-19.emergent.host
+          REACT_APP_TP_MARKER=525646
+          REACT_APP_AMAZON_TAG=sunnahumrah-21
+          ENVEOF
+          echo "--- .env.production.local ---"
+          cat .env.production.local
+
       - name: Build production web bundle
         script: |
           cd $CM_BUILD_DIR/frontend
