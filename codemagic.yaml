@@ -118,7 +118,7 @@ workflows:
             --scheme "App"
 
     artifacts:
-      - build/ios/ipa/*.ipa
+      - frontend/ios/App/build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
 
