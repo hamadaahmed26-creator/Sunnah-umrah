@@ -84,12 +84,12 @@ export default function Support() {
           Send us a message at:
         </p>
         <a
-          href="mailto:hello@sunnahumrah.app?subject=Sunnah%20Umrah%20support"
+          href="mailto:Hamada.ahmed26@hotmail.com?subject=Sunnah%20Umrah%20support"
           className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#1C1D1B] text-white px-5 py-2.5 text-[13px] font-medium no-underline hover:bg-[#3F3722] transition-colors"
           data-testid="support-email-button"
         >
           <Mail className="w-3.5 h-3.5" />
-          hello@sunnahumrah.app
+          Hamada.ahmed26@hotmail.com
         </a>
         <div className="mt-5 flex items-center gap-2 text-[12px] text-[#8E8F8A]">
           <Clock className="w-3.5 h-3.5" />
@@ -156,10 +156,10 @@ export default function Support() {
           <li>
             <strong>Found a bug?</strong> Email{" "}
             <a
-              href="mailto:hello@sunnahumrah.app?subject=Bug%20report"
+              href="mailto:Hamada.ahmed26@hotmail.com?subject=Bug%20report"
               className="text-[#B3884D] underline"
             >
-              hello@sunnahumrah.app
+              Hamada.ahmed26@hotmail.com
             </a>{" "}
             with the steps to reproduce it. A screenshot helps a lot.
           </li>

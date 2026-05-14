@@ -21,7 +21,7 @@ export default function Privacy() {
       <p>
         Sunnah Umrah ("we", "us", "the app") is a step-by-step companion for Muslim pilgrims performing ʿUmrah.
         Operated by Hamada Ahmed (United Kingdom). Bundle ID: <code>com.sunnahumrah.app</code>.
-        Contact: <a href="mailto:privacy@sunnahumrah.app">privacy@sunnahumrah.app</a>.
+        Contact: <a href="mailto:Hamada.ahmed26@hotmail.com">Hamada.ahmed26@hotmail.com</a>.
       </p>
 
       <h2>2. What we collect — and what we do NOT</h2>
@@ -67,7 +67,7 @@ export default function Privacy() {
       <ul>
         <li><strong>Delete all your data</strong> by uninstalling the app (clears all on-device storage).</li>
         <li><strong>Leave a group</strong> any time using the in-app control.</li>
-        <li><strong>Request server-side deletion</strong> by emailing <a href="mailto:privacy@sunnahumrah.app">privacy@sunnahumrah.app</a> with your group code. Processed within 30 days.</li>
+        <li><strong>Request server-side deletion</strong> by emailing <a href="mailto:Hamada.ahmed26@hotmail.com">Hamada.ahmed26@hotmail.com</a> with your group code. Processed within 30 days.</li>
       </ul>
       <p>EU / UK residents have full GDPR / UK-GDPR rights (access, rectify, port, restrict). California residents have CCPA rights. Contact us via the email above.</p>
 
@@ -89,7 +89,7 @@ export default function Privacy() {
 
       <h2>9. Contact</h2>
       <p>
-        <a href="mailto:privacy@sunnahumrah.app">privacy@sunnahumrah.app</a>
+        <a href="mailto:Hamada.ahmed26@hotmail.com">Hamada.ahmed26@hotmail.com</a>
         {" "}or visit our <Link to="/support">support page</Link>.
       </p>
 

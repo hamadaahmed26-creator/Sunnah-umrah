@@ -130,8 +130,8 @@ export default function About() {
         <p className="mt-3 text-[13px] text-[#3F3722] leading-relaxed">
           Report a religious error, suggest a feature, or just say salām:
           <br />
-          <a href="mailto:hello@sunnahumrah.app" className="text-[#B3884D] underline">
-            hello@sunnahumrah.app
+          <a href="mailto:Hamada.ahmed26@hotmail.com" className="text-[#B3884D] underline">
+            Hamada.ahmed26@hotmail.com
           </a>
         </p>
         <p className="mt-3 text-[12px] text-[#8E8F8A]">

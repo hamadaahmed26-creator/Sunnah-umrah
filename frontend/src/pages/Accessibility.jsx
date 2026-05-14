@@ -175,7 +175,7 @@ export default function AccessibilityPage() {
             : "If you have a specific need (medical, visual, hearing, elderly), email us and we'll reply personally — this is a priority for us."}
         </p>
         <a
-          href="mailto:hello@sunnahumrah.app?subject=Accessibility%20support"
+          href="mailto:Hamada.ahmed26@hotmail.com?subject=Accessibility%20support"
           className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#1C1D1B] hover:bg-black text-white px-4 py-2 text-[12px] font-medium tap-pulse"
           data-testid="acc-email"
         >
