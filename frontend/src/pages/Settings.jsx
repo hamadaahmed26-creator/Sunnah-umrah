@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen, UserCog, MapPin, HelpCircle } from "lucide-react";
+import { ArrowLeft, Volume2, VolumeX, Play, Square, BellRing, Mail, BookOpen, UserCog, MapPin, HelpCircle, LifeBuoy } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import {
   loadSettings,
@@ -312,6 +312,23 @@ export default function Settings() {
               </div>
               <div className="text-[11px] text-[#8E8F8A]">
                 {isAr ? "ما الذي نجمعه — وما لا نجمعه" : "What we collect — and don't"}
+              </div>
+            </div>
+          </div>
+        </Link>
+        <Link
+          to="/support"
+          className="block rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-3.5 hover:border-[#B3884D] transition tap-pulse"
+          data-testid="settings-support"
+        >
+          <div className="flex items-center gap-2.5">
+            <LifeBuoy className="w-4 h-4 text-[#7B5C24]" />
+            <div className="flex-1">
+              <div className="text-[13px] font-semibold text-[#1C1D1B]">
+                {isAr ? "المساعدة والدّعم" : "Help & support"}
+              </div>
+              <div className="text-[11px] text-[#8E8F8A]">
+                {isAr ? "تواصل معنا · حلول سريعة" : "Contact us · quick fixes · report a bug"}
               </div>
             </div>
           </div>
