@@ -37,7 +37,9 @@ workflows:
         APP_STORE_APP_ID: 6769159262     # Sunnah Umrah's App Store Connect numeric ID
         APPLE_TEAM_ID: D59QBAUF9K         # Hamada Ahmed — Apple Developer Team ID
       node: 20.18.0
-      xcode: latest
+      xcode: 16.0          # Pinned to stable. xcode:latest = 26.x is too new
+                           # and has CocoaPods/Capacitor framework-embed bugs
+                           # that cause builds to hang for 60+ minutes.
       cocoapods: default
 
     scripts:
@@ -62,6 +64,18 @@ workflows:
         script: |
           cd $CM_BUILD_DIR/frontend/ios/App
           pod install --repo-update
+
+      - name: Fix Pods build phases (prevent infinite Xcode 16+ loop)
+        script: |
+          # The auto-generated [CP] Embed Pods Frameworks build phase has no
+          # "outputs" declared, which makes Xcode 16+ rerun it on every file
+          # copy. Adding alwaysOutOfDate = 1 tells Xcode it's intentional and
+          # stops the loop. This fixes the 2-hour build hang.
+          cd $CM_BUILD_DIR/frontend/ios/App
+          /usr/libexec/PlistBuddy -c "Print" Pods/Pods.xcodeproj/project.pbxproj > /dev/null 2>&1 || true
+          # Patch all PBXShellScriptBuildPhase entries to be alwaysOutOfDate
+          sed -i '' 's|isa = PBXShellScriptBuildPhase;|isa = PBXShellScriptBuildPhase;\n\t\t\talwaysOutOfDate = 1;|g' Pods/Pods.xcodeproj/project.pbxproj || true
+          sed -i '' 's|isa = PBXShellScriptBuildPhase;|isa = PBXShellScriptBuildPhase;\n\t\t\talwaysOutOfDate = 1;|g' App.xcodeproj/project.pbxproj || true
 
       - name: Set up code signing (auto-create cert + profile if missing)
         script: |
