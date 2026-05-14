@@ -1,11 +1,14 @@
 import React from "react";
 import { Download, X, Share } from "lucide-react";
+import { Capacitor } from "@capacitor/core";
 
 /*
  Tiny "Install app" prompt.
  - On Android/Chrome/Edge: uses the native beforeinstallprompt event.
  - On iOS Safari: shows a one-line tip pointing to "Share → Add to Home Screen"
    since iOS gives no programmatic install API.
+ - INSIDE the native iOS/Android app (Capacitor): never shows — they already
+   installed the real app, prompting them to "Add to Home Screen" is wrong.
  The user can dismiss it; we remember the choice for 30 days.
 */
 
@@ -21,12 +24,18 @@ function isStandalone() {
 function isIOS() {
   return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
 }
+function isNativeApp() {
+  // True when running inside the Capacitor wrapper (real iOS/Android app)
+  try { return Capacitor.isNativePlatform(); } catch { return false; }
+}
 
 export default function InstallPrompt() {
   const [evt, setEvt] = React.useState(null);
   const [show, setShow] = React.useState(false);
 
   React.useEffect(() => {
+    // NEVER show inside the native app — user already has us installed.
+    if (isNativeApp()) return;
     const dismissedUntil = parseInt(localStorage.getItem(KEY) || "0", 10);
     if (dismissedUntil && Date.now() < dismissedUntil) return;
     if (isStandalone()) return;
