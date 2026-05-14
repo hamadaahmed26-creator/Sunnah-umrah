@@ -113,12 +113,15 @@ workflows:
       - name: Build & sign IPA
         script: |
           cd $CM_BUILD_DIR/frontend/ios/App
+          # --ipa-directory forces output to the standard root location
+          # where Codemagic's publishing step looks for the IPA.
           xcode-project build-ipa \
             --workspace "App.xcworkspace" \
-            --scheme "App"
+            --scheme "App" \
+            --ipa-directory "$CM_BUILD_DIR/build/ios/ipa"
 
     artifacts:
-      - frontend/ios/App/build/ios/ipa/*.ipa
+      - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
 
