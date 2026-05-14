@@ -37,9 +37,10 @@ workflows:
         APP_STORE_APP_ID: 6769159262     # Sunnah Umrah's App Store Connect numeric ID
         APPLE_TEAM_ID: D59QBAUF9K         # Hamada Ahmed — Apple Developer Team ID
       node: 20.18.0
-      xcode: 16.0          # Pinned to stable. xcode:latest = 26.x is too new
-                           # and has CocoaPods/Capacitor framework-embed bugs
-                           # that cause builds to hang for 60+ minutes.
+      xcode: latest        # Apple now requires iOS SDK 26 (Xcode 26+) for all
+                           # App Store uploads as of early 2026. Our Pods loop
+                           # fix below handles the Xcode 26 framework-embed bug
+                           # that previously caused 2hr hangs.
       cocoapods: default
 
     scripts:
