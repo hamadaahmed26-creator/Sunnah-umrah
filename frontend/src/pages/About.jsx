@@ -139,6 +139,10 @@ export default function About() {
           <Link to="/privacy" className="text-[#B3884D] underline">
             privacy policy
           </Link>
+          {" "}or visit{" "}
+          <Link to="/support" className="text-[#B3884D] underline">
+            help & support
+          </Link>
           .
         </p>
       </section>

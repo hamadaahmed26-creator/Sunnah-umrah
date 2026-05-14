@@ -90,6 +90,7 @@ export default function Privacy() {
       <h2>9. Contact</h2>
       <p>
         <a href="mailto:privacy@sunnahumrah.app">privacy@sunnahumrah.app</a>
+        {" "}or visit our <Link to="/support">support page</Link>.
       </p>
 
       <hr />
