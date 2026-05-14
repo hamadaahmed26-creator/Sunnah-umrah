@@ -121,9 +121,19 @@ workflows:
       - name: Auto-increment build number
         script: |
           cd $CM_BUILD_DIR/frontend/ios/App
-          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APP_ID" || echo 0)
-          NEW_BUILD_NUMBER=$(($LATEST_BUILD_NUMBER + 1))
-          agvtool new-version -all $NEW_BUILD_NUMBER
+          # Codemagic's $BUILD_NUMBER is a project-wide incrementing counter
+          # — it goes up by 1 on every Codemagic build. We add a base offset
+          # so it stays ahead of any previously uploaded build (the first
+          # successful Codemagic build was #10, so we'll be at 10+$BUILD_NUMBER).
+          LATEST=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APP_ID" 2>/dev/null || echo 0)
+          # Take the MAX of (latest_from_apple + 1) and ($BUILD_NUMBER + 10)
+          # so we always upload something strictly greater than what Apple has.
+          CANDIDATE_A=$(($LATEST + 1))
+          CANDIDATE_B=$(($BUILD_NUMBER + 10))
+          NEW=$CANDIDATE_A
+          if [ "$CANDIDATE_B" -gt "$CANDIDATE_A" ]; then NEW=$CANDIDATE_B; fi
+          echo "Apple latest: $LATEST | Codemagic build: $BUILD_NUMBER | Using: $NEW"
+          agvtool new-version -all $NEW
 
       - name: Build & sign IPA
         script: |
