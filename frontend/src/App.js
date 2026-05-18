@@ -28,6 +28,15 @@ import Checklist from "./pages/Checklist";
 import Miqat from "./pages/Miqat";
 import Support from "./pages/Support";
 
+// Forces a full-page navigation to a static HTML file in /public.
+// React Router's <Navigate> would just re-render the SPA, missing the
+// static file entirely. Using window.location ensures the browser
+// actually fetches /marketing/index.html etc.
+function StaticRedirect({ to }) {
+  React.useEffect(() => { window.location.replace(to); }, [to]);
+  return null;
+}
+
 function App() {
   return (
     <div className="App">
@@ -62,6 +71,15 @@ function App() {
               <Route path="/miqat" element={<Miqat />} />
               <Route path="/support" element={<Support />} />
               <Route path="/help" element={<Navigate to="/support" replace />} />
+              {/* Static-HTML pages live in /public — the production host
+                  doesn't auto-resolve directory URLs to index.html, so
+                  we redirect the bare directory paths to the explicit file. */}
+              <Route path="/marketing" element={<StaticRedirect to="/marketing/index.html" />} />
+              <Route path="/marketing/" element={<StaticRedirect to="/marketing/index.html" />} />
+              <Route path="/link" element={<StaticRedirect to="/link/index.html" />} />
+              <Route path="/link/" element={<StaticRedirect to="/link/index.html" />} />
+              <Route path="/appstore" element={<StaticRedirect to="/appstore/index.html" />} />
+              <Route path="/appstore/" element={<StaticRedirect to="/appstore/index.html" />} />
               {/* Sadaqah temporarily removed — donations create Apple App
                   Store risk under Guideline 3.2.1(vii) / 4.5.4. Old URLs
                   redirect home so existing bookmarks don't 404. */}
