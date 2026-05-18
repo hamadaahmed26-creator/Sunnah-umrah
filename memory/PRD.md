@@ -14,6 +14,16 @@ Deploy the existing full-stack Sunnah Umrah app (React + FastAPI + MongoDB, with
 - **User email**: Hamada.ahmed26@hotmail.com
 - **Codemagic ASC integration name**: `Codemagic` (Key ID: 6QS4FVVAG8)
 
+## Marketing Assets (2026-02-15 — v3, male VO + sync'd visuals)
+- Built by `/app/scripts/build_marketing.py`
+- 10 vertical 1080×1920 MP4 videos in `/app/frontend/public/marketing/videos/`
+- 30 hero PNGs (3 sizes/video) in `/app/frontend/public/marketing/hero/`
+- Voice: OpenAI TTS `tts-1-hd`, voice `onyx` (deep male), speed 0.95 (via Emergent LLM key)
+- Each video is multi-segment: every spoken line is paired with a different app screenshot so audio↔video are in sync (line "Qibla anywhere" → Qibla screen, line "Stay Together" → Group screen, etc.)
+- 6 real app screenshots reused across videos in distinct combinations + distinct headlines so all 30 hero PNGs read as different campaigns
+- Dashboard: `/app/frontend/public/marketing/index.html` (banner says "v3 — male VO, sync'd")
+- Cache-buster `?v=3` appended to every video/image URL so browser shows the new files
+
 ## Status
 
 ### ✅ iOS — LIVE ON APP STORE (2026-02-14)

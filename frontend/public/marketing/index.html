@@ -37,9 +37,9 @@ th{background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:upperc
 <body>
 <div class="wrap">
 
-<span class="tag">Sunnah Umrah · Launch Kit · v2</span>
+<span class="tag">Sunnah Umrah · Launch Kit · v3 (male VO, sync'd)</span>
 <h1>Your everything-in-one-page</h1>
-<p class="lead">All assets, scripts, captions, hashtags, calendar — and now 10 finished MP4 videos + 10 hero images built from your real app screenshots. Tap any video to play. Tap any download button.</p>
+<p class="lead">10 fresh MP4 videos with a deep <b>male voiceover</b>, every line synced to a different app screen so the visuals match the words. 30 hero images (3 sizes each) using diverse parts of the app. Tap any video to play. Tap any download button.</p>
 
 <div class="card">
   <div class="label">What's in this page</div>
@@ -58,7 +58,7 @@ th{background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:upperc
 
 <!-- ─────────────────── VIDEOS ─────────────────── -->
 <h2 id="videos">1 · 10 finished videos · tap to play, tap to download</h2>
-<p class="lead">Each: 1080×1920 (TikTok / Reels / Stories native). British-English voiceover. Real app screenshots framed with brand mark + headlines + CTA. No filming or editing required — just download, upload to TikTok / Instagram, paste the caption from section 7.</p>
+<p class="lead">Each: 1080×1920 (TikTok / Reels / Stories native). Deep male voiceover (OpenAI "onyx"). Real app screenshots — and the on-screen view changes every line so what you see matches what the voice is saying. No filming or editing needed — download, upload, paste caption from section 7.</p>
 
 <div id="videos-inline"></div>
 
@@ -156,16 +156,16 @@ iOS ↓</pre>
 <!-- ─────────────────── DATA + RENDERERS ─────────────────── -->
 <script>
 const VIDEOS = [
-  {id:"01", slug:"three-mistakes",   title:"3 mistakes everyone makes on their first Umrah", dur:"43s"},
-  {id:"02", slug:"stay-together",    title:"Why your group always loses each other",         dur:"40s"},
-  {id:"03", slug:"before-you-fly",   title:"Watch this 30 sec before you fly for Umrah",     dur:"38s"},
-  {id:"04", slug:"black-stone-dua",  title:"The dua most pilgrims forget at the Black Stone",dur:"30s"},
-  {id:"05", slug:"sourced-only",     title:"Sunnah-only · every dua sourced",                dur:"38s"},
-  {id:"06", slug:"wudu-broken",      title:"What to do if wudū breaks during Tawaf",         dur:"38s"},
-  {id:"07", slug:"no-ads",           title:"Free · No ads · No tracking",                    dur:"35s"},
-  {id:"08", slug:"five-features",    title:"5 features your Umrah app should have",          dur:"40s"},
-  {id:"09", slug:"first-tawaf",      title:"Your first Tawaf, explained in 30 sec",          dur:"42s"},
-  {id:"10", slug:"for-my-mother",    title:"The only Umrah app I'd give my mother",          dur:"33s"},
+  {id:"01", slug:"three-mistakes",   title:"3 mistakes everyone makes on their first Umrah", dur:"44s"},
+  {id:"02", slug:"stay-together",    title:"Why your group always loses each other",         dur:"28s"},
+  {id:"03", slug:"before-you-fly",   title:"Watch this before you fly for Umrah",            dur:"26s"},
+  {id:"04", slug:"black-stone-dua",  title:"The dua most pilgrims forget at the Black Stone",dur:"23s"},
+  {id:"05", slug:"sourced-only",     title:"Sunnah-only · every dua sourced",                dur:"30s"},
+  {id:"06", slug:"wudu-broken",      title:"What to do if wudū breaks during Tawaf",         dur:"25s"},
+  {id:"07", slug:"no-ads",           title:"Free · No ads · No tracking",                    dur:"21s"},
+  {id:"08", slug:"five-features",    title:"5 features your Umrah app should have",          dur:"37s"},
+  {id:"09", slug:"first-tawaf",      title:"Your first Tawaf, explained in 30 sec",          dur:"32s"},
+  {id:"10", slug:"for-my-mother",    title:"The only Umrah app I'd give my mother",          dur:"23s"},
 ];
 
 const CAPTIONS = {
@@ -183,21 +183,22 @@ const CAPTIONS = {
 
 // Render videos
 const vroot = document.getElementById('videos-inline');
+const CB = 'v=3'; // cache-buster so old browser caches don't show old assets
 VIDEOS.forEach(v => {
   const block = document.createElement('div');
   block.className = 'card';
   block.innerHTML = `
     <div class="label">${v.id} · ${v.title}</div>
     <div class="video-wrap">
-      <video controls preload="metadata" playsinline poster="hero/${v.id}_${v.slug}_9x16.png">
-        <source src="videos/${v.id}_${v.slug}.mp4" type="video/mp4"/>
+      <video controls preload="metadata" playsinline poster="hero/${v.id}_${v.slug}_9x16.png?${CB}">
+        <source src="videos/${v.id}_${v.slug}.mp4?${CB}" type="video/mp4"/>
       </video>
     </div>
     <div class="dl-bar">
-      <span class="dur">MP4 · 1080×1920 · ${v.dur} · British VO</span>
+      <span class="dur">MP4 · 1080×1920 · ${v.dur} · Male VO</span>
       <span>
-        <a class="alt" href="videos/${v.id}_${v.slug}.mp3" download="sunnah_voice_${v.id}.mp3">Voiceover MP3</a>
-        <a href="videos/${v.id}_${v.slug}.mp4" download="sunnah_video_${v.id}_${v.slug}.mp4">Download MP4</a>
+        <a class="alt" href="videos/${v.id}_${v.slug}.mp3?${CB}" download="sunnah_voice_${v.id}.mp3">Voiceover MP3</a>
+        <a href="videos/${v.id}_${v.slug}.mp4?${CB}" download="sunnah_video_${v.id}_${v.slug}.mp4">Download MP4</a>
       </span>
     </div>`;
   vroot.appendChild(block);
@@ -213,11 +214,11 @@ VIDEOS.forEach(v => {
     <div style="display:grid;gap:12px;grid-template-columns:1.4fr 1fr 1fr;margin-top:10px;" class="hero-grid">
       ${[["9x16","Reel · Story"], ["4x5","IG feed"], ["1x1","Square"]].map(([s,label])=>`
         <div>
-          <img loading="lazy" src="hero/${v.id}_${v.slug}_${s}.png" alt="${v.title} ${s}"
+          <img loading="lazy" src="hero/${v.id}_${v.slug}_${s}.png?${CB}" alt="${v.title} ${s}"
                style="width:100%;height:auto;border-radius:10px;border:1px solid #E8E5DD;display:block;"/>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
             <span style="font-size:10px;color:#8E8F8A;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;">${label}</span>
-            <a download="sunnah_${v.id}_${s}.png" href="hero/${v.id}_${v.slug}_${s}.png"
+            <a download="sunnah_${v.id}_${s}.png" href="hero/${v.id}_${v.slug}_${s}.png?${CB}"
                style="font-size:11px;background:#1C1D1B;color:#fff;text-decoration:none;padding:5px 10px;border-radius:999px;">Save</a>
           </div>
         </div>`).join('')}
