@@ -72,48 +72,40 @@ STORY = {
              "places",      "Ziyārah\n26 places\nmapped"),
             ("And a Quiz — to test what you actually know before you fly.",
              "quiz",        "Quiz\nTest what\nyou know"),
-            ("Seven tools. All free. iOS now.",
-             "home_tools",  "7 TOOLS · FREE\niOS · Link in bio"),
+            ("Seven tools. All free. iOS and Android.",
+             "home_tools",  "7 TOOLS · FREE\niOS + Android\nLink in bio"),
         ],
     },
 
     "02_begin-my-umrah": {
-        "title": "Your whole Umrah, 15 steps — in your pocket",
+        "title": "Every single step, guided in your pocket",
         "segments": [
             ("Most pilgrims try to memorise Umrah from a book — and panic at the moment.",
              "tour_step01", "MISTAKE\nMemorising\nfrom a book"),
-            ("Tap 'Begin my Umrah' — and the app walks you through, fifteen steps in order.",
-             "tour_step01", "1 / 15\nStart here\nGetting ready"),
-            ("Step 2. Preparing for Iḥrām — what to wear, what to do.",
-             "tour_step02", "2 / 15\nPreparing\nfor Iḥrām"),
-            ("Step 3. At the Mīqāt — change clothes, make wuḍū.",
-             "tour_step03", "3 / 15\nAt the Mīqāt\nchange + wuḍū"),
-            ("Step 4. Niyyah — the intention, in the heart.",
-             "tour_step04", "4 / 15\nNiyyah\nin the heart"),
-            ("Step 5. Recite the Talbiyah — the pilgrim's call.",
-             "tour_step05", "5 / 15\nTalbiyah\nthe call"),
-            ("Step 6. Enter Masjid al-Ḥarām — right foot, with the dua.",
-             "tour_step06", "6 / 15\nEnter Masjid\nright foot"),
-            ("Step 7. Tawaf begins — at the Black Stone corner.",
-             "tour_step07", "7 / 15\nBlack Stone\nstart Tawaf"),
-            ("Step 8. Seven laps around the Kaʿbah — counter built in.",
-             "tour_step08", "8 / 15\n7 laps\ncounter built in"),
-            ("Step 9. Two rakaʿah behind Maqām Ibrāhīm.",
-             "tour_step09", "9 / 15\nMaqām Ibrāhīm\n2 rakaʿah"),
-            ("Step 10. Drink Zamzam.",
-             "tour_step10", "10 / 15\nZamzam"),
-            ("Step 11. Saʿī — start at Ṣafā.",
-             "tour_step11", "11 / 15\nSaʿī\nstart at Ṣafā"),
-            ("Step 12. On Ṣafā and Marwah — takbīr three times.",
-             "tour_step12", "12 / 15\nTakbīr ×3\nṢafā · Marwah"),
-            ("Step 13. Walk seven trips between Ṣafā and Marwah.",
-             "tour_step13", "13 / 15\n7 trips\nSaʿī walk"),
-            ("Step 14. Halq or Taqṣīr — shave or trim.",
-             "tour_step14", "14 / 15\nHalq\nor Taqṣīr"),
-            ("Step 15. Done. Taqabbal-Allāhu minkum.",
-             "tour_step15", "15 / 15\nDone.\nTaqabbal Allah"),
-            ("Fifteen steps. Every one cited. Free on iOS.",
-             "tour_step01", "15 STEPS · CITED\nFree · iOS"),
+            ("Tap one button — and the app guides you, screen by screen, from start to finish.",
+             "tour_step01", "Tap once\nGuided\nscreen by screen"),
+            ("It walks you through preparing for Iḥrām.",
+             "tour_step02", "Preparing\nfor Iḥrām"),
+            ("Through changing clothes at the Mīqāt.",
+             "tour_step03", "At the\nMīqāt"),
+            ("Through making your niyyah and reciting the Talbiyah.",
+             "tour_step04", "Niyyah\n+ Talbiyah"),
+            ("Through entering the Masjid the way the Prophet, peace be upon him, did.",
+             "tour_step06", "Enter\nthe Masjid"),
+            ("Through your first lap of Tawaf at the Black Stone.",
+             "tour_step07", "Black Stone\nBegin Tawaf"),
+            ("Through seven laps around the Kaʿbah — with a counter built in so you don't lose track.",
+             "tour_step08", "Seven laps\nCounter\nbuilt in"),
+            ("Through two rakaʿah at Maqām Ibrāhīm. Through drinking Zamzam.",
+             "tour_step10", "Maqām\n+ Zamzam"),
+            ("Through Saʿī — seven trips between Ṣafā and Marwah.",
+             "tour_step13", "Saʿī\nSeven trips"),
+            ("Through Halq — shaving or trimming the hair.",
+             "tour_step14", "Halq\nor Taqṣīr"),
+            ("Until your Umrah is complete. Taqabbal-Allāhu minkum.",
+             "tour_step15", "Done.\nTaqabbal\nAllah."),
+            ("Every page cited from the Sunnah. Free on iOS and Android.",
+             "tour_step01", "Cited\nfrom the Sunnah\nFree · iOS + Android"),
         ],
     },
 
@@ -128,8 +120,8 @@ STORY = {
              "home_ar",        "Full app\nin Arabic"),
             ("And the entire 15-step Tour — every word, fully translated.",
              "tour_step02_ar", "Tour\nFully\ntranslated"),
-            ("English or Arabic. Same Sunnah. Free on iOS.",
-             "home_ar",        "EN · AR\nFree · iOS"),
+            ("English or Arabic. Same Sunnah. Free on iOS and Android.",
+             "home_ar",        "EN · AR\nFree · iOS + Android"),
         ],
     },
 
@@ -146,8 +138,8 @@ STORY = {
              "checklist_top",    "Don't have it?\nApp shows you\nwhere to get it"),
             ("Scroll down — accommodation, religious preparation, what to pack.",
              "checklist_mid",    "Accommodation\nReligious prep\nPacking"),
-            ("Tick everything. You're ready. Free on iOS.",
-             "checklist_bottom", "0% → 100%\nReady.\nFree · iOS"),
+            ("Tick everything. You're ready. Free on iOS and Android.",
+             "checklist_bottom", "0% → 100%\nReady.\nFree · iOS + Android"),
         ],
     },
 
@@ -164,8 +156,8 @@ STORY = {
              "tour_step02",   "Tap Terms\ntop of screen"),
             ("Ten essential Arabic terms. Definition. Pronunciation. Root meaning.",
              "tour_glossary", "10 terms\nMeaning +\nPronunciation"),
-            ("Tap 'Learn' on any one — see exactly where it comes from. Free on iOS.",
-             "tour_glossary", "Tap Learn\nSourced.\nFree · iOS"),
+            ("Tap 'Learn' on any one — see exactly where it comes from. Free on iOS and Android.",
+             "tour_glossary", "Tap Learn\nSourced.\nFree · iOS + Android"),
         ],
     },
 
@@ -182,8 +174,8 @@ STORY = {
              "group",    "Quiet map\nOffline\nbuilt-in"),
             ("And if you're truly lost — tap 'I'm Lost'. Nearest gate by GPS.",
              "lost",     "I'm Lost\nNearest gate\nby GPS"),
-            ("Free. iOS. Link in bio.",
-             "home_en",  "FREE · iOS\nLink in bio"),
+            ("Free. iOS and Android. Link in bio.",
+             "home_en",  "FREE · iOS + Android\nLink in bio"),
         ],
     },
 }
@@ -232,7 +224,7 @@ def phone_mockup(screenshot: Image.Image, target_h: int) -> Image.Image:
     shadow.alpha_composite(canvas, (30, 30))
     return shadow
 
-def render_frame(shot_key, headline, footer="FREE · iOS · LINK IN BIO"):
+def render_frame(shot_key, headline, footer="FREE · iOS + ANDROID · LINK IN BIO"):
     W, H = 1080, 1920
     bg = gradient(W, H, BG_TOP, BG_BOT).convert("RGBA")
     d  = ImageDraw.Draw(bg)
@@ -289,67 +281,168 @@ async def tts(text, out, client):
         speed=VOICE_SPEED, response_format="mp3")
     out.write_bytes(audio)
 
-# ── per-video build ────────────────────────────────────────────────────
+# ── per-video build (single-pass concat, sync-by-construction) ────────
 async def build(slug_id, data, client):
     print(f"\n▶ {slug_id}  {data['title']}")
     wd = TMP_DIR / slug_id
     if wd.exists(): shutil.rmtree(wd)
     wd.mkdir(parents=True)
 
-    seg_mp4s, seg_mp3s = [], []
+    # Phase 1 — TTS every line, measure exact duration, render the frame,
+    # AND build a per-segment silent video of EXACT duration using -t.
+    # (concat-demuxer "duration" directives drop frames when durations don't
+    # land on 30 fps boundaries — building per-segment MP4s with -t makes
+    # libx264 emit the exact number of frames we asked for.)
+    seg_mp3s = []           # list[(Path, float)]
+    seg_silent_mp4s = []    # list[Path]
     for i, (line, shot_key, headline) in enumerate(data["segments"], 1):
         mp3 = wd / f"s{i:02d}.mp3"
         png = wd / f"s{i:02d}.png"
-        mp4 = wd / f"s{i:02d}.mp4"
-        padded = wd / f"s{i:02d}_p.mp3"
-
+        smp4 = wd / f"s{i:02d}.silent.mp4"
         await tts(line, mp3, client)
         dur = probe(mp3)
-        print(f"   · seg {i}: {dur:5.2f}s → {shot_key:18s} | {headline.split(chr(10))[0][:30]}")
-
         render_frame(shot_key, headline).save(png, "PNG")
-
-        run(["ffmpeg", "-y", "-i", str(mp3),
-             "-af", "apad=pad_dur=0.35",
-             "-c:a", "libmp3lame", "-q:a", "4", str(padded)])
         run(["ffmpeg", "-y",
-             "-loop", "1", "-i", str(png),
-             "-i", str(padded),
-             "-c:v", "libx264", "-tune", "stillimage", "-pix_fmt", "yuv420p",
+             "-loop", "1", "-framerate", "30", "-i", str(png),
+             "-t", f"{dur:.3f}",
+             "-pix_fmt", "yuv420p",
+             "-c:v", "libx264", "-tune", "stillimage",
              "-r", "30",
-             "-c:a", "aac", "-b:a", "160k",
-             "-shortest", "-movflags", "+faststart", str(mp4)])
-        seg_mp4s.append(mp4); seg_mp3s.append(padded)
+             "-vf", "fps=30",
+             str(smp4)])
+        seg_mp3s.append((mp3, dur))
+        seg_silent_mp4s.append(smp4)
+        print(f"   · seg {i:02d}: {dur:5.2f}s → {shot_key:18s} | {headline.splitlines()[0][:30]}")
 
-    # concat
-    cl = wd / "list.txt"
-    cl.write_text("".join(f"file '{p}'\n" for p in seg_mp4s))
+    # Phase 2 — concat audio segments into one clean AAC track via filter
+    n = len(seg_mp3s)
+    inputs = []
+    for p, _ in seg_mp3s:
+        inputs += ["-i", str(p)]
+    filter_complex = "".join(f"[{i}:a]" for i in range(n)) + f"concat=n={n}:v=0:a=1[a]"
+    big_aac = wd / "all.m4a"
+    run(["ffmpeg", "-y", *inputs,
+         "-filter_complex", filter_complex,
+         "-map", "[a]",
+         "-c:a", "aac", "-b:a", "160k",
+         str(big_aac)])
+    audio_total = probe(big_aac)
+
+    # Phase 3 — concat the silent per-segment MP4s into one silent video
+    vlist = wd / "video.txt"
+    vlist.write_text("".join(f"file '{p}'\n" for p in seg_silent_mp4s))
+    silent_mp4 = wd / "silent.mp4"
+    run(["ffmpeg", "-y",
+         "-f", "concat", "-safe", "0", "-i", str(vlist),
+         "-c:v", "copy",
+         str(silent_mp4)])
+    video_total = probe(silent_mp4)
+    print(f"   · audio={audio_total:.2f}s   video={video_total:.2f}s   delta={video_total-audio_total:+.2f}s")
+
+    # Phase 4 — mux silent video + concat audio
     final = VIDEOS_DIR / f"{slug_id}.mp4"
-    run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(cl),
-         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", "30",
-         "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", str(final)])
+    run(["ffmpeg", "-y",
+         "-i", str(silent_mp4),
+         "-i", str(big_aac),
+         "-map", "0:v:0", "-map", "1:a:0",
+         "-c:v", "copy",
+         "-c:a", "copy",
+         "-movflags", "+faststart",
+         str(final)])
 
-    ml = wd / "mp3list.txt"
-    ml.write_text("".join(f"file '{p}'\n" for p in seg_mp3s))
+    # also publish the standalone voiceover MP3 (re-encode from the clean AAC)
     finalmp3 = VIDEOS_DIR / f"{slug_id}.mp3"
-    run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(ml),
+    run(["ffmpeg", "-y", "-i", str(big_aac),
          "-c:a", "libmp3lame", "-q:a", "4", str(finalmp3)])
-
     print(f"   ✓ {slug_id}.mp4 — {probe(final):.1f}s")
+
+# ── HEROES — 12 distinct 4:5 Instagram-feed images ─────────────────────
+# Each entry: (slug, screenshot_key, headline_top, headline_bottom)
+HEROES = [
+    ("01_tools",       "home_tools",     "7 TOOLS",          "hidden inside the app"),
+    ("02_walk-haram",  "walk_haram",     "WALK TO ḤARAM",    "step-by-step from your hotel"),
+    ("03_stay-together","group",         "STAY TOGETHER",    "one code · whole family"),
+    ("04_ask",         "chat",           "ASK",              "fiqh + Umrah Q&A · cited"),
+    ("05_qibla",       "qibla",          "QIBLA",            "anywhere on Earth"),
+    ("06_lost",        "lost",           "I'M LOST",         "nearest gate · by GPS"),
+    ("07_ziyarah",     "places",         "ZIYĀRAH",          "26 sacred places mapped"),
+    ("08_quiz",        "quiz",           "TEST YOURSELF",    "before you fly"),
+    ("09_every-step",  "tour_step01",    "EVERY STEP",       "guided in your pocket"),
+    ("10_glossary",    "tour_glossary",  "ARABIC TERMS",     "10 words · finally explained"),
+    ("11_checklist",   "checklist_top",  "GET READY",        "18-item Umrah checklist"),
+    ("12_arabic",      "home_ar",        "EN ↔ AR",          "one tap · same Sunnah"),
+]
+
+def render_hero(shot_key: str, top_line: str, bottom_line: str) -> Image.Image:
+    """1080×1350 Instagram-feed (4:5) hero."""
+    W, H = 1080, 1350
+    bg = gradient(W, H, BG_TOP, BG_BOT).convert("RGBA")
+    d  = ImageDraw.Draw(bg)
+
+    f_brand = font(F_BOLD, 32)
+    f_top   = font(F_BOLD, 74)
+    f_bot   = font(F_REG,  30)
+    f_foot  = font(F_BOLD, 30)
+
+    # mini brand strip
+    d.text((50, 50), "SUNNAH UMRAH", font=f_brand, fill=INK)
+    d.rectangle((50, 92, 220, 96), fill=GOLD)
+
+    # top headline (bold, big)
+    bb = d.textbbox((0, 0), top_line, font=f_top)
+    tw = bb[2] - bb[0]
+    d.text(((W - tw) // 2, 130), top_line, font=f_top, fill=INK)
+
+    # bottom line (subtitle, soft)
+    bb = d.textbbox((0, 0), bottom_line, font=f_bot)
+    sw = bb[2] - bb[0]
+    d.text(((W - sw) // 2, 230), bottom_line, font=f_bot, fill=INK_SOFT)
+
+    # phone with screenshot
+    s = Image.open(shot(shot_key)).convert("RGB")
+    phone = phone_mockup(s, target_h=800)
+    px = (W - phone.size[0]) // 2
+    py = H - phone.size[1] - 130
+    bg.alpha_composite(phone, (px, py))
+
+    out = bg.convert("RGB")
+    dd  = ImageDraw.Draw(out)
+    foot = "FREE · iOS + ANDROID · LINK IN BIO"
+    bb  = dd.textbbox((0, 0), foot, font=f_foot)
+    fw, pad_x, pad_y = bb[2] - bb[0], 32, 16
+    pw, ph = fw + pad_x * 2, 62
+    px2 = (W - pw) // 2
+    py2 = H - 85
+    dd.rounded_rectangle((px2, py2, px2 + pw, py2 + ph),
+                         radius=ph // 2, fill=INK)
+    dd.text((px2 + pad_x, py2 + pad_y - 2), foot, font=f_foot, fill=WHITE)
+    return out
+
+def build_all_heroes():
+    print(f"\n▶ Building {len(HEROES)} hero images")
+    for slug, key, top, bot in HEROES:
+        out = HERO_DIR / f"{slug}.png"
+        render_hero(key, top, bot).save(out, "PNG", optimize=True)
+        print(f"   ✓ {slug}.png  ({key})")
 
 # ── main ───────────────────────────────────────────────────────────────
 async def main():
     only = set(sys.argv[1:])
+    build_heroes_flag = "--heroes" in only
+    only.discard("--heroes")
     key = os.getenv("EMERGENT_LLM_KEY")
     if not key: sys.exit("EMERGENT_LLM_KEY missing")
     client = OpenAITextToSpeech(api_key=key)
 
     # NOTE: do not auto-wipe — we rebuild in-place and only overwrite by name
     targets = [s for s in STORY if (not only or s in only)]
-    print(f"Building {len(targets)} videos · {VOICE_NAME} · {VOICE_MODEL}")
+    if targets:
+        print(f"Building {len(targets)} videos · {VOICE_NAME} · {VOICE_MODEL}")
+        for slug in targets:
+            await build(slug, STORY[slug], client)
 
-    for slug in targets:
-        await build(slug, STORY[slug], client)
+    if build_heroes_flag or not targets:
+        build_all_heroes()
 
     shutil.rmtree(TMP_DIR, ignore_errors=True)
     print("\n✅ DONE")

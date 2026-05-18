@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sunnah Umrah — Launch Kit · v4</title>
+<title>Sunnah Umrah — Launch Kit · v5</title>
 <style>
 :root { color-scheme: light; }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -30,44 +30,56 @@ pre{background:#F0EDE5;border:1px solid #E8E5DD;border-radius:10px;padding:14px;
 .dl-bar a{font-size:12px;background:#1C1D1B;color:#fff;text-decoration:none;padding:7px 14px;border-radius:999px;font-weight:500;}
 .dl-bar a.alt{background:#fff;color:#1C1D1B;border:1px solid #E8E5DD;}
 .note{background:#FFF8EA;border:1px solid #F1E0B6;color:#7B5C24;padding:14px 16px;border-radius:12px;font-size:13.5px;line-height:1.55;}
+.hero-grid{display:grid;gap:14px;grid-template-columns:repeat(2,1fr);margin-top:14px;}
+.hero-card{background:#fff;border:1px solid #E8E5DD;border-radius:12px;overflow:hidden;}
+.hero-card img{width:100%;height:auto;display:block;}
+.hero-card .meta{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;}
+.hero-card .meta span{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#8B6A1F;font-weight:600;}
+.hero-card .meta a{font-size:11px;background:#1C1D1B;color:#fff;text-decoration:none;padding:5px 12px;border-radius:999px;}
+@media (max-width:560px){ .hero-grid{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<span class="tag">Sunnah Umrah · Launch Kit · v4 (rebuilt 2026-02-15)</span>
+<span class="tag">Sunnah Umrah · Launch Kit · v7 (no silent tails · iOS + Android)</span>
 <h1>Your everything-in-one-page</h1>
-<p class="lead">6 brand-new videos, every line in the voiceover paired with the exact app screen it describes — no more drift. Theme: <i>"the mistake pilgrims make → here's how Sunnah Umrah fixes it"</i>. Deep male voice (<code>onyx</code>). All built from fresh, real screenshots captured from your live app.</p>
+<p class="lead">6 videos — audio and video streams now within <b>±0.04 sec</b> of each other (no more silent tails). Every CTA updated to <b>"iOS + Android"</b>. Plus 12 hero images, every one a different part of the app, no duplicates.</p>
 
 <div class="note">
-  <b>What's different from v3</b> — every video uses 5–10 different real screens (Tools, Tour steps, Terms/Glossary, Get Ready checklist, Arabic mode, Stay Together, I'm Lost). When the voice says "Walk to Ḥaram" the screen IS the Walk-to-Ḥaram page. When it says "Tap Terms" the screen IS the Glossary opening. Hero images coming next round once you approve the videos.
+  <b>What's new in v7</b> — rebuilt the audio concat using ffmpeg's filter (the demuxer was reporting fake durations, causing 5–7 sec of silence at the end of every video in v5/v6). Video stream is now built per-segment with exact <code>-t</code> so no frames are dropped at boundaries. End-to-end sync is mathematical: every audio frame plays, every video frame matches.
 </div>
 
 <div class="card">
   <div class="label">What's in this page</div>
   <div class="toc">
-    <a href="#videos"><b>1. 6 finished videos</b> (MP4 · TikTok/Reels ready · 30–62 sec)</a>
-    <a href="#bio">2. Bio (TikTok + Instagram)</a>
-    <a href="#linktree">3. Link-in-bio</a>
-    <a href="#hashtags">4. Hashtag sets</a>
-    <a href="#captions">5. Caption library</a>
-    <a href="#calendar">6. 30-day post calendar</a>
-    <a href="#reply">7. Reply playbook</a>
+    <a href="#videos"><b>1. 6 finished videos</b> (MP4 · TikTok/Reels ready · 19–51 sec)</a>
+    <a href="#heroes"><b>2. 12 hero images</b> (PNG · 1080×1350 Instagram-feed)</a>
+    <a href="#bio">3. Bio (TikTok + Instagram)</a>
+    <a href="#linktree">4. Link-in-bio</a>
+    <a href="#hashtags">5. Hashtag sets</a>
+    <a href="#captions">6. Caption library</a>
+    <a href="#calendar">7. 30-day post calendar</a>
+    <a href="#reply">8. Reply playbook</a>
   </div>
 </div>
 
 <!-- ─────────────────── VIDEOS ─────────────────── -->
 <h2 id="videos">1 · 6 finished videos · tap to play, tap to download</h2>
-<p class="lead">Each: 1080×1920 (TikTok / Reels / Stories native). Deep male voiceover (OpenAI "onyx"). Multi-segment — the on-screen view changes every spoken line so what you see matches what the voice is saying. No filming or editing — download, upload, paste caption from section 5.</p>
-
+<p class="lead">Each: 1080×1920 (TikTok / Reels / Stories native). Deep male voiceover (OpenAI <code>onyx</code>). Multi-segment — on-screen view changes line by line, sync drift ≤ 0.04 sec.</p>
 <div id="videos-inline"></div>
 
+<!-- ─────────────────── HEROES ─────────────────── -->
+<h2 id="heroes">2 · 12 hero images · tap to save (1080×1350)</h2>
+<p class="lead">Static Instagram-feed cards. Twelve different parts of the app — no duplicates. Use for non-video posts, carousels, story cards, Linktree thumbnails, paid ads, anything.</p>
+<div id="heroes-inline"></div>
+
 <!-- ─────────────────── BIO ─────────────────── -->
-<h2 id="bio">2 · Bio — paste into both accounts</h2>
+<h2 id="bio">3 · Bio — paste into both accounts</h2>
 
 <h3>TikTok bio (80 chars max)</h3>
 <pre id="bio-tt">Step-by-step Umrah, the Sunnah way.
-Salafī-sourced. Free. iOS now ↓</pre>
+Salafī-sourced. Free. iOS + Android ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('bio-tt').innerText)">Copy</button>
 
 <h3>Instagram bio (150 chars max)</h3>
@@ -82,13 +94,13 @@ iOS ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('dn').innerText)">Copy</button>
 
 <!-- ─────────────────── LINK-IN-BIO ─────────────────── -->
-<h2 id="linktree">3 · Link-in-bio URL</h2>
+<h2 id="linktree">4 · Link-in-bio URL</h2>
 <p>Paste into both TikTok + Instagram bios:</p>
 <pre id="link">https://islamic-journey-19.emergent.host/link/index.html</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('link').innerText)">Copy</button>
 
 <!-- ─────────────────── HASHTAGS ─────────────────── -->
-<h2 id="hashtags">4 · Hashtag sets (rotate, don't repeat in same week)</h2>
+<h2 id="hashtags">5 · Hashtag sets (rotate, don't repeat in same week)</h2>
 
 <h3>Set A — UK Muslim (Mon/Thu)</h3>
 <pre id="ht-a">#umrah #hajj #muslimuk #britishmuslims #muslimcommunity #islamuk #mecca #madinah #kaaba #qibla #salaftalk #sunnah #masjidalharam #ummah #ramadan2026</pre>
@@ -103,18 +115,22 @@ iOS ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('ht-c').innerText)">Copy</button>
 
 <!-- ─────────────────── CAPTIONS ─────────────────── -->
-<h2 id="captions">5 · Captions — one per video</h2>
+<h2 id="captions">6 · Captions — one per video</h2>
 <div id="captions-inline"></div>
 
 <!-- ─────────────────── CALENDAR ─────────────────── -->
-<h2 id="calendar">6 · 30-day post calendar</h2>
-<p class="lead">One post per day, 7-9pm UK time (peak Muslim window). Rotate the 6 videos across the month — repeat each video roughly 5 times with different hashtag sets so each cycle reaches a new audience.</p>
+<h2 id="calendar">7 · 30-day post calendar</h2>
+<p class="lead">One post per day, 7-9pm UK time (peak Muslim window). Rotate the 6 videos and 12 heroes — never repeat the same asset in the same week.</p>
 <table id="cal" style="width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0;">
-<tr><th style="padding:8px 10px;border-bottom:1px solid #E8E5DD;background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5C5D58;font-weight:600;text-align:left;">Day</th><th style="padding:8px 10px;border-bottom:1px solid #E8E5DD;background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5C5D58;font-weight:600;text-align:left;">Post</th><th style="padding:8px 10px;border-bottom:1px solid #E8E5DD;background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5C5D58;font-weight:600;text-align:left;">Hashtags</th></tr>
+<tr>
+  <th style="padding:8px 10px;border-bottom:1px solid #E8E5DD;background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5C5D58;font-weight:600;text-align:left;">Day</th>
+  <th style="padding:8px 10px;border-bottom:1px solid #E8E5DD;background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5C5D58;font-weight:600;text-align:left;">Post</th>
+  <th style="padding:8px 10px;border-bottom:1px solid #E8E5DD;background:#F0EDE5;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#5C5D58;font-weight:600;text-align:left;">Hashtags</th>
+</tr>
 </table>
 
 <!-- ─────────────────── REPLY ─────────────────── -->
-<h2 id="reply">7 · Reply playbook — paste these</h2>
+<h2 id="reply">8 · Reply playbook — paste these</h2>
 
 <div class="card">
 <h3>"Is this Salafi / on the manhaj?"</h3>
@@ -139,25 +155,39 @@ iOS ↓</pre>
 
 <p class="lead" style="text-align:center;margin-top:40px;">Built for you, ya akhi. May Allah multiply the benefit. 🤲</p>
 
-<!-- ─────────────────── DATA + RENDERERS ─────────────────── -->
 <script>
-const CB = 'v=5';
+const CB = 'v=7';
 const VIDEOS = [
-  {id:"01", slug:"the-tools",        title:"7 hidden tools inside Sunnah Umrah",                        dur:"60s"},
-  {id:"02", slug:"begin-my-umrah",   title:"Your whole Umrah, 15 steps — in your pocket",              dur:"96s"},
-  {id:"03", slug:"switch-to-arabic", title:"Switch the whole app to Arabic in one tap",                dur:"30s"},
-  {id:"04", slug:"get-ready",        title:"The 18-item 'Get Ready for Umrah' checklist",              dur:"37s"},
-  {id:"05", slug:"terms",            title:"Iḥrām · Niyyah · Talbiyah — the words finally explained",   dur:"35s"},
-  {id:"06", slug:"lost-in-makkah",   title:"When your group loses each other in the Mataf",            dur:"36s"},
+  {id:"01", slug:"the-tools",        title:"7 hidden tools inside Sunnah Umrah",                       dur:"38s"},
+  {id:"02", slug:"begin-my-umrah",   title:"Every single step, guided in your pocket",                 dur:"51s"},
+  {id:"03", slug:"switch-to-arabic", title:"Switch the whole app to Arabic in one tap",                dur:"20s"},
+  {id:"04", slug:"get-ready",        title:"The 18-item 'Get Ready for Umrah' checklist",              dur:"24s"},
+  {id:"05", slug:"terms",            title:"Iḥrām · Niyyah · Talbiyah — the words finally explained",   dur:"22s"},
+  {id:"06", slug:"lost-in-makkah",   title:"When your group loses each other in the Mataf",            dur:"23s"},
+];
+
+const HEROES = [
+  {file:"01_tools",        label:"7 Tools — hidden inside"},
+  {file:"02_walk-haram",   label:"Walk to Ḥaram"},
+  {file:"03_stay-together",label:"Stay Together"},
+  {file:"04_ask",          label:"Ask — Fiqh Q&A"},
+  {file:"05_qibla",        label:"Qibla anywhere"},
+  {file:"06_lost",         label:"I'm Lost — nearest gate"},
+  {file:"07_ziyarah",      label:"Ziyārah · 26 places"},
+  {file:"08_quiz",         label:"Test yourself"},
+  {file:"09_every-step",   label:"Every step guided"},
+  {file:"10_glossary",     label:"10 Arabic terms"},
+  {file:"11_checklist",    label:"18-item checklist"},
+  {file:"12_arabic",       label:"EN ↔ AR · one tap"},
 ];
 
 const CAPTIONS = {
-  "01":"Most people open an Umrah app, see one big button, and miss everything else 🕋\\n\\nScroll past 'Start' and you'll find 7 tools: Walk to Ḥaram, Stay Together, Ask, Qibla, I'm Lost, Ziyārah, and a Quiz. Built for the real problems pilgrims hit.\\n\\nFree on iOS · link in bio",
-  "02":"Most pilgrims try to memorise Umrah from a book — and panic at the moment 🤲\\n\\nSunnah Umrah's Tour walks you through all 15 steps, one screen at a time: prepare for Iḥrām → Mīqāt → Niyyah → Talbiyah → enter the Masjid → Tawaf (7 laps, counter) → Maqām Ibrāhīm → Zamzam → Saʿī (7 trips, counter) → Halq. Every step cited from Bukhari, Muslim, Hiṣn al-Muslim.\\n\\nFree · iOS · link in bio",
-  "03":"Half the pilgrims at the Mataf don't read English. Most Umrah apps don't translate.\\n\\nSunnah Umrah — one tap, top right of any screen, and the WHOLE app flips to Arabic. Home. Tools. Duas. Tour. Glossary. Every word.\\n\\nEnglish or Arabic. Same Sunnah. Free · iOS · link in bio.",
-  "04":"The mistake everyone makes — book the Umrah ticket, then panic at the airport 🛫\\n\\nSunnah Umrah's 18-item Readiness Checklist: passport, visa, flights, hotel, ihrām, vaccinations, packing, religious prep. Tap 'I don't have this' and the app sends you where to get it.\\n\\nFree · iOS · link in bio",
-  "05":"Iḥrām. Niyyah. Talbiyah. Miqāt. Tawaf. Saʿī. Halq.\\n\\nYou'll hear these words a hundred times during Umrah. Most pilgrims nod and pretend they understand. Don't.\\n\\nSunnah Umrah's Glossary — 10 essential terms, definition + pronunciation + the hadith source for each. Free · iOS · link in bio.",
-  "06":"Maghrib at the Mataf. Two million people. Your phone has no signal. Your mum is gone. Your wife is gone. You can't shout over the adhan 😶\\n\\nSunnah Umrah's Stay Together — one 6-letter code, family joins, a quiet map shows you each other. No login. Auto-deletes.\\n\\nAnd 'I'm Lost' = nearest gate by GPS in 3 taps.\\n\\nFree · iOS · link in bio.",
+  "01":"Most people open an Umrah app, see one big button, and miss everything else 🕋\\n\\nScroll past 'Start' and you'll find 7 tools: Walk to Ḥaram, Stay Together, Ask, Qibla, I'm Lost, Ziyārah, and a Quiz. Built for the real problems pilgrims hit.\\n\\nFree on iOS + Android · link in bio",
+  "02":"Most pilgrims try to memorise Umrah from a book — and panic at the moment 🤲\\n\\nSunnah Umrah's Tour guides you screen-by-screen, from preparing for Iḥrām to your final Halq. Counters built in for Tawaf + Saʿī. Every page cited from Bukhari, Muslim, Hiṣn al-Muslim.\\n\\nFree · iOS + Android · link in bio",
+  "03":"Half the pilgrims at the Mataf don't read English. Most Umrah apps don't translate.\\n\\nSunnah Umrah — one tap, top right of any screen, and the WHOLE app flips to Arabic. Home. Tools. Duas. Tour. Glossary. Every word.\\n\\nEnglish or Arabic. Same Sunnah. Free · iOS + Android · link in bio.",
+  "04":"The mistake everyone makes — book the Umrah ticket, then panic at the airport 🛫\\n\\nSunnah Umrah's 18-item Readiness Checklist: passport, visa, flights, hotel, ihrām, vaccinations, packing, religious prep. Tap 'I don't have this' and the app sends you where to get it.\\n\\nFree · iOS + Android · link in bio",
+  "05":"Iḥrām. Niyyah. Talbiyah. Miqāt. Tawaf. Saʿī. Halq.\\n\\nYou'll hear these words a hundred times during Umrah. Most pilgrims nod and pretend they understand. Don't.\\n\\nSunnah Umrah's Glossary — 10 essential terms, definition + pronunciation + the hadith source for each. Free · iOS + Android · link in bio.",
+  "06":"Maghrib at the Mataf. Two million people. Your phone has no signal. Your mum is gone. Your wife is gone. You can't shout over the adhan 😶\\n\\nSunnah Umrah's Stay Together — one 6-letter code, family joins, a quiet map shows you each other. No login. Auto-deletes.\\n\\nAnd 'I'm Lost' = nearest gate by GPS in 3 taps.\\n\\nFree · iOS + Android · link in bio.",
 };
 
 // Render videos
@@ -182,6 +212,23 @@ VIDEOS.forEach(v => {
   vroot.appendChild(block);
 });
 
+// Render heroes (2-up grid)
+const hroot = document.getElementById('heroes-inline');
+const grid = document.createElement('div');
+grid.className = 'hero-grid';
+HEROES.forEach(h => {
+  const c = document.createElement('div');
+  c.className = 'hero-card';
+  c.innerHTML = `
+    <img loading="lazy" src="hero/${h.file}.png?${CB}" alt="${h.label}"/>
+    <div class="meta">
+      <span>${h.label}</span>
+      <a download="sunnah_hero_${h.file}.png" href="hero/${h.file}.png?${CB}">Save</a>
+    </div>`;
+  grid.appendChild(c);
+});
+hroot.appendChild(grid);
+
 // Render captions
 const croot = document.getElementById('captions-inline');
 VIDEOS.forEach(v => {
@@ -195,17 +242,22 @@ VIDEOS.forEach(v => {
   croot.appendChild(block);
 });
 
-// Render 30-day calendar (rotate 6 videos)
+// Render 30-day calendar — alternate video days + hero days
 const SETS = ["A","B","C"];
 const cal = document.getElementById('cal');
+const td = 'padding:8px 10px;border-bottom:1px solid #E8E5DD;vertical-align:top;';
 for (let day = 1; day <= 30; day++) {
-  const v = VIDEOS[(day - 1) % 6];
-  const post = `🎬 Video ${v.id} — ${v.title}`;
+  let post;
+  if (day % 2 === 1) {
+    const v = VIDEOS[Math.floor((day - 1) / 2) % 6];
+    post = `🎬 Video ${v.id} — ${v.title}`;
+  } else {
+    const h = HEROES[Math.floor(day / 2 - 1) % 12];
+    post = `🖼️ Hero — ${h.label}`;
+  }
   const set = SETS[(day - 1) % 3];
   cal.insertAdjacentHTML('beforeend',
-    `<tr><td style="padding:8px 10px;border-bottom:1px solid #E8E5DD;vertical-align:top;">${day}</td>
-         <td style="padding:8px 10px;border-bottom:1px solid #E8E5DD;vertical-align:top;">${post}</td>
-         <td style="padding:8px 10px;border-bottom:1px solid #E8E5DD;vertical-align:top;">${set}</td></tr>`);
+    `<tr><td style="${td}">${day}</td><td style="${td}">${post}</td><td style="${td}">${set}</td></tr>`);
 }
 </script>
 

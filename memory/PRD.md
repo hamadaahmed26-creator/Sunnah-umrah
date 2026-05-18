@@ -14,22 +14,33 @@ Deploy the existing full-stack Sunnah Umrah app (React + FastAPI + MongoDB, with
 - **User email**: Hamada.ahmed26@hotmail.com
 - **Codemagic ASC integration name**: `Codemagic` (Key ID: 6QS4FVVAG8)
 
-## Marketing Assets (2026-02-15 — v4, 6 NEW videos, real captured screens)
-- Built by `/app/scripts/build_marketing_v4.py` using 23 fresh screenshots captured from the live app via `/app/scripts/capture_screens.py` (Playwright)
-- 6 vertical 1080×1920 MP4 videos in `/app/frontend/public/marketing/videos/`:
-  - 01 The Tools (~61s) — Walk-to-Ḥaram → Stay Together → Ask → Qibla → I'm Lost → Ziyārah → Quiz
-  - 02 Begin My Umrah (~62s) — Tour steps 1, 2, 4, 6, 8, 10, 12, 15
-  - 03 Switch to Arabic (~30s) — toggle + Arabic home + Arabic tour
-  - 04 Get Ready (~37s) — checklist top + mid + bottom scrolls
-  - 05 Terms / Glossary (~35s) — Tour Terms button → Glossary bottom-sheet
-  - 06 Lost in Makkah (~36s) — Stay Together + I'm Lost
-- Voice: OpenAI TTS `tts-1-hd`, voice `onyx` (deep male), speed 0.95 (Emergent LLM key)
-- Multi-segment pipeline — each spoken line has its own TTS file + matching screenshot, ffmpeg concatenates with apad tail; audio↔video sync is mathematically guaranteed
-- Theme on every video: "the mistake pilgrims make → here's how Sunnah Umrah fixes it"
-- Dashboard banner: "v4 (rebuilt 2026-02-15)"
-- 23 source screenshots saved at `/app/screenshots/captured/` for re-runs
-- Hero images intentionally NOT rebuilt this round — will redo after user approves videos
-- Old v3 MP4s/PNGs deleted from `/marketing/`
+## Marketing Assets (2026-02-15 — v7 final, audio sync fixed, iOS + Android framing)
+
+### Pipeline (`/app/scripts/build_marketing_v4.py`)
+- 23 source screenshots in `/app/screenshots/captured/` (captured via Playwright from live preview app)
+- Voice: OpenAI TTS `tts-1-hd`, voice `onyx` (deep male), speed 0.95 — via Emergent LLM key
+- Per-segment build: TTS each line → measure exact duration → render PNG → `ffmpeg -loop 1 -t <dur>` to enforce exact per-segment frame count
+- Audio concat: ffmpeg `concat` FILTER (not demuxer) → clean AAC stream whose frame count matches wall time (demuxer reported phantom +5–7s tails in v5/v6)
+- Final mux: stream-copy video + stream-copy audio (no re-encoding)
+- Sync delta across all 6 videos: ±0.04 sec audio vs video stream
+
+### 6 final videos (in `/app/frontend/public/marketing/videos/`)
+- 01 The Tools (38s) — Walk to Ḥaram → Stay Together → Ask → Qibla → I'm Lost → Ziyārah → Quiz
+- 02 Every step guided (51s) — 13 segments through whole Umrah, NO step numbers spoken (per user feedback)
+- 03 Switch to Arabic (20s) — toggle + Arabic home + Arabic tour
+- 04 Get Ready (24s) — checklist top + mid + bottom scrolls
+- 05 Terms / Glossary (22s) — Tour Terms button → Glossary bottom-sheet
+- 06 Lost in Makkah (23s) — Stay Together + I'm Lost
+
+### 12 hero images (in `/app/frontend/public/marketing/hero/`)
+- 1080×1350 Instagram-feed format, every one a different app screen + different headline:
+  01_tools · 02_walk-haram · 03_stay-together · 04_ask · 05_qibla · 06_lost · 07_ziyarah · 08_quiz · 09_every-step · 10_glossary · 11_checklist · 12_arabic
+
+### CTA framing
+- Every voiceover, headline, footer pill, and caption says **"iOS + Android"** (not iOS only) — user is finalising Android Play Store deployment separately
+- Dashboard URL: `https://islamic-journey-19.preview.emergentagent.com/marketing/index.html`
+- Banner: "Launch Kit · v7 (no silent tails · iOS + Android)"
+- Cache-buster `?v=7` on every asset link
 
 ## Status
 
