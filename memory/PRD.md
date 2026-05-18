@@ -14,15 +14,22 @@ Deploy the existing full-stack Sunnah Umrah app (React + FastAPI + MongoDB, with
 - **User email**: Hamada.ahmed26@hotmail.com
 - **Codemagic ASC integration name**: `Codemagic` (Key ID: 6QS4FVVAG8)
 
-## Marketing Assets (2026-02-15 — v3, male VO + sync'd visuals)
-- Built by `/app/scripts/build_marketing.py`
-- 10 vertical 1080×1920 MP4 videos in `/app/frontend/public/marketing/videos/`
-- 30 hero PNGs (3 sizes/video) in `/app/frontend/public/marketing/hero/`
-- Voice: OpenAI TTS `tts-1-hd`, voice `onyx` (deep male), speed 0.95 (via Emergent LLM key)
-- Each video is multi-segment: every spoken line is paired with a different app screenshot so audio↔video are in sync (line "Qibla anywhere" → Qibla screen, line "Stay Together" → Group screen, etc.)
-- 6 real app screenshots reused across videos in distinct combinations + distinct headlines so all 30 hero PNGs read as different campaigns
-- Dashboard: `/app/frontend/public/marketing/index.html` (banner says "v3 — male VO, sync'd")
-- Cache-buster `?v=3` appended to every video/image URL so browser shows the new files
+## Marketing Assets (2026-02-15 — v4, 6 NEW videos, real captured screens)
+- Built by `/app/scripts/build_marketing_v4.py` using 23 fresh screenshots captured from the live app via `/app/scripts/capture_screens.py` (Playwright)
+- 6 vertical 1080×1920 MP4 videos in `/app/frontend/public/marketing/videos/`:
+  - 01 The Tools (~61s) — Walk-to-Ḥaram → Stay Together → Ask → Qibla → I'm Lost → Ziyārah → Quiz
+  - 02 Begin My Umrah (~62s) — Tour steps 1, 2, 4, 6, 8, 10, 12, 15
+  - 03 Switch to Arabic (~30s) — toggle + Arabic home + Arabic tour
+  - 04 Get Ready (~37s) — checklist top + mid + bottom scrolls
+  - 05 Terms / Glossary (~35s) — Tour Terms button → Glossary bottom-sheet
+  - 06 Lost in Makkah (~36s) — Stay Together + I'm Lost
+- Voice: OpenAI TTS `tts-1-hd`, voice `onyx` (deep male), speed 0.95 (Emergent LLM key)
+- Multi-segment pipeline — each spoken line has its own TTS file + matching screenshot, ffmpeg concatenates with apad tail; audio↔video sync is mathematically guaranteed
+- Theme on every video: "the mistake pilgrims make → here's how Sunnah Umrah fixes it"
+- Dashboard banner: "v4 (rebuilt 2026-02-15)"
+- 23 source screenshots saved at `/app/screenshots/captured/` for re-runs
+- Hero images intentionally NOT rebuilt this round — will redo after user approves videos
+- Old v3 MP4s/PNGs deleted from `/marketing/`
 
 ## Status
 
