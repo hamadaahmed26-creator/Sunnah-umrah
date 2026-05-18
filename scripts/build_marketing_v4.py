@@ -51,6 +51,78 @@ VOICE_SPEED = 0.95
 # ── 6 storyboards ──────────────────────────────────────────────────────
 # (line_to_speak, screenshot_key, on-screen headline (≤ 3 short lines))
 STORY = {
+    "00_everything": {
+        "title": "Everything inside Sunnah Umrah — in 60 seconds",
+        "segments": [
+            # HOOK
+            ("Imagine your whole Umrah, guided. In one app. Free.",
+             "home_en",         "ONE APP\nWHOLE UMRAH\nFREE"),
+
+            # THE PROBLEM
+            ("Most pilgrims arrive in Makkah confused — phones don't work, "
+             "duas are made up, and apps are full of ads.",
+             "home_en",         "MOST PILGRIMS\narrive\nCONFUSED"),
+
+            # CITED FROM THE SUNNAH
+            ("Sunnah Umrah fixes that. Every step. Every dua. Cited.",
+             "tour_step01",     "EVERY STEP\nEVERY DUA\nCITED"),
+
+            # GET READY
+            ("Before you fly — an 18-item checklist. Passport. Visa. Iḥrām. "
+             "Don't have something? It sends you where to get it.",
+             "checklist_top",   "BEFORE YOU FLY\n18-item\nchecklist"),
+
+            # 15-STEP TOUR
+            ("From the moment you make Iḥrām...",
+             "tour_step02",     "STEP BY STEP\nbegins"),
+            ("...to your Niyyah and Talbiyah...",
+             "tour_step04",     "Niyyah\n+ Talbiyah"),
+            ("...to entering the Masjid...",
+             "tour_step06",     "Enter\nthe Masjid"),
+            ("...to seven laps of Tawaf with the counter built in...",
+             "tour_step08",     "Tawaf\n7 laps\ncounter built in"),
+            ("...to Maqām Ibrāhīm and drinking Zamzam...",
+             "tour_step10",     "Maqām\n+ Zamzam"),
+            ("...to Saʿī between Ṣafā and Marwah...",
+             "tour_step13",     "Saʿī\n7 trips"),
+            ("...to your Halq. Every page in your hand.",
+             "tour_step15",     "Halq\nUmrah\ncomplete"),
+
+            # GLOSSARY
+            ("Don't know what Iḥrām or Talbiyah means? Tap Terms — ten "
+             "essential Arabic words, defined and pronounced.",
+             "tour_glossary",   "10 ARABIC TERMS\ndefined\n+ pronounced"),
+
+            # TOOLS
+            ("Then come the tools.",
+             "home_tools",      "THE TOOLS"),
+            ("Walk to Ḥaram — turn-by-turn from your hotel.",
+             "walk_haram",      "Walk to Ḥaram\nhotel → Mataf"),
+            ("Stay Together — one six-letter code your whole family joins.",
+             "group",           "Stay Together\n1 code · 1 family"),
+            ("Ask — fiqh questions answered with sources.",
+             "chat",             "Ask\nfiqh + Q&A\ncited"),
+            ("Qibla — direction to the Kaʿbah, anywhere on Earth.",
+             "qibla",           "Qibla\nanywhere"),
+            ("I'm Lost — nearest gate by GPS in three taps.",
+             "lost",            "I'm Lost\nnearest gate\n3 taps"),
+            ("Ziyārah — twenty-six sacred places, mapped.",
+             "places",          "Ziyārah\n26 places\nmapped"),
+            ("Quiz — test what you actually know before you fly.",
+             "quiz",            "Quiz\ntest yourself"),
+
+            # ARABIC
+            ("And one tap flips the entire app into Arabic.",
+             "home_ar",         "EN ↔ AR\none tap"),
+
+            # CLOSE
+            ("No ads. No tracking. No login. Built for one Ummah.",
+             "home_en",         "NO ADS · NO TRACKING\nNO LOGIN"),
+            ("Sunnah Umrah. Free. iOS and Android. Link in bio.",
+             "home_en",         "SUNNAH UMRAH\nFREE\niOS + Android"),
+        ],
+    },
+
     "01_the-tools": {
         "title": "7 hidden tools inside Sunnah Umrah",
         "segments": [

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sunnah Umrah — Launch Kit · v8</title>
+<title>Sunnah Umrah — Launch Kit · v9</title>
 <style>
 :root { color-scheme: light; }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -42,9 +42,9 @@ pre{background:#F0EDE5;border:1px solid #E8E5DD;border-radius:10px;padding:14px;
 <body>
 <div class="wrap">
 
-<span class="tag">Sunnah Umrah · Launch Kit · v8 (hero captions added)</span>
+<span class="tag">Sunnah Umrah · Launch Kit · v9 (trailer added)</span>
 <h1>Your everything-in-one-page</h1>
-<p class="lead">6 videos — audio and video streams now within <b>±0.04 sec</b> of each other (no more silent tails). Every CTA updated to <b>"iOS + Android"</b>. Plus 12 hero images, every one a different part of the app, no duplicates.</p>
+<p class="lead">⭐ <b>NEW — Video 00 "Trailer"</b>: 79-sec summary of the whole app, perfect pinned post / paid ad. Plus the 6 feature videos and 12 hero images. Every voiceover synced ±0.07 sec.</p>
 
 <div class="note">
   <b>What's new in v7</b> — rebuilt the audio concat using ffmpeg's filter (the demuxer was reporting fake durations, causing 5–7 sec of silence at the end of every video in v5/v6). Video stream is now built per-segment with exact <code>-t</code> so no frames are dropped at boundaries. End-to-end sync is mathematical: every audio frame plays, every video frame matches.
@@ -162,8 +162,9 @@ iOS ↓</pre>
 <p class="lead" style="text-align:center;margin-top:40px;">Built for you, ya akhi. May Allah multiply the benefit. 🤲</p>
 
 <script>
-const CB = 'v=8';
+const CB = 'v=9';
 const VIDEOS = [
+  {id:"00", slug:"everything",       title:"⭐ TRAILER — Everything inside Sunnah Umrah in 60s",       dur:"79s"},
   {id:"01", slug:"the-tools",        title:"7 hidden tools inside Sunnah Umrah",                       dur:"38s"},
   {id:"02", slug:"begin-my-umrah",   title:"Every single step, guided in your pocket",                 dur:"51s"},
   {id:"03", slug:"switch-to-arabic", title:"Switch the whole app to Arabic in one tap",                dur:"20s"},
@@ -216,6 +217,7 @@ const HERO_CAPTIONS = {
 };
 
 const CAPTIONS = {
+  "00":"This is everything inside Sunnah Umrah, in 60 seconds 🕋\\n\\nThe whole pilgrimage, guided — from Iḥrām → Tawaf → Saʿī → Halq. Plus 7 tools, a glossary, a checklist, EN↔AR, and a quiz. Every word cited from the Sunnah.\\n\\nNo ads. No tracking. No login. Built for the Ummah.\\n\\nFree · iOS + Android · link in bio.",
   "01":"Most people open an Umrah app, see one big button, and miss everything else 🕋\\n\\nScroll past 'Start' and you'll find 7 tools: Walk to Ḥaram, Stay Together, Ask, Qibla, I'm Lost, Ziyārah, and a Quiz. Built for the real problems pilgrims hit.\\n\\nFree on iOS + Android · link in bio",
   "02":"Most pilgrims try to memorise Umrah from a book — and panic at the moment 🤲\\n\\nSunnah Umrah's Tour guides you screen-by-screen, from preparing for Iḥrām to your final Halq. Counters built in for Tawaf + Saʿī. Every page cited from Bukhari, Muslim, Hiṣn al-Muslim.\\n\\nFree · iOS + Android · link in bio",
   "03":"Half the pilgrims at the Mataf don't read English. Most Umrah apps don't translate.\\n\\nSunnah Umrah — one tap, top right of any screen, and the WHOLE app flips to Arabic. Home. Tools. Duas. Tour. Glossary. Every word.\\n\\nEnglish or Arabic. Same Sunnah. Free · iOS + Android · link in bio.",
