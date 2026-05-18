@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sunnah Umrah — Launch Kit · v5</title>
+<title>Sunnah Umrah — Launch Kit · v8</title>
 <style>
 :root { color-scheme: light; }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -42,7 +42,7 @@ pre{background:#F0EDE5;border:1px solid #E8E5DD;border-radius:10px;padding:14px;
 <body>
 <div class="wrap">
 
-<span class="tag">Sunnah Umrah · Launch Kit · v7 (no silent tails · iOS + Android)</span>
+<span class="tag">Sunnah Umrah · Launch Kit · v8 (hero captions added)</span>
 <h1>Your everything-in-one-page</h1>
 <p class="lead">6 videos — audio and video streams now within <b>±0.04 sec</b> of each other (no more silent tails). Every CTA updated to <b>"iOS + Android"</b>. Plus 12 hero images, every one a different part of the app, no duplicates.</p>
 
@@ -115,8 +115,14 @@ iOS ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('ht-c').innerText)">Copy</button>
 
 <!-- ─────────────────── CAPTIONS ─────────────────── -->
-<h2 id="captions">6 · Captions — one per video</h2>
+<h2 id="captions">6 · Captions — copy & paste straight to TikTok + Instagram</h2>
+
+<h3 style="margin-top:24px;">For the 6 videos</h3>
 <div id="captions-inline"></div>
+
+<h3 style="margin-top:24px;">For the 12 hero images</h3>
+<p class="lead">Same caption works on both TikTok and Instagram. Pair with hashtag set A/B/C (section 5).</p>
+<div id="hero-captions-inline"></div>
 
 <!-- ─────────────────── CALENDAR ─────────────────── -->
 <h2 id="calendar">7 · 30-day post calendar</h2>
@@ -156,7 +162,7 @@ iOS ↓</pre>
 <p class="lead" style="text-align:center;margin-top:40px;">Built for you, ya akhi. May Allah multiply the benefit. 🤲</p>
 
 <script>
-const CB = 'v=7';
+const CB = 'v=8';
 const VIDEOS = [
   {id:"01", slug:"the-tools",        title:"7 hidden tools inside Sunnah Umrah",                       dur:"38s"},
   {id:"02", slug:"begin-my-umrah",   title:"Every single step, guided in your pocket",                 dur:"51s"},
@@ -180,6 +186,34 @@ const HEROES = [
   {file:"11_checklist",    label:"18-item checklist"},
   {file:"12_arabic",       label:"EN ↔ AR · one tap"},
 ];
+
+// One caption per hero — same caption works for Instagram + TikTok.
+// Each follows the same shape: HOOK (1 line) → BODY (2-4 lines) → CTA.
+const HERO_CAPTIONS = {
+  "01_tools": `Most people open an Umrah app, see ONE big button, and miss everything else 🕋\n\nScroll past Start and you'll find 7 hidden tools:\n• Walk to Ḥaram\n• Stay Together\n• Ask (Fiqh Q&A)\n• Qibla\n• I'm Lost\n• Ziyārah\n• Quiz\n\nBuilt for the real problems pilgrims hit, not the imaginary ones.\n\nFree · iOS + Android · link in bio.`,
+
+  "02_walk-haram": `First time in Makkah and your hotel is in Misfalah at 2am? 🌙\n\n"Walk to Ḥaram" gives you turn-by-turn directions from your hotel right to the Mataf gates. No Arabic street signs. No getting lost. No 4am Google Maps panic.\n\nJust open. Tap. Walk.\n\nFree · iOS + Android · link in bio.`,
+
+  "03_stay-together": `Maghrib at the Mataf. 2 million people. Your phone has no signal. Your mother is somewhere in the crowd 😶\n\n"Stay Together" — one 6-letter code. Your whole family joins it. A quiet map shows you each other, even offline.\n\nNo login. No tracking. Auto-deletes when you go home.\n\nFree · iOS + Android · link in bio.`,
+
+  "04_ask": `"Brother, can I still do Tawaf if my wuḍū breaks?"\n\nYou shouldn't be Googling that at the Black Stone corner.\n\n"Ask" inside Sunnah Umrah — fiqh + Umrah Q&A, every answer cited (Bukhari, Muslim, Hiṣn, Albānī, Ibn Bāz, Ibn 'Uthaymīn رحمهم الله).\n\nFree · iOS + Android · link in bio.`,
+
+  "05_qibla": `You're on a plane somewhere over Riyadh. Ẓuhr just came in. Where's qibla? ✈️\n\nOpen Sunnah Umrah. Qibla, anywhere on Earth — no internet needed once it's calibrated.\n\nWorks at home, at work, in the middle of the Atlantic. Wherever you can stand, you can pray.\n\nFree · iOS + Android · link in bio.`,
+
+  "06_lost": `You took a wrong turn out of the Mataf. You're somewhere underground. Every escalator looks the same 😵‍💫\n\nTap "I'm Lost". Three taps. The app shows you the nearest gate by GPS — Gate 1, Gate King Fahd, Gate Ajyad — whichever is closest to where you're standing right now.\n\nFree · iOS + Android · link in bio.`,
+
+  "07_ziyarah": `Most pilgrims go to Makkah, do their Umrah, and fly home — without visiting a single one of the 26 sacred places around the Ḥaramayn 🕊️\n\nMasjid al-Qiblatayn. Cave of Ḥirā'. Cave of Thawr. Jannat al-Baqī'. Quba.\n\nMapped. Routed. Story behind each one — cited from the sīrah.\n\nFree · iOS + Android · link in bio.`,
+
+  "08_quiz": `Quick — if your wuḍū breaks during Tawaf, do you:\n(a) Restart the Tawaf\n(b) Resume from where you stopped\n(c) Make up the broken laps later\n\nIf you guessed, you need the Quiz inside Sunnah Umrah before you fly. Test what you actually know. Get the cited answer either way.\n\nFree · iOS + Android · link in bio.`,
+
+  "09_every-step": `From the moment you put on your Iḥrām to the moment you do your Halq — every step of your Umrah, guided in your pocket 🤲\n\nNo Googling at the Miqāt. No "wait — what do I say now?" at the Black Stone.\n\nJust tap. Read. Do.\n\nEvery page cited from the Sunnah. Free · iOS + Android · link in bio.`,
+
+  "10_glossary": `Iḥrām. Niyyah. Talbiyah. Mīqāt. Idḍṭibāʿ. Raml. Sa'ī. Halq. Taqṣīr.\n\nYou'll hear these words 100 times during Umrah. Most pilgrims nod and pretend.\n\nDon't.\n\nSunnah Umrah's glossary — 10 essential Arabic terms, with definition + pronunciation + the hadith source for each.\n\nFree · iOS + Android · link in bio.`,
+
+  "11_checklist": `Book the ticket → panic at the airport. The classic mistake 🛫\n\nSunnah Umrah's 18-item checklist:\n✓ Passport · ✓ Visa · ✓ Flights · ✓ Accommodation\n✓ Iḥrām · ✓ Vaccinations · ✓ Packing · ✓ Religious prep\n\nTap "I don't have this" — the app sends you where to get it.\n\nFree · iOS + Android · link in bio.`,
+
+  "12_arabic": `Half the pilgrims at the Mataf don't read English. Most Umrah apps don't translate 🌍\n\nSunnah Umrah — one tap, top-right of any screen, and the WHOLE app flips to Arabic. Home. Tools. Duas. Tour. Glossary. Every. Word.\n\nEnglish or Arabic. Same Sunnah.\n\nFree · iOS + Android · link in bio.`,
+};
 
 const CAPTIONS = {
   "01":"Most people open an Umrah app, see one big button, and miss everything else 🕋\\n\\nScroll past 'Start' and you'll find 7 tools: Walk to Ḥaram, Stay Together, Ask, Qibla, I'm Lost, Ziyārah, and a Quiz. Built for the real problems pilgrims hit.\\n\\nFree on iOS + Android · link in bio",
@@ -219,11 +253,16 @@ grid.className = 'hero-grid';
 HEROES.forEach(h => {
   const c = document.createElement('div');
   c.className = 'hero-card';
+  c.dataset.caption = HERO_CAPTIONS[h.file] || '';
   c.innerHTML = `
     <img loading="lazy" src="hero/${h.file}.png?${CB}" alt="${h.label}"/>
     <div class="meta">
       <span>${h.label}</span>
-      <a download="sunnah_hero_${h.file}.png" href="hero/${h.file}.png?${CB}">Save</a>
+      <span style="display:flex;gap:6px;">
+        <button class="copy" style="margin-top:0;padding:5px 12px;font-size:11px;"
+                onclick="navigator.clipboard.writeText(this.closest('.hero-card').dataset.caption); this.innerText='Copied ✓'; setTimeout(()=>this.innerText='Copy caption',1500);">Copy caption</button>
+        <a download="sunnah_hero_${h.file}.png" href="hero/${h.file}.png?${CB}">Save</a>
+      </span>
     </div>`;
   grid.appendChild(c);
 });
@@ -240,6 +279,20 @@ VIDEOS.forEach(v => {
     <pre id="cap-${v.id}">${cap}</pre>
     <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('cap-${v.id}').innerText)">Copy</button>`;
   croot.appendChild(block);
+});
+
+// Render hero captions
+const hcroot = document.getElementById('hero-captions-inline');
+HEROES.forEach(h => {
+  const cap = HERO_CAPTIONS[h.file] || '';
+  const block = document.createElement('div');
+  block.className = 'card';
+  block.innerHTML = `
+    <div class="label">Caption for Hero — ${h.label}</div>
+    <pre id="hcap-${h.file}"></pre>
+    <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('hcap-${h.file}').innerText)">Copy</button>`;
+  hcroot.appendChild(block);
+  document.getElementById(`hcap-${h.file}`).innerText = cap;
 });
 
 // Render 30-day calendar — alternate video days + hero days
