@@ -78,15 +78,15 @@ iOS ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('dn').innerText)">Copy</button>
 
 <h3>Profile photo</h3>
-<p class="lead">Use your existing app icon (Kaaba silhouette on dark). It's already at <span class="kbd">/icons/icon-512.png</span> on your site. Or save this direct URL to your phone, then upload as profile pic on both:</p>
-<pre>https://sunnahumrah.app/icons/icon-512.png</pre>
+<p class="lead">Use your existing app icon (Kaaba silhouette on dark). Save this direct URL to your phone, then upload as profile pic on both:</p>
+<pre>https://islamic-journey-19.emergent.host/icons/icon-512.png</pre>
 
 <!-- ─────────────────────────── LINK ─────────────────────────── -->
 <h2 id="linktree">2 · Link-in-bio URL</h2>
 <p>One link to put in both bios. Already live:</p>
-<pre id="link">https://sunnahumrah.app/link</pre>
+<pre id="link">https://islamic-journey-19.emergent.host/link/index.html</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('link').innerText)">Copy</button>
-<p class="lead">It's a clean Linktree-style page with: App Store button → Android coming soon → Web app → About sources → FAQ → Contact. No Linktree subscription needed.</p>
+<p class="lead">Linktree-style page: App Store button → Android coming soon → Web app → About sources → FAQ → Contact. No Linktree subscription needed.</p>
 
 <!-- ─────────────────────────── HASHTAGS ─────────────────────────── -->
 <h2 id="hashtags">3 · Hashtag sets (rotate, never repeat per week)</h2>
@@ -384,14 +384,56 @@ iOS now · Android coming · link in bio.</pre>
 </div>
 
 <!-- ─────────────────────────── ASSETS ─────────────────────────── -->
-<h2 id="assets">8 · Image + voiceover assets</h2>
-<p><b>12 hero images × 3 sizes (TikTok/Reel 9:16, IG feed 4:5, Square 1:1):</b></p>
-<pre>https://sunnahumrah.app/marketing/hero.html</pre>
-<p class="lead">Open that link on phone → long-press each image → Save to Photos. Or tap the Download button under each one on laptop.</p>
+<h2 id="assets">8 · Hero images — 12 designs × 3 sizes</h2>
+<p class="lead">Long-press any image → <b>Save to Photos</b>. Each one comes in 3 aspect ratios — pick the right one per platform.</p>
+<p class="lead"><b>9×16</b> = TikTok / Reels / Stories &nbsp;·&nbsp; <b>4×5</b> = Instagram feed &nbsp;·&nbsp; <b>1×1</b> = Square fallback</p>
 
-<p><b>10 video scripts</b> are above (section 4). For Round 2 I'll deliver finished MP4s + voiceover MP3s here:</p>
-<pre>https://sunnahumrah.app/marketing/videos.html (coming next)</pre>
-<p class="lead">Until then, you can post the 12 hero images as carousels on Instagram + as standalone TikToks (TikTok plays static images as 5-sec videos automatically — drop hashtags + caption from section 5).</p>
+<div id="heroes-inline"></div>
+<script>
+const HERO_TITLES = [
+  ["01","Your first Tawaf — Step three of seven"],
+  ["02","Lost in the Haram? One tap"],
+  ["03","Family separated — Group code"],
+  ["04","Wuḍū broke during Tawaf?"],
+  ["05","Qibla — anywhere on Earth"],
+  ["06","Salafi-sourced, every word cited"],
+  ["07","450+ duas from Hisn al-Muslim"],
+  ["08","Umrah in Ramaḍān 2026"],
+  ["09","Live Qur'ān from Makkah 24/7"],
+  ["10","Step by step — like a teacher's hand"],
+  ["11","Free. No ads. No tracking."],
+  ["12","Before. During. After."],
+];
+const HERO_SIZES = [["9x16","TikTok / Reel"],["4x5","IG feed"],["1x1","Square"]];
+const root = document.getElementById('heroes-inline');
+HERO_TITLES.forEach(([id, title]) => {
+  const block = document.createElement('div');
+  block.className = 'card';
+  block.innerHTML = `
+    <div class="label">${id} · ${title}</div>
+    <div style="display:grid; gap:12px; grid-template-columns: 1.4fr 1fr 1fr; margin-top:10px;">
+      ${HERO_SIZES.map(([s,label]) => `
+        <div>
+          <img loading="lazy" src="img/hero_${id}_${s}.png" alt="${title} ${s}"
+               style="width:100%; height:auto; border-radius:10px; border:1px solid #E8E5DD; display:block;"/>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+            <span style="font-size:10px;color:#8E8F8A;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;">${label}</span>
+            <a download="sunnahumrah_${id}_${s}.png" href="img/hero_${id}_${s}.png"
+               style="font-size:11px;background:#1C1D1B;color:#fff;text-decoration:none;padding:5px 10px;border-radius:999px;">Save</a>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  root.appendChild(block);
+});
+// On narrow phones stack the 3 sizes vertically
+const mql = window.matchMedia('(max-width: 560px)');
+const apply = () => {
+  document.querySelectorAll('#heroes-inline > .card > div').forEach(g => {
+    g.style.gridTemplateColumns = mql.matches ? '1fr' : '1.4fr 1fr 1fr';
+  });
+};
+mql.addEventListener('change', apply); apply();
+</script>
 
 <hr/>
 <p class="lead" style="text-align:center;">Built for ya akhi 🤲<br/>One brother. Zero ads. May Allah multiply the benefit.</p>
