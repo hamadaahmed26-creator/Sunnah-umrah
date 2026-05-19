@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sunnah Umrah — Launch Kit · v9</title>
+<title>Sunnah Umrah — Launch Kit · v10</title>
 <style>
 :root { color-scheme: light; }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -42,9 +42,9 @@ pre{background:#F0EDE5;border:1px solid #E8E5DD;border-radius:10px;padding:14px;
 <body>
 <div class="wrap">
 
-<span class="tag">Sunnah Umrah · Launch Kit · v9 (trailer added)</span>
+<span class="tag">Sunnah Umrah · Launch Kit · v10 (profile pics + real link)</span>
 <h1>Your everything-in-one-page</h1>
-<p class="lead">⭐ <b>NEW — Video 00 "Trailer"</b>: 79-sec summary of the whole app, perfect pinned post / paid ad. Plus the 6 feature videos and 12 hero images. Every voiceover synced ±0.07 sec.</p>
+<p class="lead">⭐ <b>v10 adds</b>: 2 profile pictures (cream + dark, circle-safe), proper <code>sunnahumrah.app/link/</code> URL for your bio, rewritten "wow" bios for both platforms, and a clear "where each link goes" guide. Plus the 7 videos and 12 hero images from before.</p>
 
 <div class="note">
   <b>What's new in v7</b> — rebuilt the audio concat using ffmpeg's filter (the demuxer was reporting fake durations, causing 5–7 sec of silence at the end of every video in v5/v6). Video stream is now built per-segment with exact <code>-t</code> so no frames are dropped at boundaries. End-to-end sync is mathematical: every audio frame plays, every video frame matches.
@@ -55,8 +55,8 @@ pre{background:#F0EDE5;border:1px solid #E8E5DD;border-radius:10px;padding:14px;
   <div class="toc">
     <a href="#videos"><b>1. 7 finished videos</b> (MP4 · TikTok/Reels ready · 19–79 sec)</a>
     <a href="#heroes"><b>2. 12 hero images</b> (PNG · 1080×1350 Instagram-feed)</a>
-    <a href="#bio">3. Bio (TikTok + Instagram)</a>
-    <a href="#linktree">4. Link-in-bio</a>
+    <a href="#bio">3. Bio + 📸 Profile picture (TikTok + Instagram)</a>
+    <a href="#linktree">4. The ONE link for your bio</a>
     <a href="#hashtags">5. Hashtag sets</a>
     <a href="#captions">6. Caption library</a>
     <a href="#calendar">7. 30-day post calendar</a>
@@ -75,18 +75,36 @@ pre{background:#F0EDE5;border:1px solid #E8E5DD;border-radius:10px;padding:14px;
 <div id="heroes-inline"></div>
 
 <!-- ─────────────────── BIO ─────────────────── -->
-<h2 id="bio">3 · Bio — paste into both accounts</h2>
+<h2 id="bio">3 · Bio + Profile picture — paste into both accounts</h2>
+
+<h3>📸 Profile picture (1080×1080, circle-safe)</h3>
+<div style="display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin:10px 0 16px;">
+  <div class="hero-card">
+    <img src="hero/profile_cream.png?v=10" style="width:100%;height:auto;display:block;background:#F8F6F0;"/>
+    <div class="meta">
+      <span>Cream — preferred</span>
+      <a download="sunnah_profile_cream.png" href="hero/profile_cream.png?v=10">Save</a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <img src="hero/profile_ink.png?v=10" style="width:100%;height:auto;display:block;background:#1C1D1B;"/>
+    <div class="meta">
+      <span>Dark — alt</span>
+      <a download="sunnah_profile_ink.png" href="hero/profile_ink.png?v=10">Save</a>
+    </div>
+  </div>
+</div>
+<p class="lead" style="margin-bottom:18px;">Use the SAME picture on TikTok and Instagram = one recognisable brand. Both platforms auto-crop to a circle — these are built for that.</p>
 
 <h3>TikTok bio (80 chars max)</h3>
-<pre id="bio-tt">Step-by-step Umrah, the Sunnah way.
-Salafī-sourced. Free. iOS + Android ↓</pre>
+<pre id="bio-tt">Your whole Umrah, guided 🕋
+Every dua sourced. Free. iOS now ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('bio-tt').innerText)">Copy</button>
 
 <h3>Instagram bio (150 chars max)</h3>
-<pre id="bio-ig">Sunnah Umrah · the calm companion 🕋
-Step-by-step guide · Qibla · live Makkah Qur'an
-Built by 1 brother. No ads. Salafī sources.
-iOS ↓</pre>
+<pre id="bio-ig">Your whole Umrah, guided 🕋
+Step-by-step · Every dua sourced · Qibla · Stay-together
+Built by 1 brother · No ads · No tracking ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('bio-ig').innerText)">Copy</button>
 
 <h3>Display name (both platforms)</h3>
@@ -94,10 +112,19 @@ iOS ↓</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('dn').innerText)">Copy</button>
 
 <!-- ─────────────────── LINK-IN-BIO ─────────────────── -->
-<h2 id="linktree">4 · Link-in-bio URL</h2>
-<p>Paste into both TikTok + Instagram bios:</p>
-<pre id="link">https://islamic-journey-19.emergent.host/link/index.html</pre>
+<h2 id="linktree">4 · The ONE link to paste in your bio</h2>
+<p class="lead">Both TikTok and Instagram only allow <b>one</b> clickable link in your bio. This URL is your "Link-in-bio" page — it has the App Store button, the Android-coming-soon signup, the web app, and your support links all in one branded page. Paste this — and only this — into the "Website" field on both profiles:</p>
+<pre id="link">https://sunnahumrah.app/link/</pre>
 <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('link').innerText)">Copy</button>
+
+<div class="note" style="margin-top:18px;">
+  <b>Where each link lives — quick reference:</b><br/>
+  • <b>Bio field</b> (TikTok + Instagram): <code>https://sunnahumrah.app/link/</code> ← <i>this one only</i><br/>
+  • <b>App Store URL</b> (already inside <code>/link/</code>): <code>https://apps.apple.com/app/sunnah-umrah/id6769159262</code><br/>
+  • <b>Web app</b> (already inside <code>/link/</code>): <code>https://sunnahumrah.app/</code><br/>
+  • <b>Captions</b> (every post): end with the words "link in bio" — followers tap the bio link, see the App Store button, install.<br/>
+  • <b>Don't</b> paste raw App Store URLs in TikTok captions — TikTok hides external links in captions. Always say "link in bio".
+</div>
 
 <!-- ─────────────────── HASHTAGS ─────────────────── -->
 <h2 id="hashtags">5 · Hashtag sets (rotate, don't repeat in same week)</h2>
@@ -162,7 +189,7 @@ iOS ↓</pre>
 <p class="lead" style="text-align:center;margin-top:40px;">Built for you, ya akhi. May Allah multiply the benefit. 🤲</p>
 
 <script>
-const CB = 'v=9';
+const CB = 'v=10';
 const VIDEOS = [
   {id:"00", slug:"everything",       title:"⭐ TRAILER — Everything inside Sunnah Umrah in 60s",       dur:"79s"},
   {id:"01", slug:"the-tools",        title:"7 hidden tools inside Sunnah Umrah",                       dur:"38s"},
