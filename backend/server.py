@@ -561,7 +561,11 @@ async def stripe_webhook(request: Request):
     return {"ok": True}
 
 
-# Include the router in the main app
+# ---------- Flights (TravelPayouts / Aviasales) ----------
+from routes.flights import router as flights_router  # noqa: E402
+api_router.include_router(flights_router)
+
+# Include the main router in the app
 app.include_router(api_router)
 
 app.add_middleware(

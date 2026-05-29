@@ -10,6 +10,7 @@ import Group from "./pages/Group";
 import Places from "./pages/Places";
 import PlaceDetail from "./pages/PlaceDetail";
 import Hotels from "./pages/Hotels";
+import Flights from "./pages/Flights";
 import Packages from "./pages/Packages";
 import Qibla from "./pages/Qibla";
 import Privacy from "./pages/Privacy";
@@ -54,6 +55,7 @@ function App() {
               <Route path="/places" element={<Places />} />
               <Route path="/places/:slug" element={<PlaceDetail />} />
               <Route path="/hotels" element={<Hotels />} />
+              <Route path="/flights" element={<Flights />} />
               <Route path="/packages" element={<Packages />} />
               <Route path="/qibla" element={<Qibla />} />
               <Route path="/privacy" element={<Privacy />} />

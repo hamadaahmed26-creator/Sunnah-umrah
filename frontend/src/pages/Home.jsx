@@ -15,6 +15,7 @@ import { todaysReminder } from "../lib/dailyReminders";
 import { loadProfile, daysUntilTrip, tripPrompt, saveProfile } from "../lib/userProfile";
 import OnboardingSheet from "../components/OnboardingSheet";
 import HaramLive from "../components/HaramLive";
+import FlightsTeaser from "../components/FlightsTeaser";
 
 // Home dashboard — every feature visible at a glance.
 // Hero: continue / start tour. Below: 3 priority cards (Plan / Stay together / Ask).
@@ -464,69 +465,18 @@ export default function Home() {
         </Link>
       )}
 
-      {/* PRIMARY ACTION CARD — surfaced ABOVE the tools grid.
-          Updated Feb 2026: tester feedback said "homepage feels busy" when
-          we had BOTH Get Ready + Walk to Haram as big cards. The
-          Get-Ready Checklist is the conversion-critical path (affiliate
-          flights/hotel/eSIM/shop) AND the path nearly every user benefits
-          from before their trip — so it stays as the single hero card.
-          Walk to Haram moves back into the tools grid below — it's only
-          useful for the small slice of users physically in Makkah today. */}
-      <div className="mt-7 space-y-2" data-testid="home-primary-cta">
-        <Link
-          to="/checklist"
-          className="block tap-pulse rounded-2xl border border-[#C5DBC9] p-4 hover:border-[#2A5A4A] hover:shadow-[0_10px_22px_-12px_rgba(42,90,74,0.45)] transition active:scale-[0.99] bg-gradient-to-br from-[#F4F9F4] to-[#DCEBDC]"
-          data-testid="home-checklist"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#C5DBC9]">
-              <ClipboardList className="w-5 h-5 text-[#2A5A4A]" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className={`text-[15px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "قائمة الاستعداد للعمرة" : "Get ready for ʿUmrah"}
-              </div>
-              <div className={`mt-0.5 text-[12px] text-[#3E5E4B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
-                {isAr ? "جواز، تأشيرة، إحرام، فندق وأكثر" : "Passport, visa, iḥrām, hotel and more"}
-              </div>
-            </div>
-            <ArrowRight className={`w-4 h-4 text-[#2A5A4A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
-          </div>
-        </Link>
-      </div>
-
-      {/* QUICK ACCESS — 2×3 grid of the 6 most-used utility tools. */}
-      <div className="mt-7" data-testid="home-quickaccess">
-        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
-          {isAr ? "أدواتك" : "Your tools"}
-        </h2>
-        <div className="grid grid-cols-2 gap-2">
-          <QuickTile to="/walk-haram" icon={Footprints}  accent="#7B5C24" en="Walk to Ḥaram" ar="إلى الحرم"     sub_en="Step-by-step directions"     sub_ar="توجيه سيرًا، خطوة بخطوة"     isAr={isAr} testid="home-walk-haram" />
-          <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        isAr={isAr} testid="home-group" />
-          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh and Umrah questions"    sub_ar="أسئلة الفقه والعمرة"      isAr={isAr} testid="home-chat" />
-          <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             isAr={isAr} testid="home-qibla" />
-          <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  isAr={isAr} testid="home-lost" />
-          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah (visits)" ar="الزّيارة"   sub_en="26 sacred places to visit"   sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
-          <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                isAr={isAr} testid="home-quiz" />
-        </div>
-      </div>
-
-      {/* DAILY ANCHORS — reminder + prayer times. Both are habit drivers. */}
-      <DailyReminderCard reminder={reminder} isAr={isAr} />
-      <div className="mt-4">
-        <HaramLive isAr={isAr} />
-      </div>
-      <PrayerTimesCard isAr={isAr} />
-
-      {/* TRAVEL & MORE — packages / DIY hotels-flights / best-months / pre-trip
-          shop. Visible to EVERY persona (not just planners): even pilgrims
-          who've "already been" may want to book their next trip, gift an
-          Umrah package, or shop eSIM / Zamzam carriers. */}
+      {/* TRAVEL & MORE — moved ABOVE the Get-Ready checklist (Feb 2026)
+          Reason: new pilgrims are most excited & engaged immediately after
+          seeing the Welcome + Step-by-step cards. That's when booking-intent
+          peaks. Burying Packages / Hotels & flights below the fold means
+          most users never see them. */}
       <div className="mt-7">
         <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
           {isAr ? "السّفر والمزيد" : "Travel & more"}
         </h2>
-        <div className="grid grid-cols-2 gap-2" data-testid="home-travel">
+        {/* LIVE flights teaser banner — pulled from TravelPayouts / Aviasales */}
+        <FlightsTeaser isAr={isAr} destination="JED" />
+        <div className="mt-3 grid grid-cols-2 gap-2" data-testid="home-travel">
           {/* Packages */}
           <Link
             to="/packages"
@@ -600,6 +550,60 @@ export default function Home() {
           </Link>
         </div>
       </div>
+
+      {/* PRIMARY ACTION CARD — surfaced ABOVE the tools grid.
+          Updated Feb 2026: tester feedback said "homepage feels busy" when
+          we had BOTH Get Ready + Walk to Haram as big cards. The
+          Get-Ready Checklist is the conversion-critical path (affiliate
+          flights/hotel/eSIM/shop) AND the path nearly every user benefits
+          from before their trip — so it stays as the single hero card.
+          Walk to Haram moves back into the tools grid below — it's only
+          useful for the small slice of users physically in Makkah today. */}
+      <div className="mt-7 space-y-2" data-testid="home-primary-cta">
+        <Link
+          to="/checklist"
+          className="block tap-pulse rounded-2xl border border-[#C5DBC9] p-4 hover:border-[#2A5A4A] hover:shadow-[0_10px_22px_-12px_rgba(42,90,74,0.45)] transition active:scale-[0.99] bg-gradient-to-br from-[#F4F9F4] to-[#DCEBDC]"
+          data-testid="home-checklist"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-white grid place-items-center flex-shrink-0 border border-[#C5DBC9]">
+              <ClipboardList className="w-5 h-5 text-[#2A5A4A]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`text-[15px] font-semibold text-[#1C1D1B] leading-tight ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "قائمة الاستعداد للعمرة" : "Get ready for ʿUmrah"}
+              </div>
+              <div className={`mt-0.5 text-[12px] text-[#3E5E4B] leading-snug ${isAr ? "font-arabic text-right" : ""}`}>
+                {isAr ? "جواز، تأشيرة، إحرام، فندق وأكثر" : "Passport, visa, iḥrām, hotel and more"}
+              </div>
+            </div>
+            <ArrowRight className={`w-4 h-4 text-[#2A5A4A] flex-shrink-0 ${isAr ? "rotate-180" : ""}`} />
+          </div>
+        </Link>
+      </div>
+
+      {/* QUICK ACCESS — 2×3 grid of the 6 most-used utility tools. */}
+      <div className="mt-7" data-testid="home-quickaccess">
+        <h2 className={`text-[18px] font-medium tracking-tight text-[#1C1D1B] mb-2.5 ${isAr ? "font-arabic" : ""}`}>
+          {isAr ? "أدواتك" : "Your tools"}
+        </h2>
+        <div className="grid grid-cols-2 gap-2">
+          <QuickTile to="/walk-haram" icon={Footprints}  accent="#7B5C24" en="Walk to Ḥaram" ar="إلى الحرم"     sub_en="Step-by-step directions"     sub_ar="توجيه سيرًا، خطوة بخطوة"     isAr={isAr} testid="home-walk-haram" />
+          <QuickTile to="/group"  icon={Users}         accent="#B3884D" en="Stay together" ar="ابقَ معًا"      sub_en="Don't lose anyone"          sub_ar="لا تَضِع عن عائلتك"        isAr={isAr} testid="home-group" />
+          <QuickTile to="/chat"   icon={MessageSquare} accent="#8B4540" en="Ask"           ar="اسأل"           sub_en="Fiqh and Umrah questions"    sub_ar="أسئلة الفقه والعمرة"      isAr={isAr} testid="home-chat" />
+          <QuickTile to="/qibla"  icon={Compass}       accent="#7B5C24" en="Qibla"         ar="القبلة"         sub_en="Direction to the Ka'bah"     sub_ar="اتّجاه الكعبة"             isAr={isAr} testid="home-qibla" />
+          <QuickTile to="/lost"   icon={MapPin}        accent="#8B4540" en="I'm lost"      ar="أنا تائه"       sub_en="Find the nearest gate"        sub_ar="أقرب باب"                  isAr={isAr} testid="home-lost" />
+          <QuickTile to="/places" icon={Sparkles}      accent="#2A5A4A" en="Ziyārah (visits)" ar="الزّيارة"   sub_en="26 sacred places to visit"   sub_ar="٢٦ مكانًا للزّيارة"          isAr={isAr} testid="home-places" />
+          <QuickTile to="/quiz"   icon={Trophy}        accent="#B3884D" en="Quiz"          ar="الاختبار"        sub_en="Test what you know"           sub_ar="اختبر معرفتك"                isAr={isAr} testid="home-quiz" />
+        </div>
+      </div>
+
+      {/* DAILY ANCHORS — reminder + prayer times. Both are habit drivers. */}
+      <DailyReminderCard reminder={reminder} isAr={isAr} />
+      <div className="mt-4">
+        <HaramLive isAr={isAr} />
+      </div>
+      <PrayerTimesCard isAr={isAr} />
 
       {/* About / Sources footer — reassures the user (and Apple reviewers)
           that every ruling in the app is sourced. */}

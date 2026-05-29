@@ -42,6 +42,18 @@ Deploy the existing full-stack Sunnah Umrah app (React + FastAPI + MongoDB, with
 - Banner: "Launch Kit · v7 (no silent tails · iOS + Android)"
 - Cache-buster `?v=7` on every asset link
 
+## TravelPayouts / Aviasales LIVE flights API (2026-02-29)
+- API token + marker stored in `/app/backend/.env` only (NEVER frontend)
+- Backend proxy at `/app/backend/routes/flights.py`:
+  - `GET /api/flights/cheapest?destination=JED|MED` → single cheapest fare for home banner (30 min server cache)
+  - `GET /api/flights/search?destination=...&limit=15` → list of fares
+- Every `book_url` embeds `marker=525646` + `sub_id` (home-banner vs flights-page) for commission attribution + click-source tracking
+- Frontend:
+  - `/app/frontend/src/components/FlightsTeaser.jsx` — live "Cheapest flights this week" banner on home
+  - `/app/frontend/src/pages/Flights.jsx` — dedicated page with JED/MED toggle (`/flights` route)
+- Home.jsx **reordered** (Feb 2026): Welcome → Step-by-step → Travel & more (FlightsTeaser + Packages + Hotels & flights + When to go + Pre-trip shop) → Get Ready checklist → Tools → Reminder → HaramLive → PrayerTimes → Sources footer
+- Hotels: kept existing affiliate redirect (TravelPayouts shut Hotellook API on 20 Oct 2025 — auto-redirects to Booking.com, marker still tracks)
+
 ## Status
 
 ### ✅ iOS — LIVE ON APP STORE (2026-02-14)
