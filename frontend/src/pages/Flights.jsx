@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import { Plane, Loader2, ArrowRight, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Plane, Loader2, ArrowLeft, ExternalLink } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { affiliateDisclosure } from "../lib/affiliate";
 
@@ -43,6 +44,14 @@ export default function Flights() {
 
   return (
     <div className="px-4 pt-6 pb-24 max-w-2xl mx-auto" data-testid="flights-page">
+      <Link
+        to="/"
+        data-testid="flights-back"
+        className="inline-flex items-center gap-1.5 text-[12px] text-[#5C5D58] hover:text-[#1C1D1B] mb-4"
+      >
+        <ArrowLeft className={`w-3.5 h-3.5 ${isAr ? "rotate-180" : ""}`} />
+        <span className={isAr ? "font-arabic" : ""}>{isAr ? "الرّجوع" : "Back"}</span>
+      </Link>
       <h1 className={`text-[26px] font-semibold tracking-tight text-[#1C1D1B] ${isAr ? "font-arabic text-right" : ""}`}>
         {isAr ? "رحلات إلى الحجاز" : "Flights to the Ḥijāz"}
       </h1>
