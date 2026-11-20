@@ -1,3 +1,4 @@
+import {worshipGuide} from './worship.js';
 import {stages,helpTopics} from './content.js';
 import {audio} from './audio.js';
 const root=document.getElementById('app');
@@ -48,7 +49,8 @@ function journey(m){
   let counted=['sai','tawaf'].includes(s.id),count=p[s.id],allowed=(!counted||count===7)&&(!practice||answered);
   const answers=practice?[(p.step+1)%2,p.step%2].map(i=>btn('answer-'+i,d.answers[i])).join(' '):'';
   return `<article class="panel">${back()}<div class="progress" aria-hidden="true">${stages.map((_,i)=>`<i class="${i<=p.step?'on':''}"></i>`).join('')}</div><span class="eyebrow">${modeName(m)} · ${p.step+1} / 7</span><h1>${d.title}</h1>${practice?`<p class="note">${t('Practice only. This rehearsal does not perform any rite.','هذا تدريب تعليمي فقط ولا يُعدّ أداءً للنسك.')}</p>`:''}<p>${d.body}</p>${practice&&s.id==='sai'?`<figure class="tripchart"><figcaption>${t('Where each trip ends','نهاية كل شوط')}</figcaption><ol>${Array.from({length:7},(_,i)=>`<li><b>${i+1}</b> ${i%2?t('Safa','الصفا'):t('Marwah','المروة')}</li>`).join('')}</ol></figure>`:''}${s.dua?`<p class="dua" lang="ar" dir="rtl">${s.dua}</p>`:''}
-  ${counted?`<section class="counter"><span>${s.id==='sai'?t('Completed one-way trips','الأشواط المكتملة باتجاه واحد'):t('Completed circuits','الأشواط المكتملة')}</span><strong aria-live="polite">${count} / 7</strong><p>${s.id==='sai'?(count===7?t('Finish at Marwah','النهاية عند المروة'):count%2?t('Next · Marwah to Safa','التالي · من المروة إلى الصفا'):t('Next · Safa to Marwah','التالي · من الصفا إلى المروة')):''}</p>${btn('count',t('Record one','تسجيل شوط'),'primary',count===7)} ${btn('undo',t('Subtract one','إنقاص شوط'),'',count===0)}</section>`:''}
+  ${worshipGuide(s.id,count,state.lang)}
+  ${counted?`<section class="counter"><span>${s.id==='sai'?t('Completed one-way trips','الأشواط المكتملة باتجاه واحد'):t('Completed circuits','الأشواط المكتملة')}</span><strong aria-live="polite">${count} / 7</strong><p>${s.id==='sai'?(count===7?t('Finish at Marwah','النهاية عند المروة'):count%2?t('Next · Marwah to Safa','التالي · من المروة إلى الصفا'):t('Next · Safa to Marwah','التالي · من الصفا إلى المروة')):''}</p>${btn('count',s.id==='sai'?(count===7?t('Seven trips complete','اكتملت الأشواط السبعة'):count%2?t('I’ve reached Safa','وصلت إلى الصفا'):t('I’ve reached Marwah','وصلت إلى المروة')):t('I’ve completed one circuit','أتممت شوطًا'),'primary',count===7)} ${btn('undo',t('Subtract one','إنقاص شوط'),'',count===0)}</section>`:''}
   ${practice?`<section><h3>${d.question}</h3><div class="actions">${answers}</div><p role="status">${feedback}</p></section>`:''}
   <div class="actions">${btn('next',p.step===6?t('Finish','إنهاء'):t('Continue','متابعة'),'primary',!allowed)} ${btn('pause',t('Pause','إيقاف مؤقت'))} ${p.step?btn('previous',t('Previous step','الخطوة السابقة')):''}</div>
   ${link('help',t('I need help','أحتاج إلى مساعدة'))}
@@ -79,6 +81,7 @@ window.addEventListener('hashchange',()=>{audio.stop();clearCheck();render(true)
 window.addEventListener('storage',e=>{if(e.key===key){restore();clearCheck();render()}});
 root.addEventListener('input',e=>{if(e.target.id==='query')results(e.target.value)});
 root.addEventListener('click',e=>{
+ if(e.target.closest('[data-publisher-audio]'))audio.stop();
  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,r=route(),p=state[r],oldFocus=a;
  if(a==='live'){go('live');return}
  if(a==='listen'){audio.play('navigation-'+state.lang);return}if(a==='audio-pause'){audio.pause();return}if(a==='replay'){audio.replay('navigation-'+state.lang);return}

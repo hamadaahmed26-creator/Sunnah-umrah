@@ -24,3 +24,7 @@ Use Safari with the ChatGPT owner account. Try English and Arabic, Easy mode, sp
 See bugs.md for the baseline register, commercial.md for partner and competitor verification and audio.md for the audio provenance findings.
 
 Additional Chrome checks passed for the first incorrect practice response keeping Continue disabled, the correct response enabling progress, pause surviving a reload at Miqat, changing the current stage to Arabic and filtering Arabic help to the wheelchair topic with كرسي.
+
+## Worship guidance revision
+
+The current preview restores the Tawaf and Sa’i supplications and labels the publisher’s four external listening pages. Their readers are named in the publisher's player. See human-recordings.md and religious-review.md. The written guidance is bundled for offline use. Publisher audio needs internet. Nine automated checks passed, including both language paths through every Tawaf and Sa’i count. Physical iPhone verification and owner testing of these new controls remain open.
