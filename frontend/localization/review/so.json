@@ -4,7 +4,24 @@
   "nativeReviewer": null,
   "scholarlyReviewer": null,
   "stages": {},
-  "help": {},
+  "help": {
+    "count": {
+      "title": "Tiradii ayaan illaaway",
+      "body": "Haddii aad taqaan tirada saxda ah, sax tiriyaha. Haddii aad inta dawaafku socdo si dhab ah uga shakido inaad afar ama shan wareeg dhammaysay, oo midna uusan kula xoog badnayn, afar xisaabi. Shaki ku bilowda kaddib markaad dhammayso waa xaalad kale. Culimo aqoon leh weydii haddii xaaladdaadu ka duwan tahay."
+    },
+    "separated": {
+      "title": "Qoyskaygii ayaan ka lumay",
+      "body": "Marka ay ammaan tahay ka bax qulqulka dadka. Shaqaalaha labbisan u sheeg lambarka albaabka ama astaanta kuugu dambaysay oo weydii halka lagu hago dadka lumay. Haddii ilmo ama qof weyn oo daryeel u baahan la waayo, isla markiiba shaqaalaha wargeli."
+    },
+    "access": {
+      "title": "Waxaan u baahanahay kursiga curyaanka ama wiish",
+      "body": "Shaqaalaha weydii iridda dadka naafada ahi geli karaan, wiishka ama meesha kuraasta curyaanka laga bixiyo ee kuugu dhow. Waxaad tusi kartaa weedhan: «أحتاج إلى كرسي متحرك. أين أقرب نقطة؟»"
+    },
+    "religious-help": {
+      "title": "Xaaladdaydu way ka duwan tahay",
+      "body": "Haddii aad ka gudubtay miiqaatka, qayb ka mid ah cibaadada kaa tagtay ama aad u baahan tahay talo ku saabsan caadada ama jirro, caalim aqoon leh u sheeg meesha aad joogtay, wixii aad niyaysatay iyo wixii aad qabatay. Shaqaalaha weydii meesha laga helo hagidda diinta."
+    }
+  },
   "recitations": {
     "miqat": {
       "meaning": "Waxaan kaaga soo jawaabay baaqaaga anigoo cumro gudanaya.",

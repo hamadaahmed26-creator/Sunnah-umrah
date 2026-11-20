@@ -4,7 +4,24 @@
   "nativeReviewer": null,
   "scholarlyReviewer": null,
   "stages": {},
-  "help": {},
+  "help": {
+    "count": {
+      "title": "J’ai perdu le compte",
+      "body": "Si vous connaissez le bon nombre, corrigez le compteur. Pendant le tawaf, si vous hésitez réellement entre quatre et cinq tours sans pencher pour l’un ou l’autre, retenez quatre. Un doute apparu seulement après le tawaf est un autre cas. Consultez un savant qualifié si votre situation diffère."
+    },
+    "separated": {
+      "title": "J’ai perdu ma famille",
+      "body": "Dès que vous pouvez le faire en sécurité, sortez du flux des marcheurs. Indiquez à un agent en uniforme le dernier numéro de porte ou repère que vous avez vu. Demandez le point d’assistance aux personnes égarées. Signalez immédiatement la disparition d’un enfant ou d’un adulte vulnérable."
+    },
+    "access": {
+      "title": "J’ai besoin d’un fauteuil roulant ou d’un ascenseur",
+      "body": "Demandez au personnel où se trouvent l’entrée accessible, l’ascenseur ou le point de distribution de fauteuils roulants les plus proches. Vous pouvez montrer cette phrase : «أحتاج إلى كرسي متحرك. أين أقرب نقطة؟»"
+    },
+    "religious-help": {
+      "title": "Ma situation est particulière",
+      "body": "Si vous avez dépassé le miqat, omis une partie d’un rite, ou si votre question concerne les règles ou une maladie, expliquez à un savant qualifié où vous étiez, quelle était votre intention et quels rites vous avez accomplis. Demandez au personnel de vous indiquer le bureau d’orientation religieuse."
+    }
+  },
   "recitations": {
     "miqat": {
       "meaning": "Je réponds à Ton appel pour accomplir la ʿumra.",

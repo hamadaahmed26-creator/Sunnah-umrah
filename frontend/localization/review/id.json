@@ -4,7 +4,24 @@
   "nativeReviewer": null,
   "scholarlyReviewer": null,
   "stages": {},
-  "help": {},
+  "help": {
+    "count": {
+      "title": "Saya lupa hitungannya",
+      "body": "Jika tahu jumlah yang benar, perbaiki hitungan. Saat tawaf, jika Anda benar-benar ragu antara empat atau lima putaran dan tidak ada yang lebih kuat menurut Anda, hitung empat. Keraguan yang baru muncul setelah selesai adalah kasus yang berbeda. Tanyakan kepada ulama yang kompeten jika keadaan Anda berbeda."
+    },
+    "separated": {
+      "title": "Saya terpisah dari keluarga",
+      "body": "Menepilah dari arus orang ketika aman. Sebutkan nomor pintu atau tanda terakhir yang Anda lihat kepada petugas berseragam dan tanyakan pos bantuan untuk orang tersesat. Segera laporkan jika anak atau orang dewasa yang membutuhkan pendampingan hilang."
+    },
+    "access": {
+      "title": "Saya memerlukan kursi roda atau lift",
+      "body": "Tanyakan kepada petugas lokasi pintu masuk yang mudah diakses, lift, atau tempat pembagian kursi roda terdekat. Anda dapat menunjukkan kalimat ini: «أحتاج إلى كرسي متحرك. أين أقرب نقطة؟»"
+    },
+    "religious-help": {
+      "title": "Keadaan saya berbeda",
+      "body": "Jika Anda telah melewati miqat, melewatkan sebagian ibadah, atau memerlukan penjelasan tentang haid atau sakit, sampaikan kepada ulama yang kompeten di mana Anda berada saat itu, apa niat Anda dan amalan apa yang sudah Anda selesaikan. Tanyakan lokasi pos bimbingan agama kepada petugas."
+    }
+  },
   "recitations": {
     "miqat": {
       "meaning": "Aku memenuhi panggilan-Mu untuk berumrah.",

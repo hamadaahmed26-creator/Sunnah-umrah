@@ -4,7 +4,24 @@
   "nativeReviewer": null,
   "scholarlyReviewer": null,
   "stages": {},
-  "help": {},
+  "help": {
+    "count": {
+      "title": "Perdi a conta",
+      "body": "Se sabe o número correto, corrija o contador. Se durante o tawaf hesita realmente entre quatro e cinco voltas e nenhum número lhe parece mais provável, conte quatro. Uma dúvida surgida apenas depois é um caso diferente. Consulte um sábio qualificado se a sua situação for diferente."
+    },
+    "separated": {
+      "title": "Perdi a minha família de vista",
+      "body": "Afaste-se do fluxo de pessoas assim que for seguro. Indique a um funcionário uniformizado o último número de porta ou ponto de referência que viu e pergunte pelo posto de apoio a pessoas perdidas. Se desapareceu uma criança ou um adulto vulnerável, avise imediatamente."
+    },
+    "access": {
+      "title": "Preciso de uma cadeira de rodas ou de um elevador",
+      "body": "Pergunte à equipa onde fica a entrada acessível, o elevador ou o ponto de distribuição de cadeiras de rodas mais próximo. Pode mostrar esta frase: «أحتاج إلى كرسي متحرك. أين أقرب نقطة؟»"
+    },
+    "religious-help": {
+      "title": "A minha situação é diferente",
+      "body": "Se passou o miqat, omitiu parte de um rito ou precisa de orientação sobre a menstruação ou doença, explique a um sábio qualificado onde estava, qual era a sua intenção e que atos completou. Peça à equipa que lhe indique o posto de orientação religiosa."
+    }
+  },
   "recitations": {
     "miqat": {
       "meaning": "Respondo ao Teu chamamento para realizar a umra.",

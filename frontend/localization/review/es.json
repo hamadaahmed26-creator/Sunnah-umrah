@@ -4,7 +4,24 @@
   "nativeReviewer": null,
   "scholarlyReviewer": null,
   "stages": {},
-  "help": {},
+  "help": {
+    "count": {
+      "title": "He perdido la cuenta",
+      "body": "Si sabes el número correcto, corrige el contador. Si durante el tawaf dudas realmente entre cuatro y cinco vueltas y ninguna cifra te parece más probable, cuenta cuatro. Una duda que surge solo después es un caso distinto. Consulta a un sabio cualificado si tu situación es diferente."
+    },
+    "separated": {
+      "title": "He perdido de vista a mi familia",
+      "body": "Sal de la corriente de personas cuando sea seguro. Indica al personal uniformado el último número de puerta o punto de referencia que viste y pregunta por el punto de atención a personas extraviadas. Si falta un menor o un adulto vulnerable, avisa de inmediato."
+    },
+    "access": {
+      "title": "Necesito una silla de ruedas o un ascensor",
+      "body": "Pregunta al personal por la entrada accesible, el ascensor o el punto de entrega de sillas de ruedas más cercano. Puedes mostrar esta frase: «أحتاج إلى كرسي متحرك. أين أقرب نقطة؟»"
+    },
+    "religious-help": {
+      "title": "Mi situación es diferente",
+      "body": "Si pasaste el miqat, omitiste parte de un rito o necesitas orientación sobre la menstruación o una enfermedad, explica a un sabio cualificado dónde estabas, qué intención tenías y qué actos completaste. Pide al personal que te indique el puesto de orientación religiosa."
+    }
+  },
   "recitations": {
     "miqat": {
       "meaning": "Respondo a Tu llamada para realizar la umra.",
