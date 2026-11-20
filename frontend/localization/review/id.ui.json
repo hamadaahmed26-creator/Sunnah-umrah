@@ -82,11 +82,16 @@
     "Pronunciation": "Pelafalan",
     "Meaning": "Makna",
     "Listen": "Dengarkan",
-    "Makkah Live": "Siaran langsung Makkah",
+    "Makkah Live": "Makkah langsung",
     "Internet connection required": "Memerlukan koneksi internet",
     "Completed journeys": "Perjalanan yang telah selesai",
     "Begin another journey": "Mulai perjalanan lain",
     "Pending human review": "Menunggu pemeriksaan oleh penelaah",
-    "My journey": "Perjalanan saya"
+    "My journey": "Perjalanan saya",
+    "Prayer times and Qibla": "Waktu salat dan kiblat",
+    "Check a city timetable or calculate your Qibla bearing.": "Lihat jadwal salat kota atau hitung arah kiblat.",
+    "Start a new journey": "Mulai perjalanan baru",
+    "Full instructions": "Petunjuk lengkap",
+    "Watch the Haram or listen to Saudi Quran Radio.": "Saksikan Masjidilharam atau dengarkan Radio Al-Qur’an Saudi."
   }
 }

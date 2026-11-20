@@ -2,7 +2,6 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  Volume2,
   ArrowRight,
   ArrowLeft,
   RotateCcw,
@@ -30,16 +29,6 @@ import useSwipeNav from "../hooks/useSwipeNav";
  so the pilgrim can count their 7 laps right on this same screen.
 */
 
-function speak(text) {
-  if (!text) return;
-  try {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "ar-SA";
-    u.rate = 0.85;
-    window.speechSynthesis.speak(u);
-  } catch (_) {}
-}
 
 const CHAPTER_COLOR = {
   Intro: "#5C5D58",
@@ -143,7 +132,6 @@ export default function Tour() {
   }, [idx]);
   const finishUmrah = () => {
     if (navigator.vibrate) navigator.vibrate([60, 80, 60, 80, 200]);
-    speak("تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُم");
     // Small celebration delay, then reset back to the beginning so the next
     // pilgrim (or another visit) starts fresh.
     setTimeout(() => restart(), 1200);
@@ -175,7 +163,6 @@ export default function Tour() {
     if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
     if (step.counter === "tawaf") {
       setLap((l) => Math.min(7, l + 1));
-      speak("اللَّهُ أَكْبَر");
     } else {
       setTrip((t) => Math.min(7, t + 1));
     }
@@ -543,26 +530,7 @@ export default function Tour() {
                     {step.dua.ar}
                   </p>
                 </div>
-                <button
-                  onClick={() => {
-                    if (step.dua.audio_id) {
-                      // Real Arabic recitation (Onyx TTS, recorded once,
-                      // cached by SW for offline playback).
-                      const url = `${process.env.PUBLIC_URL || ""}/audio/duas/${step.dua.audio_id}.mp3`;
-                      const a = new Audio(url);
-                      a.play().catch(() => speak(step.dua.ar));
-                    } else {
-                      // Fallback to browser speech synthesis if no
-                      // pre-recorded audio is available for this du'a.
-                      speak(step.dua.ar);
-                    }
-                  }}
-                  className="tap-pulse w-11 h-11 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
-                  aria-label="listen"
-                  data-testid="tour-dua-play"
-                >
-                  <Volume2 className="w-5 h-5 text-[#1C1D1B]" />
-                </button>
+                <small>{isAr ? "التسجيل البشري بانتظار المراجعة" : "Human recording awaiting review"}</small>
               </div>
               <p className="mt-3 text-[12px] italic text-[#5C5D58]">{step.dua.tr}</p>
               <p className="mt-1 text-[12px] text-[#1C1D1B]">{step.dua.en}</p>

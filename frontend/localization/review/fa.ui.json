@@ -82,11 +82,16 @@
     "Pronunciation": "تلفظ",
     "Meaning": "معنی",
     "Listen": "گوش دادن",
-    "Makkah Live": "پخش زندهٔ مکه",
+    "Makkah Live": "پخش زنده مکه",
     "Internet connection required": "به اینترنت نیاز دارد",
     "Completed journeys": "سفرهای پایان‌یافته",
     "Begin another journey": "آغاز سفری دیگر",
     "Pending human review": "در انتظار بررسی انسانی",
-    "My journey": "سفر من"
+    "My journey": "سفر من",
+    "Prayer times and Qibla": "اوقات نماز و قبله",
+    "Check a city timetable or calculate your Qibla bearing.": "اوقات نماز شهر را ببینید یا جهت قبله را محاسبه کنید.",
+    "Start a new journey": "آغاز سفر جدید",
+    "Full instructions": "راهنمای کامل",
+    "Watch the Haram or listen to Saudi Quran Radio.": "حرم را تماشا کنید یا به رادیو قرآن عربستان گوش دهید."
   }
 }

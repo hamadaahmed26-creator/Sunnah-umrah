@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, ArrowRight, Lightbulb } from "lucide-react";
+import { ArrowRight, Lightbulb } from "lucide-react";
 import { TawafMap } from "./RitualMaps";
 
 /*
@@ -40,16 +40,6 @@ const PHOTOS = {
   kaabaWide: "/images/kaaba/04-yemeni-to-stone.jpg",
 };
 
-function speak(text) {
-  if (!text) return;
-  try {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "ar-SA";
-    u.rate = 0.85;
-    window.speechSynthesis.speak(u);
-  } catch (_) {}
-}
 
 export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
   const isRamlLap = lap < 3;
@@ -57,7 +47,6 @@ export default function TawafFlow({ lap, setLap, isAr, onComplete }) {
 
   const completeLap = () => {
     if (navigator.vibrate) navigator.vibrate([40, 60, 40, 60, 90]);
-    speak("اللَّهُ أَكْبَر");
     if (lap >= 6) {
       setLap(7);
       setTimeout(() => onComplete && onComplete(), 280);
@@ -251,13 +240,7 @@ function Step({ n, color, title, body, isAr, dua, image, alt }) {
               <p className="font-arabic text-[18px] leading-[1.9] text-right text-[#1C1D1B] flex-1">
                 {dua.ar}
               </p>
-              <button
-                onClick={() => speak(dua.ar)}
-                className="tap-pulse w-9 h-9 flex-shrink-0 grid place-items-center rounded-full bg-white border border-[#E8E5DD]"
-                aria-label="listen"
-              >
-                <Volume2 className="w-4 h-4 text-[#1C1D1B]" />
-              </button>
+              <small>{isAr ? "التسجيل البشري بانتظار المراجعة" : "Human recording awaiting review"}</small>
             </div>
             <p className="mt-2 text-[11px] italic text-[#5C5D58]">{dua.tr}</p>
             <p className="mt-0.5 text-[11px] text-[#1C1D1B]">{dua.en}</p>

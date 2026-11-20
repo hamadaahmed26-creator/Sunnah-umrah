@@ -82,11 +82,16 @@
     "Pronunciation": "Dhawaaqidda",
     "Meaning": "Macnaha",
     "Listen": "Dhegayso",
-    "Makkah Live": "Makkah toos ah",
+    "Makkah Live": "Makka oo toos ah",
     "Internet connection required": "Internet ayaa loo baahan yahay",
     "Completed journeys": "Socdaallada dhammaaday",
     "Begin another journey": "Bilow socdaal kale",
     "Pending human review": "Weli qof dib uma eegin",
-    "My journey": "Socdaalkayga"
+    "My journey": "Socdaalkayga",
+    "Prayer times and Qibla": "Waqtiyada salaadda iyo qiblada",
+    "Check a city timetable or calculate your Qibla bearing.": "Eeg jadwalka salaadda magaalada ama xisaabi jihada qiblada.",
+    "Start a new journey": "Bilow safar cusub",
+    "Full instructions": "Tilmaamaha oo dhan",
+    "Watch the Haram or listen to Saudi Quran Radio.": "Daawo Xaramka ama dhegayso Idaacadda Qur’aanka ee Sacuudiga."
   }
 }

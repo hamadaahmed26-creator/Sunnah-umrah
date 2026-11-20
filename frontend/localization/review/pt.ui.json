@@ -82,11 +82,16 @@
     "Pronunciation": "Pronúncia",
     "Meaning": "Significado",
     "Listen": "Ouvir",
-    "Makkah Live": "Meca ao vivo",
+    "Makkah Live": "Meca em direto",
     "Internet connection required": "É necessária uma conexão à internet",
     "Completed journeys": "Percursos concluídos",
     "Begin another journey": "Iniciar outro percurso",
     "Pending human review": "Aguardando revisão humana",
-    "My journey": "Meu percurso"
+    "My journey": "Meu percurso",
+    "Prayer times and Qibla": "Horários de oração e quibla",
+    "Check a city timetable or calculate your Qibla bearing.": "Consulte os horários de uma cidade ou calcule a direção da quibla.",
+    "Start a new journey": "Iniciar um novo percurso",
+    "Full instructions": "Instruções completas",
+    "Watch the Haram or listen to Saudi Quran Radio.": "Veja o Haram ou ouça a rádio saudita do Alcorão."
   }
 }
