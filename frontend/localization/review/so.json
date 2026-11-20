@@ -3,7 +3,71 @@
   "status": "draft",
   "nativeReviewer": null,
   "scholarlyReviewer": null,
-  "stages": {},
+  "stages": {
+    "ihram": {
+      "title": "Isu diyaari ixraamka",
+      "body": "Qubayso haddii aad awooddo. Ninku wuxuu xidhaa laba maro oo ixraamka ah. Haweeneydu waxay xidhataa dhar asturan, mana xidhato niqaab iyo galoofyo inta ay ixraamka ku jirto. Ka hor inta uusan niyaysan ixraamka, ninku jirkiisa wuu carfin karaa isagoo marada ka ilaalinaya cadarka. Haweeneydu waa inay ka fogaato cadar urkiisa la dareemayo markay ag marayso rag aan ahayn ninkeeda ama maxramkeeda. Marka ixraamka la galo, labadooduba cadar cusub ma marsadaan.",
+      "question": "Goormuu ninku jirkiisa carfin karaa?",
+      "answers": [
+        "Ka hor gelidda ixraamka",
+        "Inta uu ixraamka ku jiro ee uu dawaafayo"
+      ]
+    },
+    "miqat": {
+      "title": "Ixraamka ka gal miiqaatka",
+      "body": "Dhar beddelid keliya kuma bilaabato xaaladda ixraamku. Waxaad ku gashaa niyadda aad ku bilaabayso cumrada. Haddii aad dibadda miiqaatka uga imanayso Makka si aad u cumraysato, qalbiga ka niyayso bilowga cumrada ugu dambayn marka aad gaadho miiqaatka jidkaaga ama aad barbar marto. Dheh erayada hoose. Haddii aad diyaarad saaran tahay, diyaargarow ka hor gudubka. Haddii meesha aad ka soo baxayso ama jidkaagu ka duwan yahay, hagaha kooxda weydii.",
+      "question": "Diyaarad ayaad u raacaysaa cumrada. Goormaad isu diyaarinaysaa?",
+      "answers": [
+        "Ka hor inta aanay diyaaraddu miiqaatka gudbin",
+        "Keliya markaad huteelka gaadho"
+      ]
+    },
+    "talbiyah": {
+      "title": "Dheh talbiyada",
+      "body": "Ku celceli talbiyada inta aad Kacbada u socoto. Qoraalka iyo macnuhu hoos ayay ku yaallaan. Jooji talbiyada markaad dawaafka bilaabayso.",
+      "question": "Goormaad joojinaysaa talbiyada cumrada?",
+      "answers": [
+        "Markaad dawaafka bilaabayso",
+        "Socod kasta oo Safa iyo Marwa u dhexeeya kaddib"
+      ]
+    },
+    "haram": {
+      "title": "Gal Masjidka Xaramka",
+      "body": "Lugta midig ku gal oo Alle weydii inuu kuu furo albaabada naxariistiisa. Raac calaamadaha iyo tilmaamaha shaqaalaha si aad u gaadho goobta dawaafka. Haddii aad qoys la socoto, ku heshiiya meel aad ku kulantaan oo ka baxsan socodka dadka.",
+      "question": "Maxaa lagu baryaa ducada gelitaanka masjidka?",
+      "answers": [
+        "Naxariista Alle",
+        "Lambar albaab gaar ah"
+      ]
+    },
+    "tawaf": {
+      "title": "Ku wareeg Kacbada",
+      "body": "Dawaafka ku bilow daahirnimo, adigoo weyso qaba. Haddii aad caado qabto, sug inta ay kaa dhammaanayso ka dibna qubayso. Ka bilow meel la siman Dhagaxa Madow. Kacbadu bidixdaada ha ahaato, toddoba jeer ku wareeg adigoo bannaanka ka maraya derbiga gaaban ee qalloocan. Mar kasta oo aad ku soo noqoto safka Dhagaxa Madow, hal wareeg tiri. Dadka ha riixin si aad dhagaxa u taabato. Erayadaada ayaad ku ducaysan kartaa. Dabadeed laba rakcadood ku tuko Maqaamka Ibraahim gadaashiisa haddii ay kuu fududahay, haddii kalena meel kale oo masjidka ah.",
+      "question": "Goormuu hal wareeg dhammaystirmaa?",
+      "answers": [
+        "Markaad ku soo noqoto safka Dhagaxa Madow",
+        "Markaad gaadho dhinaca kale"
+      ]
+    },
+    "sai": {
+      "title": "U kala soco Safa iyo Marwa",
+      "body": "Ka bilow Safa. Socodka oo dhan ee Marwa ku dhammaada waa socdaalka koowaad. Ku soo noqoshada Safa waa kan labaad. Markasta oo aad gaadho cirifka kaa soo horjeeda mid tiri. Socdaalka toddobaad wuxuu ku dhammaadaa Marwa, Safana laguma noqdo. Buuraha dushooda qiblada u jeeso si aad Alle u xusto oo u barido. Culimadu waxay isku khilaafeen ku celinta ducada marka ugu dambaysa ee Marwa la gaadho.",
+      "question": "Waxaad ka tagtay Safa oo tagtay Marwa, dabadeedna Safa ku soo noqotay. Immisa socdaal ayaad samaysay?",
+      "answers": [
+        "Laba",
+        "Hal"
+      ]
+    },
+    "completion": {
+      "title": "Dhammaystir cumradaada",
+      "body": "Marka sacyigu dhammaado ninku madaxa ayuu xiiraa ama timaha madaxa oo dhan ayuu gaabiyaa. Haweeneydu waxay isu keentaa cidhifyada timaheeda, wax yarna way ka jartaa, ilaa dhererka qaybta ugu dambaysa ee farta. Sida caadiga ah, sidaas ayay cumradu ku dhammaataa ixraamkana looga baxaa. Haddii fal cibaado kaa tagay ama aad leedahay xaalad gaar ah, caalim aqoon leh weydii.",
+      "question": "Maxaa xiga marka ugu dambaysa ee aad Marwa gaadho?",
+      "answers": [
+        "Xiirid ama gaabin timaha sida qofka ku habboon",
+        "Socdaal kale oo Safa lagu noqdo"
+      ]
+    }
+  },
   "help": {
     "count": {
       "title": "Tiradii ayaan illaaway",

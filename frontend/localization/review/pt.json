@@ -3,7 +3,71 @@
   "status": "draft",
   "nativeReviewer": null,
   "scholarlyReviewer": null,
-  "stages": {},
+  "stages": {
+    "ihram": {
+      "title": "Preparação para o ihram",
+      "body": "Tome o banho ritual se puder. O homem veste os dois panos do ihram. A mulher usa roupa que a cubra adequadamente e, durante o ihram, não veste niqab nem luvas. Antes da intenção de entrar em ihram, o homem pode perfumar o corpo, evitando perfumar os panos. A mulher evita perfume percetível ao passar junto de homens que não sejam o marido ou os seus mahram. Depois de entrar em ihram, nenhum dos dois aplica novo perfume.",
+      "question": "Quando pode o homem perfumar o corpo?",
+      "answers": [
+        "Antes de entrar em ihram",
+        "Durante o tawaf, ainda em ihram"
+      ]
+    },
+    "miqat": {
+      "title": "Entrar em ihram no miqat",
+      "body": "Mudar de roupa, por si só, não inicia o ihram. Entra-se nele com a intenção de começar a umra. Se vem de fora do miqat em direção a Meca para a umra, forme essa intenção no coração até chegar ao miqat da sua rota ou passar à altura dele. Diga a fórmula abaixo. Se viajar de avião, prepare-se antes da passagem. Se o seu ponto de partida ou a sua rota forem diferentes, consulte o guia do grupo.",
+      "question": "Vai de avião para a umra. Quando se prepara?",
+      "answers": [
+        "Antes de o avião atravessar o miqat",
+        "Só depois de chegar ao hotel"
+      ]
+    },
+    "talbiyah": {
+      "title": "Recitar a talbiya",
+      "body": "Repita a talbiya no caminho para a Caaba. O texto e o significado aparecem abaixo. Termine a talbiya ao iniciar o tawaf.",
+      "question": "Quando termina a talbiya da umra?",
+      "answers": [
+        "Ao iniciar o tawaf",
+        "Após cada percurso entre Safa e Marwa"
+      ]
+    },
+    "haram": {
+      "title": "Entrar na Mesquita Sagrada",
+      "body": "Entre com o pé direito e peça a Allah que lhe abra as portas da Sua misericórdia. Siga a sinalização e as indicações do pessoal até à zona do tawaf. Se estiver em família, combinem um ponto de encontro fora do fluxo de pessoas.",
+      "question": "O que se pede na súplica de entrada na mesquita?",
+      "answers": [
+        "A misericórdia de Allah",
+        "Um número de porta específico"
+      ]
+    },
+    "tawaf": {
+      "title": "Dar as voltas à Caaba",
+      "body": "Comece o tawaf em estado de pureza ritual, com a ablução. Se estiver menstruada, aguarde o fim da menstruação e faça o banho ritual. Comece à altura da Pedra Negra. Mantenha a Caaba à sua esquerda e complete sete voltas, passando por fora do muro baixo e curvo. Conte uma volta sempre que regressar à altura da Pedra Negra. Evite empurrar para lhe tocar. Pode suplicar com as suas próprias palavras. Depois, reze duas unidades atrás da estação de Ibrahim se for possível, ou noutro local da mesquita.",
+      "question": "Quando se completa uma volta?",
+      "answers": [
+        "Ao regressar à altura da Pedra Negra",
+        "Ao chegar ao lado oposto"
+      ]
+    },
+    "sai": {
+      "title": "Caminhar entre Safa e Marwa",
+      "body": "Comece em Safa. O percurso completo até Marwa é o primeiro e o regresso a Safa é o segundo. Conte cada chegada à extremidade oposta. O sétimo termina em Marwa, sem regresso a Safa. Nas elevações, volte-se para a quibla para recordar Allah e suplicar. Os sábios divergem quanto à repetição da súplica na última chegada.",
+      "question": "Foi de Safa a Marwa e voltou a Safa. Quantos percursos completou?",
+      "answers": [
+        "Dois",
+        "Um"
+      ]
+    },
+    "completion": {
+      "title": "Completar a umra",
+      "body": "Depois do sa‘i, o homem rapa a cabeça ou encurta o cabelo em toda a cabeça. A mulher junta as pontas do cabelo e corta uma pequena porção, até ao comprimento da ponta de um dedo. Na sequência habitual, isto completa a umra e põe fim ao ihram. Se omitiu um rito ou tem circunstâncias especiais, consulte um sábio qualificado.",
+      "question": "O que se segue à última chegada a Marwa?",
+      "answers": [
+        "Rapar a cabeça ou encurtar o cabelo, conforme o caso",
+        "Fazer outro percurso de regresso a Safa"
+      ]
+    }
+  },
   "help": {
     "count": {
       "title": "Perdi a conta",
