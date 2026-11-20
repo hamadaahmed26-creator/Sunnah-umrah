@@ -8,7 +8,6 @@ import math
 from pathlib import Path
 from pydantic import BaseModel, Field
 from typing import List, Optional
-import uuid
 from datetime import datetime, timezone
 
 from emergentintegrations.payments.stripe.checkout import (
@@ -88,6 +87,7 @@ logger = logging.getLogger(__name__)
 # Simple in-memory rate limiter — keeps a tiny LLM-cost guardrail without
 # requiring redis. Resets on backend restart, which is fine for our scale.
 import time
+from routes.families import family_router
 from collections import defaultdict, deque
 
 _RATE_BUCKETS: dict[str, deque] = defaultdict(deque)
@@ -146,28 +146,6 @@ class NearestGateResponse(BaseModel):
     others: List[dict]
 
 
-class ProgressUpdate(BaseModel):
-    user_id: str
-    step: Optional[str] = None  # ihram | tawaf | sai | halq | done
-    tawaf_count: Optional[int] = None
-    sai_count: Optional[int] = None
-
-
-class GroupJoinRequest(BaseModel):
-    code: str = Field(min_length=4, max_length=10, pattern="^[A-Za-z0-9]+$")
-
-
-class GroupCheckin(BaseModel):
-    user_id: str = Field(min_length=1, max_length=100)
-    name: str = Field(min_length=1, max_length=60)
-    tawaf_count: int = 0
-    sai_count: int = 0
-    lat: Optional[float] = Field(None, ge=-90, le=90)
-    lng: Optional[float] = Field(None, ge=-180, le=180)
-    accuracy: Optional[float] = Field(None, ge=0, le=100000)
-    share_loc: bool = False
-
-
 # ---------- Routes ----------
 @api_router.get("/")
 async def root():
@@ -200,141 +178,17 @@ async def nearest_gate(req: NearestGateRequest):
     )
 
 
-@api_router.put("/progress")
-async def update_progress(p: ProgressUpdate):
-    doc = {k: v for k, v in p.model_dump().items() if v is not None}
-    doc["updated_at"] = datetime.now(timezone.utc).isoformat()
-    await db.progress.update_one({"user_id": p.user_id}, {"$set": doc}, upsert=True)
-    return {"ok": True}
+def limit_family_creation(request: Request):
+    _rate_check("group_create", request.client.host if request.client else "unknown", "group_create")
 
 
-@api_router.get("/progress/{user_id}")
-async def get_progress(user_id: str):
-    doc = await db.progress.find_one({"user_id": user_id}, {"_id": 0})
-    if not doc:
-        return {"user_id": user_id, "step": "ihram", "tawaf_count": 0, "sai_count": 0}
-    return doc
+# Existing legacy collections are deliberately untouched. Progress is stored on device.
+api_router.include_router(family_router(db.family_checkins_v2, limit_family_creation))
 
 
-# ---------- Group / Family ----------
-import random as _random
-import string as _string
-
-
-def _gen_code():
-    return "".join(_random.choices(_string.ascii_uppercase + _string.digits, k=6))
-
-
-def _ago(iso_ts: str) -> str:
-    try:
-        t = datetime.fromisoformat(iso_ts)
-        if t.tzinfo is None:
-            t = t.replace(tzinfo=timezone.utc)
-        delta = (datetime.now(timezone.utc) - t).total_seconds()
-        if delta < 60:
-            return "just now"
-        if delta < 3600:
-            return f"{int(delta // 60)}m ago"
-        if delta < 86400:
-            return f"{int(delta // 3600)}h ago"
-        return f"{int(delta // 86400)}d ago"
-    except Exception:
-        return ""
-
-
-@api_router.post("/group/create")
-async def group_create(http_request: Request):
-    _rate_check("group_create", _client_ip(http_request), "group_create")
-    for _ in range(8):
-        code = _gen_code()
-        existing = await db.groups.find_one({"code": code})
-        if not existing:
-            await db.groups.insert_one({
-                "code": code,
-                "created_at": datetime.now(timezone.utc).isoformat(),
-            })
-            return {"code": code}
-    raise HTTPException(status_code=500, detail="Could not allocate code")
-
-
-@api_router.post("/group/join")
-async def group_join(req: GroupJoinRequest):
-    code = req.code.upper()
-    g = await db.groups.find_one({"code": code}, {"_id": 0})
-    if not g:
-        raise HTTPException(status_code=404, detail="Group not found")
-    return {"ok": True, "code": code}
-
-
-@api_router.put("/group/{code}/checkin")
-async def group_checkin(code: str, c: GroupCheckin):
-    code = code.upper()
-    g = await db.groups.find_one({"code": code})
-    if not g:
-        raise HTTPException(status_code=404, detail="Group not found")
-    now_iso = datetime.now(timezone.utc).isoformat()
-    doc = {
-        "code": code,
-        "user_id": c.user_id,
-        "name": c.name,
-        "tawaf_count": c.tawaf_count,
-        "sai_count": c.sai_count,
-        "share_loc": bool(c.share_loc),
-        "updated_at": now_iso,
-    }
-    # Only persist coordinates if the member opted in to share. Otherwise,
-    # actively wipe any previously-stored coordinates (privacy-by-default).
-    if c.share_loc and c.lat is not None and c.lng is not None:
-        doc["lat"] = c.lat
-        doc["lng"] = c.lng
-        doc["accuracy"] = c.accuracy
-        doc["loc_updated_at"] = now_iso
-    else:
-        # Unset stale coordinates if user just turned sharing off
-        await db.group_members.update_one(
-            {"code": code, "user_id": c.user_id},
-            {"$unset": {"lat": "", "lng": "", "accuracy": "", "loc_updated_at": ""}},
-        )
-    await db.group_members.update_one(
-        {"code": code, "user_id": c.user_id}, {"$set": doc}, upsert=True
-    )
-    return {"ok": True}
-
-
-@api_router.get("/group/{code}")
-async def group_get(code: str):
-    code = code.upper()
-    g = await db.groups.find_one({"code": code}, {"_id": 0})
-    if not g:
-        raise HTTPException(status_code=404, detail="Group not found")
-    members = await db.group_members.find({"code": code}, {"_id": 0}).to_list(50)
-    now = datetime.now(timezone.utc)
-    LOC_TTL = 300  # 5 minutes — drop stale coordinates from the response
-    cleaned = []
-    for m in members:
-        m["last_ago"] = _ago(m.get("updated_at", ""))
-        # Strip location data when sharing is off, missing coords, or stale
-        if not m.get("share_loc") or m.get("lat") is None or m.get("lng") is None:
-            m.pop("lat", None); m.pop("lng", None); m.pop("accuracy", None)
-            m["loc_age_sec"] = None
-        else:
-            try:
-                t = datetime.fromisoformat(m.get("loc_updated_at", ""))
-                if t.tzinfo is None:
-                    t = t.replace(tzinfo=timezone.utc)
-                age = int((now - t).total_seconds())
-                if age > LOC_TTL:
-                    m.pop("lat", None); m.pop("lng", None); m.pop("accuracy", None)
-                    m["loc_age_sec"] = None
-                else:
-                    m["loc_age_sec"] = age
-            except Exception:
-                m.pop("lat", None); m.pop("lng", None); m.pop("accuracy", None)
-                m["loc_age_sec"] = None
-        m.pop("loc_updated_at", None)
-        cleaned.append(m)
-    cleaned.sort(key=lambda x: x.get("updated_at", ""), reverse=True)
-    return {"code": code, "members": cleaned}
+@app.on_event("startup")
+async def ensure_family_expiry():
+    await db.family_checkins_v2.create_index("expires_at", expireAfterSeconds=0)
 
 
 # ─── Sadaqah / Donations (Stripe Checkout) ────────────────────────────────

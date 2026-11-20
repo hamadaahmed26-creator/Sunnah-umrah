@@ -35,8 +35,7 @@ export default function Privacy() {
       </ul>
       <h3>Sent to our server only when you actively use a feature</h3>
       <ul>
-        <li><strong>AI Companion chat</strong> — your question is forwarded to Anthropic Claude (via Emergent) and an answer is returned. Logs auto-delete after 30 days. No name, email, or account required.</li>
-        <li><strong>Stay Together group</strong> — your chosen display name, Tawaf/Saʿi count, and (only if you opt in) your latitude/longitude. Auto-purged 14 days after last activity.</li>
+        <li><strong>Stay Together group</strong> — your chosen display name and the check-in status you explicitly share. Anyone with a valid private invitation can join. Each member can remove their own check-in by leaving. This feature does not request GPS.</li>
         <li><strong>I'm Lost gate finder</strong> — your GPS coordinates are sent in a single request to compute the nearest gate. We do <strong>not</strong> log or store them.</li>
       </ul>
       <h3>What we do NOT collect</h3>
@@ -50,7 +49,6 @@ export default function Privacy() {
 
       <h2>3. Third-party services</h2>
       <ul>
-        <li><strong>Anthropic Claude (via Emergent)</strong> — powers the AI Companion. <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noreferrer">Policy</a></li>
         <li><strong>Aladhan API</strong> — daily prayer times. <a href="https://aladhan.com/privacy-policy" target="_blank" rel="noreferrer">Policy</a></li>
         <li><strong>Travelpayouts</strong> — affiliate redirects to Hotellook (hotels), Aviasales (flights), and Yesim (eSIM). <a href="https://www.travelpayouts.com/legal/privacy_policy" target="_blank" rel="noreferrer">Policy</a></li>
         <li><strong>Amazon UK Associates</strong> — affiliate links on shop product pages. <a href="https://www.amazon.co.uk/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ" target="_blank" rel="noreferrer">Policy</a></li>
@@ -65,16 +63,15 @@ export default function Privacy() {
 
       <h2>5. Your rights</h2>
       <ul>
-        <li><strong>Delete all your data</strong> by uninstalling the app (clears all on-device storage).</li>
+        <li><strong>Delete your device preferences</strong> by uninstalling the app (clears all on-device storage).</li>
         <li><strong>Leave a group</strong> any time using the in-app control.</li>
-        <li><strong>Request server-side deletion</strong> by emailing <a href="mailto:Hamada.ahmed26@hotmail.com">Hamada.ahmed26@hotmail.com</a> with your group code. Processed within 30 days.</li>
+        <li><strong>Request server-side deletion</strong> by emailing <a href="mailto:Hamada.ahmed26@hotmail.com">Hamada.ahmed26@hotmail.com</a> to request help. Keep private invitations and membership credentials secret.</li>
       </ul>
       <p>EU / UK residents have full GDPR / UK-GDPR rights (access, rectify, port, restrict). California residents have CCPA rights. Contact us via the email above.</p>
 
       <h2>6. Data retention</h2>
       <ul>
-        <li>AI chat questions — 30 days</li>
-        <li>Group codes &amp; members — 14 days after last activity</li>
+        <li>New family groups close 14 days after creation. The database expiry service removes expired group records.</li>
         <li>GPS coordinates — not stored, discarded after the single request</li>
       </ul>
 

@@ -1,12 +1,14 @@
 // Only approved navigation prompts belong here. Religious recordings require
 // a human recitation review and permission for redistribution before inclusion.
+export const approvedReligiousTracks = Object.freeze({});
 const tracks = Object.freeze({
+  ...approvedReligiousTracks,
   'navigation-en': './audio/navigation-en.mp3',
   'navigation-ar': './audio/navigation-ar.mp3',
 });
 
 export const audioAssets = Object.freeze(Object.values(tracks));
-export function createPlayer(makeAudio = () => new Audio()) {
+export function createPlayer(makeAudio = () => new Audio(), availableTracks = tracks) {
   let media = null;
   let attempt = 0;
   let state = { id: null, status: 'idle' };
@@ -44,12 +46,12 @@ export function createPlayer(makeAudio = () => new Audio()) {
     sync('ended', 'ended', () => node.ended);
     sync('error', 'error');
     node.preload = 'auto';
-    node.src = new URL(tracks[id], import.meta.url).href;
+    node.src = new URL(availableTracks[id], import.meta.url).href;
     return node;
   }
 
   async function play(id = state.id, fromStart = false) {
-    if (!Object.hasOwn(tracks, id)) return false;
+    if (!Object.hasOwn(availableTracks, id)) return false;
     if (id !== state.id || state.status === 'error') stop();
     const request = ++attempt;
     let node;

@@ -1,0 +1,2 @@
+# Test-only, in-memory Mongo adapter
+mongomock-motor==0.0.36

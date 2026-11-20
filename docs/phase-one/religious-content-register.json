@@ -1,0 +1,999 @@
+{
+  "schemaVersion": 1,
+  "scope": "Isolated web companion: displayed stages, quiz keys, recitation cards, counting and help; guidance for cases beyond these entries requires a qualified scholar.",
+  "reviewedFileSha256": {
+    "content.js": "df7e4f36170ac7321a3bd0ea35e9f8274cd0ad5b9ac1a9c957494de1fefc9c5e",
+    "worship.js": "456e6cded4a9dc0e0b9410887cc42584afe67984c319d07e9d35d1f0e4e57d08"
+  },
+  "review": {
+    "editorialSourceCheck": "2026-11-20",
+    "scholarlyStatus": "pending",
+    "scholarlyReviewer": null,
+    "scholarlyApprovalDate": null,
+    "bilingualReviewer": null,
+    "bilingualApprovalDate": null,
+    "approvedRevision": null
+  },
+  "recitations": [
+    {
+      "id": "miqat",
+      "location": "Entering ihram for Umrah",
+      "arabic": "لَبَّيْكَ عُمْرَةً",
+      "transliteration": "Labbayka ʿumratan.",
+      "meaningEn": "I answer Your call for Umrah.",
+      "sources": [
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    },
+    {
+      "id": "talbiyah",
+      "location": "On the way to Tawaf",
+      "arabic": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
+      "transliteration": "Labbayka Allāhumma labbayk. Labbayka lā sharīka laka labbayk. Innal-ḥamda wan-niʿmata laka wal-mulk. Lā sharīka lak.",
+      "meaningEn": "Here I am, O Allah, here I am. Here I am, You have no partner, here I am. All praise, blessing and dominion belong to You. You have no partner.",
+      "sources": [
+        {
+          "reference": "Sahih al-Bukhari 1549",
+          "url": "https://sunnah.com/bukhari:1549",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    },
+    {
+      "id": "haram",
+      "location": "Entering the mosque",
+      "arabic": "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+      "transliteration": "Allāhumma iftaḥ lī abwāba raḥmatik.",
+      "meaningEn": "O Allah, open the doors of Your mercy to me.",
+      "sources": [
+        {
+          "reference": "Sahih Muslim 713a",
+          "url": "https://sunnah.com/muslim:713a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    },
+    {
+      "id": "stone",
+      "location": "In line with the Black Stone",
+      "arabic": "اللَّهُ أَكْبَرُ",
+      "transliteration": "Allāhu akbar.",
+      "meaningEn": "Allah is the Greatest.",
+      "sources": [
+        {
+          "reference": "Sahih al-Bukhari 1613",
+          "url": "https://sunnah.com/bukhari:1613",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    },
+    {
+      "id": "corner",
+      "location": "From the Yemeni Corner to the Black Stone",
+      "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+      "transliteration": "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā ʿadhāban-nār.",
+      "meaningEn": "Our Lord, grant us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",
+      "sources": [
+        {
+          "reference": "Qur’an 2:201",
+          "url": "https://quran.com/2/201",
+          "authority": "Qur’an · al-Baqarah",
+          "grading": null
+        },
+        {
+          "reference": "Sunan Abi Dawud 1892",
+          "url": "https://sunnah.com/abudawud:1892",
+          "authority": "Abu Dawud al-Sijistani",
+          "grading": "Hasan (al-Albani)"
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    },
+    {
+      "id": "opening",
+      "location": "As you approach Safa for the first time",
+      "arabic": "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ",
+      "transliteration": "Innaṣ-Ṣafā wal-Marwata min shaʿāʾirillāh.",
+      "meaningEn": "Indeed, Safa and Marwah are among the sacred symbols of Allah.",
+      "sources": [
+        {
+          "reference": "Qur’an 2:158",
+          "url": "https://quran.com/2/158",
+          "authority": "Qur’an · al-Baqarah",
+          "grading": null
+        },
+        {
+          "reference": "Sahih Muslim 1218a",
+          "url": "https://sunnah.com/muslim:1218a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    },
+    {
+      "id": "begin",
+      "location": "Then say",
+      "arabic": "أَبْدَأُ بِمَا بَدَأَ اللَّهُ بِهِ",
+      "transliteration": "Abdaʾu bimā badaʾa Allāhu bih.",
+      "meaningEn": "I begin with what Allah began with.",
+      "sources": [
+        {
+          "reference": "Sahih Muslim 1218a",
+          "url": "https://sunnah.com/muslim:1218a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    },
+    {
+      "id": "hill",
+      "location": "Remembrance on the hill",
+      "arabic": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
+      "transliteration": "Lā ilāha illallāhu waḥdahu lā sharīka lah. Lahul-mulku wa lahul-ḥamd, wa huwa ʿalā kulli shayʾin qadīr. Lā ilāha illallāhu waḥdah. Anjaza waʿdah, wa naṣara ʿabdah, wa hazamal-aḥzāba waḥdah.",
+      "meaningEn": "Allah alone deserves worship and has no partner. All dominion and praise belong to Him, and He has power over everything. Allah alone deserves worship. He fulfilled His promise, gave victory to His servant and defeated the confederates alone.",
+      "sources": [
+        {
+          "reference": "Sahih Muslim 1218a",
+          "url": "https://sunnah.com/muslim:1218a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      },
+      "audio": {
+        "localApprovedFile": null,
+        "sha256": null,
+        "reciter": null,
+        "qualifiedListener": null,
+        "listeningApprovalDate": null,
+        "rightsEvidence": null,
+        "offlineDistributionApproved": false
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "ihram",
+      "en": {
+        "title": "Prepare for ihram",
+        "body": "Bathe if you can. A man wears two ihram cloths. A woman wears modest clothing and leaves off the niqab and gloves in ihram. Before intending ihram, a man may scent his body, keeping perfume off the cloths. A woman must avoid noticeable perfume when passing men who are not her mahrams. Once in ihram, neither applies fresh perfume.",
+        "question": "When may a man apply perfume to his body?",
+        "answers": [
+          "Before entering ihram",
+          "While still in ihram during Tawaf"
+        ]
+      },
+      "ar": {
+        "title": "الاستعداد للإحرام",
+        "body": "يُستحب الاغتسال. يلبس الرجل إزارًا ورداءً، وتلبس المرأة ثيابها الساترة وتترك النقاب والقفازين في الإحرام. للرجل أن يطيّب بدنه قبل نية الإحرام ويترك ثياب الإحرام بلا طيب. لا تخرج المرأة بطيب يشمّه الرجال غير المحارم. وبعد نية الإحرام يمتنع الرجل والمرأة عن وضع طيب جديد.",
+        "question": "متى يجوز للرجل أن يطيّب بدنه؟",
+        "answers": [
+          "قبل الدخول في الإحرام",
+          "أثناء الطواف وهو مُحرم"
+        ]
+      },
+      "correctAnswerIndex": 0,
+      "sources": [
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Sahih al-Bukhari 1539",
+          "url": "https://sunnah.com/bukhari:1539",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Sahih al-Bukhari 1838",
+          "url": "https://sunnah.com/bukhari:1838",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Sunan an-Nasa’i 5126",
+          "url": "https://sunnah.com/nasai:5126",
+          "authority": "Ahmad al-Nasa’i",
+          "grading": "Hasan (Darussalam, edition displayed)"
+        },
+        {
+          "reference": "Collected Fatwas 10/39",
+          "url": "https://islamqa.info/en/answers/26347",
+          "authority": "Ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Collected Fatwas 22/9",
+          "url": "https://islamqa.info/en/answers/194704",
+          "authority": "Ibn ‘Uthaymin, as quoted",
+          "grading": null
+        },
+        {
+          "reference": "Perfume after entry",
+          "url": "https://islamqa.info/en/answers/109331",
+          "authority": "Standing Committee, including Ibn Baz, ‘Abd al-Razzaq ‘Afifi and ‘Abd Allah ibn Qa‘ud",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "miqat",
+      "en": {
+        "title": "Enter ihram at the Miqat",
+        "body": "The Miqat is the boundary for entering ihram. If travelling towards Makkah for Umrah from outside it, intend in your heart to begin Umrah by the time you reach or pass alongside your route’s Miqat. Say “Labbayka ‘umrah” (I answer Your call for Umrah). If flying, prepare before the crossing. Ask your group guide if your starting point or route is different.",
+        "question": "You are flying in for Umrah. When do you prepare?",
+        "answers": [
+          "Before the plane crosses the Miqat",
+          "Only after reaching your hotel"
+        ]
+      },
+      "ar": {
+        "title": "الإحرام عند الميقات",
+        "body": "الميقات موضع الإحرام. من قصد العمرة قادمًا من خارج المواقيت ينوي بقلبه الدخول في النسك عند ميقاته أو محاذاته، ويقول «لبيك عمرة». من سافر بالطائرة يستعد قبل المحاذاة. إذا اختلف مسارك أو مكان انطلاقك فاسأل مرشد حملتك عن ميقاتك.",
+        "question": "متى يستعد القادم بالطائرة للعمرة؟",
+        "answers": [
+          "قبل محاذاة الميقات",
+          "بعد الوصول إلى الفندق فقط"
+        ]
+      },
+      "correctAnswerIndex": 0,
+      "sources": [
+        {
+          "reference": "Sahih al-Bukhari 1524",
+          "url": "https://sunnah.com/bukhari:1524",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Air travellers crossing the Miqat",
+          "url": "https://islamqa.info/en/answers/132269",
+          "authority": "Islam Question & Answer, quoting Ibn ‘Uthaymin on passing the boundary",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "talbiyah",
+      "en": {
+        "title": "Say the Talbiyah",
+        "body": "Repeat the Talbiyah on your way to the Ka‘bah. Its meaning is “I answer Your call, O Allah. I answer Your call. Here I am. You have no partner. I answer Your call. All praise, blessing and sovereignty belong to You. You have no partner.” Stop the Talbiyah when beginning Tawaf.",
+        "question": "When do you stop the Talbiyah for Umrah?",
+        "answers": [
+          "When beginning Tawaf",
+          "After every journey between Safa and Marwah"
+        ]
+      },
+      "ar": {
+        "title": "التلبية",
+        "body": "أكثِر من التلبية في الطريق إلى البيت. فهي إجابة لنداء الله وإقرار بأن الحمد والنعمة والملك له وحده. اقطع التلبية عند الشروع في الطواف.",
+        "question": "متى يقطع المعتمر التلبية؟",
+        "answers": [
+          "عند الشروع في الطواف",
+          "بعد كل شوط من السعي"
+        ]
+      },
+      "correctAnswerIndex": 0,
+      "sources": [
+        {
+          "reference": "Sahih al-Bukhari 1549",
+          "url": "https://sunnah.com/bukhari:1549",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "haram",
+      "en": {
+        "title": "Enter the Grand Mosque",
+        "body": "Enter with your right foot and ask Allah to open the doors of His mercy to you. Follow the signs and staff directions to the Tawaf area. With family? Agree on a meeting place away from the moving crowd.",
+        "question": "What does the mosque-entry supplication ask for?",
+        "answers": [
+          "Allah’s mercy",
+          "A particular gate number"
+        ]
+      },
+      "ar": {
+        "title": "دخول المسجد الحرام",
+        "body": "ادخل بقدمك اليمنى واسأل الله أن يفتح لك أبواب رحمته. اتبع اللوحات وتعليمات العاملين للوصول إلى المطاف. إن كنت مع أهلك فاتفقوا على مكان للقاء بعيدًا عن مسار الزحام.",
+        "question": "ماذا تسأل الله في دعاء دخول المسجد؟",
+        "answers": [
+          "أن يفتح لك أبواب رحمته",
+          "أن تدخل من باب ذي رقم معين"
+        ]
+      },
+      "correctAnswerIndex": 0,
+      "sources": [
+        {
+          "reference": "Sahih Muslim 713a",
+          "url": "https://sunnah.com/muslim:713a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "tawaf",
+      "en": {
+        "title": "Go around the Ka‘bah",
+        "body": "Begin Tawaf in a state of ritual purity, including wudu. If you are menstruating, wait until your period ends and you have performed ghusl. Begin in line with the Black Stone. Keep the Ka‘bah on your left and complete seven circuits around it, passing outside the low curved wall. Count one circuit each time you return to the starting line. Avoid pushing to touch the Stone. You can make dua in your own words. Afterwards, pray two rak‘ahs behind Maqam Ibrahim if practicable, or elsewhere in the mosque.",
+        "question": "When does one circuit count?",
+        "answers": [
+          "When you return to the Black Stone line",
+          "When you reach the opposite side"
+        ]
+      },
+      "ar": {
+        "title": "الطواف بالكعبة",
+        "body": "ابدأ الطواف على طهارة ووضوء. وتنتظر الحائض حتى تطهر وتغتسل. ابدأ من محاذاة الحجر الأسود واجعل الكعبة عن يسارك. طُف سبعة أشواط من خارج الحِجْر، وهو الجدار المقوّس. كل عودة إلى محاذاة الحجر الأسود تُتمّ شوطًا. تجنّب المزاحمة لاستلامه وادعُ بما تيسّر. بعد الطواف صلِّ ركعتين خلف مقام إبراهيم إن تيسّر، وإلا ففي أي مكان من المسجد.",
+        "question": "متى يكتمل شوط الطواف؟",
+        "answers": [
+          "عند العودة إلى محاذاة الحجر الأسود",
+          "عند الوصول إلى الجهة المقابلة"
+        ]
+      },
+      "correctAnswerIndex": 0,
+      "sources": [
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Sahih Muslim 1218a",
+          "url": "https://sunnah.com/muslim:1218a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Sahih al-Bukhari 305",
+          "url": "https://sunnah.com/bukhari:305",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Circuit outside the Hijr",
+          "url": "https://islamqa.info/en/answers/109275",
+          "authority": "Standing Committee, including Ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "sai",
+      "en": {
+        "title": "Walk between Safa and Marwah",
+        "body": "Begin at Safa. Walk all the way to Marwah for trip one. The return to Safa is trip two. Count each arrival at the opposite end. Trip seven finishes at Marwah. There is no return trip to Safa. At the hills, turn towards the qiblah for remembrance and supplication. Scholars differ about repeating the supplication after the final arrival.",
+        "question": "You have gone from Safa to Marwah and back to Safa. How many trips?",
+        "answers": [
+          "Two",
+          "One"
+        ]
+      },
+      "ar": {
+        "title": "السعي بين الصفا والمروة",
+        "body": "ابدأ بالصفا. وصولك إلى المروة يُتمّ الشوط الأول، ورجوعك إلى الصفا يُتمّ الثاني. احسب شوطًا عند كل وصول إلى الطرف الآخر. ينتهي السابع عند المروة ولا تعود إلى الصفا. يُسن استقبال القبلة للذكر والدعاء على الصفا والمروة. وفي تكرار الدعاء عند ختام السابع خلاف بين أهل العلم.",
+        "question": "ذهبت من الصفا إلى المروة ثم عدت إلى الصفا. كم شوطًا أتممت؟",
+        "answers": [
+          "شوطين",
+          "شوطًا واحدًا"
+        ]
+      },
+      "correctAnswerIndex": 0,
+      "sources": [
+        {
+          "reference": "Qur’an 2:158",
+          "url": "https://quran.com/2/158",
+          "authority": "Qur’an · al-Baqarah",
+          "grading": null
+        },
+        {
+          "reference": "Sahih Muslim 1218a",
+          "url": "https://sunnah.com/muslim:1218a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Views on the final arrival, including Al-Sharh al-Mumti‘ 7/352",
+          "url": "https://islamqa.info/en/answers/617842",
+          "authority": "Ibn Baz and Ibn ‘Uthaymin among the scholars quoted",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "completion",
+      "en": {
+        "title": "Complete your Umrah",
+        "body": "After completing Sa‘i, a man shaves his head or shortens his hair all over. A woman gathers the ends of her hair and trims a small amount, up to a fingertip’s length. This completes the usual Umrah sequence and ends ihram. If you missed a rite or have an unusual circumstance, ask a qualified scholar about your situation.",
+        "question": "What follows the final trip to Marwah?",
+        "answers": [
+          "Shaving or trimming as appropriate",
+          "Another trip back to Safa"
+        ]
+      },
+      "ar": {
+        "title": "إتمام العمرة",
+        "body": "بعد تمام السعي يحلق الرجل رأسه أو يقصّر من جميع شعره. وتجمع المرأة أطراف شعرها وتأخذ منها قدر أنملة فأقلّ. بذلك تتم العمرة ويتحلّل المعتمر من إحرامه إذا أتى بالمناسك. إن فاتك نُسك أو كانت لك حالة خاصة فاسأل أحد أهل العلم عن حالك.",
+        "question": "ماذا يأتي بعد الشوط الأخير عند المروة؟",
+        "answers": [
+          "الحلق أو التقصير بحسب الحال",
+          "شوط آخر للعودة إلى الصفا"
+        ]
+      },
+      "correctAnswerIndex": 0,
+      "sources": [
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Shortening all the hair",
+          "url": "https://islamqa.info/en/answers/110804",
+          "authority": "Ibn Qudamah and the Standing Committee, as quoted",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    }
+  ],
+  "help": [
+    {
+      "id": "count",
+      "en": {
+        "title": "I lost count",
+        "body": "If you tapped the wrong number and know the correct one, correct the counter. If you are genuinely unsure during Tawaf whether you have completed four or five and neither seems more likely, use four. Doubt arising only afterwards is a different case. Ask a qualified scholar if your circumstances differ."
+      },
+      "ar": {
+        "title": "شككت في عدد الأشواط",
+        "body": "إن أخطأت في الضغط وتعرف العدد الصحيح فعدّل العداد. إن شككت أثناء الطواف هل طفت أربعة أم خمسة ولم يترجّح أحدهما فابنِ على الأربعة. أما الشك الذي طرأ بعد الفراغ فله حكم آخر. اسأل أهل العلم إن اختلفت حالك."
+      },
+      "sources": [
+        {
+          "reference": "Doubt during or after Tawaf, including al-Mughni 3/187",
+          "url": "https://islamqa.info/en/answers/171308",
+          "authority": "Ibn Qudamah and discussion of Ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "separated",
+      "en": {
+        "title": "I lost my family",
+        "body": "Move out of the stream of people when safe. Tell uniformed staff the last gate number or landmark you saw and ask for the lost-persons guidance point. If a child or vulnerable adult is missing, alert staff immediately."
+      },
+      "ar": {
+        "title": "افترقت عن أهلي",
+        "body": "ابتعد عن مسار المشاة متى أمكن بأمان. أخبر أحد العاملين بالزي الرسمي بآخر باب أو معلم رأيته واطلب نقطة إرشاد التائهين. إذا فُقد طفل أو شخص يحتاج إلى رعاية فأبلغ العاملين فورًا."
+      },
+      "sources": [
+        {
+          "reference": "Umrah Guide for Domestic Pilgrims, Grand Mosque map legend",
+          "url": "https://haj.gov.sa/-/media/Project/HAJJ/Awareness-Guides/Umrah-Guide-for-Domestic-Pilgrims/EN-Umrah-Guide-for-Domestic-Pilgrims.pdf",
+          "authority": "Saudi Ministry of Hajj and Umrah",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "access",
+      "en": {
+        "title": "I need a wheelchair or lift",
+        "body": "Ask staff for the nearest accessible entrance, lift or wheelchair distribution point. Show them this phrase: «أحتاج إلى كرسي متحرك. أين أقرب نقطة؟» (I need a wheelchair. Where is the nearest service point?)"
+      },
+      "ar": {
+        "title": "أحتاج إلى كرسي متحرك أو مصعد",
+        "body": "اطلب من العاملين إرشادك إلى أقرب مدخل مهيّأ أو مصعد أو نقطة توزيع للكراسي المتحركة. يمكنك أن تقول: «أحتاج إلى كرسي متحرك. أين أقرب نقطة؟»"
+      },
+      "sources": [
+        {
+          "reference": "Umrah Guide for Domestic Pilgrims, Grand Mosque map legend",
+          "url": "https://haj.gov.sa/-/media/Project/HAJJ/Awareness-Guides/Umrah-Guide-for-Domestic-Pilgrims/EN-Umrah-Guide-for-Domestic-Pilgrims.pdf",
+          "authority": "Saudi Ministry of Hajj and Umrah",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "religious-help",
+      "en": {
+        "title": "My circumstances are different",
+        "body": "If you passed the Miqat, missed part of a rite, or need guidance about menstruation or illness, tell a qualified scholar where you were, what you intended and which acts you completed. Ask mosque staff to direct you to a religious guidance desk."
+      },
+      "ar": {
+        "title": "لديّ حالة خاصة",
+        "body": "إذا تجاوزت الميقات، أو فاتك شيء من النسك، أو كان سؤالك عن الحيض أو المرض، فبيّن لأحد أهل العلم أين كنت وماذا نويت وما الذي أتممته. اطلب من العاملين إرشادك إلى موضع الإفتاء."
+      },
+      "sources": [
+        {
+          "reference": "Hidaya centre and question-and-answer point, January 2026",
+          "url": "https://www.spa.gov.sa/en/N2494795",
+          "authority": "Saudi Press Agency",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    }
+  ],
+  "scopeNotes": [
+    {
+      "id": "perfume",
+      "disposition": "Men may perfume the body before entry, keeping scent off ihram cloths. A woman avoids perceptible fragrance among non-mahram men. Neither applies fresh perfume after entry. Continuing traces from permissible pre-entry application are a different matter.",
+      "sources": [
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Sahih al-Bukhari 1539",
+          "url": "https://sunnah.com/bukhari:1539",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Sahih al-Bukhari 1838",
+          "url": "https://sunnah.com/bukhari:1838",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Sunan an-Nasa’i 5126",
+          "url": "https://sunnah.com/nasai:5126",
+          "authority": "Ahmad al-Nasa’i",
+          "grading": "Hasan (Darussalam, edition displayed)"
+        },
+        {
+          "reference": "Collected Fatwas 10/39",
+          "url": "https://islamqa.info/en/answers/26347",
+          "authority": "Ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Collected Fatwas 22/9",
+          "url": "https://islamqa.info/en/answers/194704",
+          "authority": "Ibn ‘Uthaymin, as quoted",
+          "grading": null
+        },
+        {
+          "reference": "Perfume after entry",
+          "url": "https://islamqa.info/en/answers/109331",
+          "authority": "Standing Committee, including Ibn Baz, ‘Abd al-Razzaq ‘Afifi and ‘Abd Allah ibn Qa‘ud",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "grooming",
+      "disposition": "No blanket instruction to shave or cut nails for entry. Ordinary pre-entry grooming is distinct from removing hair or cutting nails during ihram. Illness, necessary treatment and compensation require individual advice. An intended udhiyah in early Dhu al-Hijjah can affect the pre-entry guidance.",
+      "sources": [
+        {
+          "reference": "Qur’an 2:196",
+          "url": "https://quran.com/2/196",
+          "authority": "Qur’an · al-Baqarah",
+          "grading": null
+        },
+        {
+          "reference": "Fatawa al-Lajnah 11/178",
+          "url": "https://islamqa.info/en/answers/26715",
+          "authority": "Permanent Committee for Scholarly Research and Ifta",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "seventh-arrival",
+      "disposition": "Sa‘i ends upon reaching Marwah on the seventh one-way trip. No eighth trip. Ibn Baz favours supplication at that arrival; Ibn ‘Uthaymin does not prescribe repeating the hilltop formula at completion. The preview permits reading it without requiring it.",
+      "sources": [
+        {
+          "reference": "Sahih Muslim 1218a",
+          "url": "https://sunnah.com/muslim:1218a",
+          "authority": "Muslim ibn al-Hajjaj",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Views on the final arrival, including Al-Sharh al-Mumti‘ 7/352",
+          "url": "https://islamqa.info/en/answers/617842",
+          "authority": "Ibn Baz and Ibn ‘Uthaymin among the scholars quoted",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "purification",
+      "disposition": "The Tawaf card follows Ibn Baz on ritual purity. Menstruation is distinguished from loss of wudu. Disruption, illness, imminent departure and exceptional circumstances require individual advice.",
+      "sources": [
+        {
+          "reference": "Sahih al-Bukhari 305",
+          "url": "https://sunnah.com/bukhari:305",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "counter",
+      "disposition": "Manual device count is a memory aid. Known entry error, balanced doubt during Tawaf and doubt after completion are different. No automatic legal response to uncertainty.",
+      "sources": [
+        {
+          "reference": "Doubt during or after Tawaf, including al-Mughni 3/187",
+          "url": "https://islamqa.info/en/answers/171308",
+          "authority": "Ibn Qudamah and discussion of Ibn Baz",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    },
+    {
+      "id": "individual-cases",
+      "disposition": "Travel from inside the Miqat, an already missed Miqat, incomplete rites, illness, layered hair or unusual circumstances go to a qualified scholar. Personal exemptions and compensation are not resolved by the interface.",
+      "sources": [
+        {
+          "reference": "Sahih al-Bukhari 1524",
+          "url": "https://sunnah.com/bukhari:1524",
+          "authority": "Muhammad ibn Ismail al-Bukhari",
+          "grading": "Sahih collection"
+        },
+        {
+          "reference": "Description of Umrah, Collected Fatwas 17/425",
+          "url": "https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf",
+          "authority": "Abd al-Aziz ibn Baz",
+          "grading": null
+        },
+        {
+          "reference": "Qur’an 2:196",
+          "url": "https://quran.com/2/196",
+          "authority": "Qur’an · al-Baqarah",
+          "grading": null
+        }
+      ],
+      "review": {
+        "editorialSourceCheck": "2026-11-20",
+        "scholarlyStatus": "pending",
+        "scholarlyReviewer": null,
+        "scholarlyApprovalDate": null,
+        "bilingualReviewer": null,
+        "bilingualApprovalDate": null,
+        "approvedRevision": null
+      }
+    }
+  ],
+  "releaseCriteria": [
+    "A named qualified scholar approves the specific English and Arabic entries and the exact revision.",
+    "An Arabic/English editor reviews the meaning, pronunciation aids, diacritics and novice wording.",
+    "Each distributed recording matches its Arabic script and rights, has a named qualified listener and signed approval tied to its final checksum.",
+    "For edited source or media, recheck every affected entry. Verify online source access separately from offline availability.",
+    "Complete independent inventory and review of other religious content before re-enabling legacy routes."
+  ]
+}

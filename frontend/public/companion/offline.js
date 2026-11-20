@@ -1,5 +1,5 @@
-const cacheName='pilgrim-companion-'+new URL(self.registration.scope).pathname+'-v1.1.0';
-const assets=['index.html','style.css','guide.js','worship.js','content.js','audio.js','hero.jpg','audio/navigation-en.mp3','audio/navigation-ar.mp3'];
+const cacheName='pilgrim-companion-'+new URL(self.registration.scope).pathname+'-v1.2.0';
+const assets=['index.html','style.css','guide.js','worship.js','locales/languages.js','locales/review-packs.js','recitations.js','journey-records.js','prayer-clock.js','pilgrim-tools.js','content.js','audio.js','hero.jpg','audio/navigation-en.mp3','audio/navigation-ar.mp3'];
 const scoped=name=>new URL(name,self.registration.scope).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{
  const cache=await caches.open(cacheName);
