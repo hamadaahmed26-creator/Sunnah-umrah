@@ -1,0 +1,42 @@
+{
+  "locale": "id",
+  "status": "draft",
+  "nativeReviewer": null,
+  "scholarlyReviewer": null,
+  "stages": {},
+  "help": {},
+  "recitations": {
+    "miqat": {
+      "meaning": "Aku memenuhi panggilan-Mu untuk berumrah.",
+      "pronunciation": null
+    },
+    "talbiyah": {
+      "meaning": "Aku memenuhi panggilan-Mu, ya Allah, aku memenuhi panggilan-Mu. Aku memenuhi panggilan-Mu. Tiada sekutu bagi-Mu. Aku memenuhi panggilan-Mu. Sesungguhnya segala puji, nikmat dan kerajaan adalah milik-Mu. Tiada sekutu bagi-Mu.",
+      "pronunciation": null
+    },
+    "haram": {
+      "meaning": "Ya Allah, bukakanlah bagiku pintu-pintu rahmat-Mu.",
+      "pronunciation": null
+    },
+    "stone": {
+      "meaning": "Allah Mahabesar.",
+      "pronunciation": null
+    },
+    "corner": {
+      "meaning": "Wahai Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, serta lindungilah kami dari azab neraka.",
+      "pronunciation": null
+    },
+    "opening": {
+      "meaning": "Sesungguhnya Safa dan Marwah termasuk syiar-syiar Allah.",
+      "pronunciation": null
+    },
+    "begin": {
+      "meaning": "Aku memulai dengan apa yang Allah sebutkan terlebih dahulu.",
+      "pronunciation": null
+    },
+    "hill": {
+      "meaning": "Tiada sesembahan yang berhak disembah selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan segala puji, dan Dia Mahakuasa atas segala sesuatu. Tiada sesembahan yang berhak disembah selain Allah semata. Dia menepati janji-Nya, memenangkan hamba-Nya dan mengalahkan sendiri pasukan yang bersekutu.",
+      "pronunciation": null
+    }
+  }
+}

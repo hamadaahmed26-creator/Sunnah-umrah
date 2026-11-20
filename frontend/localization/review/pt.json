@@ -1,0 +1,42 @@
+{
+  "locale": "pt",
+  "status": "draft",
+  "nativeReviewer": null,
+  "scholarlyReviewer": null,
+  "stages": {},
+  "help": {},
+  "recitations": {
+    "miqat": {
+      "meaning": "Respondo ao Teu chamamento para realizar a umra.",
+      "pronunciation": null
+    },
+    "talbiyah": {
+      "meaning": "Aqui estou, ó Allah, aqui estou. Aqui estou, Tu não tens associado algum, aqui estou. A Ti pertencem o louvor, as bênçãos e o domínio. Tu não tens associado algum.",
+      "pronunciation": null
+    },
+    "haram": {
+      "meaning": "Ó Allah, abre-me as portas da Tua misericórdia.",
+      "pronunciation": null
+    },
+    "stone": {
+      "meaning": "Allah é o Maior.",
+      "pronunciation": null
+    },
+    "corner": {
+      "meaning": "Senhor nosso, concede-nos o bem nesta vida e o bem na outra vida e protege-nos do castigo do Fogo.",
+      "pronunciation": null
+    },
+    "opening": {
+      "meaning": "De facto, Safa e Marwa estão entre os símbolos sagrados de Allah.",
+      "pronunciation": null
+    },
+    "begin": {
+      "meaning": "Começo por aquilo por que Allah começou.",
+      "pronunciation": null
+    },
+    "hill": {
+      "meaning": "Ninguém merece ser adorado salvo Allah, o Único, sem associado. A Ele pertencem o domínio e o louvor, e Ele tem poder sobre todas as coisas. Ninguém merece ser adorado salvo Allah, o Único. Ele cumpriu a Sua promessa, concedeu a vitória ao Seu servo e derrotou sozinho os confederados.",
+      "pronunciation": null
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "locale": "it",
+  "status": "draft",
+  "nativeReviewer": null,
+  "scholarlyReviewer": null,
+  "stages": {},
+  "help": {},
+  "recitations": {
+    "miqat": {
+      "meaning": "Rispondo alla Tua chiamata per compiere la ʿumra.",
+      "pronunciation": null
+    },
+    "talbiyah": {
+      "meaning": "Eccomi, o Allah, eccomi. Eccomi, Tu non hai associati, eccomi. A Te appartengono la lode, i benefici e il dominio. Tu non hai associati.",
+      "pronunciation": null
+    },
+    "haram": {
+      "meaning": "O Allah, aprimi le porte della Tua misericordia.",
+      "pronunciation": null
+    },
+    "stone": {
+      "meaning": "Allah è il più grande.",
+      "pronunciation": null
+    },
+    "corner": {
+      "meaning": "Signore nostro, donaci il bene in questa vita e il bene nell’altra vita, e proteggici dal castigo del Fuoco.",
+      "pronunciation": null
+    },
+    "opening": {
+      "meaning": "In verità Safa e Marwa sono tra i simboli sacri di Allah.",
+      "pronunciation": null
+    },
+    "begin": {
+      "meaning": "Comincio da ciò da cui Allah ha cominciato.",
+      "pronunciation": null
+    },
+    "hill": {
+      "meaning": "Nessuno merita di essere adorato tranne Allah, unico e senza associati. A Lui appartengono il dominio e la lode, ed Egli ha potere su ogni cosa. Nessuno merita di essere adorato tranne Allah soltanto. Egli ha mantenuto la Sua promessa, ha concesso la vittoria al Suo servo e ha sconfitto da solo i confederati.",
+      "pronunciation": null
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "locale": "so",
+  "status": "draft",
+  "nativeReviewer": null,
+  "scholarlyReviewer": null,
+  "stages": {},
+  "help": {},
+  "recitations": {
+    "miqat": {
+      "meaning": "Waxaan kaaga soo jawaabay baaqaaga anigoo cumro gudanaya.",
+      "pronunciation": null
+    },
+    "talbiyah": {
+      "meaning": "Ilaahayow, waan kuu jawaabay, waan kuu jawaabay. Waan kuu jawaabay, shariik ma lihid, waan kuu jawaabay. Mahadda oo dhan, nicmada iyo boqortooyaduba adigay kuu sugnaadeen. Shariik ma lihid.",
+      "pronunciation": null
+    },
+    "haram": {
+      "meaning": "Ilaahayow, ii fur albaabada naxariistaada.",
+      "pronunciation": null
+    },
+    "stone": {
+      "meaning": "Alle ayaa ugu weyn.",
+      "pronunciation": null
+    },
+    "corner": {
+      "meaning": "Rabbiyow, adduunka nagu sii wanaag, aakhirana nagu sii wanaag, nagana ilaali cadaabka Naarta.",
+      "pronunciation": null
+    },
+    "opening": {
+      "meaning": "Safa iyo Marwa waxay ka mid yihiin calaamooyinka cibaadada Alle.",
+      "pronunciation": null
+    },
+    "begin": {
+      "meaning": "Waxaan ku bilaabayaa wixii Alle ku bilaabay.",
+      "pronunciation": null
+    },
+    "hill": {
+      "meaning": "Ma jiro ilaah xaq lagu caabudo oo aan Alle ahayn. Waa keli, shariikna ma laha. Boqortooyada iyo mahadda isagaa leh, wax kastana wuu karaa. Ma jiro ilaah xaq lagu caabudo oo aan Alle oo keliya ahayn. Wuxuu oofiyey ballankiisii, addoonkiisii guul ayuu siiyey, xulafadiina isagaa keligiis jebiyey.",
+      "pronunciation": null
+    }
+  }
+}

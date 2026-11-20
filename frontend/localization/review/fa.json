@@ -1,0 +1,42 @@
+{
+  "locale": "fa",
+  "status": "draft",
+  "nativeReviewer": null,
+  "scholarlyReviewer": null,
+  "stages": {},
+  "help": {},
+  "recitations": {
+    "miqat": {
+      "meaning": "برای عمره دعوتت را اجابت می‌کنم.",
+      "pronunciation": null
+    },
+    "talbiyah": {
+      "meaning": "لبیک، ای الله، لبیک. لبیک، تو را شریکی نیست، لبیک. همانا ستایش و نعمت و فرمانروایی از آنِ توست. تو را شریکی نیست.",
+      "pronunciation": null
+    },
+    "haram": {
+      "meaning": "ای الله، درهای رحمتت را به رویم بگشا.",
+      "pronunciation": null
+    },
+    "stone": {
+      "meaning": "الله بزرگ‌تر است.",
+      "pronunciation": null
+    },
+    "corner": {
+      "meaning": "پروردگارا، در دنیا به ما نیکی عطا کن و در آخرت نیز به ما نیکی عطا کن و ما را از عذاب آتش نگه دار.",
+      "pronunciation": null
+    },
+    "opening": {
+      "meaning": "به‌راستی صفا و مروه از شعائر الله‌اند.",
+      "pronunciation": null
+    },
+    "begin": {
+      "meaning": "از همان چیزی آغاز می‌کنم که الله با آن آغاز کرد.",
+      "pronunciation": null
+    },
+    "hill": {
+      "meaning": "هیچ معبود برحقی جز الله نیست؛ او یگانه است و شریکی ندارد. فرمانروایی و ستایش از آنِ اوست و بر هر چیزی تواناست. هیچ معبود برحقی جز الله یگانه نیست. او به وعده‌اش وفا کرد، بنده‌اش را پیروز گرداند و به‌تنهایی گروه‌های هم‌پیمان را شکست داد.",
+      "pronunciation": null
+    }
+  }
+}
