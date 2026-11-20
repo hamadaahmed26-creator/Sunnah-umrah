@@ -2,22 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { ArrowLeft, Compass, MapPin, Navigation, Loader2, AlertTriangle, RefreshCcw } from "lucide-react";
+import { ArrowLeft, MapPin, Loader2, AlertTriangle, RefreshCcw } from "lucide-react";
 import { LangContext } from "../components/Layout";
 import { useT } from "../lib/i18n";
 import WalkRouteMap from "../components/WalkRouteMap";
 import { describeGeoError } from "../lib/locationErrors";
-import { saveLastKnownGeo } from "../lib/prayerPreferences";
+import { bearing, haversine, compass8Localised } from "../lib/geo";
 import { getCurrentPosition } from "../lib/geolocation";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
-
-function bearingLabel(deg, lang) {
-  const dirs_en = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-  const dirs_ar = ["ش", "شش", "ش‎ق", "ج‎ق", "ج", "ج‎غ", "غ", "ش‎غ"];
-  const d = (lang === "ar" ? dirs_ar : dirs_en)[Math.round(deg / 45) % 8];
-  return `${Math.round(deg)}° ${d}`;
-}
+const API = `${process.env.REACT_APP_BACKEND_URL || ""}/api`;
 
 export default function Lost() {
   const { lang } = React.useContext(LangContext);
@@ -26,18 +19,28 @@ export default function Lost() {
   const [errInfo, setErrInfo] = React.useState(null);
   const [coords, setCoords] = React.useState(null);
   const [data, setData] = React.useState(null);
-  const [heading, setHeading] = React.useState(0);
+  const [shareWithRouter, setShareWithRouter] = React.useState(false);
 
   const locate = async () => {
     setLoading(true);
     setErrInfo(null);
     try {
-      const { lat, lng } = await getCurrentPosition({ timeoutMs: 12000 });
+      const { lat, lng, accuracy } = await getCurrentPosition({ timeoutMs: 12000 });
       setCoords({ lat, lng });
-      saveLastKnownGeo({ lat, lng });
+      if (!Number.isFinite(accuracy) || accuracy > 100) {
+        setErrInfo({title:isAr ? "دقة الموقع غير كافية" : "Location is too uncertain",
+          message:isAr ? "تحقّق من رقم الباب أو اسأل موظفي الحرم." : "Check a posted gate number or ask mosque staff."});
+        setLoading(false);
+        return;
+      }
       try {
-        const res = await axios.post(`${API}/gates/nearest`, { lat, lng });
-        setData(res.data);
+        const res = await axios.get(`${API}/gates`, {timeout:10000});
+        const ranked = res.data.filter(g => Number.isFinite(g.lat) && Number.isFinite(g.lng)).map(gate => ({
+          gate, distance_km:haversine(lat,lng,gate.lat,gate.lng)/1000,
+          bearing_deg:bearing(lat,lng,gate.lat,gate.lng)
+        })).sort((a,b) => a.distance_km-b.distance_km);
+        if (!ranked.length) throw new Error("No mapped gates");
+        setData({...ranked[0],accuracy,others:ranked.slice(1,4)});
       } catch (e) {
         setErrInfo({
           title: lang === "ar" ? "خطأ في الخادم" : "Server error",
@@ -53,18 +56,7 @@ export default function Lost() {
     setLoading(false);
   };
 
-  React.useEffect(() => {
-    const onOrient = (e) => {
-      // alpha: rotation around z-axis (0..360)
-      if (typeof e.alpha === "number") setHeading(e.alpha);
-    };
-    window.addEventListener("deviceorientation", onOrient, true);
-    return () => window.removeEventListener("deviceorientation", onOrient, true);
-  }, []);
-
   const isAr = lang === "ar";
-  const targetBearing = data?.bearing_deg ?? 0;
-  const arrowAngle = (targetBearing - heading + 360) % 360;
 
   // Native-maps fallback (small secondary link only — never the primary CTA)
   const openExternalMaps = () => {
@@ -86,12 +78,12 @@ export default function Lost() {
         <div>
           <p className="text-xs uppercase tracking-[0.22em] text-[#8B4540]">{t("lost")}</p>
           <h1 className="mt-2 text-[28px] font-medium tracking-tight text-[#1C1D1B]">
-            {isAr ? "اعثر على أقرب باب" : "Find your nearest gate"}
+            {isAr ? "ابحث عن باب على الخريطة" : "Find a mapped gate"}
           </h1>
           <p className="mt-2 text-[14px] text-[#5C5D58] max-w-[34ch]">
             {isAr
-              ? "اضغط الزرّ ليحدّد الـ GPS أقرب باب من المسجد الحرام إليك ويُريك المسار سيرًا."
-              : "Tap the button to use GPS, find the nearest Bab (gate) of Masjid al-Haram, and get walking directions in-app."}
+              ? "اعرض المسافة التقريبية بخط مستقيم إلى الأبواب المسجّلة. اتبع اللوحات وإرشادات الموظفين."
+              : "Compare approximate straight-line distances to mapped gates. Follow posted signs and staff directions."}
           </p>
         </div>
       </div>
@@ -168,7 +160,7 @@ export default function Lost() {
           className="mt-6 rounded-3xl border border-[#E8E5DD] bg-white p-6"
           data-testid="nearest-gate-card"
         >
-          <div className="text-[11px] uppercase tracking-[0.22em] text-[#B3884D]">{t("nearestGate")}</div>
+          <div className="text-[11px] uppercase tracking-[0.22em] text-[#B3884D]">{isAr ? "باب على الخريطة" : "Mapped gate"}</div>
           <div className="mt-2 text-[22px] font-medium text-[#1C1D1B] leading-tight" data-testid="nearest-gate-name">
             {isAr ? data.gate.name_ar : data.gate.name_en}
           </div>
@@ -187,30 +179,16 @@ export default function Lost() {
             <div className="rounded-2xl bg-[#F8F6F0] border border-[#E8E5DD] p-4">
               <div className="text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">{t("bearing")}</div>
               <div className="mt-1 text-2xl font-light text-[#1C1D1B] tabular-nums">
-                {bearingLabel(data.bearing_deg, lang)}
+                {Math.round(data.bearing_deg)}° {compass8Localised(data.bearing_deg,isAr)}
               </div>
             </div>
           </div>
 
-          <div className="mt-7 flex justify-center" style={{ direction: "ltr" }}>
-            <div className="relative w-44 h-44 rounded-full border border-[#E8E5DD] grid place-items-center bg-[#F8F6F0]">
-              <div className="absolute top-2 text-[10px] uppercase tracking-[0.22em] text-[#8E8F8A]">N</div>
-              <motion.div
-                className="absolute inset-0 grid place-items-center"
-                animate={{ rotate: arrowAngle }}
-                transition={{ type: "spring", stiffness: 90, damping: 18 }}
-              >
-                <Navigation className="w-12 h-12 text-[#2A5A4A]" strokeWidth={2.2} fill="#2A5A4A" />
-              </motion.div>
-              <Compass className="absolute w-44 h-44 text-[#E8E5DD]" strokeWidth={1} />
-            </div>
-          </div>
-          <p className="mt-3 text-center text-xs text-[#8E8F8A]">
-            {isAr ? "وجّه هاتفك في اتجاه السهم الأخضر" : "Point your phone toward the green arrow"}
-          </p>
-
-          {/* In-app walking-route map with turn-by-turn (OSRM, no Google) — primary action */}
-          {coords && (
+          <p>GPS ±{Math.round(data.accuracy)} m</p>
+          {coords && !shareWithRouter && <button onClick={() => setShareWithRouter(true)}>
+            {isAr ? "شارك موقعك مع مزوّد الخرائط لعرض مسار تقريبي" : "Share my location with the map provider to see an estimated route"}
+          </button>}
+          {coords && shareWithRouter && (
             <div className="mt-6" data-testid="lost-route-map">
               <WalkRouteMap
                 from={coords}
@@ -248,6 +226,7 @@ export default function Lost() {
               onClick={() => {
                 setData(null);
                 setCoords(null);
+                setShareWithRouter(false);
                 setErrInfo(null);
               }}
               className="text-[11px] text-[#8E8F8A] hover:text-[#1C1D1B] inline-flex items-center gap-1 tap-pulse"

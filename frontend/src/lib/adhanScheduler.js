@@ -6,6 +6,8 @@ const FIRED_KEY = "umrah_adhan_fired"; // {Fajr: '2026-05-01', ...} prevent doub
 
 
 
+export const PRAYERS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+
 export const DEFAULT_SETTINGS = {
   enabled: false, // OFF by default — user opts in
   prayers: { Fajr: true, Dhuhr: true, Asr: true, Maghrib: true, Isha: true },
