@@ -1,0 +1,6 @@
+Haram street and building extract © OpenStreetMap contributors, ODbL 1.0.
+https://www.openstreetmap.org/copyright
+Source https://api.openstreetmap.org/api/0.6/map?bbox=39.8205,21.418,39.831,21.427
+Extracted 20 November 2026. Local database available as haram.json under the ODbL.
+Gate points are the existing project's approximate reference locations. Current access, levels and closures require on-site confirmation.
+Leaflet 1.9.4 uses the BSD 2-Clause license. See LICENSE.
