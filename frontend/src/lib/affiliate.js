@@ -54,7 +54,7 @@ export function aviasalesTo(destIata, origIata = "LON") {
 
 // ─── eSIM — Yesim (Travelpayouts partner; user already connected this offer)
 export function yesimSaudi() {
-  return withMarker("https://yesim.tech/");
+  return "https://yesim.app/country/saudi-arabia/";
 }
 
 // ─── AMAZON UK — search-based affiliate links

@@ -65,9 +65,12 @@ export async function getCurrentPosition({ timeoutMs = 12000 } = {}) {
 export function watchPosition(cb, errCb) {
   if (isNative()) {
     let watchId = null;
+    let stopped = false;
+    const clear = id => CapGeo.clearWatch({ id }).catch(error => console.warn("Could not clear location watch", error));
     CapGeo.watchPosition(
       { enableHighAccuracy: true, timeout: 12000 },
       (pos, err) => {
+        if (stopped) return;
         if (err) {
           errCb?.({ code: 2, message: err.message || "Watch error" });
           return;
@@ -80,11 +83,12 @@ export function watchPosition(cb, errCb) {
           });
         }
       }
-    ).then((id) => { watchId = id; }).catch((e) => {
+    ).then((id) => { if (stopped) clear(id); else watchId = id; }).catch((e) => {
       errCb?.({ code: 1, message: e?.message || "Watch failed" });
     });
     return () => {
-      if (watchId != null) CapGeo.clearWatch({ id: watchId }).catch(() => {});
+      stopped = true;
+      if (watchId != null) clear(watchId);
     };
   }
   if (typeof navigator === "undefined" || !navigator.geolocation) {

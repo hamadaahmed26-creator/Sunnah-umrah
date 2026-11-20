@@ -6,12 +6,11 @@ import os
 import logging
 import math
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
 from emergentintegrations.payments.stripe.checkout import (
     StripeCheckout,
     CheckoutSessionRequest,
@@ -26,7 +25,6 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY', '')
 
 # Fixed Sadaqah amounts (USD). Backend-controlled to prevent price tampering.
@@ -127,26 +125,6 @@ def _rate_check(bucket_key: str, ip: str, kind: str):
 
 
 # ---------- Models ----------
-class ChatRequest(BaseModel):
-    session_id: str = Field(min_length=1, max_length=100)
-    message: str = Field(min_length=1, max_length=2000)
-    language: Optional[str] = Field("en", pattern="^(en|ar)$")
-
-
-class ChatMessage(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    session_id: str
-    role: str  # "user" or "assistant"
-    content: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-
-class ChatResponse(BaseModel):
-    session_id: str
-    reply: str
-
-
 class GateOut(BaseModel):
     id: int
     name_en: str
@@ -220,65 +198,6 @@ async def nearest_gate(req: NearestGateRequest):
         bearing_deg=round(nearest["bearing_deg"], 1),
         others=others,
     )
-
-
-@api_router.post("/chat", response_model=ChatResponse)
-async def chat(req: ChatRequest, http_request: Request):
-    if not EMERGENT_LLM_KEY:
-        raise HTTPException(status_code=500, detail="LLM key not configured")
-
-    # Per-IP rate-limit — both 1-minute burst and 1-hour sustained caps so a
-    # malicious actor can't drain LLM credits with a tight loop or a slow drip.
-    ip = _client_ip(http_request)
-    _rate_check("chat_minute", ip, "chat")
-    _rate_check("chat_hour", ip, "chat_hour")
-
-    lang_instr = (
-        "Respond primarily in clear Arabic (Modern Standard) using authentic Islamic etiquette. Cite source briefly when applicable."
-        if req.language == "ar"
-        else "Respond in clear, warm English with brief Arabic transliteration where appropriate."
-    )
-
-    system_message = (
-        "You are an Umrah & Hajj companion grounded in the Sunnah of Prophet Muhammad ﷺ. "
-        "You answer questions about Umrah rituals (Ihram, Tawaf, Sa'i, Halq/Taqsir), duas, fiqh according to the four mainstream Sunni schools, "
-        "etiquettes inside Masjid al-Haram and Madinah, and practical pilgrim concerns (lost items, finding gates, health). "
-        "Always remind users to consult a qualified scholar for binding rulings. Keep answers concise (3-6 short paragraphs), kind, and structured. "
-        f"{lang_instr}"
-    )
-
-    try:
-        llm = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=req.session_id,
-            system_message=system_message,
-        ).with_model("anthropic", "claude-sonnet-4-5-20250929")
-
-        # persist history before-call so LlmChat session memory + DB stay aligned
-        # save user msg
-        user_doc = ChatMessage(session_id=req.session_id, role="user", content=req.message).model_dump()
-        user_doc["timestamp"] = user_doc["timestamp"].isoformat()
-        await db.chat_messages.insert_one(user_doc)
-
-        reply = await llm.send_message(UserMessage(text=req.message))
-
-        asst_doc = ChatMessage(session_id=req.session_id, role="assistant", content=reply).model_dump()
-        asst_doc["timestamp"] = asst_doc["timestamp"].isoformat()
-        await db.chat_messages.insert_one(asst_doc)
-
-        return ChatResponse(session_id=req.session_id, reply=reply)
-    except Exception as e:
-        logging.exception("chat error")
-        raise HTTPException(status_code=500, detail=f"Chat failed: {e}")
-
-
-@api_router.get("/chat/{session_id}/messages", response_model=List[ChatMessage])
-async def get_chat_messages(session_id: str):
-    docs = await db.chat_messages.find({"session_id": session_id}, {"_id": 0}).sort("timestamp", 1).to_list(500)
-    for d in docs:
-        if isinstance(d.get("timestamp"), str):
-            d["timestamp"] = datetime.fromisoformat(d["timestamp"])
-    return docs
 
 
 @api_router.put("/progress")

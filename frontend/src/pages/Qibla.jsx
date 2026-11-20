@@ -17,6 +17,7 @@ export default function Qibla() {
   const [geoErr, setGeoErr] = React.useState("");
   const [geoDenied, setGeoDenied] = React.useState(false); // permission was explicitly denied
   const [geoLoading, setGeoLoading] = React.useState(false);
+  const listenerCleanup = React.useRef(() => {});
   const [heading, setHeading] = React.useState(null); // device heading (deg, 0=N)
   const [needsPermission, setNeedsPermission] = React.useState(false);
   const [orientationErr, setOrientationErr] = React.useState("");
@@ -85,12 +86,17 @@ export default function Qibla() {
       // iOS: webkitCompassHeading is true compass heading (0 = N).
       // Android: alpha goes 0–360 but is opposite direction; convert: 360 - alpha
       let h = null;
-      if (typeof e.webkitCompassHeading === "number") {
+      if (Number.isFinite(e.webkitCompassHeading) && e.webkitCompassHeading >= 0) {
         h = e.webkitCompassHeading;
-      } else if (typeof e.alpha === "number") {
+      } else if ((e.absolute || e.type === "deviceorientationabsolute") && Number.isFinite(e.alpha)) {
         h = 360 - e.alpha;
       }
       if (h != null) setHeading(h);
+    };
+    listenerCleanup.current();
+    listenerCleanup.current = () => {
+      window.removeEventListener("deviceorientationabsolute", handler, true);
+      window.removeEventListener("deviceorientation", handler, true);
     };
     window.addEventListener("deviceorientationabsolute", handler, true);
     window.addEventListener("deviceorientation", handler, true);
@@ -104,6 +110,7 @@ export default function Qibla() {
     } else {
       startOrientation();
     }
+    return () => listenerCleanup.current();
   }, [startOrientation]);
 
   // Bearing from user → Ka'bah (true bearing, 0 = N)
@@ -115,7 +122,7 @@ export default function Qibla() {
     ? (qiblaBearing - heading + 360) % 360
     : qiblaBearing;
 
-  const aligned = needleAngle != null && (needleAngle < 5 || needleAngle > 355);
+  const aligned = heading != null && needleAngle != null && (needleAngle < 5 || needleAngle > 355);
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="qibla-page">

@@ -15,7 +15,6 @@ import {
 import { LangContext } from "../components/Layout";
 import { TOUR_STEPS } from "../lib/tourSteps";
 import TourScene from "../components/TourScene";
-import AskHelper from "../components/AskHelper";
 import TawafFlow from "../components/TawafFlow";
 import SaiFlow from "../components/SaiFlow";
 import GlossarySheet from "../components/GlossarySheet";
@@ -113,11 +112,6 @@ export default function Tour() {
 
   React.useEffect(() => {
     localStorage.setItem("umrah_tour_step", String(idx));
-    // Reset lap/trip whenever the user (re)enters a flow step from outside
-    const cur = TOUR_STEPS[idx];
-    if (cur?.scene === "tawaf-flow" && lap >= 7) setLap(0);
-    if (cur?.scene === "sai-flow" && trip >= 7) setTrip(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx]);
   React.useEffect(() => {
     localStorage.setItem("umrah_tawaf_count", String(lap));
@@ -679,7 +673,6 @@ export default function Tour() {
       )}
 
       {/* Floating "Ask the Companion" button — context-aware */}
-      <AskHelper stepLabel={isAr ? step.title_ar : step.title_en} lowerPosition={isFlowStep} />
 
       {/* Glossary bottom-sheet — plain-English definitions of Arabic terms */}
       <GlossarySheet

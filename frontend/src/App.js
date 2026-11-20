@@ -3,9 +3,9 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout, { LangProvider } from "./components/Layout";
 import InstallPrompt from "./components/InstallPrompt";
-import Tour from "./pages/Tour";
+
 import Lost from "./pages/Lost";
-import Chat from "./pages/Chat";
+
 import Group from "./pages/Group";
 import Places from "./pages/Places";
 import PlaceDetail from "./pages/PlaceDetail";
@@ -17,7 +17,7 @@ import Privacy from "./pages/Privacy";
 import About from "./pages/About";
 import Quiz from "./pages/Quiz";
 import Ramadan from "./pages/Ramadan";
-import Home from "./pages/Home";
+
 import Shop from "./pages/Shop";
 import Settings from "./pages/Settings";
 import AccessibilityPage from "./pages/Accessibility";
@@ -45,11 +45,11 @@ function App() {
         <BrowserRouter>
           <Layout>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/tour" element={<Tour />} />
+              <Route path="/" element={<StaticRedirect to="/companion/index.html" />} />
+              <Route path="/home" element={<StaticRedirect to="/companion/index.html" />} />
+              <Route path="/tour" element={<StaticRedirect to="/companion/index.html#live" />} />
               <Route path="/lost" element={<Lost />} />
-              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat" element={<StaticRedirect to="/companion/index.html#help" />} />
               <Route path="/group" element={<Group />} />
               <Route path="/group/join/:code" element={<Group />} />
               <Route path="/places" element={<Places />} />
