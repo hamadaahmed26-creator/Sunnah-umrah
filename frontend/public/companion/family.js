@@ -17,7 +17,7 @@ $('family-page').innerHTML=`<a href="./index.html">${t('Home','الرئيسية'
 <p>${t('Sharing sends your location to group members while this page is open. Links for walking directions open Apple Maps.','تتيح المشاركة لأعضاء المجموعة رؤية موقعك أثناء فتح الصفحة. تفتح روابط اتجاهات المشي خرائط Apple.')}</p>
 <button id="start" class="primary">${t('Start sharing my location','بدء مشاركة موقعي')}</button><button id="stop" class="critical" hidden>${t('Stop sharing','إيقاف مشاركة الموقع')}</button><button id="leave">${t('Leave group and delete my entry','مغادرة المجموعة وحذف بياناتي')}</button></section>
 <p id="connection" role="status"></p><p id="notice" role="status"></p>
-<button id="locate">${t('Find my position on this device','اعرض موقعي على هذا الجهاز')}</button><p id="own" role="status"></p>
+<button id="locate">${t('Find my position on this device','اعرض موقعي على هذا الجهاز')}</button><button id="local-stop" hidden>${t('Stop using my position','إيقاف استخدام موقعي')}</button><p id="own" role="status"></p>
 <div id="family-map" aria-label="${title}"></div><p id="map-info">${t('Offline map around the Haram. Gate pins are approximate.','خريطة محيط الحرم دون اتصال. مواقع الأبواب تقريبية.')}</p>
 <label>${gateMode?t('Choose a mapped gate','اختر بابًا على الخريطة'):t('Choose a family member','اختر أحد أفراد العائلة')}<select id="target"></select></label>
 <p id="detail" role="status"></p><a id="walk" hidden rel="noopener noreferrer" target="_blank">${t('Walking directions in Apple Maps · internet may be required','اتجاهات المشي في خرائط Apple · قد يلزم الإنترنت')}</a>`;
@@ -42,7 +42,7 @@ const stats=p=>when(p.captured)+' · ±'+Math.round(p.accuracy)+' m';
 function render(){
  $('setup').hidden=gateMode||!!session;$('joined').hidden=gateMode||!session;
  $('start').hidden=sharing;$('start').disabled=!!session?.pending;$('stop').hidden=!sharing&&!session?.pending;
- $('locate').disabled=watch!==null;
+ $('locate').disabled=watch!==null;$('local-stop').hidden=watch===null||sharing;
  $('connection').textContent=gateMode?'':!navigator.onLine?t('Offline · family positions are last received.','دون اتصال · تظهر آخر مواقع وصلتنا.'):session&&!connected?t('Waiting for group connection · last received positions only.','بانتظار الاتصال بالمجموعة · آخر مواقع مستلمة فقط.'):sharing?t('Location sharing is on','مشاركة الموقع مفعّلة'):'';
  $('own').textContent=local?t('My estimated position','موقعي التقديري')+' · '+stats(local)+(fresh(local)?'':' · '+t('Old fix','موقع سابق')):'';
  marks.clearLayers();
@@ -61,7 +61,15 @@ function render(){
  if(row){
    const f=row.fix;
    if(!gateMode)detail=(connected&&fresh(f)?t('Last received','آخر تحديث'):t('STALE · last received','موقع قديم · آخر تحديث'))+' '+stats(f);
-   if(local)detail+=' · '+Math.round(map.distance([local.lat,local.lng],[f.lat,f.lng]))+' m '+t('straight-line estimate','تقدير بخط مستقيم');
+   if(local){
+    const distance=map.distance([local.lat,local.lng],[f.lat,f.lng]);
+    detail+=' · '+Math.round(distance)+' m '+t('straight-line estimate','تقدير بخط مستقيم');
+    if(fresh(local)&&distance>2*(local.accuracy+(f.accuracy||0))){
+      const rad=Math.PI/180,delta=(f.lng-local.lng)*rad;
+      const bearing=(Math.atan2(Math.sin(delta)*Math.cos(f.lat*rad),Math.cos(local.lat*rad)*Math.sin(f.lat*rad)-Math.sin(local.lat*rad)*Math.cos(f.lat*rad)*Math.cos(delta))/rad+360)%360;
+      detail+=' · '+Math.round(bearing)+'° '+t('from true north','من الشمال الحقيقي');
+    }
+   }
    $('walk').href='https://maps.apple.com/?dirflg=w&daddr='+f.lat+','+f.lng;
  }else if(!gateMode&&session){detail=peers.filter(r=>r.id!==session.id).map(r=>r.name).join(', ')||t('Waiting for another member','بانتظار عضو آخر');}
  $('detail').textContent=detail;
@@ -84,7 +92,7 @@ async function setup(join){
 }
 function locate(){
  if(watch!==null)return;
- if(!navigator.geolocation)throw Error('GPS unavailable');
+ if(!navigator.geolocation){if(sharing)void stop();throw Error('GPS unavailable');}
  const first=!local;
  watch=navigator.geolocation.watchPosition(pos=>{
   if(watch===null)return;
@@ -111,7 +119,10 @@ async function poll(){
   if(!navigator.onLine){connected=false;return;}
   if(current.pending&&!sharing&&!starting){await flushPending();if(!session||current.pending)return;}
   const data=await api('members');
-  const next=await Promise.all(data.members.map(async row=>({...row,fix:row.packet?await open(current.key,row):null})));
+  const next=await Promise.all(data.members.map(async row=>{
+    try{return {...row,fix:row.packet?await open(current.key,row):null}}
+    catch{return {...row,fix:null}}
+  }));
   if(session!==current)return;
   peers=next;connected=true;if(!sharing)current.epoch=data.epoch;
  }catch(e){connected=false;if(e.status===401){cancelWatch();session=null;peers=[];save();notice(t('Session expired. Create or join another group.','انتهت الجلسة. أنشئ مجموعة أو انضم إلى أخرى.'));}}
@@ -146,9 +157,10 @@ async function stop(leave=false){
 }
 const action=(id,fn)=>{$(id).onclick=async()=>{const b=$(id);b.disabled=true;try{await fn()}catch{notice(t('Could not complete this action. Check the connection, permissions or invitation and retry.','تعذّر إتمام العملية. تحقق من الاتصال أو الإذن أو الدعوة وأعد المحاولة.'))}finally{b.disabled=false;render()}}};
 action('create',()=>setup(false));action('join',()=>setup(true));action('invite',async()=>showInvite((await api('invite',{})).invite));action('send',async()=>{const text=$('invitation').textContent;if(navigator.share)await navigator.share({text});else await navigator.clipboard.writeText(text)});
-action('locate',locate);action('start',async()=>{starting=true;try{await start()}finally{starting=false}});action('stop',()=>stop());action('leave',()=>stop(true));
+action('local-stop',()=>{cancelWatch();local=null;render()});action('locate',locate);action('start',async()=>{starting=true;try{await start()}finally{starting=false}});action('stop',()=>stop());action('leave',()=>stop(true));
 window.addEventListener('online',poll);window.addEventListener('offline',()=>{connected=false;render()});
 window.addEventListener('pagehide',()=>{cancelWatch();if(session?.pending){fetch('/api/family/'+session.pending,{method:'POST',keepalive:true,headers:{Authorization:'Bearer '+session.secret,'Content-Type':'application/json'},body:JSON.stringify({epoch:session.epoch})}).catch(()=>{});}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();void poll()}});
 setInterval(()=>{if(session&&!gateMode)void poll();else render()},5000);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('./offline.js').catch(()=>{});
 render();void poll();

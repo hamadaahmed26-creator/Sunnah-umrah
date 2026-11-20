@@ -25,7 +25,7 @@ export async function familyAPI(req,db,now=Date.now()){
     sql('UPDATE family_members SET packet=NULL WHERE packet IS NOT NULL AND captured<=?',now-fixLifetime)
   ]);
   if(action==='create'||action==='join'){
-    const name=body.name?.trim?.();
+    const name=typeof body.name==='string'?body.name.trim():'';
     if(!name||name.length>40)return result({},400);
     const secret=token(), id=crypto.randomUUID(), digest=await hash(secret);
     await removeExpired();
