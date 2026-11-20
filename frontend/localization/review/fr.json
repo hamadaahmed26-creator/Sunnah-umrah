@@ -3,7 +3,71 @@
   "status": "draft",
   "nativeReviewer": null,
   "scholarlyReviewer": null,
-  "stages": {},
+  "stages": {
+    "ihram": {
+      "title": "Préparer l’ihram",
+      "body": "Faites les grandes ablutions si vous le pouvez. L’homme porte les deux pièces de tissu de l’ihram. La femme porte des vêtements couvrants et, en ihram, ne porte ni niqab ni gants. Avant l’intention d’entrer en ihram, l’homme peut parfumer son corps en évitant ses vêtements. La femme évite un parfum perceptible lorsqu’elle passe près d’hommes autres que son mari ou ses mahrams. Une fois en ihram, ni l’un ni l’autre n’applique de nouveau parfum.",
+      "question": "Quand un homme peut-il parfumer son corps ?",
+      "answers": [
+        "Avant d’entrer en ihram",
+        "Pendant le tawaf, alors qu’il est encore en ihram"
+      ]
+    },
+    "miqat": {
+      "title": "Entrer en ihram au miqat",
+      "body": "Le changement de vêtements seul ne marque pas l’entrée en ihram. C’est l’intention de commencer la ʿumra qui vous y fait entrer. Si vous venez de l’extérieur du miqat pour accomplir la ʿumra à La Mecque, formez cette intention dans votre cœur au plus tard en atteignant le miqat de votre itinéraire ou en passant à sa hauteur. Dites la formule présentée ci-dessous. En avion, préparez-vous avant ce passage. Si votre point de départ ou votre itinéraire diffère, demandez conseil à votre guide.",
+      "question": "Vous venez en avion pour la ʿumra. Quand vous préparez-vous ?",
+      "answers": [
+        "Avant que l’avion franchisse le miqat",
+        "Seulement à l’arrivée à l’hôtel"
+      ]
+    },
+    "talbiyah": {
+      "title": "Prononcer la talbiya",
+      "body": "Répétez la talbiya en vous dirigeant vers la Kaaba. Son texte et son sens figurent ci-dessous. Cessez de la prononcer lorsque vous commencez le tawaf.",
+      "question": "Quand cesse-t-on la talbiya de la ʿumra ?",
+      "answers": [
+        "Au début du tawaf",
+        "Après chaque trajet entre Safa et Marwa"
+      ]
+    },
+    "haram": {
+      "title": "Entrer dans la Mosquée sacrée",
+      "body": "Entrez du pied droit et demandez à Allah de vous ouvrir les portes de Sa miséricorde. Suivez les panneaux et les consignes du personnel vers la zone du tawaf. En famille, convenez d’un lieu de rendez-vous à l’écart du passage.",
+      "question": "Que demande-t-on dans l’invocation d’entrée à la mosquée ?",
+      "answers": [
+        "La miséricorde d’Allah",
+        "Un numéro de porte précis"
+      ]
+    },
+    "tawaf": {
+      "title": "Faire le tour de la Kaaba",
+      "body": "Commencez le tawaf en état de pureté rituelle, avec les ablutions. En cas de règles, attendez leur fin et faites les grandes ablutions. Commencez à hauteur de la Pierre noire. Gardez la Kaaba à votre gauche et faites sept tours en passant à l’extérieur du muret arrondi. Comptez un tour chaque fois que vous revenez à la hauteur de la Pierre noire. Évitez de bousculer les autres pour la toucher. Vous pouvez invoquer Allah avec vos propres mots. Ensuite, priez deux unités derrière la station d’Ibrahim si cela est possible, ou ailleurs dans la mosquée.",
+      "question": "Quand un tour est-il complet ?",
+      "answers": [
+        "Au retour à hauteur de la Pierre noire",
+        "En atteignant le côté opposé"
+      ]
+    },
+    "sai": {
+      "title": "Marcher entre Safa et Marwa",
+      "body": "Partez de Safa. L’aller jusqu’à Marwa compte pour un trajet et le retour à Safa pour le deuxième. Comptez chaque arrivée à l’autre extrémité. Le septième trajet se termine à Marwa. Il n’y a pas de retour à Safa. Sur les hauteurs, tournez-vous vers la qibla pour le rappel et les invocations. Les savants divergent sur la répétition de l’invocation à la toute dernière arrivée.",
+      "question": "Vous êtes allé de Safa à Marwa puis revenu à Safa. Combien de trajets avez-vous faits ?",
+      "answers": [
+        "Deux",
+        "Un"
+      ]
+    },
+    "completion": {
+      "title": "Achever la ʿumra",
+      "body": "Après le saʿi, l’homme se rase la tête ou raccourcit ses cheveux sur toute la tête. La femme rassemble les pointes de ses cheveux et en coupe une petite longueur, jusqu’à celle de l’extrémité d’un doigt. Cela achève la ʿumra dans le déroulement habituel et met fin à l’ihram. Si vous avez omis un rite ou si votre situation est particulière, consultez un savant qualifié.",
+      "question": "Que fait-on après la dernière arrivée à Marwa ?",
+      "answers": [
+        "Se raser la tête ou raccourcir ses cheveux selon sa situation",
+        "Faire un autre trajet vers Safa"
+      ]
+    }
+  },
   "help": {
     "count": {
       "title": "J’ai perdu le compte",
