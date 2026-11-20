@@ -89,35 +89,35 @@
   "recitations": {
     "miqat": {
       "meaning": "Je réponds à Ton appel pour accomplir la ʿumra.",
-      "pronunciation": null
+      "pronunciation": "Labbayka ʿoumratan."
     },
     "talbiyah": {
       "meaning": "Me voici, ô Allah, me voici. Me voici, Tu n’as aucun associé, me voici. À Toi appartiennent la louange, les bienfaits et la royauté. Tu n’as aucun associé.",
-      "pronunciation": null
+      "pronunciation": "Labbayka llâhoumma labbayk. Labbayka lâ charîka laka labbayk. Inna l-ḥamda wan-niʿmata laka wal-moulk. Lâ charîka lak."
     },
     "haram": {
       "meaning": "Ô Allah, ouvre-moi les portes de Ta miséricorde.",
-      "pronunciation": null
+      "pronunciation": "Allâhoumma ftaḥ lî abwâba raḥmatik."
     },
     "stone": {
       "meaning": "Allah est le plus grand.",
-      "pronunciation": null
+      "pronunciation": "Allâhou akbar."
     },
     "corner": {
       "meaning": "Notre Seigneur, accorde-nous un bien ici-bas et un bien dans l’au-delà, et préserve-nous du châtiment du Feu.",
-      "pronunciation": null
+      "pronunciation": "Rabbanâ âtinâ fi d-dounyâ ḥasanatan wa fi l-âkhirati ḥasanatan wa qinâ ʿadhâba n-nâr."
     },
     "opening": {
       "meaning": "Safa et Marwa font certes partie des rites sacrés d’Allah.",
-      "pronunciation": null
+      "pronunciation": "Inna ṣ-Ṣafâ wal-Marwata min chaʿâʾiri llâh."
     },
     "begin": {
       "meaning": "Je commence par ce par quoi Allah a commencé.",
-      "pronunciation": null
+      "pronunciation": "Abdaʾou bimâ badaʾa llâhou bih."
     },
     "hill": {
       "meaning": "Nul ne mérite d’être adoré en dehors d’Allah, seul et sans associé. À Lui la royauté et la louange, et Il est capable de toute chose. Nul ne mérite d’être adoré en dehors d’Allah seul. Il a tenu Sa promesse, accordé la victoire à Son serviteur et défait à Lui seul les coalisés.",
-      "pronunciation": null
+      "pronunciation": "Lâ ilâha illa llâhou waḥdahou lâ charîka lah. Lahou l-moulkou wa lahou l-ḥamd. Wa houwa ʿalâ koulli chayʾin qadîr. Lâ ilâha illa llâhou waḥdah. Andjaza waʿdah, wa naṣara ʿabdah, wa hazama l-aḥzâba waḥdah."
     }
   }
 }

@@ -89,35 +89,35 @@
   "recitations": {
     "miqat": {
       "meaning": "Respondo ao Teu chamamento para realizar a umra.",
-      "pronunciation": null
+      "pronunciation": "Labbáika ʿumratan."
     },
     "talbiyah": {
       "meaning": "Aqui estou, ó Allah, aqui estou. Aqui estou, Tu não tens associado algum, aqui estou. A Ti pertencem o louvor, as bênçãos e o domínio. Tu não tens associado algum.",
-      "pronunciation": null
+      "pronunciation": "Labbáika llāhumma labbáik. Labbáika lā charīka laka labbáik. Inna l-ḥamda wan-niʿmata laka wal-mulk. Lā charīka lak."
     },
     "haram": {
       "meaning": "Ó Allah, abre-me as portas da Tua misericórdia.",
-      "pronunciation": null
+      "pronunciation": "Allāhumma ftaḥ lī abwāba raḥmatik."
     },
     "stone": {
       "meaning": "Allah é o Maior.",
-      "pronunciation": null
+      "pronunciation": "Allāhu ákbar."
     },
     "corner": {
       "meaning": "Senhor nosso, concede-nos o bem nesta vida e o bem na outra vida e protege-nos do castigo do Fogo.",
-      "pronunciation": null
+      "pronunciation": "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā ʿadhāban-nār."
     },
     "opening": {
       "meaning": "De facto, Safa e Marwa estão entre os símbolos sagrados de Allah.",
-      "pronunciation": null
+      "pronunciation": "Innaṣ-Ṣafā wal-Marwata min chaʿāʾiri llāh."
     },
     "begin": {
       "meaning": "Começo por aquilo por que Allah começou.",
-      "pronunciation": null
+      "pronunciation": "Abdaʾu bimā badaʾa llāhu bih."
     },
     "hill": {
       "meaning": "Ninguém merece ser adorado salvo Allah, o Único, sem associado. A Ele pertencem o domínio e o louvor, e Ele tem poder sobre todas as coisas. Ninguém merece ser adorado salvo Allah, o Único. Ele cumpriu a Sua promessa, concedeu a vitória ao Seu servo e derrotou sozinho os confederados.",
-      "pronunciation": null
+      "pronunciation": "Lā ilāha illa llāhu waḥdahu lā charīka lah. Lahu l-mulku wa lahu l-ḥamd. Wa huwa ʿalā kulli chaiʾin qadīr. Lā ilāha illa llāhu waḥdah. Andjaza waʿdah, wa naṣara ʿabdah, wa hazama l-aḥzāba waḥdah."
     }
   }
 }

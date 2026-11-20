@@ -89,35 +89,35 @@
   "recitations": {
     "miqat": {
       "meaning": "Rispondo alla Tua chiamata per compiere la ʿumra.",
-      "pronunciation": null
+      "pronunciation": "Labbayka ʿumratan."
     },
     "talbiyah": {
       "meaning": "Eccomi, o Allah, eccomi. Eccomi, Tu non hai associati, eccomi. A Te appartengono la lode, i benefici e il dominio. Tu non hai associati.",
-      "pronunciation": null
+      "pronunciation": "Labbayka llāhumma labbayk. Labbayka lā šarīka laka labbayk. Inna l-ḥamda wan-niʿmata laka wal-mulk. Lā šarīka lak."
     },
     "haram": {
       "meaning": "O Allah, aprimi le porte della Tua misericordia.",
-      "pronunciation": null
+      "pronunciation": "Allāhumma ftaḥ lī abwāba raḥmatik."
     },
     "stone": {
       "meaning": "Allah è il più grande.",
-      "pronunciation": null
+      "pronunciation": "Allāhu akbar."
     },
     "corner": {
       "meaning": "Signore nostro, donaci il bene in questa vita e il bene nell’altra vita, e proteggici dal castigo del Fuoco.",
-      "pronunciation": null
+      "pronunciation": "Rabbanā ātinā fid-dunyā ḥasanatan wa fil-ākhirati ḥasanatan wa qinā ʿadhāban-nār."
     },
     "opening": {
       "meaning": "In verità Safa e Marwa sono tra i simboli sacri di Allah.",
-      "pronunciation": null
+      "pronunciation": "Innaṣ-Ṣafā wal-Marwata min šaʿāʾiri llāh."
     },
     "begin": {
       "meaning": "Comincio da ciò da cui Allah ha cominciato.",
-      "pronunciation": null
+      "pronunciation": "Abdaʾu bimā badaʾa llāhu bih."
     },
     "hill": {
       "meaning": "Nessuno merita di essere adorato tranne Allah, unico e senza associati. A Lui appartengono il dominio e la lode, ed Egli ha potere su ogni cosa. Nessuno merita di essere adorato tranne Allah soltanto. Egli ha mantenuto la Sua promessa, ha concesso la vittoria al Suo servo e ha sconfitto da solo i confederati.",
-      "pronunciation": null
+      "pronunciation": "Lā ilāha illa llāhu waḥdahu lā šarīka lah. Lahu l-mulku wa lahu l-ḥamd. Wa huwa ʿalā kulli šayʾin qadīr. Lā ilāha illa llāhu waḥdah. Anǧaza waʿdah, wa naṣara ʿabdah, wa hazama l-aḥzāba waḥdah."
     }
   }
 }

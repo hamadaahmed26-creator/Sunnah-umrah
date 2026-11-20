@@ -89,35 +89,35 @@
   "recitations": {
     "miqat": {
       "meaning": "Waxaan kaaga soo jawaabay baaqaaga anigoo cumro gudanaya.",
-      "pronunciation": null
+      "pronunciation": "Labbayka cumratan."
     },
     "talbiyah": {
       "meaning": "Ilaahayow, waan kuu jawaabay, waan kuu jawaabay. Waan kuu jawaabay, shariik ma lihid, waan kuu jawaabay. Mahadda oo dhan, nicmada iyo boqortooyaduba adigay kuu sugnaadeen. Shariik ma lihid.",
-      "pronunciation": null
+      "pronunciation": "Labbayka llaahumma labbayk. Labbayka laa shariika laka labbayk. Innal-xamda wan-nicmata laka wal-mulk. Laa shariika lak."
     },
     "haram": {
       "meaning": "Ilaahayow, ii fur albaabada naxariistaada.",
-      "pronunciation": null
+      "pronunciation": "Allaahumma ftax lii abwaaba raxmatik."
     },
     "stone": {
       "meaning": "Alle ayaa ugu weyn.",
-      "pronunciation": null
+      "pronunciation": "Allaahu akbar."
     },
     "corner": {
       "meaning": "Rabbiyow, adduunka nagu sii wanaag, aakhirana nagu sii wanaag, nagana ilaali cadaabka Naarta.",
-      "pronunciation": null
+      "pronunciation": "Rabbanaa aatinaa fid-dunyaa xasanatan wa fil-aakhirati xasanatan wa qinaa cadhaaban-naar."
     },
     "opening": {
       "meaning": "Safa iyo Marwa waxay ka mid yihiin calaamooyinka cibaadada Alle.",
-      "pronunciation": null
+      "pronunciation": "Innaṣ-Ṣafaa wal-Marwata min shacaa’iri llaah."
     },
     "begin": {
       "meaning": "Waxaan ku bilaabayaa wixii Alle ku bilaabay.",
-      "pronunciation": null
+      "pronunciation": "Abda’u bimaa bada’a llaahu bih."
     },
     "hill": {
       "meaning": "Ma jiro ilaah xaq lagu caabudo oo aan Alle ahayn. Waa keli, shariikna ma laha. Boqortooyada iyo mahadda isagaa leh, wax kastana wuu karaa. Ma jiro ilaah xaq lagu caabudo oo aan Alle oo keliya ahayn. Wuxuu oofiyey ballankiisii, addoonkiisii guul ayuu siiyey, xulafadiina isagaa keligiis jebiyey.",
-      "pronunciation": null
+      "pronunciation": "Laa ilaaha illa llaahu waxdahu laa shariika lah. Lahu l-mulku wa lahu l-xamd. Wa huwa calaa kulli shay’in qadiir. Laa ilaaha illa llaahu waxdah. Anjaza wacdah, wa naṣara cabdah, wa hazama l-axzaaba waxdah."
     }
   }
 }
