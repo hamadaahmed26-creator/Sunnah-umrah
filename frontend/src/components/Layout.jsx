@@ -23,7 +23,16 @@ export default function Layout({ children }) {
   const loc = useLocation();
   // Mount the adhan scheduler at the app root — it self-disables when the
   // user hasn't enabled adhan in Settings.
-  useAdhanScheduler();
+  const reminder = useAdhanScheduler();
+  const isAr = lang === "ar";
+  const prayerNames = {Fajr:"الفجر",Dhuhr:"الظهر",Asr:"العصر",Maghrib:"المغرب",Isha:"العشاء"};
+  const prayer = isAr ? prayerNames[reminder?.prayer] : reminder?.prayer;
+  const messages = {
+    location:isAr ? "يلزم موقع حديث لمواقيت مدينتك. تحقّق من إعدادات الموقع أو اختر مكة." : "Local reminders need a recent location. Check location settings or select Makkah.",
+    timetable:isAr ? "تعذّر تحميل المواقيت. تحقّق من الاتصال." : "Prayer times unavailable. Check your connection.",
+    due:isAr ? "حان وقت صلاة " + prayer : "Time for " + prayer,
+    sound:isAr ? "حان وقت صلاة " + prayer + " وتعذّر تشغيل الصوت." : "Time for " + prayer + ". Sound could not play."
+  };
   const navItems = [
     { to: "/", icon: Home, label: lang === "ar" ? "الرئيسية" : "Home", id: "tour" },
     { to: "/places", icon: MapPin, label: lang === "ar" ? "زيارات" : "Places", id: "places" },
@@ -67,6 +76,7 @@ export default function Layout({ children }) {
         </button>
       </header>
 
+      {reminder && <p className="px-5" role="status">{messages[reminder.reason]}</p>}
       <main className="relative z-10 pb-44 sm:pb-32 px-5" data-testid="app-main">{children}</main>
 
       {/* Hide the floating bottom nav on the new home dashboard — its tiles

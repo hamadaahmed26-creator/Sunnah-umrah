@@ -18,6 +18,7 @@ export function loadPrayerMode() {
 export function savePrayerMode(mode) {
   try {
     localStorage.setItem(KEY, mode);
+    window.dispatchEvent(new Event("umrah-prayer-settings"));
   } catch {}
 }
 
@@ -30,7 +31,7 @@ export function loadLastKnownGeo() {
     const raw = localStorage.getItem(LOC_KEY);
     if (!raw) return null;
     const v = JSON.parse(raw);
-    if (!v.lat || !v.lng) return null;
+    if (!Number.isFinite(v.lat) || !Number.isFinite(v.lng) || Math.abs(v.lat)>90 || Math.abs(v.lng)>180) return null;
     // Expire after 24h
     if (Date.now() - (v.ts || 0) > 24 * 60 * 60 * 1000) return null;
     return v;
@@ -45,5 +46,6 @@ export function saveLastKnownGeo(geo) {
       LOC_KEY,
       JSON.stringify({ ...geo, ts: Date.now() })
     );
+    window.dispatchEvent(new Event("umrah-prayer-settings"));
   } catch {}
 }

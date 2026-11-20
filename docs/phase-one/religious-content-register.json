@@ -2,8 +2,9 @@
   "schemaVersion": 1,
   "scope": "Isolated web companion: displayed stages, quiz keys, recitation cards, counting and help; guidance for cases beyond these entries requires a qualified scholar.",
   "reviewedFileSha256": {
-    "content.js": "df7e4f36170ac7321a3bd0ea35e9f8274cd0ad5b9ac1a9c957494de1fefc9c5e",
-    "worship.js": "456e6cded4a9dc0e0b9410887cc42584afe67984c319d07e9d35d1f0e4e57d08"
+    "content.js": "91e71cc40543eccce9049bf96e3694cbc792f5e2b61369250e13db72516ec9e7",
+    "worship.js": "b0605704087b4f823cd0011e1f4c48466a44a036b9da30ab655f80005537cefd",
+    "recitations.js": "9bb2f9d2035c3fe1f13387a5213c961de6468b7dfd9552aad8c26ac916b35afc"
   },
   "review": {
     "editorialSourceCheck": "2026-11-20",
@@ -303,7 +304,7 @@
       "id": "ihram",
       "en": {
         "title": "Prepare for ihram",
-        "body": "Bathe if you can. A man wears two ihram cloths. A woman wears modest clothing and leaves off the niqab and gloves in ihram. Before intending ihram, a man may scent his body, keeping perfume off the cloths. A woman must avoid noticeable perfume when passing men who are not her mahrams. Once in ihram, neither applies fresh perfume.",
+        "body": "Bathe if you can. A man wears two ihram cloths. A woman wears modest clothing and leaves off the niqab and gloves in ihram. Before intending ihram, a man may scent his body, keeping perfume off the cloths. A woman must avoid noticeable perfume when passing men other than her husband or mahrams. Once in ihram, neither applies fresh perfume.",
         "question": "When may a man apply perfume to his body?",
         "answers": [
           "Before entering ihram",
@@ -312,7 +313,7 @@
       },
       "ar": {
         "title": "الاستعداد للإحرام",
-        "body": "يُستحب الاغتسال. يلبس الرجل إزارًا ورداءً، وتلبس المرأة ثيابها الساترة وتترك النقاب والقفازين في الإحرام. للرجل أن يطيّب بدنه قبل نية الإحرام ويترك ثياب الإحرام بلا طيب. لا تخرج المرأة بطيب يشمّه الرجال غير المحارم. وبعد نية الإحرام يمتنع الرجل والمرأة عن وضع طيب جديد.",
+        "body": "يُستحب الاغتسال. يلبس الرجل إزارًا ورداءً، وتلبس المرأة ثيابها الساترة وتترك النقاب والقفازين في الإحرام. للرجل أن يطيّب بدنه قبل نية الإحرام ويترك ثياب الإحرام بلا طيب. لا تخرج المرأة بطيب يشمّه الرجال الأجانب عنها. وبعد نية الإحرام يمتنع الرجل والمرأة عن وضع طيب جديد.",
         "question": "متى يجوز للرجل أن يطيّب بدنه؟",
         "answers": [
           "قبل الدخول في الإحرام",
@@ -362,6 +363,12 @@
           "url": "https://islamqa.info/en/answers/109331",
           "authority": "Standing Committee, including Ibn Baz, ‘Abd al-Razzaq ‘Afifi and ‘Abd Allah ibn Qa‘ud",
           "grading": null
+        },
+        {
+          "reference": "Ibn Baz · noticeable perfume when going out",
+          "url": "https://binbaz.org.sa/fatwas/6551",
+          "authority": "Ibn Baz",
+          "grading": null
         }
       ],
       "review": {
@@ -378,7 +385,7 @@
       "id": "miqat",
       "en": {
         "title": "Enter ihram at the Miqat",
-        "body": "The Miqat is the boundary for entering ihram. If travelling towards Makkah for Umrah from outside it, intend in your heart to begin Umrah by the time you reach or pass alongside your route’s Miqat. Say “Labbayka ‘umrah” (I answer Your call for Umrah). If flying, prepare before the crossing. Ask your group guide if your starting point or route is different.",
+        "body": "Changing clothes alone does not begin ihram. You enter it by intending to begin Umrah. The Miqat is the boundary for entering ihram. If travelling towards Makkah for Umrah from outside it, intend in your heart to begin Umrah by the time you reach or pass alongside your route’s Miqat. Say “Labbayka ‘umrah” (I answer Your call for Umrah). If flying, prepare before the crossing. Ask your group guide if your starting point or route is different.",
         "question": "You are flying in for Umrah. When do you prepare?",
         "answers": [
           "Before the plane crosses the Miqat",
@@ -387,7 +394,7 @@
       },
       "ar": {
         "title": "الإحرام عند الميقات",
-        "body": "الميقات موضع الإحرام. من قصد العمرة قادمًا من خارج المواقيت ينوي بقلبه الدخول في النسك عند ميقاته أو محاذاته، ويقول «لبيك عمرة». من سافر بالطائرة يستعد قبل المحاذاة. إذا اختلف مسارك أو مكان انطلاقك فاسأل مرشد حملتك عن ميقاتك.",
+        "body": "لبس ثياب الإحرام وحده لا يُدخلك في النسك؛ تدخل فيه بنيّة العمرة. الميقات موضع الإحرام. من قصد العمرة قادمًا من خارج المواقيت ينوي بقلبه الدخول في النسك عند ميقاته أو محاذاته، ويقول «لبيك عمرة». من سافر بالطائرة يستعد قبل المحاذاة. إذا اختلف مسارك أو مكان انطلاقك فاسأل مرشد حملتك عن ميقاتك.",
         "question": "متى يستعد القادم بالطائرة للعمرة؟",
         "answers": [
           "قبل محاذاة الميقات",

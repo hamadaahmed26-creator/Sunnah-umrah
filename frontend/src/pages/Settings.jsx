@@ -24,6 +24,7 @@ export default function Settings() {
 
   const [settings, setSettings] = React.useState(() => loadSettings());
   const [playing, setPlaying] = React.useState(false);
+  const [previewFailed, setPreviewFailed] = React.useState(false);
   const audioRef = React.useRef(null);
   const profile = React.useMemo(() => loadProfile(), []);
   const [prayerMode, setPrayerMode] = React.useState(() => loadPrayerMode());
@@ -64,7 +65,9 @@ export default function Settings() {
     return audioRef.current;
   };
 
+  React.useEffect(() => () => audioRef.current?.pause(), []);
   const handlePreview = () => {
+    setPreviewFailed(false);
     const a = ensureAudio();
     if (playing) {
       a.pause();
@@ -74,12 +77,13 @@ export default function Settings() {
       a.currentTime = 0;
       a.play()
         .then(() => setPlaying(true))
-        .catch(() => setPlaying(false));
+        .catch(() => { setPlaying(false); setPreviewFailed(true); });
     }
   };
 
   return (
     <div className="max-w-md mx-auto pb-12" data-testid="settings-page">
+      {previewFailed && <p role="alert">{isAr ? "تعذّر تشغيل الصوت. تحقّق من إعدادات الصوت وحاول مجددًا." : "Audio could not play. Check sound permissions and try again."}</p>}
       <Link
         to="/"
         className="inline-flex items-center gap-1 text-[12px] text-[#8E8F8A] no-underline mb-4"
