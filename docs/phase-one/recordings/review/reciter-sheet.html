@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Umrah recording review</title><style>body{max-width:45rem;margin:2rem auto;padding:1rem;font:1.1rem/1.5 system-ui}section{border-top:1px solid #bbb;padding-block:1rem}[lang=ar]{font-size:2rem}label,audio,output{display:block;margin:.7rem 0}output{overflow-wrap:anywhere}</style><h1>Umrah recording review</h1>
+ <p>For the reciter, the Arabic reviewer and the rights holder. Only select files you have permission to review. The file stays on this device. Compare every word and vowel against the approved script, including the stopping point. Record corrections before recording approval.</p>
+ <p>For each take, retain its ID, fingerprint, named reader, reviewer, date, pronunciation decision and written rights to embed and distribute online and offline. This sheet plays candidate files locally. Approval is recorded separately.</p><section><h2>Entering ihram for Umrah</h2><p lang="ar" dir="rtl">لَبَّيْكَ عُمْرَةً</p>
+ <p>I answer Your call for Umrah.</p><small>miqat · Description of Umrah, Collected Fatwas 17/425</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section><section><h2>On the way to Tawaf</h2><p lang="ar" dir="rtl">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</p>
+ <p>Here I am, O Allah, here I am. Here I am, You have no partner, here I am. All praise, blessing and dominion belong to You. You have no partner.</p><small>talbiyah · Sahih al-Bukhari 1549 · Description of Umrah, Collected Fatwas 17/425</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section><section><h2>Entering the mosque</h2><p lang="ar" dir="rtl">اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ</p>
+ <p>O Allah, open the doors of Your mercy to me.</p><small>haram · Sahih Muslim 713a</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section><section><h2>In line with the Black Stone</h2><p lang="ar" dir="rtl">اللَّهُ أَكْبَرُ</p>
+ <p>Allah is the Greatest.</p><small>stone · Sahih al-Bukhari 1613</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section><section><h2>From the Yemeni Corner to the Black Stone</h2><p lang="ar" dir="rtl">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</p>
+ <p>Our Lord, grant us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.</p><small>corner · Qur’an 2:201 · Sunan Abi Dawud 1892</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section><section><h2>As you approach Safa for the first time</h2><p lang="ar" dir="rtl">إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ</p>
+ <p>Indeed, Safa and Marwah are among the sacred symbols of Allah.</p><small>opening · Qur’an 2:158 · Sahih Muslim 1218a</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section><section><h2>Then say</h2><p lang="ar" dir="rtl">أَبْدَأُ بِمَا بَدَأَ اللَّهُ بِهِ</p>
+ <p>I begin with what Allah began with.</p><small>begin · Sahih Muslim 1218a</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section><section><h2>Remembrance on the hill</h2><p lang="ar" dir="rtl">لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزَابَ وَحْدَهُ</p>
+ <p>Allah alone deserves worship and has no partner. All dominion and praise belong to Him, and He has power over everything. Allah alone deserves worship. He fulfilled His promise, gave victory to His servant and defeated the confederates alone.</p><small>hill · Sahih Muslim 1218a</small>
+ <label>Candidate human recording <input type="file" accept="audio/*"></label><audio controls preload="none"></audio><output></output></section>
+ <script>
+ const sections=document.querySelectorAll('section');
+ for(const section of sections){
+ const input=section.querySelector('input'),player=section.querySelector('audio'),out=section.querySelector('output');let url,version=0;
+ input.onchange=async()=>{const selected=++version;player.pause();if(url)URL.revokeObjectURL(url);player.removeAttribute('src');player.load();out.textContent='';
+ const file=input.files[0];if(!file)return;url=URL.createObjectURL(file);player.src=url;
+ try{const digest=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());if(selected===version)out.textContent='SHA-256 '+Array.from(new Uint8Array(digest),n=>n.toString(16).padStart(2,'0')).join('')}catch{out.textContent='Fingerprint unavailable on this browser.'}};
+ player.addEventListener('play',()=>{for(const other of document.querySelectorAll('audio'))if(other!==player)other.pause()});
+ player.onerror=()=>{if(input.files.length)out.textContent='This file could not be played. Check its format.'};
+ }
+ </script></html>
