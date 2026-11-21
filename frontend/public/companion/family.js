@@ -212,17 +212,24 @@ window.addEventListener('pagehide',()=>{cancelWatch();if(session?.pending){fetch
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();void poll()}});
 setInterval(()=>{if(session&&!gateMode)void poll();else render()},5000);
 function offlineCopyUnavailable(){
- $('offline-copy').textContent=t('The offline map could not be prepared on this device. Reopen this page with a connection to retry.','تعذّر تجهيز الخريطة دون اتصال على هذا الجهاز. افتح الصفحة مجددًا أثناء الاتصال للمحاولة.');
+ $('offline-copy').textContent=t('Offline map not confirmed. Reopen this page while connected, then retry.','لم يتأكد حفظ الخريطة للعمل دون اتصال. افتح الصفحة أثناء الاتصال وأعد المحاولة.');
+}
+async function confirmOfflineCopy(registration){
+ try{
+  // The installed service worker must have finished installing all core map files.
+  const ready=await Promise.race([navigator.serviceWorker.ready,new Promise(resolve=>setTimeout(()=>resolve(null),12000))]);
+  if(!ready || !('caches' in window)){offlineCopyUnavailable();return;}
+  const prefix='pilgrim-companion-'+new URL(registration.scope).pathname+'-v';
+  const versions=(await caches.keys()).filter(name=>name.startsWith(prefix)).sort();
+  if(!versions.length){offlineCopyUnavailable();return;}
+  const cache=await caches.open(versions[versions.length-1]);
+  const required=['family.html','family.js','maps/haram.json','maps/gates.js','maps/leaflet.js','maps/leaflet.css','index.html'];
+  const assets=await Promise.all(required.map(name=>cache.match(new URL(name,registration.scope).href)));
+  if(assets.every(Boolean))$('offline-copy').textContent=t('Offline map files saved on this device. Try Airplane Mode to confirm. Family updates still need internet.','تم حفظ ملفات الخريطة على هذا الجهاز. جرّب وضع الطيران للتحقق. تحديثات العائلة ما زالت تحتاج إلى الإنترنت.');
+  else offlineCopyUnavailable();
+ }catch{offlineCopyUnavailable();}
 }
 if('serviceWorker' in navigator){
- navigator.serviceWorker.register('./offline.js',{type:'module'}).then(registration=>{
-  function checkInstall(){
-   const worker=registration.installing;
-   if(!worker)return;
-   const status=()=>{if(worker.state==='redundant'&&!registration.active)offlineCopyUnavailable()};
-   worker.addEventListener('statechange',status);status();
-  }
-  registration.addEventListener('updatefound',checkInstall);checkInstall();
- }).catch(offlineCopyUnavailable);
+ navigator.serviceWorker.register('./offline.js',{type:'module'}).then(confirmOfflineCopy).catch(offlineCopyUnavailable);
 }else offlineCopyUnavailable();
 render();void poll();
