@@ -36,7 +36,7 @@ function youtubeApi() {
 }
 
 export function mediaPanel(t) {
-  return `<article class="panel"><a href="#home">${t('Home','الرئيسية')}</a>
+  return `<article class="panel"><button type="button" class="back" data-act="go-back">${t('Back','رجوع')}</button> <a href="#home">${t('Home','الرئيسية')}</a>
   <h1>${t('Makkah Live','مكة مباشر')}</h1>
   <p>${t('Watch Masjid al-Haram on Saudi Quran TV. Video uses mobile data.','شاهد المسجد الحرام على قناة القرآن الكريم السعودية. يستهلك الفيديو بيانات الإنترنت.')}</p>
   <button class="primary" id="watch">${t('Load video player','تحميل مشغّل الفيديو')}</button>
