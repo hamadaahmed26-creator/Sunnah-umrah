@@ -24,7 +24,7 @@ async function run(){
    page.on('pageerror',error=>errors.push(error.message));
    const base='http://127.0.0.1:'+server.address().port;
    await page.goto(base+'/#live');
-   const act=name=>page.locator('[data-act="'+name+'"]').click();
+   const act=name=>page.locator('[data-act="'+name+'"]').first().click();
    for(let i=0;i<4;i++)await act('next');
    await act('count');await act('count');await act('undo');await act('pause');
    await page.reload();await act('resume');

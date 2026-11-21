@@ -3,6 +3,9 @@ import {recitations} from './recitations.js';
 // Text for the precise points described in Jabir's report (Muslim 1218a).
 // The English meanings and reading aids are separate from the Arabic wording.
 const cards = {
+  miqat: {source:"https://risala.prh.gov.sa/gu/content-download?url=contents%2F63%2Far_sifat_omrah_ibnbaz.pdf", reference:["Description of Umrah, Collected Fatwas 17/425", "ابن باز · مجموع الفتاوى ١٧/٤٢٥"]},
+  talbiyah: {source:"https://sunnah.com/bukhari:1549", reference:["Sahih al-Bukhari 1549", "صحيح البخاري ١٥٤٩"]},
+  haram: {source:"https://sunnah.com/muslim:713a", reference:["Sahih Muslim 713a", "صحيح مسلم ٧١٣"]},
   stone: {
     title:['In line with the Black Stone','عند محاذاة الحجر الأسود'],
     source:'https://sunnah.com/bukhari:1613', reference:['Bukhari 1613','البخاري ١٦١٣']
@@ -64,7 +67,7 @@ export function worshipGuide(stage,count,lang,{compact=false,local=null,translat
   };
   const card=id=>{
     const c=cards[id], text=recitations[id], variant=local?.recitations?.[id];
-    const heading=c?say(...c.title):'';
+    const heading=c?.title?say(...c.title):'';
     const reading=variant?.pronunciation||(i?text.arabic:text.reading);
     const meaning=variant?.meaning||(i?text.arMeaning:text.meaning);
     const reader=lesson[id]?.()||(id==='talbiyah'?recording(1284,'Listen to the Talbiyah','استمع إلى التلبية'):'');
@@ -72,7 +75,7 @@ export function worshipGuide(stage,count,lang,{compact=false,local=null,translat
     const approved = approvedRecordings[id];
     const listen = approved ? recordingControls(id, approved, say) : detail(say('Listen','استمع'),
       `<p>${say('In-app human recording awaiting verification.','التسجيل البشري داخل التطبيق بانتظار التحقق.')}</p>${reviewSample(id,say)}${reader}`);
-    return `<section class="recitation quick-dua">${heading?`<h3>${heading}</h3>`:''}<small>${say('Arabic','العربية')}</small><p class="dua" lang="ar" dir="rtl">${text.arabic}</p>
+    return `<section class="recitation quick-dua">${heading?`<h3>${heading}</h3>`:''}<details open><summary>${say('Arabic','العربية')}</summary><p class="dua" lang="ar" dir="rtl">${text.arabic}</p></details>
     ${approved?listen:''}
     ${detail(say('Pronunciation','النطق'),`<p class="reading" lang="${lang}" dir="auto">${reading}</p><small>${say('A reading aid. Arabic sounds may differ.','تقريب للنطق، وقد تختلف الأصوات عن العربية.')}</small>`)}
     ${detail(say('Meaning','المعنى'),`<p>${meaning}</p>`)}

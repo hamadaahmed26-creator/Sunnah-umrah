@@ -59,12 +59,12 @@ test('the local review build renders all eight readings alongside their Arabic a
   }
 });
 
-test('all family consent and offline map labels have translations in each draft language',async()=>{
+test('all prayer, compass, family consent and offline map labels have translations in each draft language',async()=>{
   const base=new URL('../../frontend/public/companion/',import.meta.url);
-  const source=await readFile(new URL('family.js',base),'utf8');
+  const source=(await Promise.all(['family.js','pilgrim-tools.js'].map(file=>readFile(new URL(file,base),'utf8')))).join('\n');
   const {gates}=await import(new URL('maps/gates.js',base));
   const required=[...source.matchAll(/\bt\('([^']+)','[^']*'\)/g)].map(m=>m[1]);
-  required.push(...gates.map(gate=>gate.name_en));
+  required.push('Fajr','Dhuhr','Asr','Maghrib','Isha',...gates.map(gate=>gate.name_en));
   for(const code of Object.keys(languages).filter(code=>!['ar','en'].includes(code))){
     const path=new URL('../../frontend/localization/review/'+code+'.ui.json',import.meta.url);
     const pack=JSON.parse(await readFile(path,'utf8'));
