@@ -6,7 +6,7 @@
   "stages": {
     "ihram": {
       "title": "Bersiap untuk ihram",
-      "body": "Mandilah jika mampu. Laki-laki mengenakan dua helai kain ihram. Perempuan mengenakan pakaian yang menutup aurat dan tidak memakai niqab atau sarung tangan saat ihram. Sebelum berniat ihram, laki-laki boleh memakai wewangian pada badan, tanpa mengenai kain ihram. Perempuan harus menghindari wangi yang tercium saat melewati laki-laki selain suami atau mahramnya. Sesudah masuk ihram, keduanya tidak memakai wewangian baru.",
+      "body": "Mandilah jika mampu. Laki-laki mengenakan dua helai kain ihram. Perempuan mengenakan pakaian yang menutup aurat dan tidak memakai niqab atau sarung tangan saat ihram. Sebelum berniat ihram, laki-laki boleh memakai wewangian pada badan, tanpa mengenai kain ihram. Sebelum masuk ihram, perempuan boleh memakai wewangian ringan. Perempuan harus menghindari wangi yang tercium saat melewati laki-laki selain suami atau mahramnya. Sesudah masuk ihram, keduanya tidak memakai wewangian baru.",
       "question": "Kapan laki-laki boleh memakai wewangian pada badan?",
       "answers": [
         "Sebelum masuk ihram",
@@ -42,7 +42,7 @@
     },
     "tawaf": {
       "title": "Mengelilingi Ka'bah",
-      "body": "Mulailah tawaf dalam keadaan suci, termasuk berwudu. Jika sedang haid, tunggu hingga selesai dan mandi wajib. Mulai sejajar dengan Hajar Aswad. Posisikan Ka'bah di sebelah kiri. Selesaikan tujuh putaran dengan berjalan di luar dinding rendah yang melengkung. Hitung satu putaran setiap kembali sejajar dengan Hajar Aswad. Jangan berdesakan untuk menyentuhnya. Anda boleh berdoa dengan kata-kata sendiri. Sesudahnya, salat dua rakaat di belakang Maqam Ibrahim jika memungkinkan, atau di tempat lain dalam masjid.",
+      "body": "Mulailah tawaf dalam keadaan suci, termasuk berwudu. Jika sedang haid, tunggu hingga selesai dan mandi wajib. Mulai sejajar dengan Hajar Aswad. Posisikan Ka'bah di sebelah kiri. Selesaikan tujuh putaran dengan berjalan di luar dinding rendah yang melengkung. Hitung satu putaran setiap kembali sejajar dengan Hajar Aswad. Jika Hajar Aswad sulit dijangkau, berilah isyarat ke arahnya dan ucapkan takbir saat Anda melewatinya dalam posisi sejajar. Sentuh Rukun Yamani dengan tangan kanan jika mudah dijangkau. Jika tidak, teruslah berjalan tanpa memberi isyarat ke arahnya. Hindari berdesakan di kedua sudut. Anda boleh berdoa dengan kata-kata sendiri. Sesudahnya, salat dua rakaat di belakang Maqam Ibrahim jika memungkinkan, atau di tempat lain dalam masjid.",
       "question": "Kapan satu putaran selesai?",
       "answers": [
         "Saat kembali sejajar dengan Hajar Aswad",
@@ -51,7 +51,7 @@
     },
     "sai": {
       "title": "Berjalan antara Safa dan Marwah",
-      "body": "Mulailah dari Safa. Perjalanan penuh ke Marwah adalah perjalanan pertama. Kembali ke Safa adalah perjalanan kedua. Hitung setiap tiba di ujung seberang. Perjalanan ketujuh berakhir di Marwah, tanpa kembali ke Safa. Di atas bukit, hadaplah ke kiblat untuk berzikir dan berdoa. Ulama berbeda pendapat tentang mengulangi doa pada kedatangan terakhir di Marwah.",
+      "body": "Mulailah dari Safa. Perjalanan penuh ke Marwah adalah perjalanan pertama. Kembali ke Safa adalah perjalanan kedua. Di antara tanda hijau, laki-laki berlari jika aman. Perempuan berjalan seperti biasa. Berjalanlah jika berlari dapat membahayakan diri sendiri atau orang lain. Hitung setiap tiba di ujung seberang. Perjalanan ketujuh berakhir di Marwah, tanpa kembali ke Safa. Di atas bukit, hadaplah ke kiblat untuk berzikir dan berdoa. Ulama berbeda pendapat tentang mengulangi doa pada kedatangan terakhir di Marwah.",
       "question": "Anda berjalan dari Safa ke Marwah lalu kembali ke Safa. Berapa perjalanan?",
       "answers": [
         "Dua",

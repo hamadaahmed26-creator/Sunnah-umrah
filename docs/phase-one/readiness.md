@@ -1,3 +1,5 @@
+Current release checklist and test evidence: [Family, ritual and device acceptance](family-milestone.md). Earlier milestone results follow.
+
 # Phase One · private web preview
 
 **Decision, 20 November 2026.** Ready for owner usability testing. Production release is blocked. The hosted artifact consists exclusively of the files in frontend/public/companion. It contains no runtime account keys, database, production API, affiliate tracker, Adhan scheduler, generative chat, or location collection. The existing app identity and Codemagic configuration have not been edited.

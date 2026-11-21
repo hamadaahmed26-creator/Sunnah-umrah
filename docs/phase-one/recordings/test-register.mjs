@@ -29,16 +29,18 @@ for(const a of all){
    assert.ok(a.exact_audio_match_verified && a.offline_redistribution_confirmed && a.rights_evidence && a.reviewer && a.review_evidence && a.review_date && a.sha256,'incomplete approval evidence');
  }
 }
-const playerSource=readFileSync(process.argv[3] || resolve(here,'audio.js'),'utf8');
+const audioPath=process.argv[3] || resolve(here,'../../../frontend/public/companion/audio.js');
+const manifest=readFileSync(resolve(dirname(audioPath),'approved-tracks.js'),'utf8');
+const playerSource=readFileSync(audioPath,'utf8').replace("import {approvedRecordings} from './approved-tracks.js';",manifest);
 const {audio,approvedReligiousTracks}=await import('data:text/javascript;base64,'+Buffer.from(playerSource).toString('base64'));
-assert.deepEqual(Object.keys(approvedReligiousTracks).sort(),all.filter(a=>a.religious && a.release_approved).map(a=>a.id).sort());
+assert.deepEqual(Object.keys(approvedReligiousTracks).sort(),all.filter(a=>a.religious && a.release_approved).map(a=>a.topic).sort());
 assert.equal(await audio.play('review-takbir'),false);
 const fixture=all.find(a=>a.origin==='review-fixture');
 assert.equal(fixture.offline_redistribution_confirmed,true);
 assert.equal(fixture.exact_audio_match_verified,false);
 const review=readFileSync(resolve(here,'review','listen.html'),'utf8');
 assert.ok(review.includes(playerSource),'review harness is stale; regenerate using current player');
-assert.ok(review.includes('data:audio/ogg;base64,'+readFileSync(resolve(here,fixture.fixture)).toString('base64')));
+assert.ok(!review.includes('data:audio/'));
 console.log(all.length+' records, '+paths.length+' repository audio assets; hashes, rights flags, review isolation and shared-player harness passed.');
 const controls=new Map(['#play','#pause','#replay','#status'].map(id=>[id,{}]));
 let activeNode;
@@ -50,13 +52,13 @@ class TestMedia extends EventTarget {
   async play(){this.paused=false;}
   pause(){this.paused=true;this.dispatchEvent(new Event('pause'));}
 }
-globalThis.document={querySelector:id=>controls.get(id)};
+globalThis.document={baseURI:new URL('review/listen.html',import.meta.url).href,querySelector:id=>controls.get(id)};
 globalThis.Audio=TestMedia;
 const script=review.match(/<script type="module">([\s\S]*?)<\/script>/)[1];
 await import('data:text/javascript;base64,'+Buffer.from(script).toString('base64'));
 assert.equal(await controls.get('#play').onclick(),true);
 assert.equal(controls.get('#status').textContent,'playing');
-const played=Buffer.from(activeNode.src.split(',')[1],'base64');
+const played=readFileSync(new URL(activeNode.src));
 assert.equal(createHash('sha256').update(played).digest('hex'),fixture.sha256);
 controls.get('#pause').onclick();
 assert.equal(controls.get('#status').textContent,'paused');

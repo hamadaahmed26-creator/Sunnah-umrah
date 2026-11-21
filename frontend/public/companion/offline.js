@@ -1,5 +1,7 @@
-const cacheName='pilgrim-companion-'+new URL(self.registration.scope).pathname+'-v1.4.1';
-const assets=['family.html','family.js','family-crypto.js','maps/leaflet.js','maps/leaflet.css','maps/haram.json','maps/gates.js','index.html','style.css','guide.js','live-media.js','worship.js','locales/languages.js','locales/review-packs.js','recitations.js','journey-records.js','prayer-clock.js','pilgrim-tools.js','content.js','audio.js','hero.jpg','audio/navigation-en.mp3','audio/navigation-ar.mp3'];
+import {approvedRecordings} from './approved-tracks.js';
+const cacheName='pilgrim-companion-'+new URL(self.registration.scope).pathname+'-v1.5.0';
+const licensedMedia=Object.values(approvedRecordings).map(record=>record.src.slice(2));
+const assets=['approved-tracks.js',...licensedMedia,'family.html','family.js','family-crypto.js','maps/leaflet.js','maps/leaflet.css','maps/haram.json','maps/gates.js','index.html','style.css','guide.js','live-media.js','worship.js','locales/languages.js','locales/review-packs.js','recitations.js','journey-records.js','prayer-clock.js','pilgrim-tools.js','content.js','audio.js','hero.jpg','audio/navigation-en.mp3','audio/navigation-ar.mp3'];
 const scoped=name=>new URL(name,self.registration.scope).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{
  const cache=await caches.open(cacheName);
@@ -22,7 +24,7 @@ self.addEventListener('fetch',event=>{
    const cache=await caches.open(cacheName);
    const hit=await cache.match(scoped(file||'index.html'));
    if(!hit)return fetch(request);
-   return file?.endsWith('.mp3')?mediaRange(hit,request.headers.get('Range')):hit;
+   return file && /\.(mp3|ogg|oga|m4a|wav)$/.test(file)?mediaRange(hit,request.headers.get('Range')):hit;
  })());
 });
 // Offline single-range media responses for an already cached complete MP3.

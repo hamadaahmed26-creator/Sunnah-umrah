@@ -1,0 +1,141 @@
+{
+  "checked_on": "2026-11-20",
+  "credit": "Recitation by Muhammad Jumah for OpenDua.",
+  "publisher": "Ihsan Labs at the Human Development Fund",
+  "publisher_credits_url": "https://opendua.org/credits",
+  "audio_version": "0.0.2",
+  "licence": "CC-BY-4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+  "publisher_audio_licence_url": "https://opendua.org/licence/audio",
+  "changes": "Unmodified original MP3s.",
+  "catalogue_version": "0.0.4",
+  "catalogue_url": "https://opendua.org/v0.0.4/catalogue.json",
+  "catalogue_sha256": "231dfca7b1d0b5bea8ead8125c8d556121a115c40c9e348e08f4b3ede5194958",
+  "comparison": "Publisher text vs displayed cards. Compared letters and word boundaries after removing diacritics, ornamentation, punctuation, and collapsing alif-madda into alif. Does not verify vowels, tajwid, sound, or appropriateness.",
+  "recordings": [
+    {
+      "file": "OD-020.mp3",
+      "source_url": "https://audio.opendua.org/hisn/v0.0.2/OD-020.mp3",
+      "source_page": "https://opendua.org/dua/entering-the-mosque",
+      "source_entry_id": "entry-000020",
+      "source_recording_id": "recording-000020",
+      "source_reciter_id": "reciter-0001",
+      "source_script": "((أَعُوذُ بِاللَّهِ العَظِيمِ، وَبِوَجْهِهِ الْكَرِيمِ، وَسُلْطَانِهِ الْقَدِيمِ، مِنَ الشَّيْطَانِ الرَّجِيمِ)) [بِسْمِ اللَّهِ، وَالصَّلَاةُ] [وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ] ((اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ))",
+      "card_ids": [
+        "haram"
+      ],
+      "text_relationship": "excerpt",
+      "review_note": "Longer selection. The mosque-entry card is the ending of this recording’s published text. Hearing and a separately verified excerpt are required.",
+      "bytes": 315272,
+      "sha256": "6cb854f2f767112e8700c35ad18c45f11bde7c005d4a8bc7c355068abbb3eac1",
+      "duration_seconds": 31.488,
+      "full_decode": "ffmpeg -xerror succeeded",
+      "human_listening_review": null,
+      "release_approved": false
+    },
+    {
+      "file": "OD-233.mp3",
+      "source_url": "https://audio.opendua.org/hisn/v0.0.2/OD-233.mp3",
+      "source_page": "https://opendua.org/dua/pilgrims-announcement-of-his-arrival-for-hajj-or-umrah",
+      "source_entry_id": "entry-000233",
+      "source_recording_id": "recording-000224",
+      "source_reciter_id": "reciter-0001",
+      "source_script": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ، وَالنِّعْمَةَ، لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ",
+      "card_ids": [
+        "talbiyah"
+      ],
+      "text_relationship": "full",
+      "review_note": "Standalone candidate.",
+      "bytes": 206312,
+      "sha256": "83a94a9d0d27795894f9ef4aa86bcccfb3669678f54f64b1210d332eec1460ae",
+      "duration_seconds": 20.592,
+      "full_decode": "ffmpeg -xerror succeeded",
+      "human_listening_review": null,
+      "release_approved": false
+    },
+    {
+      "file": "OD-235.mp3",
+      "source_url": "https://audio.opendua.org/hisn/v0.0.2/OD-235.mp3",
+      "source_page": "https://opendua.org/dua/between-the-yemenite-corner-and-the-black-stone",
+      "source_entry_id": "entry-000235",
+      "source_recording_id": "recording-000225",
+      "source_reciter_id": "reciter-0001",
+      "source_script": "﴿رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ﴾",
+      "card_ids": [
+        "corner"
+      ],
+      "text_relationship": "full",
+      "review_note": "Standalone candidate.",
+      "bytes": 144392,
+      "sha256": "a96c2d139f9dd41d22a3bab43dee9815045c4d2658a7e6224c463b164bd4cb81",
+      "duration_seconds": 14.4,
+      "full_decode": "ffmpeg -xerror succeeded",
+      "human_listening_review": null,
+      "release_approved": false
+    },
+    {
+      "file": "OD-236-1.mp3",
+      "source_url": "https://audio.opendua.org/hisn/v0.0.2/OD-236-1.mp3",
+      "source_page": "https://opendua.org/dua/while-standing-at-safa-and-marwah",
+      "source_entry_id": "entry-000236",
+      "source_recording_id": "recording-000226",
+      "source_reciter_id": "reciter-0001",
+      "source_script": "﴿إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَآئِرِ اللَّهِ﴾ أَبْدَأُ بِمَا بَدَأَ اللَّهُ بِهِ",
+      "card_ids": [
+        "opening",
+        "begin"
+      ],
+      "text_relationship": "full",
+      "review_note": "One recording of both consecutive Safa phrases. A qualified listener must identify and verify the pause and both excerpt boundaries for separate cards.",
+      "bytes": 133354,
+      "sha256": "0a2bd1cde1f75c75a186fe29fd3a374f686a2efdd8c7de61f756cdbd612c4203",
+      "duration_seconds": 13.296,
+      "full_decode": "ffmpeg -xerror succeeded",
+      "human_listening_review": null,
+      "release_approved": false
+    },
+    {
+      "file": "OD-236-3.mp3",
+      "source_url": "https://audio.opendua.org/hisn/v0.0.2/OD-236-3.mp3",
+      "source_page": "https://opendua.org/dua/while-standing-at-safa-and-marwah",
+      "source_entry_id": "entry-000236",
+      "source_recording_id": "recording-000228",
+      "source_reciter_id": "reciter-0001",
+      "source_script": "لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
+      "card_ids": [
+        "hill"
+      ],
+      "text_relationship": "full",
+      "review_note": "Standalone candidate for the full hilltop remembrance in the nested repeat step.",
+      "bytes": 327274,
+      "sha256": "eecae4bb4d9a4ba1e1735ada7a63dd331e90dc6ee7d934dcafacc1ae6623839d",
+      "duration_seconds": 32.688,
+      "full_decode": "ffmpeg -xerror succeeded",
+      "human_listening_review": null,
+      "release_approved": false
+    },
+    {
+      "file": "OD-241.mp3",
+      "source_url": "https://audio.opendua.org/hisn/v0.0.2/OD-241.mp3",
+      "source_page": "https://opendua.org/dua/when-surprised-or-startled-2",
+      "source_entry_id": "entry-000241",
+      "source_recording_id": "recording-000231",
+      "source_reciter_id": "reciter-0001",
+      "source_script": "اللَّهُ أَكْبَرُ!",
+      "card_ids": [
+        "stone"
+      ],
+      "text_relationship": "full",
+      "review_note": "Standalone takbir from another chapter. Its teaching use here is limited to the pronunciation of the same two words. The evidence for the location comes from the worship register.",
+      "bytes": 19352,
+      "sha256": "52da9f6ef5853117f05681595f37ac5741d784386fd98ba64252010dd2ccdcbb",
+      "duration_seconds": 1.896,
+      "full_decode": "ffmpeg -xerror succeeded",
+      "human_listening_review": null,
+      "release_approved": false
+    }
+  ],
+  "unmatched_cards": [
+    "miqat"
+  ]
+}

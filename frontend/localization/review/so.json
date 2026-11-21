@@ -6,7 +6,7 @@
   "stages": {
     "ihram": {
       "title": "Isu diyaari ixraamka",
-      "body": "Qubayso haddii aad awooddo. Ninku wuxuu xidhaa laba maro oo ixraamka ah. Haweeneydu waxay xidhataa dhar asturan, mana xidhato niqaab iyo galoofyo inta ay ixraamka ku jirto. Ka hor inta uusan niyaysan ixraamka, ninku jirkiisa wuu carfin karaa isagoo marada ka ilaalinaya cadarka. Haweeneydu waa inay ka fogaato cadar urkiisa la dareemayo markay ag marayso rag aan ahayn ninkeeda ama maxramkeeda. Marka ixraamka la galo, labadooduba cadar cusub ma marsadaan.",
+      "body": "Qubayso haddii aad awooddo. Ninku wuxuu xidhaa laba maro oo ixraamka ah. Haweeneydu waxay xidhataa dhar asturan, mana xidhato niqaab iyo galoofyo inta ay ixraamka ku jirto. Ka hor inta uusan niyaysan ixraamka, ninku jirkiisa wuu carfin karaa isagoo marada ka ilaalinaya cadarka. Ka hor gelidda ixraamka, haweeneydu way isticmaali kartaa cadar khafiif ah. Waa inay ka fogaato cadar urkiisa la dareemayo markay ag marayso rag aan ahayn ninkeeda ama maxramkeeda. Marka ixraamka la galo, labadooduba cadar cusub ma marsadaan.",
       "question": "Goormuu ninku jirkiisa carfin karaa?",
       "answers": [
         "Ka hor gelidda ixraamka",
@@ -42,7 +42,7 @@
     },
     "tawaf": {
       "title": "Ku wareeg Kacbada",
-      "body": "Dawaafka ku bilow daahirnimo, adigoo weyso qaba. Haddii aad caado qabto, sug inta ay kaa dhammaanayso ka dibna qubayso. Ka bilow meel la siman Dhagaxa Madow. Kacbadu bidixdaada ha ahaato, toddoba jeer ku wareeg adigoo bannaanka ka maraya derbiga gaaban ee qalloocan. Mar kasta oo aad ku soo noqoto safka Dhagaxa Madow, hal wareeg tiri. Dadka ha riixin si aad dhagaxa u taabato. Erayadaada ayaad ku ducaysan kartaa. Dabadeed laba rakcadood ku tuko Maqaamka Ibraahim gadaashiisa haddii ay kuu fududahay, haddii kalena meel kale oo masjidka ah.",
+      "body": "Dawaafka ku bilow daahirnimo, adigoo weyso qaba. Haddii aad caado qabto, sug inta ay kaa dhammaanayso ka dibna qubayso. Ka bilow meel la siman Dhagaxa Madow. Kacbadu bidixdaada ha ahaato, toddoba jeer ku wareeg adigoo bannaanka ka maraya derbiga gaaban ee qalloocan. Mar kasta oo aad ku soo noqoto safka Dhagaxa Madow, hal wareeg tiri. Haddii aadan si fudud u gaari karin Dhagaxa Madow, u ishaaro oo takbiirta dheh markaad la siman tahay. Haddii ay kuu fududdahay, Rukniga Yamani gacantaada midig ku taabo. Haddii aadan gaari karin, iska gudub adigoon u ishaarin. Labada rukniba dadka ha ku ciriirin. Erayadaada ayaad ku ducaysan kartaa. Dabadeed laba rakcadood ku tuko Maqaamka Ibraahim gadaashiisa haddii ay kuu fududahay, haddii kalena meel kale oo masjidka ah.",
       "question": "Goormuu hal wareeg dhammaystirmaa?",
       "answers": [
         "Markaad ku soo noqoto safka Dhagaxa Madow",
@@ -51,7 +51,7 @@
     },
     "sai": {
       "title": "U kala soco Safa iyo Marwa",
-      "body": "Ka bilow Safa. Socodka oo dhan ee Marwa ku dhammaada waa socdaalka koowaad. Ku soo noqoshada Safa waa kan labaad. Markasta oo aad gaadho cirifka kaa soo horjeeda mid tiri. Socdaalka toddobaad wuxuu ku dhammaadaa Marwa, Safana laguma noqdo. Buuraha dushooda qiblada u jeeso si aad Alle u xusto oo u barido. Culimadu waxay isku khilaafeen ku celinta ducada marka ugu dambaysa ee Marwa la gaadho.",
+      "body": "Ka bilow Safa. Socodka oo dhan ee Marwa ku dhammaada waa socdaalka koowaad. Ku soo noqoshada Safa waa kan labaad. Labada calaamadood ee cagaaran dhexdooda, ragga awooda inay si nabad ah u ordaan way ordaan. Haweenku si caadi ah bay u socdaan. Soco haddii orodku adiga ama dadka kale waxyeello u geysan karo. Markasta oo aad gaadho cirifka kaa soo horjeeda mid tiri. Socdaalka toddobaad wuxuu ku dhammaadaa Marwa, Safana laguma noqdo. Buuraha dushooda qiblada u jeeso si aad Alle u xusto oo u barido. Culimadu waxay isku khilaafeen ku celinta ducada marka ugu dambaysa ee Marwa la gaadho.",
       "question": "Waxaad ka tagtay Safa oo tagtay Marwa, dabadeedna Safa ku soo noqotay. Immisa socdaal ayaad samaysay?",
       "answers": [
         "Laba",

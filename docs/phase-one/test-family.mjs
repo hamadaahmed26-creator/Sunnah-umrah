@@ -31,7 +31,9 @@ test('two independent family sessions, single-use invitation, encryption, reconn
  const epoch=(await call('members',null,a.secret)).epoch;
  const restart=await call('start',{epoch},a.secret);
  await call('fix',{...update,epoch:restart.epoch,captured:clock},a.secret);
- clock+=fixLifetime+1;assert.equal((await call('members',null,b.secret)).members.find(r=>r.id===a.id).packet,null);
+ clock+=fixLifetime+1;
+ const expired=(await call('members',null,b.secret)).members.find(r=>r.id===a.id);
+ assert.equal(expired.packet,null);assert.equal(expired.captured,0);
  await call('leave',{},a.secret);
  assert.equal((await call('members',null,a.secret)).status,401);assert.equal((await call('members',null,b.secret)).members.length,1);
 });

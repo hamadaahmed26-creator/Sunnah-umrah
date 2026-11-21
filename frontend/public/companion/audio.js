@@ -1,6 +1,7 @@
-// Only approved navigation prompts belong here. Religious recordings require
-// a human recitation review and permission for redistribution before inclusion.
-export const approvedReligiousTracks = Object.freeze({});
+import {approvedRecordings} from './approved-tracks.js';
+export const approvedReligiousTracks = Object.freeze(Object.fromEntries(
+  Object.entries(approvedRecordings).map(([id, record]) => [id, record.src])
+));
 const tracks = Object.freeze({
   ...approvedReligiousTracks,
   'navigation-en': './audio/navigation-en.mp3',

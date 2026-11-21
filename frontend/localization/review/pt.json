@@ -6,7 +6,7 @@
   "stages": {
     "ihram": {
       "title": "Preparação para o ihram",
-      "body": "Tome o banho ritual se puder. O homem veste os dois panos do ihram. A mulher usa roupa que a cubra adequadamente e, durante o ihram, não veste niqab nem luvas. Antes da intenção de entrar em ihram, o homem pode perfumar o corpo, evitando perfumar os panos. A mulher evita perfume percetível ao passar junto de homens que não sejam o marido ou os seus mahram. Depois de entrar em ihram, nenhum dos dois aplica novo perfume.",
+      "body": "Tome o banho ritual se puder. O homem veste os dois panos do ihram. A mulher usa roupa que a cubra adequadamente e, durante o ihram, não veste niqab nem luvas. Antes da intenção de entrar em ihram, o homem pode perfumar o corpo, evitando perfumar os panos. Antes de entrar em ihram, a mulher pode usar um perfume suave. Deve evitar perfume percetível ao passar junto de homens que não sejam o marido ou os seus mahram. Depois de entrar em ihram, nenhum dos dois aplica novo perfume.",
       "question": "Quando pode o homem perfumar o corpo?",
       "answers": [
         "Antes de entrar em ihram",
@@ -42,7 +42,7 @@
     },
     "tawaf": {
       "title": "Dar as voltas à Caaba",
-      "body": "Comece o tawaf em estado de pureza ritual, com a ablução. Se estiver menstruada, aguarde o fim da menstruação e faça o banho ritual. Comece à altura da Pedra Negra. Mantenha a Caaba à sua esquerda e complete sete voltas, passando por fora do muro baixo e curvo. Conte uma volta sempre que regressar à altura da Pedra Negra. Evite empurrar para lhe tocar. Pode suplicar com as suas próprias palavras. Depois, reze duas unidades atrás da estação de Ibrahim se for possível, ou noutro local da mesquita.",
+      "body": "Comece o tawaf em estado de pureza ritual, com a ablução. Se estiver menstruada, aguarde o fim da menstruação e faça o banho ritual. Comece à altura da Pedra Negra. Mantenha a Caaba à sua esquerda e complete sete voltas, passando por fora do muro baixo e curvo. Conte uma volta sempre que regressar à altura da Pedra Negra. Se não conseguir chegar facilmente à Pedra Negra, faça um gesto em direção a ela e pronuncie o takbir ao passar à sua altura. Toque no Canto Iemenita com a mão direita apenas se isso for fácil. Se não o conseguir alcançar, continue a andar sem fazer qualquer gesto em direção a ele. Evite aglomerações nos dois cantos. Pode suplicar com as suas próprias palavras. Depois, reze duas unidades atrás da estação de Ibrahim se for possível, ou noutro local da mesquita.",
       "question": "Quando se completa uma volta?",
       "answers": [
         "Ao regressar à altura da Pedra Negra",
@@ -51,7 +51,7 @@
     },
     "sai": {
       "title": "Caminhar entre Safa e Marwa",
-      "body": "Comece em Safa. O percurso completo até Marwa é o primeiro e o regresso a Safa é o segundo. Conte cada chegada à extremidade oposta. O sétimo termina em Marwa, sem regresso a Safa. Nas elevações, volte-se para a quibla para recordar Allah e suplicar. Os sábios divergem quanto à repetição da súplica na última chegada.",
+      "body": "Comece em Safa. O percurso completo até Marwa é o primeiro e o regresso a Safa é o segundo. Entre as marcas verdes, os homens que o possam fazer em segurança correm. As mulheres caminham ao seu ritmo habitual. Caminhe se correr puder causar danos a si ou a outras pessoas. Conte cada chegada à extremidade oposta. O sétimo termina em Marwa, sem regresso a Safa. Nas elevações, volte-se para a quibla para recordar Allah e suplicar. Os sábios divergem quanto à repetição da súplica na última chegada.",
       "question": "Foi de Safa a Marwa e voltou a Safa. Quantos percursos completou?",
       "answers": [
         "Dois",

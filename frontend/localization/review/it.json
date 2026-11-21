@@ -6,7 +6,7 @@
   "stages": {
     "ihram": {
       "title": "Prepararsi all’ihram",
-      "body": "Se puoi, fai il bagno rituale. L’uomo indossa i due teli dell’ihram. La donna porta abiti coprenti e, durante l’ihram, non indossa né niqab né guanti. Prima di formulare l’intenzione di entrare in ihram, l’uomo può profumare il corpo, evitando i teli. La donna evita un profumo percepibile quando passa tra uomini che non siano suo marito o suoi mahram. Dopo l’ingresso in ihram nessuno dei due applica altro profumo.",
+      "body": "Se puoi, fai il bagno rituale. L’uomo indossa i due teli dell’ihram. La donna porta abiti coprenti e, durante l’ihram, non indossa né niqab né guanti. Prima di formulare l’intenzione di entrare in ihram, l’uomo può profumare il corpo, evitando i teli. Prima di entrare in ihram la donna può usare un profumo leggero. Evita un profumo percepibile quando passa tra uomini che non siano suo marito o suoi mahram. Dopo l’ingresso in ihram nessuno dei due applica altro profumo.",
       "question": "Quando l’uomo può profumare il corpo?",
       "answers": [
         "Prima di entrare in ihram",
@@ -42,7 +42,7 @@
     },
     "tawaf": {
       "title": "Girare intorno alla Kaaba",
-      "body": "Inizia il tawaf in stato di purezza rituale, con l’abluzione. Durante le mestruazioni, attendi che finiscano e fai il bagno rituale. Parti all’altezza della Pietra Nera. Tieni la Kaaba alla tua sinistra e compi sette giri passando all’esterno del muretto curvo. Conta un giro ogni volta che torni all’altezza della Pietra Nera. Evita di spingere per toccarla. Puoi supplicare con parole tue. Al termine, prega due unità dietro la stazione di Ibrahim se è possibile, oppure altrove nella moschea.",
+      "body": "Inizia il tawaf in stato di purezza rituale, con l’abluzione. Durante le mestruazioni, attendi che finiscano e fai il bagno rituale. Parti all’altezza della Pietra Nera. Tieni la Kaaba alla tua sinistra e compi sette giri passando all’esterno del muretto curvo. Conta un giro ogni volta che torni all’altezza della Pietra Nera. Se non puoi raggiungere facilmente la Pietra Nera, indica la pietra e pronuncia il takbir mentre le passi davanti. Tocca l’Angolo Yemenita con la mano destra solo se ti è facile. Se non puoi raggiungerlo, prosegui senza indicarlo. Evita di accalcarti presso entrambi gli angoli. Puoi supplicare con parole tue. Al termine, prega due unità dietro la stazione di Ibrahim se è possibile, oppure altrove nella moschea.",
       "question": "Quando si completa un giro?",
       "answers": [
         "Quando torni all’altezza della Pietra Nera",
@@ -51,7 +51,7 @@
     },
     "sai": {
       "title": "Camminare tra Safa e Marwa",
-      "body": "Comincia da Safa. L’intero percorso fino a Marwa è il primo tragitto. Il ritorno a Safa è il secondo. Conta ogni arrivo all’estremità opposta. Il settimo termina a Marwa e non si torna a Safa. Sulle alture rivolgiti alla qibla per il ricordo di Allah e le suppliche. Gli studiosi hanno opinioni diverse sulla ripetizione della supplica all’ultimo arrivo.",
+      "body": "Comincia da Safa. L’intero percorso fino a Marwa è il primo tragitto. Il ritorno a Safa è il secondo. Tra i segnali verdi gli uomini che possono farlo in sicurezza corrono. Le donne camminano al loro passo abituale. Cammina se correre rischia di fare male a te o ad altri. Conta ogni arrivo all’estremità opposta. Il settimo termina a Marwa e non si torna a Safa. Sulle alture rivolgiti alla qibla per il ricordo di Allah e le suppliche. Gli studiosi hanno opinioni diverse sulla ripetizione della supplica all’ultimo arrivo.",
       "question": "Sei andato da Safa a Marwa e sei tornato a Safa. Quanti tragitti hai compiuto?",
       "answers": [
         "Due",

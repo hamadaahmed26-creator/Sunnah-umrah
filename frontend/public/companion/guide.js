@@ -1,12 +1,12 @@
-import {languages,visibleLanguages,normalizeLocale,localeDirection,translate,localReviewContent} from './locales/languages.js';
+import {isTranslationReview,languages,visibleLanguages,normalizeLocale,localeDirection,translate,localReviewContent} from './locales/languages.js';
 import {mediaPanel,wireMedia} from './live-media.js';
 import {toolsPanel,wireTools} from './pilgrim-tools.js';
 import {completedRecords,archiveCompleted} from './journey-records.js';
 import {worshipGuide} from './worship.js';
 import {stages,helpTopics} from './content.js';
-import {audio} from './audio.js';
+import {audio,approvedReligiousTracks} from './audio.js';
 const root=document.getElementById('app');
-const key='sunnah-umrah.companion.v1';
+const key=isTranslationReview()?'sunnah-umrah.translation-review.v1':'sunnah-umrah.companion.v1';
 const fresh=()=>({step:0,tawaf:0,sai:0,done:false,paused:false});
 let state, storageError=false, answered=false,feedback='',offline=false;
 const clamp=(v,max)=>Number.isInteger(v)?Math.max(0,Math.min(v,max)):0;
@@ -15,7 +15,7 @@ function restore(){
   try{
     const stored=localStorage.getItem(key);
     if(stored) saved=JSON.parse(stored)||{};
-    else {
+    else if(!isTranslationReview()) {
       const oldStep=localStorage.getItem('umrah_tour_step');
       const map=[0,0,1,1,2,3,4,4,4,4,5,5,5,6,6];
       if(oldStep!==null && /^\d+$/.test(oldStep) && Number(oldStep)<map.length) {
@@ -84,8 +84,9 @@ function render(focus=false){
  stopTool();
  const r=route(),lang=state.lang;
  document.documentElement.lang=lang;document.documentElement.dir=document.body.dir=localeDirection(lang);document.body.classList.toggle('easy',state.easy);
- root.innerHTML=`<header><div><a class="brand" href="#home"><i class="mark" aria-hidden="true"></i>${t('Sunnah Umrah','عمرة السُّنّة')}</a><nav>${link('practice',modeName('practice'))}${link('live',modeName('live'))}${link('help',t('Help','المساعدة'))}</nav><div class="tools">${btn('easy',t('Easy mode','الوضع الميسّر'))}<select id="guide-language" aria-label="${t('Language','اللغة')}">${visibleLanguages().map(code=>`<option value="${code}" ${lang===code?'selected':''}>${languages[code].name}</option>`).join('')}</select></div></div></header><main class="wrap">${r==='live'||r==='practice'?journey(r):r==='help'?help():r==='travel'?travel():r==='tools'?toolsPanel(t):r==='makkah'?mediaPanel(t):home()}<p class="status" role="alert">${storageError?t('Storage unavailable. Keep this page open.','تعذّر الحفظ. أبقِ هذه الصفحة مفتوحة.') :''}</p></main><footer>${t('Independent pilgrim companion · Preview for content and usability review','رفيق مستقل للمعتمر · نسخة تجريبية لمراجعة المحتوى وسهولة الاستخدام')}<p id="offline" role="status"></p>${state.easy&&['ar','en'].includes(lang)?`<div class="actions">${btn('listen',t('Listen to controls','استمع إلى شرح الأزرار'))} ${btn('audio-pause',t('Pause audio','إيقاف الصوت مؤقتًا'))} ${btn('replay',t('Replay','إعادة التشغيل'))}<span id="audio-status" role="status"></span></div>`:''}</footer>`;
+ root.innerHTML=`<header><div><a class="brand" href="#home"><i class="mark" aria-hidden="true"></i>${t('Sunnah Umrah','عمرة السُّنّة')}</a><nav>${link('practice',modeName('practice'))}${link('live',modeName('live'))}${link('help',t('Help','المساعدة'))}</nav><div class="tools">${btn('easy',t('Easy mode','الوضع الميسّر'))}<select id="guide-language" aria-label="${t('Language','اللغة')}">${visibleLanguages().map(code=>`<option value="${code}" ${lang===code?'selected':''}>${languages[code].name}</option>`).join('')}</select></div></div></header><main class="wrap">${isTranslationReview()?`<aside class="note">${t('Translation review · Draft wording awaiting human verification.','مراجعة الترجمة · صياغة تجريبية بانتظار المراجعة البشرية.')}</aside>`:''}${r==='live'||r==='practice'?journey(r):r==='help'?help():r==='travel'?travel():r==='tools'?toolsPanel(t):r==='makkah'?mediaPanel(t):home()}<p class="status" role="alert">${storageError?t('Storage unavailable. Keep this page open.','تعذّر الحفظ. أبقِ هذه الصفحة مفتوحة.') :''}</p></main><footer>${t('Independent pilgrim companion · Preview for content and usability review','رفيق مستقل للمعتمر · نسخة تجريبية لمراجعة المحتوى وسهولة الاستخدام')}<p id="offline" role="status"></p>${state.easy&&['ar','en'].includes(lang)?`<div class="actions">${btn('listen',t('Listen to controls','استمع إلى شرح الأزرار'))} ${btn('audio-pause',t('Pause audio','إيقاف الصوت مؤقتًا'))} ${btn('replay',t('Replay','إعادة التشغيل'))}<span id="audio-status" role="status"></span></div>`:''}</footer>`;
  root.querySelector('[data-act=easy]').setAttribute('aria-pressed',String(state.easy));
+ if(Object.hasOwn(approvedReligiousTracks,audio.state.id) && !root.querySelector(`[data-recitation="${audio.state.id}"]`))audio.stop();
  if(r==='makkah')toolCleanup=wireMedia(root,t,()=>audio.stop());
  if(r==='tools')toolCleanup=wireTools(root,t);
  if(r==='help')results('');offlineLabel();audioLabel(lastAudio);
@@ -93,7 +94,17 @@ function render(focus=false){
 }
 function offlineLabel(){document.getElementById('offline').textContent=offline?t('Guide ready offline on this device.','الدليل متاح دون اتصال على هذا الجهاز.'):t('Offline copy has not been confirmed on this device.','لم يتأكد حفظ النسخة دون اتصال على هذا الجهاز.')}
 let lastAudio={status:'idle'};
-function audioLabel(s){const el=document.getElementById('audio-status');if(el)el.textContent=({loading:t('Loading','جارٍ التحميل'),playing:t('Playing','قيد التشغيل'),paused:t('Paused','متوقف مؤقتًا'),blocked:t('Playback blocked. Tap Listen to try again.','تعذّر بدء الصوت. اضغط على الاستماع للمحاولة مجددًا.'),error:t('Audio unavailable','تعذّر تشغيل الصوت'),ended:t('Finished','اكتمل')})[s.status]||''}
+function audioLabel(s){const label=({loading:t('Loading','جارٍ التحميل'),playing:t('Playing','قيد التشغيل'),paused:t('Paused','متوقف مؤقتًا'),blocked:t('Playback blocked. Tap Listen to try again.','تعذّر بدء الصوت. اضغط على الاستماع للمحاولة مجددًا.'),error:t('Audio unavailable','تعذّر تشغيل الصوت'),ended:t('Finished','اكتمل')})[s.status]||'';
+ const navigation=document.getElementById('audio-status');
+ if(navigation)navigation.textContent=s.id?.startsWith('navigation-')?label:'';
+ for(const card of root.querySelectorAll('[data-recitation]')){
+   const selected=card.dataset.recitation===s.id;
+   card.querySelector('[data-recording-status]').textContent=selected?label:'';
+   const active=selected&&['playing','loading'].includes(s.status);
+   card.querySelector('[data-recitation-action="play"]').disabled=active;
+   card.querySelector('[data-recitation-action="pause"]').disabled=!active;
+ }
+}
 audio.subscribe(s=>{lastAudio=s;audioLabel(s)});
 function clearCheck(){answered=false;feedback=''}
 window.addEventListener('hashchange',()=>{audio.stop();clearCheck();render(true)});
@@ -104,6 +115,16 @@ root.addEventListener('change',e=>{
 });
 root.addEventListener('input',e=>{if(e.target.id==='query')results(e.target.value)});
 root.addEventListener('click',e=>{
+ const control=e.target.closest('[data-recitation-action]');
+ if(control){
+   const id=control.closest('[data-recitation]')?.dataset.recitation;
+   if(!Object.hasOwn(approvedReligiousTracks,id))return;
+   const action=control.dataset.recitationAction;
+   if(action==='play')audio.play(id);
+   if(action==='pause'&&audio.state.id===id)audio.pause();
+   if(action==='replay')audio.replay(id);
+   return;
+ }
  if(e.target.closest('[data-publisher-audio]'))audio.stop();
  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,r=route(),p=state[r],oldFocus=a;
  if(a==='live'){go('live');return}
@@ -119,10 +140,10 @@ root.addEventListener('click',e=>{
    else if(a==='review')p.done=false;
    else if(a==='reset'){archiveCompleted(state,r);state[r]=fresh();clearCheck()}
  }
- save();const transition=['next','previous','resume','pause','review','reset'].includes(a);render(transition);
+ save();const transition=['next','previous','resume','pause','review','reset'].includes(a);if(transition)audio.stop();render(transition);
  if(!transition)root.querySelector(`[data-act="${oldFocus}"]:not(:disabled)`)?.focus({preventScroll:true});
 });
 render();
 if('serviceWorker' in navigator){
- navigator.serviceWorker.register('./offline.js').then(()=>navigator.serviceWorker.ready).then(reg=>{if(reg.active?.scriptURL===new URL('./offline.js',import.meta.url).href){offline=true;offlineLabel()}}).catch(()=>{offline=false;offlineLabel()});
+ navigator.serviceWorker.register('./offline.js',{type:'module'}).then(()=>navigator.serviceWorker.ready).then(reg=>{if(reg.active?.scriptURL===new URL('./offline.js',import.meta.url).href){offline=true;offlineLabel()}}).catch(()=>{offline=false;offlineLabel()});
 }

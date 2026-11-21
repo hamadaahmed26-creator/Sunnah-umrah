@@ -22,7 +22,7 @@ export async function familyAPI(req,db,now=Date.now()){
   const sql=(query,...args)=>db.prepare(query).bind(...args);
   const removeExpired=()=>db.batch([
     sql('DELETE FROM family_members WHERE expires<=?',now),
-    sql('UPDATE family_members SET packet=NULL WHERE packet IS NOT NULL AND captured<=?',now-fixLifetime)
+    sql('UPDATE family_members SET packet=NULL,captured=0 WHERE packet IS NOT NULL AND captured<=?',now-fixLifetime)
   ]);
   if(action==='create'||action==='join'){
     const name=typeof body.name==='string'?body.name.trim():'';

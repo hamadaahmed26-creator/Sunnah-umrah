@@ -20,7 +20,9 @@ function setup(missing){
     async match(name){return stored.get(name)?.clone()}
   };
   const self={registration:{scope},addEventListener:(name,fn)=>events[name]=fn,skipWaiting:()=>{active=true},clients:{claim(){}}};
-  vm.runInNewContext(fs.readFileSync(path.join(dir,'offline.js'),'utf8'),{URL,Request,Response,self,caches:{open:async()=>cache},fetch:()=>{throw Error('offline')}});
+  const registry=fs.readFileSync(path.join(dir,'approved-tracks.js'),'utf8').replace('export const ','const ');
+  const sw=fs.readFileSync(path.join(dir,'offline.js'),'utf8').replace("import {approvedRecordings} from './approved-tracks.js';",registry);
+  vm.runInNewContext(sw,{URL,Request,Response,self,caches:{open:async()=>cache},fetch:()=>{throw Error('offline')}});
   const install=()=>new Promise((resolve,reject)=>events.install({waitUntil:promise=>promise.then(resolve,reject)}));
   const get=(name,headers)=>new Promise(resolve=>events.fetch({request:new Request(scope+name,{headers}),respondWith:resolve}));
   return {install,get,stored,isActive:()=>active};

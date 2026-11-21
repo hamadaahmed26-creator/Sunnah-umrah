@@ -6,7 +6,7 @@
   "stages": {
     "ihram": {
       "title": "Préparer l’ihram",
-      "body": "Faites les grandes ablutions si vous le pouvez. L’homme porte les deux pièces de tissu de l’ihram. La femme porte des vêtements couvrants et, en ihram, ne porte ni niqab ni gants. Avant l’intention d’entrer en ihram, l’homme peut parfumer son corps en évitant ses vêtements. La femme évite un parfum perceptible lorsqu’elle passe près d’hommes autres que son mari ou ses mahrams. Une fois en ihram, ni l’un ni l’autre n’applique de nouveau parfum.",
+      "body": "Faites les grandes ablutions si vous le pouvez. L’homme porte les deux pièces de tissu de l’ihram. La femme porte des vêtements couvrants et, en ihram, ne porte ni niqab ni gants. Avant l’intention d’entrer en ihram, l’homme peut parfumer son corps en évitant ses vêtements. Avant d’entrer en ihram, la femme peut utiliser un parfum léger. Elle évite un parfum perceptible lorsqu’elle passe près d’hommes autres que son mari ou ses mahrams. Une fois en ihram, ni l’un ni l’autre n’applique de nouveau parfum.",
       "question": "Quand un homme peut-il parfumer son corps ?",
       "answers": [
         "Avant d’entrer en ihram",
@@ -42,7 +42,7 @@
     },
     "tawaf": {
       "title": "Faire le tour de la Kaaba",
-      "body": "Commencez le tawaf en état de pureté rituelle, avec les ablutions. En cas de règles, attendez leur fin et faites les grandes ablutions. Commencez à hauteur de la Pierre noire. Gardez la Kaaba à votre gauche et faites sept tours en passant à l’extérieur du muret arrondi. Comptez un tour chaque fois que vous revenez à la hauteur de la Pierre noire. Évitez de bousculer les autres pour la toucher. Vous pouvez invoquer Allah avec vos propres mots. Ensuite, priez deux unités derrière la station d’Ibrahim si cela est possible, ou ailleurs dans la mosquée.",
+      "body": "Commencez le tawaf en état de pureté rituelle, avec les ablutions. En cas de règles, attendez leur fin et faites les grandes ablutions. Commencez à hauteur de la Pierre noire. Gardez la Kaaba à votre gauche et faites sept tours en passant à l’extérieur du muret arrondi. Comptez un tour chaque fois que vous revenez à la hauteur de la Pierre noire. Si vous ne pouvez pas atteindre facilement la Pierre noire, faites un geste vers elle et prononcez le takbir en passant à sa hauteur. Touchez le Coin yéménite de la main droite seulement si cela vous est facile. Si vous ne pouvez pas l’atteindre, poursuivez votre chemin sans faire de geste vers lui. Évitez les bousculades aux deux coins. Vous pouvez invoquer Allah avec vos propres mots. Ensuite, priez deux unités derrière la station d’Ibrahim si cela est possible, ou ailleurs dans la mosquée.",
       "question": "Quand un tour est-il complet ?",
       "answers": [
         "Au retour à hauteur de la Pierre noire",
@@ -51,7 +51,7 @@
     },
     "sai": {
       "title": "Marcher entre Safa et Marwa",
-      "body": "Partez de Safa. L’aller jusqu’à Marwa compte pour un trajet et le retour à Safa pour le deuxième. Comptez chaque arrivée à l’autre extrémité. Le septième trajet se termine à Marwa. Il n’y a pas de retour à Safa. Sur les hauteurs, tournez-vous vers la qibla pour le rappel et les invocations. Les savants divergent sur la répétition de l’invocation à la toute dernière arrivée.",
+      "body": "Partez de Safa. L’aller jusqu’à Marwa compte pour un trajet et le retour à Safa pour le deuxième. Entre les repères verts, les hommes courent s’ils peuvent le faire sans danger. Les femmes marchent à leur allure habituelle. Marchez si courir risque de vous blesser ou de blesser quelqu’un. Comptez chaque arrivée à l’autre extrémité. Le septième trajet se termine à Marwa. Il n’y a pas de retour à Safa. Sur les hauteurs, tournez-vous vers la qibla pour le rappel et les invocations. Les savants divergent sur la répétition de l’invocation à la toute dernière arrivée.",
       "question": "Vous êtes allé de Safa à Marwa puis revenu à Safa. Combien de trajets avez-vous faits ?",
       "answers": [
         "Deux",

@@ -6,7 +6,7 @@
   "stages": {
     "ihram": {
       "title": "Prepararse para el ihram",
-      "body": "Haz la ablución mayor si puedes. El hombre viste las dos piezas de tela del ihram. La mujer lleva ropa modesta y, en ihram, prescinde del niqab y los guantes. Antes de tener la intención de entrar en ihram, el hombre puede perfumar su cuerpo sin perfumar las telas. La mujer debe evitar un perfume perceptible cuando pasa cerca de hombres distintos de su esposo o sus mahram. Una vez en ihram, ninguno de los dos se aplica perfume nuevo.",
+      "body": "Haz la ablución mayor si puedes. El hombre viste las dos piezas de tela del ihram. La mujer lleva ropa modesta y, en ihram, prescinde del niqab y los guantes. Antes de tener la intención de entrar en ihram, el hombre puede perfumar su cuerpo sin perfumar las telas. Antes de entrar en ihram, la mujer puede usar un perfume suave. La mujer debe evitar un perfume perceptible cuando pasa cerca de hombres distintos de su esposo o sus mahram. Una vez en ihram, ninguno de los dos se aplica perfume nuevo.",
       "question": "¿Cuándo puede un hombre perfumar su cuerpo?",
       "answers": [
         "Antes de entrar en ihram",
@@ -42,7 +42,7 @@
     },
     "tawaf": {
       "title": "Dar las vueltas alrededor de la Kaaba",
-      "body": "Comienza el tawaf en estado de pureza ritual, con la ablución. Si estás menstruando, espera a que termine y realiza la ablución mayor. Empieza a la altura de la Piedra Negra. Mantén la Kaaba a tu izquierda y completa siete vueltas pasando por fuera del muro bajo y curvo. Cuenta una vuelta cada vez que vuelvas a la altura de la Piedra Negra. Evita empujar para tocarla. Puedes suplicar con tus propias palabras. Después, reza dos unidades detrás de la estación de Ibrahim si es posible, o en otro lugar de la mezquita.",
+      "body": "Comienza el tawaf en estado de pureza ritual, con la ablución. Si estás menstruando, espera a que termine y realiza la ablución mayor. Empieza a la altura de la Piedra Negra. Mantén la Kaaba a tu izquierda y completa siete vueltas pasando por fuera del muro bajo y curvo. Cuenta una vuelta cada vez que vuelvas a la altura de la Piedra Negra. Si no puedes llegar fácilmente a la Piedra Negra, señala hacia ella y pronuncia el takbir al pasar a su altura. Toca la Esquina Yemení con la mano derecha solo si puedes hacerlo con facilidad. Si no llegas, sigue caminando sin señalarla. Evita las aglomeraciones en ambas esquinas. Puedes suplicar con tus propias palabras. Después, reza dos unidades detrás de la estación de Ibrahim si es posible, o en otro lugar de la mezquita.",
       "question": "¿Cuándo se completa una vuelta?",
       "answers": [
         "Al volver a la altura de la Piedra Negra",
@@ -51,7 +51,7 @@
     },
     "sai": {
       "title": "Caminar entre Safa y Marwa",
-      "body": "Empieza en Safa. El recorrido completo hasta Marwa es el primer trayecto. El regreso a Safa es el segundo. Cuenta cada llegada al extremo contrario. El séptimo trayecto termina en Marwa y no se vuelve a Safa. En las colinas, oriéntate hacia la alquibla para recordar a Allah y suplicar. Los sabios difieren sobre repetir la súplica en la última llegada.",
+      "body": "Empieza en Safa. El recorrido completo hasta Marwa es el primer trayecto. El regreso a Safa es el segundo. Entre las señales verdes, los hombres que pueden hacerlo con seguridad corren. Las mujeres caminan a su paso habitual. Si correr pudiera causarte daño o dañar a otras personas, camina. Cuenta cada llegada al extremo contrario. El séptimo trayecto termina en Marwa y no se vuelve a Safa. En las colinas, oriéntate hacia la alquibla para recordar a Allah y suplicar. Los sabios difieren sobre repetir la súplica en la última llegada.",
       "question": "Has ido de Safa a Marwa y has regresado a Safa. ¿Cuántos trayectos has completado?",
       "answers": [
         "Dos",

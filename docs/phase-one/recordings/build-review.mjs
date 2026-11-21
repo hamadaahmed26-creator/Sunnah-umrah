@@ -3,7 +3,9 @@ import {createHash} from 'node:crypto';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 const here=dirname(fileURLToPath(import.meta.url));
-const player=readFileSync(process.argv[2] || resolve(here,'audio.js'),'utf8');
+const audioPath=process.argv[2] || resolve(here,'../../../frontend/public/companion/audio.js');
+const manifest=readFileSync(resolve(dirname(audioPath),'approved-tracks.js'),'utf8');
+const player=readFileSync(audioPath,'utf8').replace("import {approvedRecordings} from './approved-tracks.js';",manifest);
 const register=JSON.parse(readFileSync(resolve(here,'audio-register.json')));
 const track=register.assets.find(asset=>asset.id==='takbir-asem-khidhr');
 const media=readFileSync(resolve(here,track.fixture));
@@ -18,7 +20,7 @@ const html=`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="vie
 <p>Ar-eg-الله أكبر.oga by Assem Khidhr. Original audio, unmodified. <a href="${track.rights_evidence}">Source</a>. <a href="${track.license_url}">CC BY-SA 4.0</a>.</p></main>
 <script type="module">
 ${player}
-const playerForReview=createPlayer(() => new Audio(),Object.freeze({'review-takbir':'data:audio/ogg;base64,${media.toString('base64')}'}));
+const playerForReview=createPlayer(() => new Audio(),Object.freeze({'review-takbir':new URL('./takbir.oga',document.baseURI).href}));
 playerForReview.subscribe(state => document.querySelector('#status').textContent=state.status);
 document.querySelector('#play').onclick=()=>playerForReview.play('review-takbir');
 document.querySelector('#pause').onclick=()=>playerForReview.pause();

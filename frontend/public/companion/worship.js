@@ -1,3 +1,4 @@
+import {approvedRecordings} from './approved-tracks.js';
 import {recitations} from './recitations.js';
 // Text for the precise points described in Jabir's report (Muslim 1218a).
 // The English meanings and reading aids are separate from the Arabic wording.
@@ -23,6 +24,15 @@ const cards = {
     source:'https://sunnah.com/muslim:1218a',reference:['Muslim 1218a · Jabir’s account','مسلم ١٢١٨ · حديث جابر']
   }
 };
+const escape = value => String(value).replace(/[&<>"']/g, char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+export function recordingControls(id, record, say){
+  return `<div data-recitation="${id}" class="recording-controls"><div class="actions">
+  <button data-recitation-action="play">${say('Listen','استمع')}</button>
+  <button data-recitation-action="pause" disabled>${say('Pause audio','إيقاف الصوت مؤقتًا')}</button>
+  <button data-recitation-action="replay">${say('Replay','إعادة التشغيل')}</button></div>
+  <span data-recording-status role="status"></span>
+  <small><a href="${escape(record.source)}" target="_blank" rel="noopener">${escape(record.attribution)}</a></small></div>`;
+}
 export function worshipGuide(stage,count,lang,{compact=false,local=null,translate=null}={}){
   const i=lang==='ar'?1:0;
   const say=(en,ar)=>translate?translate(en,ar):i?ar:en;
@@ -35,14 +45,18 @@ export function worshipGuide(stage,count,lang,{compact=false,local=null,translat
   const card=id=>{
     const c=cards[id], text=recitations[id], variant=local?.recitations?.[id];
     const heading=c?say(...c.title):'';
-    const reading=variant?.pronunciation||text.reading;
+    const reading=variant?.pronunciation||(i?text.arabic:text.reading);
     const meaning=variant?.meaning||(i?text.arMeaning:text.meaning);
     const reader=lesson[id]?.()||(id==='talbiyah'?recording(1284,'Listen to the Talbiyah','استمع إلى التلبية'):'');
     const detail=(title,body)=>`<details><summary>${title}</summary>${body}</details>`;
+    const approved = approvedRecordings[id];
+    const listen = approved ? recordingControls(id, approved, say) : detail(say('Listen','استمع'),
+      `<p>${say('In-app human recording awaiting verification.','التسجيل البشري داخل التطبيق بانتظار التحقق.')}</p>${reader}`);
     return `<section class="recitation quick-dua">${heading?`<h3>${heading}</h3>`:''}<small>${say('Arabic','العربية')}</small><p class="dua" lang="ar" dir="rtl">${text.arabic}</p>
-    ${detail(say('Pronunciation','النطق'),`<p class="reading" dir="auto">${reading}</p><small>${say('A reading aid. Arabic sounds may differ.','تقريب للنطق، وقد تختلف الأصوات عن العربية.')}</small>`)}
+    ${approved?listen:''}
+    ${detail(say('Pronunciation','النطق'),`<p class="reading" lang="${lang}" dir="auto">${reading}</p><small>${say('A reading aid. Arabic sounds may differ.','تقريب للنطق، وقد تختلف الأصوات عن العربية.')}</small>`)}
     ${detail(say('Meaning','المعنى'),`<p>${meaning}</p>`)}
-    ${detail(say('Listen','استمع'),reader||`<p>${say('Human recording awaiting verification.','التسجيل البشري بانتظار التحقق.')}</p>`)}
+    ${approved?'':listen}
     ${c?detail(say('Source','المصدر'),`<a href="${c.source}" target="_blank" rel="noopener">${say(...c.reference)}</a>`):''}</section>`;
   };
   if(['miqat','talbiyah','haram'].includes(stage))return card(stage);

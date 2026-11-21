@@ -12,9 +12,12 @@ export const languages = Object.freeze({
 
 const sourceLanguages = new Set(['ar','en']);
 const localHost = () => ['localhost','127.0.0.1','[::1]'].includes(globalThis.location?.hostname);
+export const isTranslationReview=() => Object.keys(reviewPacks).length>0 &&
+  (localHost() || (globalThis.location?.origin==='https://sunnah-umrah-pilgrim-preview.tastygrebe11.chatgpt.site' &&
+   globalThis.location.pathname.startsWith('/language-review/')));
 export function visibleLanguages(){
   return Object.keys(languages).filter(code =>
-    sourceLanguages.has(code) || (localHost() && Object.hasOwn(reviewPacks,code))
+    sourceLanguages.has(code) || (isTranslationReview() && Object.hasOwn(reviewPacks,code))
   );
 }
 export function normalizeLocale(code){
@@ -26,9 +29,9 @@ export function localeDirection(code){
 export function translate(code,en,ar){
   if(code==='ar')return ar ?? en;
   if(code==='en')return en;
-  return localHost() ? reviewPacks[code]?.interface[en] ?? en : en;
+  return isTranslationReview() ? reviewPacks[code]?.interface[en] ?? en : en;
 }
 export function localReviewContent(code,section,id){
-  if(!localHost())return undefined;
+  if(!isTranslationReview())return undefined;
   return reviewPacks[code]?.[section]?.[id];
 }
