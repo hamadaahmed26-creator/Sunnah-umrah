@@ -34,7 +34,7 @@ export function saiProgressHtml(count,say){
   return '<section class="sai-route" aria-label="'+say('Seven Sa’i journeys','أشواط السعي السبعة')+'">'
     +'<div class="sai-route-heading"><h2>'+tripTitle+'</h2><strong>'+direction+'</strong></div>'
     +'<p role="status">'+prompt+'</p>'
-    +'<div role="progressbar" aria-label="'+say('One-way trips completed','الأشواط المكتملة')+'" aria-valuemin="0" aria-valuemax="7" aria-valuenow="'+state.completed+'"></div>'
+    +'<div role="progressbar" aria-label="'+say('One-way trips completed','الأشواط المكتملة')+'" aria-valuemin="0" aria-valuemax="7" aria-valuenow="'+state.completed+'" style="--percent:'+((state.completed/7)*100).toFixed(2)+'%"></div>'
     +'<details><summary>'+say('See all seven trips','عرض الأشواط السبعة')+'</summary><ol class="sai-trip-list">'+rows+'</ol></details>'
     +'</section>';
 }
