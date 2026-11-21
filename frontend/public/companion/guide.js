@@ -67,18 +67,18 @@ function journey(m){
   if(p.paused)return `<article class="panel">${back()}<h1>${t('Journey paused','توقّفت الرحلة مؤقتًا')}</h1><p>${modeName(m)} · ${d.title}</p>${btn('resume',t('Resume','استئناف'),'primary')} ${link('help',t('I need help','أحتاج إلى مساعدة'))}</article>`;
   let counted=['sai','tawaf'].includes(s.id),count=p[s.id],allowed=(!counted||count===7)&&(!practice||answered);
   const counter=counted?`<section class="counter ${practice?'':'live-counter'}"><span>${s.id==='sai'?t('Completed one-way trips','الأشواط المكتملة باتجاه واحد'):t('Completed circuits','الأشواط المكتملة')}</span><strong aria-live="polite">${count} / 7</strong><p>${s.id==='sai'?(count===7?t('Finish at Marwah','النهاية عند المروة'):count%2?t('Next · Marwah to Safa','التالي · من المروة إلى الصفا'):t('Next · Safa to Marwah','التالي · من الصفا إلى المروة')):''}</p>${btn('count',s.id==='sai'?(count===7?t('Seven trips complete','اكتملت الأشواط السبعة'):count%2?t('I’ve reached Safa','وصلت إلى الصفا'):t('I’ve reached Marwah','وصلت إلى المروة')):t('I’ve completed one circuit','أتممت شوطًا'),'primary',count===7)} ${btn('undo',t('Subtract one','إنقاص شوط'),'',count===0)}${!practice?btn('pause',t('Pause','إيقاف مؤقت')):''}</section>`:'';
-  const navigation=`<nav class="journey-navigation" aria-label="${t('Journey navigation','التنقل في الرحلة')}">${btn(p.step?'previous':'step-home',t('Back','رجوع'))}${btn('next',p.step===6?t('Finish','إنهاء'):t('Next','التالي'),'primary',!allowed)}</nav>`;
+  const navigation=`<nav id="journey-navigation" class="journey-navigation" aria-label="${t('Journey navigation','التنقل في الرحلة')}">${btn(p.step?'previous':'step-home',t('Back','رجوع'))}${btn('next',p.step===6?t('Finish','إنهاء'):t('Next','التالي'),'primary',!allowed)}</nav>`;
   const answers=practice?[(p.step+1)%2,p.step%2].map(i=>btn('answer-'+i,d.answers[i])).join(' '):'';
   return `<article class="panel"><div class="progress" aria-hidden="true">${stages.map((_,i)=>`<i class="${i<=p.step?'on':''}"></i>`).join('')}</div><span class="eyebrow">${modeName(m)} · ${p.step+1} / 7</span><h1>${d.title}</h1>${navigation}${!practice&&counted?counter:''}${s.id==='sai'?saiProgressHtml(count,t):''}${practice?`<p class="note">${t('Practice only. This rehearsal does not perform any rite.','هذا تدريب تعليمي فقط ولا يُعدّ أداءً للنسك.')}</p>`:''}${!practice&&counted?`<details class="step-instructions"><summary>${t('Full instructions','التعليمات الكاملة')}</summary><p>${d.body}</p></details>`:`<p>${d.body}</p>`}${practice&&s.id==='sai'?`<figure class="tripchart"><figcaption>${t('Where each trip ends','نهاية كل شوط')}</figcaption><ol>${Array.from({length:7},(_,i)=>`<li><b>${i+1}</b> ${i%2?t('Safa','الصفا'):t('Marwah','المروة')}</li>`).join('')}</ol></figure>`:''}
   ${worshipGuide(s.id,count,state.lang,{compact:!practice,translate:t,local:{recitations:Object.fromEntries(['miqat','talbiyah','haram','stone','corner','opening','begin','hill'].map(id=>[id,localReviewContent(state.lang,'recitations',id)]))}})}
   ${practice&&counted?counter:''}
   ${practice?`<section><h3>${d.question}</h3><div class="actions">${answers}</div><p role="status">${feedback}</p></section>`:''}
-  ${navigation}<div class="actions">${!practice&&counted?'':btn('pause',t('Pause','إيقاف مؤقت'))}</div>
+  <div class="end-of-step-controls"><button data-act="jump-to-controls" class="return-to-controls" type="button">${t('Return to Back and Next','العودة إلى السابق والتالي')}</button>${!practice&&counted?'':btn('pause',t('Pause','إيقاف مؤقت'))}</div>
   ${link('help',t('I need help','أحتاج إلى مساعدة'))}
   <details><summary>${t('Sources and references','المصادر والمراجع')}</summary><ul>${refs(s)}</ul></details></article>`;
 }
 function help(){
-  return `<article class="panel">${back()}<span class="eyebrow">${t('Pilgrim support','مساعدة المعتمر')}</span><h1>${t('What do you need help with?','كيف يمكننا مساعدتك؟')}</h1><label for="query">${t('Search guidance','البحث في الدليل')}</label><input id="query" type="search" placeholder="${t('Try “perfume” or “family”','جرّب «الطيب» أو «أهلي»')}"><div class="tiles help-gps-shortcuts">${mapTiles()}</div><div id="results"></div><div class="actions">${link('live',modeName('live'))}${link('practice',modeName('practice'))}</div></article>`;
+  return `<article class="panel">${back()}<span class="eyebrow">${t('Pilgrim support','مساعدة المعتمر')}</span><h1>${t('What do you need help with?','كيف يمكننا مساعدتك؟')}</h1><label for="query">${t('Search guidance','البحث في الدليل')}</label><input id="query" type="search" placeholder="${t('Try “perfume” or “family”','جرّب «الطيب» أو «أهلي»')}"><div id="results"></div><div class="actions">${link('live',modeName('live'))}${link('practice',modeName('practice'))}</div></article>`;
 }
 function results(q){
  const items=[...helpTopics,...stages].filter(s=>(localized(s,s.sources?'stages':'help').title+' '+localized(s,s.sources?'stages':'help').body).toLocaleLowerCase().includes(q.trim().toLocaleLowerCase()));
@@ -138,6 +138,7 @@ root.addEventListener('click',e=>{
  }
  if(e.target.closest('[data-publisher-audio]'))audio.stop();
  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,r=route(),p=state[r],oldFocus=a;
+ if(a==='jump-to-controls'){root.querySelector('#journey-navigation')?.scrollIntoView({behavior:'smooth',block:'center'});return}
  if(a==='go-back'){go(previousRoute!==r?previousRoute:'home');return}
  if(a==='step-home'){go('home');return}
  if(a==='live'){go('live');return}
