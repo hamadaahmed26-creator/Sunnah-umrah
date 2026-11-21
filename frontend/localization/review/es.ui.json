@@ -176,6 +176,8 @@
     "Record the trip only after you arrive.": "Registra el trayecto únicamente después de llegar.",
     "Seven Sa’i journeys": "Los siete trayectos del sa'i",
     "One-way trips completed": "Trayectos de ida completados",
-    "See all seven trips": "Ver los siete trayectos"
+    "See all seven trips": "Ver los siete trayectos",
+    "Offline map not confirmed. Reopen this page while connected, then retry.": "No se ha confirmado el mapa sin conexión. Vuelve a abrir esta página con internet e inténtalo de nuevo.",
+    "Offline map files saved on this device. Try Airplane Mode to confirm. Family updates still need internet.": "Los archivos del mapa sin conexión se han guardado en este dispositivo. Compruébalo en modo Avión. Las posiciones familiares necesitan internet para actualizarse."
   }
 }
