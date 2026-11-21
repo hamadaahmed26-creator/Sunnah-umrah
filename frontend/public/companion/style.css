@@ -50,3 +50,11 @@
 .circuit-marker::after{content:"";position:absolute;right:0;width:1.1rem;height:1.1rem;background:#075a47;border:3px solid white;outline:2px solid #075a47;border-radius:50%;transform:translate(50%,-50%)}
 .practice-circuit input[type=range]{display:block;width:100%;min-height:44px;accent-color:#075a47}
 .practice-circuit output,.practice-circuit small{display:block;margin-block:.5rem}
+.tawaf-model .model-stage{margin-block:1rem;border-radius:1.1rem;overflow:hidden;background:#eae2ce;border:1px solid #c7b99b}
+.model-stage svg{display:block;width:100%;height:auto}
+.model-stage [data-model-scene]{max-width:38rem;margin:auto}
+.model-corners{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;max-width:38rem;margin:auto;padding:0 .6rem .85rem}
+.model-corners button{display:block;min-width:0;min-height:48px;margin:0;padding:.45rem .3rem;border:2px solid #00655c;color:#004c46;background:#fffdf4;border-radius:.65rem;font-size:1rem;font-weight:700}
+.model-corners [data-corner=yemeni]{border-color:#865323;color:#653a14}
+.model-corners button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,inset 0 -3px 0 currentColor}
+.tawaf-model [data-model-note]{min-height:2.8em}
