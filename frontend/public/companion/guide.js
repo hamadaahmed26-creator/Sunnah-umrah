@@ -16,7 +16,7 @@ function restore(){
   try{
     const stored=localStorage.getItem(key);
     if(stored) saved=JSON.parse(stored)||{};
-    else if(!isTranslationReview()) {
+    else if(progressStorageKey()==='sunnah-umrah.companion.v1') {
       const oldStep=localStorage.getItem('umrah_tour_step');
       const map=[0,0,1,1,2,3,4,4,4,4,5,5,5,6,6];
       if(oldStep!==null && /^\d+$/.test(oldStep) && Number(oldStep)<map.length) {

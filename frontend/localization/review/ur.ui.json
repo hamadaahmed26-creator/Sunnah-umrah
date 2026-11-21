@@ -179,6 +179,14 @@
     "See all seven trips": "تمام سات چکر دیکھیں",
     "Offline map not confirmed. Reopen this page while connected, then retry.": "آف لائن نقشے کی تصدیق نہیں ہوئی۔ انٹرنیٹ سے جڑ کر صفحہ دوبارہ کھولیں اور پھر کوشش کریں۔",
     "Offline map files saved on this device. Try Airplane Mode to confirm. Family updates still need internet.": "نقشے کی فائلیں اس فون میں محفوظ ہیں۔ تصدیق کے لیے ایئرپلین موڈ آزمائیں۔ خاندان کے مقام کی تازہ کاری کے لیے انٹرنیٹ درکار ہے۔",
-    "Private audio sample — NOT approved for worship playback.": "نجی جائزے کے لیے آڈیو نمونہ — عبادت میں استعمال کے لیے منظور شدہ نہیں۔"
+    "Private audio sample — NOT approved for worship playback.": "نجی جائزے کے لیے آڈیو نمونہ — عبادت میں استعمال کے لیے منظور شدہ نہیں۔",
+    "Saved gate": "محفوظ دروازہ",
+    "Save a location estimate on this device. Check the gate sign and floor yourself.": "اس آلے پر اندازاً مقام محفوظ کریں۔ دروازے کا نشان اور منزل خود دیکھ لیں۔",
+    "Forget my saved gate": "میرا محفوظ دروازہ حذف کریں",
+    "Could not save or remove the gate on this device.": "اس آلے پر دروازہ محفوظ یا حذف نہیں ہو سکا۔",
+    "Replace my saved gate": "میرا محفوظ دروازہ تبدیل کریں",
+    "Save the gate where I am standing": "جس دروازے پر کھڑا ہوں اسے محفوظ کریں",
+    "Getting your location…": "آپ کا مقام معلوم کیا جا رہا ہے…",
+    "Location is too uncertain to save this gate. Try again outdoors.": "دروازہ محفوظ کرنے کے لیے مقام کی درستگی ناکافی ہے۔ کھلی جگہ پر دوبارہ کوشش کریں۔"
   }
 }

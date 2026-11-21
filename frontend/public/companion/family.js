@@ -1,4 +1,5 @@
 import {isTranslationReview,progressStorageKey,localeDirection,normalizeLocale,translate} from './locales/languages.js';
+import {captureGate,readSavedGate,writeSavedGate} from './saved-gate.js';
 import {gates} from './maps/gates.js';
 import {newKey,seal,open} from './family-crypto.js';
 let pref={};
@@ -19,6 +20,9 @@ $('family-page').innerHTML=`<div class="family-navigation"><button id="page-back
 <button id="start" class="primary">${t('Start sharing my location','بدء مشاركة موقعي')}</button><button id="stop" class="critical" hidden>${t('Stop sharing','إيقاف مشاركة الموقع')}</button><button id="leave">${t('Leave group and delete my entry','مغادرة المجموعة وحذف بياناتي')}</button></section>
 <p id="connection" role="status"></p><p id="notice" role="status"></p><p id="offline-copy" role="status"></p>
 <button id="locate">${t('Find my position on this device','اعرض موقعي على هذا الجهاز')}</button><button id="local-stop" hidden>${t('Stop using my position','إيقاف استخدام موقعي')}</button><p id="gps-status" role="status"></p><p id="own" role="status"></p>
+${gateMode?`<section id="personal-gate"><h2>${t('Saved gate','الباب المحفوظ')}</h2>
+<p>${t('Save a location estimate on this device. Check the gate sign and floor yourself.','احفظ موقعًا تقديريًا على هذا الجهاز. تحقّق بنفسك من لافتة الباب والطابق.')}</p>
+<p id="saved-summary"></p><button id="save-gate"></button><button id="forget-gate" hidden>${t('Forget my saved gate','حذف الباب المحفوظ')}</button><p id="gate-status" role="status"></p></section>`:''}
 <div id="family-map" aria-label="${title}"></div><p id="map-info">${t('Offline map around the Haram. Gate pins are approximate.','خريطة محيط الحرم دون اتصال. مواقع الأبواب تقريبية.')}</p>
 <label>${gateMode?t('Choose a mapped gate','اختر بابًا على الخريطة'):t('Choose a family member','اختر أحد أفراد العائلة')}<select id="target"></select></label>
 <p id="detail" role="status"></p><a id="walk" hidden rel="noopener noreferrer" target="_blank">${t('Walking directions in Apple Maps · internet may be required','اتجاهات المشي في خرائط Apple · قد يلزم الإنترنت')}</a>`;
@@ -26,6 +30,12 @@ $('page-back').addEventListener('click',()=>{
  try{if(document.referrer&&new URL(document.referrer).origin===location.origin){history.back();return;}}catch{}
  location.href='./index.html';
 });
+const gateKey=progressStorageKey()+'.saved-gate-v1';
+const gateStorageError=()=>t('Could not save or remove the gate on this device.','تعذّر حفظ الباب أو حذفه على هذا الجهاز.');
+let savedGate=null,gateRequest=0,gateBusy=false;
+if(gateMode){
+ try{savedGate=readSavedGate(localStorage,gateKey)}catch{$('gate-status').textContent=gateStorageError()}
+}
 const map=L.map('family-map',{zoomControl:false}).setView([21.4225,39.8262],17);
 L.control.zoom({zoomInTitle:t('Zoom in','تكبير الخريطة'),zoomOutTitle:t('Zoom out','تصغير الخريطة')}).addTo(map);
 map.attributionControl.addAttribution('<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>');
@@ -38,7 +48,7 @@ fetch('./maps/haram.json').then(r=>r.json()).then(features=>{
 const renderer=L.canvas({padding:.2});
 for(const g of gates){L.circleMarker([g.lat,g.lng],{radius:4,color:'#765325'}).addTo(map).bindTooltip(t(g.name_en,g.name_ar));}
 let session,local=null,peers=[],connected=false,watch=null,sharing=false,generation=0,pollBusy=false,publishing=false,lastSent=0;
-const key=isTranslationReview()?'umrah-family-review-session-v1':'umrah-family-session-v1';
+const key=progressStorageKey()==='sunnah-umrah.translation-review.v1'?'umrah-family-review-session-v1':'umrah-family-session-v1';
 try{session=JSON.parse(sessionStorage.getItem(key))}catch{}
 function save(){
  try{
@@ -55,7 +65,7 @@ function clearSession(){
  clearInvitation();save();
 }
 const notice=text=>{$('notice').textContent=text};
-const fresh=fix=>fix && Date.now()-fix.captured<60000;
+const fresh=fix=>fix && fix.captured<=Date.now() && Date.now()-fix.captured<60000;
 const when=ms=>new Date(ms).toLocaleTimeString(lang);
 const metres=new Intl.NumberFormat(lang,{style:'unit',unit:'meter',unitDisplay:'short',maximumFractionDigits:0});
 const stats=p=>when(p.captured)+' · ±'+metres.format(p.accuracy);
@@ -77,10 +87,21 @@ function render(){
  const members=peers.filter(row=>row.id!==session?.id && row.fix);
  for(const row of members)marker(row.fix,row.name,online&&fresh(row.fix)?'#14604c':'#815528');
  const targets=gateMode?gates.map(g=>({id:String(g.id),name:t(g.name_en,g.name_ar),fix:g})):members;
+ if(gateMode){
+   const savedLabel=t('Saved gate','الباب المحفوظ');
+   $('save-gate').textContent=savedGate?t('Replace my saved gate','استبدال الباب المحفوظ'):t('Save the gate where I am standing','احفظ الباب الذي أقف عنده');
+   $('save-gate').disabled=gateBusy;
+   $('forget-gate').hidden=!savedGate;
+   $('saved-summary').textContent=savedGate?new Date(savedGate.captured).toLocaleString(lang)+' · ±'+metres.format(savedGate.accuracy):'';
+   if(savedGate){targets.unshift({id:'saved',name:savedLabel,fix:savedGate});marker(savedGate,savedLabel,'#633d76')}
+ }
  const select=$('target'),id=select.value;
- select.replaceChildren(new Option(t('Select…','اختر…'),''));
- for(const row of targets)select.add(new Option(row.name,row.id));
- select.value=id;
+ // Preserve the native picker while a pilgrim is choosing a destination.
+ if(select.options.length!==targets.length+1||targets.some((target,i)=>select.options[i+1].value!==target.id||select.options[i+1].text!==target.name)){
+   select.replaceChildren(new Option(t('Select…','اختر…'),''));
+   for(const row of targets)select.add(new Option(row.name,row.id));
+   select.value=targets.some(row=>row.id===id)?id:'';
+ }
  const row=targets.find(r=>r.id===select.value);
  $('walk').hidden=!row;$('walk').removeAttribute('href');
  let detail='';
@@ -90,7 +111,7 @@ function render(){
    if(local){
     const distance=map.distance([local.lat,local.lng],[f.lat,f.lng]);
     detail+=' · '+metres.format(distance)+' '+t('straight-line estimate','تقدير بخط مستقيم');
-    if(fresh(local)&&distance>2*(local.accuracy+(f.accuracy||0))){
+    if(fresh(local)&&(gateMode||fresh(f))&&distance>2*(local.accuracy+(f.accuracy||0))){
       const rad=Math.PI/180,delta=(f.lng-local.lng)*rad;
       const bearing=(Math.atan2(Math.sin(delta)*Math.cos(f.lat*rad),Math.cos(local.lat*rad)*Math.sin(f.lat*rad)-Math.sin(local.lat*rad)*Math.cos(f.lat*rad)*Math.cos(delta))/rad+360)%360;
       detail+=' · '+Math.round(bearing)+'° '+t('from true north','من الشمال الحقيقي');
@@ -102,7 +123,51 @@ function render(){
  }else if(!gateMode&&session){detail=peers.filter(r=>r.id!==session.id).map(r=>r.name).join(', ')||t('Waiting for another member','بانتظار عضو آخر');}
  $('detail').textContent=detail;
 }
-$('target').onchange=()=>{const id=$('target').value;const f=gateMode?gates.find(g=>String(g.id)===id):peers.find(p=>p.id===id)?.fix;if(f)map.setView([f.lat,f.lng],17);render()};
+$('target').onchange=()=>{const id=$('target').value;const f=gateMode?(id==='saved'?savedGate:gates.find(g=>String(g.id)===id)):peers.find(p=>p.id===id)?.fix;if(f)map.setView([f.lat,f.lng],17);render()};
+function selectPersonalGate(){
+ render();$('target').value='saved';
+ map.setView([savedGate.lat,savedGate.lng],17);render();
+}
+if(gateMode){
+ if(savedGate)selectPersonalGate();
+ $('save-gate').onclick=()=>{
+   if(gateBusy)return;
+   const status=$('gate-status');
+   if(!navigator.geolocation){
+     status.textContent=t('This browser cannot access your location. Check location permissions or use a supported browser.','لا يستطيع هذا المتصفح الوصول إلى موقعك. تحقّق من أذونات الموقع أو استخدم متصفحًا مدعومًا.');
+     return;
+   }
+   const request=++gateRequest;
+   gateBusy=true;status.textContent=t('Getting your location…','جارٍ تحديد موقعك…');render();
+   function failure(error){
+     if(request!==gateRequest)return;
+     gateBusy=false;
+     status.textContent=error?.code===1?t('Location permission denied. Check Safari location settings.','رُفض إذن الموقع. راجع إعدادات الموقع في سفاري.'):t('Could not get a fresh position. Check signs or ask staff.','تعذّر تحديد موقع حديث. راجع اللوحات أو اسأل الموظفين.');
+     render();
+   }
+   try{navigator.geolocation.getCurrentPosition(position=>{
+     if(request!==gateRequest)return;
+     gateBusy=false;
+     const point=captureGate(position);
+     if(!point){status.textContent=t('Location is too uncertain to save this gate. Try again outdoors.','دقة الموقع غير كافية لحفظ هذا الباب. حاول مجددًا في مكان مفتوح.');render();return}
+     try{writeSavedGate(localStorage,gateKey,point)}catch{status.textContent=gateStorageError();render();return}
+     savedGate=point;local=point;status.textContent=t('Saved gate','الباب المحفوظ');selectPersonalGate();
+   },failure,{enableHighAccuracy:true,maximumAge:0,timeout:15000})}catch(error){failure(error)}
+ };
+ $('forget-gate').onclick=()=>{
+   gateRequest++;gateBusy=false;
+   try{writeSavedGate(localStorage,gateKey,null);if(local===savedGate)local=null;savedGate=null;$('gate-status').textContent=''}
+   catch{$('gate-status').textContent=gateStorageError()}
+   render();
+ };
+ window.addEventListener('storage',event=>{
+   if(event.key!==gateKey && event.key!==null)return;
+   gateRequest++;gateBusy=false;
+   try{if(local===savedGate)local=null;savedGate=readSavedGate(localStorage,gateKey);$('gate-status').textContent=''}catch{$('gate-status').textContent=gateStorageError()}
+   render();
+ });
+ window.addEventListener('pagehide',()=>{gateRequest++;gateBusy=false});
+}
 async function api(action,body,auth=session?.secret){
  const response=await fetch('/api/family/'+action,{method:body?'POST':'GET',cache:'no-store',signal:AbortSignal.timeout(12000),headers:{...(auth?{Authorization:'Bearer '+auth}:{}),...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});
  if(!response.ok)throw Object.assign(Error('Family request failed'),{status:response.status});

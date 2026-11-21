@@ -179,6 +179,14 @@
     "See all seven trips": "Vedi tutti e sette i tratti",
     "Offline map not confirmed. Reopen this page while connected, then retry.": "La mappa offline non è stata confermata. Riapri questa pagina connesso a Internet, poi riprova.",
     "Offline map files saved on this device. Try Airplane Mode to confirm. Family updates still need internet.": "I file della mappa offline sono salvati sul dispositivo. Verifica in modalità Aereo. Per aggiornare le posizioni dei familiari serve comunque Internet.",
-    "Private audio sample — NOT approved for worship playback.": "Campione audio per revisione privata — NON approvato per l'uso nel culto."
+    "Private audio sample — NOT approved for worship playback.": "Campione audio per revisione privata — NON approvato per l'uso nel culto.",
+    "Saved gate": "Porta salvata",
+    "Save a location estimate on this device. Check the gate sign and floor yourself.": "Salva una posizione approssimativa sul dispositivo. Controlla il cartello della porta e il piano.",
+    "Forget my saved gate": "Dimentica la mia porta",
+    "Could not save or remove the gate on this device.": "Impossibile salvare o rimuovere la porta su questo dispositivo.",
+    "Replace my saved gate": "Sostituisci la porta salvata",
+    "Save the gate where I am standing": "Salva la porta dove mi trovo",
+    "Getting your location…": "Ricerca della posizione…",
+    "Location is too uncertain to save this gate. Try again outdoors.": "La posizione è troppo incerta per salvare questa porta. Riprova all’aperto."
   }
 }

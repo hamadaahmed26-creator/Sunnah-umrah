@@ -37,3 +37,34 @@ export function bearingToKaaba(lat,lon){
   const angle=Math.atan2(Math.sin(delta),Math.cos(lat*rad)*Math.tan(21.4225*rad)-Math.sin(lat*rad)*Math.cos(delta));
   return (angle/rad+360)%360;
 }
+
+export function currentTimetable(entry, city, country, now = new Date()) {
+  const same = (a,b) => typeof a === 'string' && a.trim().toLowerCase() === b.trim().toLowerCase();
+  if (!entry || !same(entry.city,city) || !same(entry.country,country) || !entry.timezone) return false;
+  try {
+    return entry.day === zonedClock(now,entry.timezone).day &&
+      prayerNames.every(name=>/^([01]\d|2[0-3]):[0-5]\d$/.test(entry.times?.[name]));
+  } catch { return false; }
+}
+
+export function reliableBearing(coords) {
+  const {latitude,longitude,accuracy}=coords;
+  if (!Number.isFinite(latitude) || Math.abs(latitude)>90 || !Number.isFinite(longitude) ||
+      Math.abs(longitude)>180 || !Number.isFinite(accuracy) || accuracy<0) return null;
+  const rad=Math.PI/180;
+  const a=Math.sin((latitude-21.4225)*rad/2)**2+
+    Math.cos(latitude*rad)*Math.cos(21.4225*rad)*Math.sin((longitude-39.8262)*rad/2)**2;
+  const distance=12742000*Math.asin(Math.min(1,Math.sqrt(a)));
+  // Direction is unstable both at the destination and near its antipode.
+  if(Math.min(distance,Math.PI*6371000-distance)<Math.max(accuracy*4,100) || Math.abs(latitude)===90)return null;
+  return Math.round(bearingToKaaba(latitude,longitude))%360;
+}
+
+export function compassReading(event, screenAngle) {
+  // iOS provides heading clockwise from north, with an accuracy estimate.
+  // Relative alpha alone has neither a north reference nor an accuracy bound.
+  const h=event.webkitCompassHeading, a=event.webkitCompassAccuracy;
+  if (screenAngle!==0 || !Number.isFinite(h) || h<0 || h>=360 || !Number.isFinite(a) || a<=0 || a>20 ||
+      !Number.isFinite(event.beta) || Math.abs(event.beta)>30 || !Number.isFinite(event.gamma) || Math.abs(event.gamma)>30) return null;
+  return {heading:Math.round(h)%360, accuracy:Math.ceil(a)};
+}

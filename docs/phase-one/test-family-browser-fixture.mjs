@@ -106,10 +106,11 @@ if(process.argv[2]){
     assert.equal((await start.arrayBuffer()).byteLength,2);
   }
   const ordinary=await production.fetch(request('locales/review-packs.js'),{});
-  assert.match(await ordinary.text(),/Object.freeze\(\{\}\)/);
+  const homePacks=await ordinary.text();
   const review=await production.fetch(request('language-review/locales/review-packs.js'),{});
-  const module=await import('data:text/javascript;base64,'+Buffer.from(await review.text()).toString('base64'));
+  const module=await import('data:text/javascript;base64,'+Buffer.from(homePacks).toString('base64'));
   assert.equal(Object.keys(module.reviewPacks).length,8);
+  assert.equal(await review.text(),homePacks);
   assert.equal((await production.fetch(request('qa-family.html'),{})).status,404);
   assert.equal((await production.fetch(request('qa-sensors.js'),{})).status,404);
  });

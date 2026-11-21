@@ -179,6 +179,14 @@
     "See all seven trips": "Lihat ketujuh lintasan",
     "Offline map not confirmed. Reopen this page while connected, then retry.": "Peta offline belum terkonfirmasi. Buka kembali halaman ini saat terhubung, lalu coba lagi.",
     "Offline map files saved on this device. Try Airplane Mode to confirm. Family updates still need internet.": "Berkas peta offline tersimpan di perangkat ini. Uji dengan Mode Pesawat. Pembaruan lokasi keluarga tetap memerlukan internet.",
-    "Private audio sample — NOT approved for worship playback.": "Contoh audio untuk peninjauan pribadi — BELUM disetujui untuk digunakan dalam ibadah."
+    "Private audio sample — NOT approved for worship playback.": "Contoh audio untuk peninjauan pribadi — BELUM disetujui untuk digunakan dalam ibadah.",
+    "Saved gate": "Gerbang tersimpan",
+    "Save a location estimate on this device. Check the gate sign and floor yourself.": "Simpan perkiraan lokasi di perangkat ini. Periksa sendiri tanda gerbang dan lantainya.",
+    "Forget my saved gate": "Hapus gerbang tersimpan",
+    "Could not save or remove the gate on this device.": "Tidak dapat menyimpan atau menghapus gerbang di perangkat ini.",
+    "Replace my saved gate": "Ganti gerbang tersimpan",
+    "Save the gate where I am standing": "Simpan gerbang tempat saya berdiri",
+    "Getting your location…": "Mencari lokasi Anda…",
+    "Location is too uncertain to save this gate. Try again outdoors.": "Lokasi terlalu tidak akurat untuk menyimpan gerbang ini. Coba lagi di luar ruangan."
   }
 }

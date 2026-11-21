@@ -13,10 +13,9 @@ export const languages = Object.freeze({
 const sourceLanguages = new Set(['ar','en']);
 const localHost = () => ['localhost','127.0.0.1','[::1]'].includes(globalThis.location?.hostname);
 export const isTranslationReview=() => Object.keys(reviewPacks).length>0 &&
-  (localHost() || (globalThis.location?.origin==='https://sunnah-umrah-pilgrim-preview.tastygrebe11.chatgpt.site' &&
-   globalThis.location.pathname.startsWith('/language-review/')));
+  (localHost() || globalThis.location?.origin==='https://sunnah-umrah-pilgrim-preview.tastygrebe11.chatgpt.site');
 export function progressStorageKey(){
-  return isTranslationReview()?'sunnah-umrah.translation-review.v1':'sunnah-umrah.companion.v1';
+  return globalThis.location?.pathname?.startsWith('/language-review/')?'sunnah-umrah.translation-review.v1':'sunnah-umrah.companion.v1';
 }
 export function visibleLanguages(){
   return Object.keys(languages).filter(code =>

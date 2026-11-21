@@ -179,6 +179,14 @@
     "See all seven trips": "Eeg toddobada marin",
     "Offline map not confirmed. Reopen this page while connected, then retry.": "Lama xaqiijin in khariidadda offline la kaydiyey. Boggan dib u fur adigoo internet ku xiran, dabadeed mar kale isku day.",
     "Offline map files saved on this device. Try Airplane Mode to confirm. Family updates still need internet.": "Faylasha khariidadda offline waa lagu kaydiyey qalabkan. Ku tijaabi Habka Diyaaradda. Cusboonaysiinta goobta qoyska weli internet bay u baahan tahay.",
-    "Private audio sample — NOT approved for worship playback.": "Cod muunad ah oo dib-u-eegis gaar ah — LOOMA ansixin in cibaadada lagu isticmaalo."
+    "Private audio sample — NOT approved for worship playback.": "Cod muunad ah oo dib-u-eegis gaar ah — LOOMA ansixin in cibaadada lagu isticmaalo.",
+    "Saved gate": "Albaabka la kaydiyey",
+    "Save a location estimate on this device. Check the gate sign and floor yourself.": "Ku kaydi goobta qiyaasta ah qalabkan. Hubi calaamadda albaabka iyo dabaqa.",
+    "Forget my saved gate": "Tirtir albaabkayga kaydsan",
+    "Could not save or remove the gate on this device.": "Albaabka laguma kaydin ama lagama tirtiri karo qalabkan.",
+    "Replace my saved gate": "Beddel albaabkayga kaydsan",
+    "Save the gate where I am standing": "Kaydi albaabka aan hadda joogo",
+    "Getting your location…": "Goobtaada ayaa la raadinayaa…",
+    "Location is too uncertain to save this gate. Try again outdoors.": "Qiyaasta goobtu saxnaan ku filan ma leh. Mar kale isku day bannaanka."
   }
 }

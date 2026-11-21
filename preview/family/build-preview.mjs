@@ -26,7 +26,7 @@ for(const name of await fs.readdir(candidates)){
 const reviewDir=execFileSync(process.execPath,[path.resolve(here,'../../frontend/scripts/build-language-review.mjs')],{encoding:'utf8'}).trim();
 try{
  for(const name of ['locales/review-packs.js','offline.js']){
-   files['/language-review/'+name]=[types.js,(await fs.readFile(path.join(reviewDir,name))).toString('base64')];
+   files['/'+name]=files['/language-review/'+name]=[types.js,(await fs.readFile(path.join(reviewDir,name))).toString('base64')];
  }
 }finally{await fs.rm(reviewDir,{recursive:true,force:true})}
 const staticHelper=await fs.readFile(path.join(here,'static-response.mjs'),'utf8');
