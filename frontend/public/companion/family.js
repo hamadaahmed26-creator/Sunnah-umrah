@@ -10,7 +10,7 @@ const gateMode=location.hash==='#gates';
 const title=gateMode?t('Find my gate','ابحث عن باب'):t('Find my family','اعثر على عائلتي');
 document.title=title+' · Sunnah Umrah';
 const $=id=>document.getElementById(id);
-$('family-page').innerHTML=`<a href="./index.html">${t('Home','الرئيسية')}</a><h1>${title}</h1>
+$('family-page').innerHTML=`<div class="family-navigation"><button id="page-back" class="back">${t('Back','رجوع')}</button><a href="./index.html">${t('Home','الرئيسية')}</a></div><h1>${title}</h1>
 <p>${t('Your phone estimates your position. Indoors, check the gate number and floor with mosque staff.','يقدّر هاتفك موقعك. داخل المسجد تأكّد من رقم الباب والطابق مع الموظفين.')}</p>
 <section id="setup"><label>${t('Your first name or nickname','اسمك الأول أو اسم مستعار')}<input id="name" maxlength="40" autocomplete="off"></label>
 <button id="create">${t('Create private group','إنشاء مجموعة خاصة')}</button><details><summary>${t('Join with an invitation','الانضمام بدعوة')}</summary><label>${t('Private invitation','الدعوة الخاصة')}<input id="invite-code" autocomplete="off" spellcheck="false"></label><button id="join">${t('Join group','انضم إلى المجموعة')}</button></details></section>
@@ -22,6 +22,10 @@ $('family-page').innerHTML=`<a href="./index.html">${t('Home','الرئيسية'
 <div id="family-map" aria-label="${title}"></div><p id="map-info">${t('Offline map around the Haram. Gate pins are approximate.','خريطة محيط الحرم دون اتصال. مواقع الأبواب تقريبية.')}</p>
 <label>${gateMode?t('Choose a mapped gate','اختر بابًا على الخريطة'):t('Choose a family member','اختر أحد أفراد العائلة')}<select id="target"></select></label>
 <p id="detail" role="status"></p><a id="walk" hidden rel="noopener noreferrer" target="_blank">${t('Walking directions in Apple Maps · internet may be required','اتجاهات المشي في خرائط Apple · قد يلزم الإنترنت')}</a>`;
+$('page-back').addEventListener('click',()=>{
+ try{if(document.referrer&&new URL(document.referrer).origin===location.origin){history.back();return;}}catch{}
+ location.href='./index.html';
+});
 const map=L.map('family-map',{zoomControl:false}).setView([21.4225,39.8262],17);
 L.control.zoom({zoomInTitle:t('Zoom in','تكبير الخريطة'),zoomOutTitle:t('Zoom out','تصغير الخريطة')}).addTo(map);
 map.attributionControl.addAttribution('<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>');
