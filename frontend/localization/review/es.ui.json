@@ -215,6 +215,15 @@
     "Asr": "Asr",
     "Maghrib": "Magreb",
     "Isha": "Isha",
-    "Return to Back and Next": "Volver a los botones Atrás y Siguiente"
+    "Return to Back and Next": "Volver a los botones Atrás y Siguiente",
+    "Explore one Tawaf circuit": "Explorar una vuelta de tawaf",
+    "Start level with the Black Stone. Keep the Ka‘bah on your left until you return to the same line.": "Empieza a la altura de la Piedra Negra. Mantén la Kaaba a tu izquierda hasta volver a esa línea.",
+    "Move through the diagram": "Avanzar por el diagrama",
+    "Practice diagram only. Your counters stay the same.": "Diagrama de práctica. Los contadores se mantienen.",
+    "Starting line": "Línea de salida",
+    "Quarter of a circuit": "Un cuarto de vuelta",
+    "Half a circuit": "Media vuelta recorrida",
+    "Three quarters of a circuit": "Tres cuartos de vuelta",
+    "Back at the starting line · one circuit": "De vuelta al inicio · una vuelta"
   }
 }

@@ -1,7 +1,7 @@
 import {approvedRecordings} from './approved-tracks.js';
-const cacheName='pilgrim-companion-'+new URL(self.registration.scope).pathname+'-v1.6.3';
+const cacheName='pilgrim-companion-'+new URL(self.registration.scope).pathname+'-v1.6.4';
 const licensedMedia=Object.values(approvedRecordings).map(record=>record.src.slice(2));
-const assets=['approved-tracks.js',...licensedMedia,'family.html','family.js','saved-gate.js','family-crypto.js','maps/leaflet.js','maps/leaflet.css','maps/haram.json','maps/gates.js','index.html','style.css','guide.js','sai-progress.js','live-media.js','worship.js','locales/languages.js','locales/review-packs.js','recitations.js','journey-records.js','prayer-clock.js','pilgrim-tools.js','content.js','audio.js','hero.jpg','audio/navigation-en.mp3','audio/navigation-ar.mp3'];
+const assets=['approved-tracks.js',...licensedMedia,'family.html','family.js','saved-gate.js','family-crypto.js','maps/leaflet.js','maps/leaflet.css','maps/haram.json','maps/gates.js','index.html','style.css','guide.js','sai-progress.js','tawaf-practice.js','live-media.js','worship.js','locales/languages.js','locales/review-packs.js','recitations.js','journey-records.js','prayer-clock.js','pilgrim-tools.js','content.js','audio.js','hero.jpg','audio/navigation-en.mp3','audio/navigation-ar.mp3'];
 const scoped=name=>new URL(name,self.registration.scope).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{
  const cache=await caches.open(cacheName);

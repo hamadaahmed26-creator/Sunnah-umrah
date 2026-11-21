@@ -8,7 +8,7 @@ const style=await readFile(new URL('style.css',path),'utf8');
 const start=source.indexOf('function journey(m){'),end=source.indexOf('function help(){');
 assert.ok(start>=0 && end>start,'journey source must be inspectable');
 const factory=new Function('ctx',
-  'const {state,stages,localized,modeName,t,btn,link,back,saiProgressHtml,worshipGuide,localReviewContent,refs,answered,feedback,archiveCompleted}=ctx;\n'
+  'const {state,stages,localized,modeName,t,btn,link,back,practiceCircuit,saiProgressHtml,worshipGuide,localReviewContent,refs,answered,feedback,archiveCompleted}=ctx;\n'
   +source.slice(start,end)+';return journey;'
 );
 const ids=['ihram','miqat','talbiyah','haram','tawaf','sai','complete'];
@@ -26,7 +26,7 @@ function render(mode,step,count) {
   const ctx={
     state,stages,localized:s=>s.en,modeName:x=>x,t:(en,ar)=>en,btn,
     link:()=>'<a href="#help">Help</a>',back:()=>'<button>Back</button>',
-    saiProgressHtml:()=>'<div>Sa’i route</div>',
+    practiceCircuit:()=>'<details></details>',saiProgressHtml:()=>'<div>Sa’i route</div>',
     worshipGuide:()=>'<div>Arabic Pronunciation Meaning Listen Source</div>',
     localReviewContent:()=>undefined,refs:()=>'',answered:true,feedback:'',
     archiveCompleted:()=>{}

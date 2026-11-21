@@ -215,6 +215,15 @@
     "Asr": "Casar",
     "Maghrib": "Maqrib",
     "Isha": "Cishe",
-    "Return to Back and Next": "Ku noqo badhamada Dib u noqo iyo Xiga"
+    "Return to Back and Next": "Ku noqo badhamada Dib u noqo iyo Xiga",
+    "Explore one Tawaf circuit": "Baro hal wareeg oo dawaaf ah",
+    "Start level with the Black Stone. Keep the Ka‘bah on your left until you return to the same line.": "Ka bilow halka aad la siman tahay Xajarul Aswad. Kacbada bidixdaada ku hay ilaa aad isla xariiqda ku soo noqoto.",
+    "Move through the diagram": "Dhaqaaji calaamadda sawirka",
+    "Practice diagram only. Your counters stay the same.": "Jaantus tababar ah. Tirintaadu isma beddelayso.",
+    "Starting line": "Xariiqda bilowga",
+    "Quarter of a circuit": "Rubuc wareeg",
+    "Half a circuit": "Nus wareeg",
+    "Three quarters of a circuit": "Saddex rubuc oo wareeg ah",
+    "Back at the starting line · one circuit": "Ku soo noqoshada bilowga · hal wareeg"
   }
 }

@@ -215,6 +215,15 @@
     "Asr": "عصر",
     "Maghrib": "مغرب",
     "Isha": "عشاء",
-    "Return to Back and Next": "بازگشت به دکمه‌های قبلی و بعدی"
+    "Return to Back and Next": "بازگشت به دکمه‌های قبلی و بعدی",
+    "Explore one Tawaf circuit": "تمرین یک دور طواف",
+    "Start level with the Black Stone. Keep the Ka‘bah on your left until you return to the same line.": "از محاذات حجرالاسود آغاز کنید. کعبه را در سمت چپ خود نگه دارید تا به همان خط بازگردید.",
+    "Move through the diagram": "نشانگر را در نمودار حرکت دهید",
+    "Practice diagram only. Your counters stay the same.": "نمودار تمرینی است. شمارنده‌های شما تغییری نمی‌کنند.",
+    "Starting line": "خط آغاز",
+    "Quarter of a circuit": "یک‌چهارم دور",
+    "Half a circuit": "نیم دور",
+    "Three quarters of a circuit": "سه‌چهارم دور",
+    "Back at the starting line · one circuit": "بازگشت به خط آغاز · یک دور"
   }
 }

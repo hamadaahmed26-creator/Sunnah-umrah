@@ -41,3 +41,12 @@
 .end-of-step-controls .return-to-controls{background:transparent;border-color:#aebcaf;color:#194d3f;text-decoration:underline;font-size:.92em;font-weight:600;min-height:44px;padding:.5rem .7rem}
 .journey-navigation{scroll-margin-top:1rem}
 @media(max-width:550px){.panel:has(.live-counter) .counter{padding:.65rem}.panel:has(.live-counter) .counter button{min-height:50px}.journey-navigation{gap:.45rem}.journey-navigation button{min-height:50px}}
+.practice-circuit{margin-block:1rem}
+.circuit-map{position:relative;width:min(100%,15rem);aspect-ratio:1;margin:1rem auto;isolation:isolate}
+.circuit-track{position:absolute;inset:9%;border:3px dashed #688174;border-radius:50%}
+.circuit-kaaba{position:absolute;inset:32%;background:linear-gradient(#292d2a 21%,#d6ae5c 21% 28%,#292d2a 28%);border-radius:.18rem}
+.circuit-start{position:absolute;left:68%;top:68%;width:20%;border-top:3px solid #9e762f;transform-origin:0 0;transform:rotate(45deg)}
+.circuit-marker{position:absolute;left:50%;top:50%;width:41%;transform-origin:0 0;transform:rotate(var(--marker-angle,45deg))}
+.circuit-marker::after{content:"";position:absolute;right:0;width:1.1rem;height:1.1rem;background:#075a47;border:3px solid white;outline:2px solid #075a47;border-radius:50%;transform:translate(50%,-50%)}
+.practice-circuit input[type=range]{display:block;width:100%;min-height:44px;accent-color:#075a47}
+.practice-circuit output,.practice-circuit small{display:block;margin-block:.5rem}

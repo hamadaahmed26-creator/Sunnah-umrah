@@ -1,3 +1,4 @@
+import {practiceCircuit,showPosition} from './tawaf-practice.js';
 import {isTranslationReview,progressStorageKey,languages,visibleLanguages,normalizeLocale,localeDirection,translate,localReviewContent} from './locales/languages.js';
 import {mediaPanel,wireMedia} from './live-media.js';
 import {toolsPanel,wireTools} from './pilgrim-tools.js';
@@ -70,6 +71,7 @@ function journey(m){
   const navigation=`<nav id="journey-navigation" class="journey-navigation" aria-label="${t('Journey navigation','التنقل في الرحلة')}">${btn(p.step?'previous':'step-home',t('Back','رجوع'))}${btn('next',p.step===6?t('Finish','إنهاء'):t('Next','التالي'),'primary',!allowed)}</nav>`;
   const answers=practice?[(p.step+1)%2,p.step%2].map(i=>btn('answer-'+i,d.answers[i])).join(' '):'';
   return `<article class="panel"><div class="progress" aria-hidden="true">${stages.map((_,i)=>`<i class="${i<=p.step?'on':''}"></i>`).join('')}</div><span class="eyebrow">${modeName(m)} · ${p.step+1} / 7</span><h1>${d.title}</h1>${navigation}${!practice&&counted?counter:''}${s.id==='sai'?saiProgressHtml(count,t):''}${practice?`<p class="note">${t('Practice only. This rehearsal does not perform any rite.','هذا تدريب تعليمي فقط ولا يُعدّ أداءً للنسك.')}</p>`:''}${!practice&&counted?`<details class="step-instructions"><summary>${t('Full instructions','التعليمات الكاملة')}</summary><p>${d.body}</p></details>`:`<p>${d.body}</p>`}${practice&&s.id==='sai'?`<figure class="tripchart"><figcaption>${t('Where each trip ends','نهاية كل شوط')}</figcaption><ol>${Array.from({length:7},(_,i)=>`<li><b>${i+1}</b> ${i%2?t('Safa','الصفا'):t('Marwah','المروة')}</li>`).join('')}</ol></figure>`:''}
+  ${practice&&s.id==='tawaf'?practiceCircuit(t):''}
   ${worshipGuide(s.id,count,state.lang,{compact:!practice,translate:t,local:{recitations:Object.fromEntries(['miqat','talbiyah','haram','stone','corner','opening','begin','hill'].map(id=>[id,localReviewContent(state.lang,'recitations',id)]))}})}
   ${practice&&counted?counter:''}
   ${practice?`<section><h3>${d.question}</h3><div class="actions">${answers}</div><p role="status">${feedback}</p></section>`:''}
@@ -90,6 +92,8 @@ function render(focus=false){
  const r=route(),lang=state.lang;
  document.documentElement.lang=lang;document.documentElement.dir=document.body.dir=localeDirection(lang);document.body.classList.toggle('easy',state.easy);
  root.innerHTML=`<header><div><a class="brand" href="#home"><i class="mark" aria-hidden="true"></i>${t('Sunnah Umrah','عمرة السُّنّة')}</a><nav>${link('practice',modeName('practice'))}${link('live',modeName('live'))}${link('help',t('Help','المساعدة'))}</nav><div class="tools">${btn('easy',t('Easy mode','الوضع الميسّر'))}<select id="guide-language" aria-label="${t('Language','اللغة')}">${visibleLanguages().map(code=>`<option value="${code}" ${lang===code?'selected':''}>${languages[code].name}</option>`).join('')}</select></div></div></header><main class="wrap">${isTranslationReview()?`<aside class="note">${t('Translation review · Draft wording awaiting human verification.','مراجعة الترجمة · صياغة تجريبية بانتظار المراجعة البشرية.')}</aside>`:''}${r==='live'||r==='practice'?journey(r):r==='help'?help():r==='travel'?travel():r==='tools'?toolsPanel(t):r==='makkah'?mediaPanel(t):home()}<p class="status" role="alert">${storageError?t('Storage unavailable. Keep this page open.','تعذّر الحفظ. أبقِ هذه الصفحة مفتوحة.') :''}</p></main><footer>${t('Independent pilgrim companion · Preview for content and usability review','رفيق مستقل للمعتمر · نسخة تجريبية لمراجعة المحتوى وسهولة الاستخدام')}<p id="offline" role="status"></p>${state.easy&&['ar','en'].includes(lang)?`<div class="actions">${btn('listen',t('Listen to controls','استمع إلى شرح الأزرار'))} ${btn('audio-pause',t('Pause audio','إيقاف الصوت مؤقتًا'))} ${btn('replay',t('Replay','إعادة التشغيل'))}<span id="audio-status" role="status"></span></div>`:''}</footer>`;
+ const scrubber=root.querySelector('[data-circuit-position]');
+ if(scrubber){showPosition(scrubber,t);scrubber.oninput=()=>showPosition(scrubber,t)}
  root.querySelector('[data-act=easy]').setAttribute('aria-pressed',String(state.easy));
  if(Object.hasOwn(approvedReligiousTracks,audio.state.id) && !root.querySelector(`[data-recitation="${audio.state.id}"]`))audio.stop();
  if(r==='makkah')toolCleanup=wireMedia(root,t,()=>audio.stop());
