@@ -1,7 +1,7 @@
 import {fetchTimetable,bearingToKaaba} from './prayer-clock.js';
 
 export function toolsPanel(t) {
- return `<article class="panel"><a href="#home">${t('Home','الرئيسية')}</a><h1>${t('Prayer times and Qibla','مواقيت الصلاة والقبلة')}</h1>
+ return `<article class="panel"><button type="button" class="back" data-act="go-back">${t('Back','رجوع')}</button> <a href="#home">${t('Home','الرئيسية')}</a><h1>${t('Prayer times and Qibla','مواقيت الصلاة والقبلة')}</h1>
  <form id="prayer-form"><h2>${t('Prayer times','مواقيت الصلاة')}</h2><p>${t('Calculated using Umm al-Qura. Check the local mosque timetable. An internet connection is required.','الحساب وفق تقويم أم القرى. راجع جدول المسجد المحلي. يتطلّب اتصالاً بالإنترنت.')}</p>
  <label>${t('City','المدينة')}<input id="prayer-city" value="Makkah" required maxlength="80"></label>
  <label>${t('Country','الدولة')}<input id="prayer-country" value="Saudi Arabia" required maxlength="80"></label><button class="primary">${t('Show times','عرض المواقيت')}</button><div id="prayer-result" role="status"></div></form>
