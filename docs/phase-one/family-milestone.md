@@ -34,3 +34,11 @@ The map refreshes group updates every five seconds while active. Member credenti
 ## Private review pages
 
 Open /recording-review/ for six original recordings. Browser QA of the packaged site started Talbiyah, switched to the dua between the corners and observed the first player pause. Open /language-review/#practice to choose a review language. Urdu displayed its instructions, choices and review notice, and the browser reported its offline copy ready. The remote deployment succeeded, and the hosted URL required owner sign-in in the test browser. No live authenticated browser playback or physical-device sign-off is claimed.
+
+## Update, 21 November 2026
+
+The private language review homepage now passes the selected language and Easy Mode to both family and gate screens. The eight draft catalogues each gained 62 labels covering consent, stale/offline states, invitation errors, gate names and map controls. Each catalogue has 158 interface entries. The review area has its own group session and journey storage.
+
+Packaged browser acceptance: with Urdu selected, opened Find My Gate, saw the Urdu map controls, selected Bab al-Salam and observed the Apple Maps walking link. This checks the language transition and selected destination. The gate coordinates still require field validation. The full Node suite passed 21 checks, including serving exact bytes for all six review recordings and answering the initial two-byte media range request.
+
+Private deployment source commit ca03acbc8765c79b20d45df199ecb8ec1806e9e1. The developer recovery bundle was restored into a separate repository at 04c4f90 and verified to contain d78fdd5 as an ancestor. Raw OpenDua MP3s are in the private preview and recovery ZIP. After a public GitHub checkout, restore those files with the publisher download command in the recording attribution document.
