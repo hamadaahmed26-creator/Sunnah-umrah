@@ -29,3 +29,9 @@
 .language-review-link{padding:.8rem;border:1px solid #c6b07b;border-radius:.7rem;background:#fff9eb;margin:1rem 0}
 .language-review-link p{margin-top:.35rem}
 @media(max-width:550px){.journey-navigation button{min-height:56px}.sai-route{padding:.85rem}.sai-route-heading strong{font-size:1rem}.sai-route p{font-size:1rem}}
+
+.audio-review-sample{border:1px solid #d7b377;border-radius:.75rem;background:#fff7e8;padding:1rem;margin:.8rem 0}
+.audio-review-sample p{font-weight:700;color:#81501a;font-size:.94rem}
+.audio-review-sample audio{display:block;width:100%;margin:.65rem 0}
+.audio-review-sample small{display:block;color:#715d42;line-height:1.4}
+.audio-review-sample a{min-height:44px;display:inline-flex;align-items:center}
