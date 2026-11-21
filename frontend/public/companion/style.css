@@ -5,7 +5,7 @@
 .worship{border-top:1px solid #d6dccc;padding-top:1.25em}.worship h2,.worship h3{margin-block:1em .45em}.recitation{margin-block:1.2em}.recitation .dua{margin:.45em 0}.reading{font-style:italic}.recitation a{display:inline-block;padding-block:.65em}.worship>p{margin-block:.6em}
 
 .recording{margin-block:.65em}.recording a{display:inline-flex;align-items:center;min-height:48px;padding:.5em .8em;border:1px solid #a5b6a6;border-radius:.5em;font-weight:650}.recording small{display:block;color:#4b5e50;font-size:.87em;margin-top:.35em}
-.history{margin:1em 0 2em}.live-counter{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.25em;text-align:start;border:1px solid #a7b9a9;box-shadow:0 3px 10px #17382e14;padding:.5em}.live-counter strong{font-family:inherit;font-size:1.3em}.live-counter p{flex-basis:100%;text-align:center}.live-counter p:empty{display:none}.live-counter button{margin:0;font-size:.9em}.recitation details{margin:0;padding:.35em 0}.recitation summary{font-size:1em}.step-instructions p{margin:.6em 0}.quick-dua{border-inline-start:3px solid #99ad91;padding-inline-start:.8em}.quick-dua .dua{font-size:1.6em}.quick-dua>summary{font-weight:bold}.quick-dua summary:focus-visible{outline:3px solid #754000}@media(max-height:540px){.live-counter{position:static}}@media(max-width:440px){.panel:has(.live-counter){padding:.85em}.live-counter{top:0}.live-counter button{padding:.45em .55em}}
+.history{margin:1em 0 2em}.live-counter{position:relative;z-index:auto;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.25em;text-align:start;border:1px solid #a7b9a9;box-shadow:none;padding:.7em}.live-counter strong{font-family:inherit;font-size:1.3em}.live-counter p{flex-basis:100%;text-align:center}.live-counter p:empty{display:none}.live-counter button{margin:0;font-size:.9em}.recitation details{margin:0;padding:.35em 0}.recitation summary{font-size:1em}.step-instructions p{margin:.6em 0}.quick-dua{border-inline-start:3px solid #99ad91;padding-inline-start:.8em}.quick-dua .dua{font-size:1.6em}.quick-dua>summary{font-weight:bold}.quick-dua summary:focus-visible{outline:3px solid #754000}@media(max-height:540px){.live-counter{position:static}}@media(max-width:440px){.panel:has(.live-counter){padding:.85em}.live-counter button{padding:.55em .65em}}
 #prayer-form label{display:block;margin:.65em 0}dl{display:grid;grid-template-columns:1fr auto;gap:.45em}dd{font-weight:bold}select{font:inherit;min-height:46px;color:inherit;background:white;border-radius:.6em;padding:.4em}.tools select{max-width:9em}html[lang=ur]{font-family:"Noto Naskh Arabic","Geeza Pro",Tahoma,serif}html[lang=fa]{font-family:Tahoma,"Geeza Pro",sans-serif}
 
 /* Clear one-step navigation and the seven one-way Sa'i trips. */
@@ -35,3 +35,9 @@
 .audio-review-sample audio{display:block;width:100%;margin:.65rem 0}
 .audio-review-sample small{display:block;color:#715d42;line-height:1.4}
 .audio-review-sample a{min-height:44px;display:inline-flex;align-items:center}
+
+/* Safe mobile counter: controls remain in normal document flow, never overlay Arabic or dua panels. */
+.end-of-step-controls{display:flex;gap:.5rem;align-items:center;justify-content:flex-start;flex-wrap:wrap;margin-top:1rem}
+.end-of-step-controls .return-to-controls{background:transparent;border-color:#aebcaf;color:#194d3f;text-decoration:underline;font-size:.92em;font-weight:600;min-height:44px;padding:.5rem .7rem}
+.journey-navigation{scroll-margin-top:1rem}
+@media(max-width:550px){.panel:has(.live-counter) .counter{padding:.65rem}.panel:has(.live-counter) .counter button{min-height:50px}.journey-navigation{gap:.45rem}.journey-navigation button{min-height:50px}}
