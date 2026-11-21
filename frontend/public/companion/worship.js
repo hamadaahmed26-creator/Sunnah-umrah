@@ -24,6 +24,26 @@ const cards = {
     source:'https://sunnah.com/muslim:1218a',reference:['Muslim 1218a · Jabir’s account','مسلم ١٢١٨ · حديث جابر']
   }
 };
+
+// Exact unmodified full-track candidates for the OWNER-ONLY review environment.
+// These are NOT release-approved, and deliberately do not populate approvedRecordings.
+// Longer/cropped tracks are excluded until an Arabic reviewer validates the excerpt.
+const privateSamples=Object.freeze({
+  talbiyah:{file:'OD-233.mp3',page:'https://opendua.org/dua/pilgrims-announcement-of-his-arrival-for-hajj-or-umrah'},
+  corner:{file:'OD-235.mp3',page:'https://opendua.org/dua/between-the-yemenite-corner-and-the-black-stone'},
+  hill:{file:'OD-236-3.mp3',page:'https://opendua.org/dua/while-standing-at-safa-and-marwah'}
+});
+function reviewSample(id,say){
+  if(globalThis.location?.origin!=='https://sunnah-umrah-pilgrim-preview.tastygrebe11.chatgpt.site')return '';
+  const sample=privateSamples[id];if(!sample)return '';
+  return '<div class="audio-review-sample" role="note">'
+    +'<p>'+say('Private audio sample — NOT approved for worship playback.','عينة صوتية للمراجعة الخاصة — غير معتمدة للاستعمال في العبادة.')+'</p>'
+    +'<audio controls preload="none" data-review-audio src="/recording-review/'+sample.file+'"></audio>'
+    +'<small>Reciter: Muhammad Jumah · OpenDua · '
+    +'<a href="'+sample.page+'" target="_blank" rel="noopener">Source</a> · '
+    +'<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></small>'
+    +'</div>';
+}
 const escape = value => String(value).replace(/[&<>"']/g, char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 export function recordingControls(id, record, say){
   return `<div data-recitation="${id}" class="recording-controls"><div class="actions">
@@ -51,7 +71,7 @@ export function worshipGuide(stage,count,lang,{compact=false,local=null,translat
     const detail=(title,body)=>`<details><summary>${title}</summary>${body}</details>`;
     const approved = approvedRecordings[id];
     const listen = approved ? recordingControls(id, approved, say) : detail(say('Listen','استمع'),
-      `<p>${say('In-app human recording awaiting verification.','التسجيل البشري داخل التطبيق بانتظار التحقق.')}</p>${reader}`);
+      `<p>${say('In-app human recording awaiting verification.','التسجيل البشري داخل التطبيق بانتظار التحقق.')}</p>${reviewSample(id,say)}${reader}`);
     return `<section class="recitation quick-dua">${heading?`<h3>${heading}</h3>`:''}<small>${say('Arabic','العربية')}</small><p class="dua" lang="ar" dir="rtl">${text.arabic}</p>
     ${approved?listen:''}
     ${detail(say('Pronunciation','النطق'),`<p class="reading" lang="${lang}" dir="auto">${reading}</p><small>${say('A reading aid. Arabic sounds may differ.','تقريب للنطق، وقد تختلف الأصوات عن العربية.')}</small>`)}
