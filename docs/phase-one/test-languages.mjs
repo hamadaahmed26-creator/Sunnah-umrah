@@ -58,3 +58,16 @@ test('the local review build renders all eight readings alongside their Arabic a
     }
   }
 });
+
+test('all family consent and offline map labels have translations in each draft language',async()=>{
+  const base=new URL('../../frontend/public/companion/',import.meta.url);
+  const source=await readFile(new URL('family.js',base),'utf8');
+  const {gates}=await import(new URL('maps/gates.js',base));
+  const required=[...source.matchAll(/\bt\('([^']+)','[^']*'\)/g)].map(m=>m[1]);
+  required.push(...gates.map(gate=>gate.name_en));
+  for(const code of Object.keys(languages).filter(code=>!['ar','en'].includes(code))){
+    const path=new URL('../../frontend/localization/review/'+code+'.ui.json',import.meta.url);
+    const pack=JSON.parse(await readFile(path,'utf8'));
+    for(const key of required)assert.ok(pack.interface[key]?.trim(),code+' missing family label '+key);
+  }
+});

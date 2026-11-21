@@ -1,10 +1,11 @@
+import {isTranslationReview,progressStorageKey,localeDirection,normalizeLocale,translate} from './locales/languages.js';
 import {gates} from './maps/gates.js';
 import {newKey,seal,open} from './family-crypto.js';
 let pref={};
-try{pref=JSON.parse(localStorage.getItem('sunnah-umrah.companion.v1'))||{}}catch{}
-const ar=pref.lang==='ar',t=(en,arabic)=>ar?arabic:en;
-document.documentElement.lang=ar?'ar':'en';document.documentElement.dir=ar?'rtl':'ltr';
-document.body.classList.toggle('easy',!!pref.easy);
+try{pref=JSON.parse(localStorage.getItem(progressStorageKey()))||{}}catch{}
+const lang=normalizeLocale(pref?.lang),t=(en,arabic)=>translate(lang,en,arabic);
+document.documentElement.lang=lang;document.documentElement.dir=localeDirection(lang);
+document.body.classList.toggle('easy',!!pref?.easy);
 const gateMode=location.hash==='#gates';
 const title=gateMode?t('Find my gate','ابحث عن باب'):t('Find my family','اعثر على عائلتي');
 document.title=title+' · Sunnah Umrah';
@@ -21,7 +22,8 @@ $('family-page').innerHTML=`<a href="./index.html">${t('Home','الرئيسية'
 <div id="family-map" aria-label="${title}"></div><p id="map-info">${t('Offline map around the Haram. Gate pins are approximate.','خريطة محيط الحرم دون اتصال. مواقع الأبواب تقريبية.')}</p>
 <label>${gateMode?t('Choose a mapped gate','اختر بابًا على الخريطة'):t('Choose a family member','اختر أحد أفراد العائلة')}<select id="target"></select></label>
 <p id="detail" role="status"></p><a id="walk" hidden rel="noopener noreferrer" target="_blank">${t('Walking directions in Apple Maps · internet may be required','اتجاهات المشي في خرائط Apple · قد يلزم الإنترنت')}</a>`;
-const map=L.map('family-map').setView([21.4225,39.8262],17);
+const map=L.map('family-map',{zoomControl:false}).setView([21.4225,39.8262],17);
+L.control.zoom({zoomInTitle:t('Zoom in','تكبير الخريطة'),zoomOutTitle:t('Zoom out','تصغير الخريطة')}).addTo(map);
 map.attributionControl.addAttribution('<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>');
 const streets=L.layerGroup().addTo(map), marks=L.layerGroup().addTo(map);
 fetch('./maps/haram.json').then(r=>r.json()).then(features=>{
@@ -30,9 +32,9 @@ fetch('./maps/haram.json').then(r=>r.json()).then(features=>{
  }
 }).catch(()=>{$('map-info').textContent=t('Street layer unavailable. Gate markers remain approximate.','طبقة الطرق غير متاحة. علامات الأبواب تقريبية.')});
 const renderer=L.canvas({padding:.2});
-for(const g of gates){L.circleMarker([g.lat,g.lng],{radius:4,color:'#765325'}).addTo(map).bindTooltip(ar?g.name_ar:g.name_en);}
+for(const g of gates){L.circleMarker([g.lat,g.lng],{radius:4,color:'#765325'}).addTo(map).bindTooltip(t(g.name_en,g.name_ar));}
 let session,local=null,peers=[],connected=false,watch=null,sharing=false,generation=0,pollBusy=false,publishing=false,lastSent=0;
-const key='umrah-family-session-v1';
+const key=isTranslationReview()?'umrah-family-review-session-v1':'umrah-family-session-v1';
 try{session=JSON.parse(sessionStorage.getItem(key))}catch{}
 function save(){
  try{
@@ -50,8 +52,9 @@ function clearSession(){
 }
 const notice=text=>{$('notice').textContent=text};
 const fresh=fix=>fix && Date.now()-fix.captured<60000;
-const when=ms=>new Date(ms).toLocaleTimeString(ar?'ar':'en');
-const stats=p=>when(p.captured)+' · ±'+Math.round(p.accuracy)+' m';
+const when=ms=>new Date(ms).toLocaleTimeString(lang);
+const metres=new Intl.NumberFormat(lang,{style:'unit',unit:'meter',unitDisplay:'short',maximumFractionDigits:0});
+const stats=p=>when(p.captured)+' · ±'+metres.format(p.accuracy);
 function render(){
  const leaving=session?.pending==='leave';
  if(leaving)peers=[];
@@ -69,7 +72,7 @@ function render(){
  if(local)marker(local,t('Me','أنا'),'#215db2');
  const members=peers.filter(row=>row.id!==session?.id && row.fix);
  for(const row of members)marker(row.fix,row.name,online&&fresh(row.fix)?'#14604c':'#815528');
- const targets=gateMode?gates.map(g=>({id:String(g.id),name:ar?g.name_ar:g.name_en,fix:g})):members;
+ const targets=gateMode?gates.map(g=>({id:String(g.id),name:t(g.name_en,g.name_ar),fix:g})):members;
  const select=$('target'),id=select.value;
  select.replaceChildren(new Option(t('Select…','اختر…'),''));
  for(const row of targets)select.add(new Option(row.name,row.id));
@@ -82,7 +85,7 @@ function render(){
    if(!gateMode)detail=(online&&fresh(f)?t('Last received','آخر تحديث'):t('STALE · last received','موقع قديم · آخر تحديث'))+' '+stats(f);
    if(local){
     const distance=map.distance([local.lat,local.lng],[f.lat,f.lng]);
-    detail+=' · '+Math.round(distance)+' m '+t('straight-line estimate','تقدير بخط مستقيم');
+    detail+=' · '+metres.format(distance)+' '+t('straight-line estimate','تقدير بخط مستقيم');
     if(fresh(local)&&distance>2*(local.accuracy+(f.accuracy||0))){
       const rad=Math.PI/180,delta=(f.lng-local.lng)*rad;
       const bearing=(Math.atan2(Math.sin(delta)*Math.cos(f.lat*rad),Math.cos(local.lat*rad)*Math.sin(f.lat*rad)-Math.sin(local.lat*rad)*Math.cos(f.lat*rad)*Math.cos(delta))/rad+360)%360;

@@ -15,6 +15,9 @@ const localHost = () => ['localhost','127.0.0.1','[::1]'].includes(globalThis.lo
 export const isTranslationReview=() => Object.keys(reviewPacks).length>0 &&
   (localHost() || (globalThis.location?.origin==='https://sunnah-umrah-pilgrim-preview.tastygrebe11.chatgpt.site' &&
    globalThis.location.pathname.startsWith('/language-review/')));
+export function progressStorageKey(){
+  return isTranslationReview()?'sunnah-umrah.translation-review.v1':'sunnah-umrah.companion.v1';
+}
 export function visibleLanguages(){
   return Object.keys(languages).filter(code =>
     sourceLanguages.has(code) || (isTranslationReview() && Object.hasOwn(reviewPacks,code))

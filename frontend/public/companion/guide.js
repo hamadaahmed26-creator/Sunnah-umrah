@@ -1,4 +1,4 @@
-import {isTranslationReview,languages,visibleLanguages,normalizeLocale,localeDirection,translate,localReviewContent} from './locales/languages.js';
+import {isTranslationReview,progressStorageKey,languages,visibleLanguages,normalizeLocale,localeDirection,translate,localReviewContent} from './locales/languages.js';
 import {mediaPanel,wireMedia} from './live-media.js';
 import {toolsPanel,wireTools} from './pilgrim-tools.js';
 import {completedRecords,archiveCompleted} from './journey-records.js';
@@ -6,7 +6,7 @@ import {worshipGuide} from './worship.js';
 import {stages,helpTopics} from './content.js';
 import {audio,approvedReligiousTracks} from './audio.js';
 const root=document.getElementById('app');
-const key=isTranslationReview()?'sunnah-umrah.translation-review.v1':'sunnah-umrah.companion.v1';
+const key=progressStorageKey();
 const fresh=()=>({step:0,tawaf:0,sai:0,done:false,paused:false});
 let state, storageError=false, answered=false,feedback='',offline=false;
 const clamp=(v,max)=>Number.isInteger(v)?Math.max(0,Math.min(v,max)):0;
@@ -49,10 +49,10 @@ function historyList(){
 function home(){
   const current=state.live;
   return `<section class="hero"><div><span class="eyebrow">${t('Your Umrah companion','رفيقك في العمرة')}</span><h1>${t('Your Umrah, step by step.','عمرتك، خطوة بخطوة.')}</h1><p>${t('Practise before you travel. At the Haram, follow one step at a time and pick up exactly where you paused.','تدرّب قبل السفر، ثم اتبع الخطوات في الحرم وعُد حيث توقّفت.')}</p>${btn('live',current.done?t('View completed journey','عرض الرحلة المكتملة'):current.step||current.paused?t('Resume my Umrah','استئناف عمرتي'):t('Guide me through Umrah','أرشدني في عمرتي'),'primary')}</div></section>
-  <section><h2>${t('Before you set out','قبل الانطلاق')}</h2><div class="tiles">${tile('practice','◉',modeName('practice'),t('Rehearse all seven stages with a short check at each stop.','تدرّب على المراحل السبع مع سؤال قصير في كل مرحلة.'))}${tile('help','☏',t('I need help','أحتاج إلى مساعدة'),t('Lost count, separated from family or looking for accessible routes?','هل شككت في العدد أو افترقت عن أهلك أو تحتاج إلى مسار ميسّر؟'))}${tile('travel','◎',t('Saudi travel eSIM','شريحة سفر إلكترونية'),t('Check your phone and choose a Saudi data plan before departure.','تحقّق من جهازك واختر باقة إنترنت سعودية قبل السفر.'))}${mapTiles()}${tile('makkah','▷',t('Makkah Live','مكة مباشر'),t('Watch the Haram or listen to Saudi Quran Radio.','شاهد الحرم أو استمع إلى إذاعة القرآن الكريم السعودية.'))}${tile('tools','◴',t('Prayer times and Qibla','مواقيت الصلاة والقبلة'),t('Check a city timetable or calculate your Qibla bearing.','تحقّق من مواقيت مدينتك أو احسب اتجاه القبلة.'))}</div></section>${historyList()}`;
+  <section><h2>${t('Before you set out','قبل الانطلاق')}</h2><div class="tiles">${tile('practice','◉',modeName('practice'),t('Rehearse all seven stages with a short check at each stop.','تدرّب على المراحل السبع مع سؤال قصير في كل مرحلة.'))}${tile('help','☏',t('I need help','أحتاج إلى مساعدة'),t('Lost count, separated from family or looking for accessible routes?','هل شككت في العدد أو افترقت عن أهلك أو تحتاج إلى مسار ميسّر؟'))}${tile('travel','◎',t('Saudi travel eSIM','شريحة سفر إلكترونية'),t('Check your phone and choose a Saudi data plan before departure.','تحقّق من جهازك واختر باقة إنترنت سعودية قبل السفر.'))}${mapTiles()}${tile('makkah','▷',t('Makkah Live','مكة مباشر'),t('Watch the Haram or listen to Qur’an radio.','شاهد الحرم أو استمع إلى إذاعة التلاوات.'))}${tile('tools','◴',t('Prayer times and Qibla','مواقيت الصلاة والقبلة'),t('Check a city timetable or calculate your Qibla bearing.','تحقّق من مواقيت مدينتك أو احسب اتجاه القبلة.'))}</div></section>${historyList()}`;
 }
 function mapTiles(){
- const labels=state.lang==='ar'?['اعثر على عائلتي','شارك موقعك مع أقاربك بإذنك.','ابحث عن باب','اعرض موقعك وأبواب الحرم على خريطة محفوظة.']:['Find my family','Share your position with relatives you invite.','Find my gate','See your position and mapped gates around the Haram offline.'];
+ const labels=[t('Find my family','اعثر على عائلتي'),t('Share your position with relatives you invite.','شارك موقعك مع أقاربك بإذنك.'),t('Find my gate','ابحث عن باب'),t('See your position and mapped gates around the Haram offline.','اعرض موقعك وأبواب الحرم على خريطة محفوظة.')];
  return [['family.html',labels[0],labels[1]],['family.html#gates',labels[2],labels[3]]].map(([path,title,body])=>`<a class="tile" href="./${path}"><span class="symbol" aria-hidden="true">⌖</span><h3>${title}</h3><p>${body}</p></a>`).join('');
 }
 function tile(r,icon,title,body){return `<a class="tile" href="#${r}"><span class="symbol" aria-hidden="true">${icon}</span><h3>${title}</h3><p>${body}</p></a>`}

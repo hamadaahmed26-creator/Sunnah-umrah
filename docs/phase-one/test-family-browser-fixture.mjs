@@ -92,6 +92,24 @@ if(process.argv[2]){
   const request=route=>new Request('https://preview.example/'+route);
   assert.doesNotMatch(await (await worker.fetch(request('family.html'),{})).text(),/qa-sensors/);
   assert.match(await (await worker.fetch(request('qa-family.html'),{})).text(),/qa-sensors/);
+  // Verify recording routes from the deployable Worker, including Safari-style ranges.
+  const inventory=JSON.parse(await fs.readFile(new URL('./recordings/review/opendua/candidates.json',import.meta.url)));
+  const {createHash}=await import('node:crypto');
+  for(const row of inventory.recordings){
+    const url=request('recording-review/'+row.file);
+    const complete=await production.fetch(url,{});
+    assert.equal(complete.status,200);
+    assert.equal(createHash('sha256').update(Buffer.from(await complete.arrayBuffer())).digest('hex'),row.sha256);
+    const start=await production.fetch(new Request(url,{headers:{Range:'bytes=0-1'}}),{});
+    assert.equal(start.status,206);
+    assert.equal(start.headers.get('content-range'),'bytes 0-1/'+row.bytes);
+    assert.equal((await start.arrayBuffer()).byteLength,2);
+  }
+  const ordinary=await production.fetch(request('locales/review-packs.js'),{});
+  assert.match(await ordinary.text(),/Object.freeze\(\{\}\)/);
+  const review=await production.fetch(request('language-review/locales/review-packs.js'),{});
+  const module=await import('data:text/javascript;base64,'+Buffer.from(await review.text()).toString('base64'));
+  assert.equal(Object.keys(module.reviewPacks).length,8);
   assert.equal((await production.fetch(request('qa-family.html'),{})).status,404);
   assert.equal((await production.fetch(request('qa-sensors.js'),{})).status,404);
  });
