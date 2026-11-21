@@ -119,6 +119,12 @@ root.addEventListener('change',e=>{
  audio.stop();state.lang=normalizeLocale(e.target.value);clearCheck();save();render();root.querySelector('#guide-language').focus();
 });
 root.addEventListener('input',e=>{if(e.target.id==='query')results(e.target.value)});
+// Private human audio review uses native controls; only one review sample plays at a time.
+root.addEventListener('play',event=>{
+  if(!event.target?.matches?.('audio[data-review-audio]'))return;
+  audio.stop();
+  root.querySelectorAll('audio[data-review-audio]').forEach(other=>{if(other!==event.target)other.pause()});
+},true);
 root.addEventListener('click',e=>{
  const control=e.target.closest('[data-recitation-action]');
  if(control){
