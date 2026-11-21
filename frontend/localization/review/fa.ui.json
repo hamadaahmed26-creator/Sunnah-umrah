@@ -176,6 +176,8 @@
     "Record the trip only after you arrive.": "فقط پس از رسیدن، شوط را ثبت کنید.",
     "Seven Sa’i journeys": "هفت شوط سعی",
     "One-way trips completed": "شوط‌های یک‌طرفهٔ تکمیل‌شده",
-    "See all seven trips": "نمایش هر هفت شوط"
+    "See all seven trips": "نمایش هر هفت شوط",
+    "Offline map not confirmed. Reopen this page while connected, then retry.": "ذخیرهٔ نقشهٔ آفلاین تأیید نشد. هنگام اتصال به اینترنت این صفحه را دوباره باز کنید و دوباره تلاش کنید.",
+    "Offline map files saved on this device. Try Airplane Mode to confirm. Family updates still need internet.": "فایل‌های نقشهٔ آفلاین در دستگاه ذخیره شده‌اند. برای بررسی حالت هواپیما را امتحان کنید. به‌روزرسانی موقعیت خانواده همچنان به اینترنت نیاز دارد."
   }
 }
